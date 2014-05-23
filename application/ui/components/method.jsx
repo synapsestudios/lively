@@ -5,6 +5,7 @@ var _           = require('underscore');
 var React       = require('react');
 var Params      = require('./params-list');
 var ApiCallInfo = require('./api-call-info');
+var Checkbox    = require('./input/checkbox');
 
 var LOADED  = 'loaded',
     LOADING = 'loading';
@@ -69,7 +70,7 @@ module.exports = React.createClass({
         });
 
         var requestInfo;
-        if (this.props.oauth === true) {
+        if (this.refs.sendToken.getValue() === true) {
             requestInfo = this.props.oauthStore.oauthRequest(
                 this.props.method,
                 uri,
@@ -112,6 +113,7 @@ module.exports = React.createClass({
                     </div>
                     {this.props.synopsis}
                     <Params params={this.props.params} ref='params' />
+                    Include OAuth Token?<Checkbox defaultChecked={this.props.oauth} ref="sendToken" /><br />
                     <a onClick={this.onSubmit}>Try it</a>
                     {apiCallInfo}
                 </div>

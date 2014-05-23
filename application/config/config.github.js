@@ -15,6 +15,7 @@ module.exports = {
         "tokenParam"   : "token"
     },
     "resources" : [
-        require('./github/issues')
+        require('./github/issues'),
+        require('./github/issues/assignees')
     ]
 };

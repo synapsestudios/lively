@@ -1,0 +1,108 @@
+.panel__wrapper {
+    position             : relative;
+    padding-top          : rem-calc(100);
+    left                 : 0;
+    width                : 100%;
+    z-index              : 100;
+
+    .panel {
+        width            : calc(100% - 40px);
+        max-width        : 1400px;
+        margin           : 0 auto;
+        background-color : $white;
+        border-radius    : 3px;
+        box-shadow       : 0 1px 5px rgba($black, .2);
+
+
+        .panel__header {
+            @extend .ff-source-bold;
+            position         : relative;
+            height           : rem-calc(50);
+            width            : 100%;
+            background-color : $themeDGray;
+            border-radius    : 3px 3px 0 0;
+            margin-bottom    : rem-calc(30);
+
+            &.panel__header--center {
+                h2 {
+                    text-align   : center;
+                }
+            }
+
+            h2 {
+                margin       : 0;
+                text-align       : left;
+                color            : $white;
+                line-height      : rem-calc(50);
+                font-size        : rem-calc(20);
+                padding-left     : rem-calc(10);
+            }
+
+            .panel__header--x {
+                position: absolute;
+                top     : 18px;
+                right   : 15px;
+                height  : 15px;
+                width   : 15px;
+                color   : $themeDDGray;
+                background-color: $white;
+                border-radius: 50%;
+                text-align: center;
+            }
+
+        }
+
+    }
+
+}
+
+// log & project panels
+
+.panel-section {
+    position             : relative;
+    width                : 100%;
+    background-color     : $white;
+    height               : auto;
+    border-radius        : 0 0 3px 3px;
+    padding-bottom       : 25px;
+
+    .panel__subhead {
+        height           : rem-calc(72);
+    }
+
+    .log {
+        width            : calc(100% - 60px);
+        height           : 680px;
+        margin           : 20px auto;
+        background-color : $themeMGray;
+        border-radius    : 3px;
+        overflow         : scroll;
+        padding          : rem-calc(10);
+    }
+
+    .new-project-form {
+
+        .submit-form-button {
+            position     : absolute;
+            bottom       : 20px;
+            right        : 20px;
+        }
+
+        .multiple-select-input {
+            height       : 300px;
+            background   : $white;
+            -webkit-appearance: none !important;
+            padding      : 0;
+
+            option {
+                padding  : 4px 0 4px 10px;
+            }
+        }
+
+        .ssh-key-input {
+            height       : 200px;
+        }
+
+    }
+
+}

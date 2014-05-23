@@ -1,0 +1,58 @@
+// wraps individual inputs
+// sets up positioning context for field validation
+// see forms/_vadiations.scss
+
+// <div class="form__input">
+// 	<input type="text" placeholder="Name" />
+// </div>
+
+.form__input-row {
+    height               : rem-calc(36);
+    margin-bottom        : rem-calc(36);
+}
+
+.form__input {
+	margin               : 0 0 rem-calc(32);
+	position             : relative;
+
+    select {
+        @extend .ff-source;
+        padding          : rem-calc(0 10);
+        font-size        : rem-calc(18);
+        border-radius    : 2px !important;
+        cursor           : pointer;
+    }
+
+    .placeholder {
+        color            : rgba($themeDGray, .5) !important;
+    }
+
+	input,
+    .input,
+	textarea {
+		@extend .ff-source;
+        font-size        : rem-calc(18);
+		color            : $themeDDGray;
+        margin           : 0;
+        line-height      : rem-calc(18);
+	    border-radius    : 2px;
+        padding          : rem-calc(0 10);
+        overflow         : hidden;
+    }
+
+    textarea {
+        min-height       : rem-calc(150);
+        max-width        : 100%;
+        line-height      : rem-calc(18);
+    }
+
+}
+
+@include placeholder {
+    font-family          : $source;
+    line-height          : rem-calc(18);
+    height               : rem-calc(18);
+    color                : rgba($themeDGray, .5);
+    padding-top          : 3px;
+}
+

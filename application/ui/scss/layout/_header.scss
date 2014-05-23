@@ -1,0 +1,166 @@
+header {
+    position             : fixed;
+    width                : 100%;
+    z-index              : 1000;
+    color                : $white;
+    background-color     : $themeDDGray;
+    height               : 60px;
+
+    .header__container {
+        max-width        : 1440px;
+        margin           : 0 auto;
+    }
+
+    .header__branding {
+        float            : left;
+        height           : rem-calc(60);
+        @include transition(all 300ms ease-in-out);
+
+        a {
+            display          : block;
+        }
+
+        .branding {
+            padding      : rem-calc(20);
+            height       : rem-calc(20);
+            @include box-sizing(content-box);
+            @include animation(spinner 20s infinite);
+            @include backface-visibility(visible);
+            @include transition (all 300ms ease-in-out);
+        }
+
+    }
+
+    .login {
+        float            : right;
+        line-height      : 60px;
+        padding-right    : rem-calc(20);
+    }
+
+    .header__toggle-nav {
+        position         : absolute;
+        top              : 0;
+        right            : 0;
+        margin           : 0;
+        float            : right;
+        height           : rem-calc(60);
+        width            : rem-calc(60);
+        display          : block;
+        @include transition(all 300ms ease-in-out);
+
+        @media #{$medium-up} {
+            width        : rem-calc(120);
+        }
+
+        .title {
+            position         : absolute;
+            top              : 0;
+            right            : rem-calc(60);
+            height           : rem-calc(60);
+            line-height      : rem-calc(60);
+            color            : $white;
+            text-transform   : uppercase;
+            @include transition(all 300ms ease-in-out);
+        }
+
+        [class*="label"] {
+            width            : rem-calc(50);
+            height           : rem-calc(60);
+            display          : block;
+            position         : relative;
+            text-align       : center;
+            line-height      : rem-calc(50);
+            @include transition(margin 300ms $ease-in-out-back 500ms);
+        }
+
+        .switch-icon__label--default {
+            margin-top       : 0;
+        }
+
+        &.active {
+            // slide close icon up
+            .switch-icon__label--default {
+                margin-top   : rem-calc(-60);
+            }
+
+        }
+
+    }
+
+    // --------- transformicon ----------- //
+
+    $navicon-size : rem-calc(24);
+
+    @mixin line {
+        display              : inline-block;
+        width                : $navicon-size;
+        height               : $navicon-size/8;
+        background-color     : $white;
+        user-select          : none;
+        @include transition(300ms);
+    }
+
+    .navicon-button {
+        position             : absolute;
+        top                  : 0;
+        right                : 0;
+        padding              : rem-calc(18);
+        width                : rem-calc(24);
+        height               : rem-calc(24);
+        background           : transparent;
+        cursor               : pointer;
+        user-select          : none;
+        @include box-sizing(content-box);
+        @include transition(300ms);
+
+        .navicon {
+            position         : relative;
+            @include line;
+
+            &:before,
+            &:after {
+                content      : '';
+                position     : absolute;
+                background-color: $white;
+                @include transform-origin($navicon-size/14 center);
+                @include line;
+            }
+
+            &:before {
+                top          : -8px;
+            }
+
+            &:after {
+                top          : 8px;
+            }
+
+        }
+
+        &.open {
+            .navicon {
+                // hide the middle line
+                background   : transparent;
+                // overlay the lines by setting both their top values to 0
+                &:before,
+                &:after {
+                    top      :  0;
+                    width    : $navicon-size;
+                    @include transform-origin(50% 50%);
+                }
+
+                // rotate the lines to form the x shape
+                &:before {
+                    @include transform(rotate3d(0, 0, 1, 45deg));
+                }
+
+                &:after {
+                    @include transform(rotate3d(0, 0, 1, -45deg));
+                }
+
+            }
+
+        }
+
+    }
+
+}

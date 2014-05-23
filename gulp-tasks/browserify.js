@@ -12,26 +12,22 @@ var gulp       = require('gulp'),
     connect    = require('gulp-connect'),
     uglify     = require('gulp-uglify');
 
-var appBundler = function(watch)
-{
-    var bundler, rebundle,
-        options = {
+gulp.task('watchify:app', function() {
+
+    var bundler = watchify({
             entries: ['./application/bootstrap.js'],
             extensions: ['.js', '.jsx']
-        };
-
-    if (watch) {
-        bundler = watchify(options);
-    } else {
-        bundler = browserify(options);
-    }
-
-    bundler.external('config')
+        })
+        .external('config')
         .transform(reactify);
 
-    rebundle = function() {
-        var stream = bundler.bundle({debug: (gutil.env.build !== 'production')});
+    var rebundle = function() {
+        var stream = bundler.bundle({
+            debug: (gutil.env.build !== 'production')
+        });
+
         stream.on('error', gutil.log);
+
         stream = stream.pipe(source('app.js'))
             .pipe(gutil.env.build === 'production' ? streamify(uglify()) : gutil.noop())
             .pipe(gulp.dest('./build/js'))
@@ -40,16 +36,9 @@ var appBundler = function(watch)
         return stream;
     };
 
+    bundler.on('log', gutil.log);
     bundler.on('update', rebundle);
     return rebundle();
-};
-
-gulp.task('watchify:app', function() {
-    return appBundler(true);
-});
-
-gulp.task('browserify:app', function() {
-    return appBundler(false);
 });
 
 gulp.task('browserify:config', function() {

@@ -25,7 +25,7 @@ gulp.task('watch', ['build', 'connect', 'delta']);
 
 // Watch definitions
 gulp.task('delta', function() {
-    gulp.watch(['./application/**/*.{js,jsx}'], ['watchify:app']);
+    //gulp.watch(['./application/**/*.{js,jsx}'], ['watchify:app']);
     gulp.watch(['./application/ui/scss/**/*.scss'], ['sass']);
     gulp.watch(['./application/**/*.html'], ['html']);
     gulp.watch(['./media/**/*.*'], ['media']);

@@ -11,7 +11,7 @@ gulp.task('connect', function() {
         livereload : true,
         middleware : function (connect, options) {
             return [
-                modRewrite(['!\\..*$ /index.html [L]'])
+                modRewrite(['!\\..{1,4}$ /index.html [L]'])
             ];
         }
     });

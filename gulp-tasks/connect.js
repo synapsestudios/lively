@@ -2,7 +2,8 @@
 
 var gulp       = require('gulp'),
     connect    = require('gulp-connect'),
-    modRewrite = require('connect-modrewrite');
+    url        = require('url'),
+    fallback   = require('connect-history-api-fallback');
 
 gulp.task('connect', function() {
     connect.server({
@@ -11,7 +12,15 @@ gulp.task('connect', function() {
         livereload : true,
         middleware : function (connect, options) {
             return [
-                modRewrite(['!\\..{1,4}$ /index.html [L]'])
+                function(req, res, next) {
+                    var reqUrl = url.parse(req.url);
+                    if (reqUrl.pathname === '/oauth2-redirect') {
+                        require('../application/oauth2-proxy')(req, res);
+                    } else {
+                        next();
+                    }
+                },
+                fallback
             ];
         }
     });

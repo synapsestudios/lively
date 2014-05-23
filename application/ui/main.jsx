@@ -14,6 +14,8 @@ var NotFound            = Router.NotFound;
 var SiteLayoutComponent = require('./layouts/site');
 var HomeModule          = require('./pages/home');
 var NotFoundPage        = require('./pages/404');
+var apiConfig           = require('../config.api');
+var OAuthStore          = require('../store/oauth2');
 
 module.exports = React.createClass({
 
@@ -21,10 +23,15 @@ module.exports = React.createClass({
 
     render : function()
     {
+        var stores = {
+            oauth : new OAuthStore()
+        };
+
         return (
             <SiteLayoutComponent>
                 <Locations ref="router">
-                    <Location path="/" handler={HomeModule} />
+                    <Location path="/" handler={HomeModule} config={apiConfig} stores={stores} />
+                    <Location path="/oauth2/callback" handler={HomeModule} config={apiConfig} />
                     <NotFound handler={NotFoundPage} />
                 </Locations>
             </SiteLayoutComponent>

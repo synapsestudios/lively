@@ -1,12 +1,83 @@
 /** @jsx React.DOM */
+/* global window */
 'use strict';
 
-var React    = require('react');
-var Resource = require('../components/resource');
+var React             = require('react');
+var StoreWatchMixin   = require('synapse-common/ui/mixins/store-watch');
+var Resource          = require('../components/resource');
+var OAuthConnectPanel = require('../components/oauth');
+var store             = require('store');
+var qs                = require('querystring');
 
 module.exports = React.createClass({
 
     displayName : 'HomeModule',
+
+    mixins : [ StoreWatchMixin ],
+
+    propTypes : {
+        config : React.PropTypes.object.isRequired
+    },
+
+    getStateFromStores : function()
+    {
+        return {
+            hasOAuth : (this.props.stores.oauth.accessToken !== null)
+        };
+    },
+
+    getInitialState : function()
+    {
+        return this.getStateFromStores();
+    },
+
+    componentWillMount : function()
+    {
+        if (window.location.search.length > 1) {
+            var options = store.get('client', options),
+                config  = this.props.config;
+
+            this.props.stores.oauth.setOptions(
+                options.clientId,
+                options.clientSecret,
+                config.oauth2.hostname,
+                config.oauth2.port || 80,
+                config.oauth2.authorizeUrl,
+                config.oauth2.tokenUrl
+            );
+
+            var queryString = qs.parse(window.location.search.substring(1));
+
+            this.props.stores.oauth.setToken({
+                accessToken : queryString.access_token,
+                tokenType   : queryString.token_type,
+                rawData     : queryString
+            });
+        }
+    },
+
+    handleOAuthStart : function(options)
+    {
+        store.set('client', options);
+
+        var config = this.props.config.oauth2;
+
+        var redirectQs = qs.stringify({
+            'client_id'     : options.clientId,
+            'client_secret' : options.clientSecret
+        });
+
+        var url = config.baseUrl + config.authorizeUrl + '?' + qs.stringify({
+            'client_id'     : options.clientId,
+            'client_secret' : options.clientSecret,
+            'response_type' : 'code',
+            'redirect_uri'  : 'http://127.0.0.1:9001/oauth2-redirect?' + redirectQs,
+            'scope'         : options.scope,
+            'state'         : Math.random()
+        });
+
+        window.location = url;
+    },
 
     getDefaultProps : function()
     {
@@ -23,18 +94,18 @@ module.exports = React.createClass({
                             oauth    : false,
                             params   : [
                                 {
-                                    name : 'username',
-                                    required : true,
+                                    name         : 'username',
+                                    required     : true,
                                     defaultValue : '',
-                                    type : 'string',
-                                    description: 'User\'s username'
+                                    type         : 'string',
+                                    description  : 'User\'s username'
                                 },
                                 {
-                                    name : 'password',
-                                    required : true,
+                                    name         : 'password',
+                                    required     : true,
                                     defaultValue : '',
-                                    type : 'string',
-                                    description: 'User\'s password'
+                                    type         : 'string',
+                                    description  : 'User\'s password'
                                 },
                                 {
                                     name        : 'aBool',
@@ -71,8 +142,13 @@ module.exports = React.createClass({
             );
         });
 
+        var stores = {
+            oauth : this.props.stores.oauth
+        };
+
         return (
             <div>
+                <OAuthConnectPanel stores={stores} onOAuthStart={this.handleOAuthStart} />
                 {resources}
             </div>
         );

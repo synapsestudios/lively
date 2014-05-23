@@ -153,8 +153,8 @@ var Store = BaseStore.extend({
             clientSecret : this.clientSecret,
             hostname     : this.hostname,
             port         : this.port,
-            authorizeUrl : this.authorizeUrl,
-            tokenUrl     : this.tokenUrl,
+            secure       : this.secure,
+            tokenParam   : this.tokenParam,
             accessToken  : this.accessToken,
             tokenType    : this.tokenType,
             rawData      : this.rawData
@@ -169,8 +169,8 @@ var Store = BaseStore.extend({
         this.clientSecret = data.clientSecret;
         this.hostname     = data.hostname;
         this.port         = data.port;
-        this.authorizeUrl = data.authorizeUrl;
-        this.tokenUrl     = data.tokenUrl;
+        this.secure       = data.secure;
+        this.tokenParam   = data.tokenParam;
         this.accessToken  = data.accessToken;
         this.tokenType    = data.tokenType;
         this.rawData      = data.rawData;

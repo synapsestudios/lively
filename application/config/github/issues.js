@@ -160,7 +160,7 @@ module.exports = {
         },
         {
             name     : 'List issues for a repository',
-            synopsis : 'List all issues for a given repository.  Public repositories do not require OAuth while private ones do.',
+            synopsis : 'List all issues for a given repository.',
             method   : 'GET',
             uri      : '/repos/:owner/:repo/issues',
             oauth    : false,
@@ -178,7 +178,7 @@ module.exports = {
         },
         {
             name     : 'Get a single issue',
-            synopsis : 'Get a single issue from a given repository.  Public repositories do not require OAuth while private ones do. **Note**: Every pull request is an issue, but not every issue is a pull request. If the issue is not a pull request, the response omits the `pull_request` attribute.',
+            synopsis : 'Get a single issue from a given repository. **Note**: Every pull request is an issue, but not every issue is a pull request. If the issue is not a pull request, the response omits the `pull_request` attribute.',
             method   : 'GET',
             uri      : '/repos/:owner/:repo/issues/:number',
             oauth    : false,

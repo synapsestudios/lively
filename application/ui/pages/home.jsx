@@ -94,6 +94,68 @@ module.exports = React.createClass({
                             uri      : '/instances',
                             oauth    : true,
                             params   : []
+                        },
+                        {
+                            name : 'getSingle',
+                            synopsis : 'Get a single instance',
+                            method : 'GET',
+                            'uri' : '/instances/:id',
+                            oauth : true,
+                            params : [
+                                {
+                                    name        : 'id',
+                                    required    : true,
+                                    type        : 'integer',
+                                    description : 'The ID of the instance to fetch'
+                                }
+                            ]
+                        },
+                        {
+                            name     : 'create',
+                            synopsis : 'Create an instance',
+                            method   : 'POST',
+                            uri      : '/instances',
+                            oauth    : true,
+                            params   : [
+                                {
+                                    name         : 'project_id',
+                                    required     : true,
+                                    defaultValue : '',
+                                    type         : 'integer',
+                                    description  : 'The project this instance belongs to'
+                                },
+                                {
+                                    name        : 'name',
+                                    required    : true,
+                                    type        : 'string',
+                                    description : 'The instance\'s name'
+                                },
+                                {
+                                    name        : 'branch',
+                                    required    : true,
+                                    type        : 'enum',
+                                    description : 'The branch to deploy',
+                                    enumValues  : [
+                                        'develop',
+                                        'master'
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            name : 'deleteInstance',
+                            synopsis : 'Delete an instance',
+                            method : 'DELETE',
+                            'uri' : '/instances/:id',
+                            oauth : true,
+                            params : [
+                                {
+                                    name        : 'id',
+                                    required    : true,
+                                    type        : 'integer',
+                                    description : 'The ID of the instance to delete'
+                                }
+                            ]
                         }
                     ]
                 },

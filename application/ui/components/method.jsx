@@ -72,14 +72,14 @@ module.exports = React.createClass({
         if (this.props.oauth === true) {
             requestInfo = this.props.oauthStore.oauthRequest(
                 this.props.method,
-                this.props.uri,
+                uri,
                 params,
                 _.bind(this.apiCallback, this)
             );
         } else {
             requestInfo = this.props.oauthStore.request(
                 this.props.method,
-                this.props.uri,
+                uri,
                 params,
                 _.bind(this.apiCallback, this)
             );

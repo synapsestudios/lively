@@ -51,7 +51,7 @@ var Store = BaseStore.extend({
         this.emit('change');
     },
 
-    _request : function(options, cb)
+    _request : function(options, data, cb)
     {
         if (! _.isFunction(cb)) {
             throw "callback must be a function";
@@ -83,11 +83,12 @@ var Store = BaseStore.extend({
         });
 
         req.on('error', function(e) {
+            console.log(e);
             cb(e);
         });
 
-        if (options.data) {
-            req.write(JSON.stringify(options.data));
+        if (data) {
+            req.write(JSON.stringify(data));
         }
 
         req.end();
@@ -116,13 +117,14 @@ var Store = BaseStore.extend({
             method   : method,
             path     : path,
             headers  : {
+                'X-Debug': true,
                 'Accept'       : 'application/json',
                 'Content-Type' : 'application/json',
                 'Authorization': this.tokenParam + ' ' + this.accessToken
             }
         };
 
-        return this._request(options, cb);
+        return this._request(options, data, cb);
     },
 
     request : function(method, path, data, cb)
@@ -138,7 +140,7 @@ var Store = BaseStore.extend({
             }
         };
 
-        return this._request(options, cb);
+        return this._request(options, data, cb);
     },
 
     serializeToLocalStorage : function()

@@ -112,7 +112,7 @@ module.exports = {
             synopsis : '',
             method   : 'POST',
             uri      : '/repos/:owner/:repo/issues/:number/comments',
-            oauth    : false,
+            oauth    : true,
             params   : [
                 paramOwner,
                 paramRepo,
@@ -125,7 +125,7 @@ module.exports = {
             synopsis : '',
             method   : 'PATCH',
             uri      : '/repos/:owner/:repo/issues/comments/:id',
-            oauth    : false,
+            oauth    : true,
             params   : [
                 paramOwner,
                 paramRepo,
@@ -138,7 +138,7 @@ module.exports = {
             synopsis : '',
             method   : 'DELETE',
             uri      : '/repos/:owner/:repo/issues/comments/:id',
-            oauth    : false,
+            oauth    : true,
             params   : [
                 paramOwner,
                 paramRepo,

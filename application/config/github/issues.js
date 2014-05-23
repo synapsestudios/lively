@@ -193,7 +193,7 @@ module.exports = {
             synopsis : 'Any user with pull access to a repository can create an issue.',
             method   : 'POST',
             uri      : '/repos/:owner/:repo/issues',
-            oauth    : false,
+            oauth    : true,
             params   : [
                 paramOwner,
                 paramRepo,
@@ -234,7 +234,7 @@ module.exports = {
             synopsis : 'Issue owners and users with push access can edit an issue.',
             method   : 'PATCH',
             uri      : '/repos/:owner/:repo/issues/:number',
-            oauth    : false,
+            oauth    : true,
             params   : [
                 paramOwner,
                 paramRepo,

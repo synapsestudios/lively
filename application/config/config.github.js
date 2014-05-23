@@ -16,6 +16,7 @@ module.exports = {
     },
     "resources" : [
         require('./github/issues'),
-        require('./github/issues/assignees')
+        require('./github/issues/assignees'),
+        require('./github/issues/comments')
     ]
 };

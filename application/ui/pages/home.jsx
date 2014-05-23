@@ -43,7 +43,8 @@ module.exports = React.createClass({
                 config.oauth2.hostname,
                 config.oauth2.port || 80,
                 config.oauth2.authorizeUrl,
-                config.oauth2.tokenUrl
+                config.oauth2.tokenUrl,
+                config.oauth2.tokenParam
             );
 
             var queryString = qs.parse(window.location.search.substring(1));
@@ -83,6 +84,19 @@ module.exports = React.createClass({
     {
         return {
             resources : [
+                {
+                    name : 'Instance Resources',
+                    methods : [
+                        {
+                            name     : 'get',
+                            synopsis : 'List instances',
+                            method   : 'GET',
+                            uri      : '/instances',
+                            oauth    : true,
+                            params   : []
+                        }
+                    ]
+                },
                 {
                     name : 'OAuth Resources',
                     methods : [
@@ -134,11 +148,13 @@ module.exports = React.createClass({
 
     render : function()
     {
+        var self = this;
         var resources = this.props.resources.map(function(resource, idx) {
             return (
                 <Resource key={idx}
                           name={resource.name}
-                          methods={resource.methods} />
+                          methods={resource.methods}
+                          oauthStore={self.props.stores.oauth} />
             );
         });
 

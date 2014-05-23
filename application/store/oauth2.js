@@ -1,3 +1,4 @@
+/* global setTimeout */
 'use strict';
 
 var _           = require('underscore');
@@ -15,6 +16,7 @@ var Store = BaseStore.extend({
     port         : 80,
     authorizeUrl : null,
     tokenUrl     : null,
+    tokenParam   : 'Bearer',
     accessToken  : null,
     tokenType    : null,
     rawData      : null,
@@ -30,7 +32,7 @@ var Store = BaseStore.extend({
         });
     },
 
-    setOptions : function(clientId, clientSecret, hostname, port, authorizeUrl, tokenUrl)
+    setOptions : function(clientId, clientSecret, hostname, port, authorizeUrl, tokenUrl, tokenParam)
     {
         this.clientId     = clientId;
         this.clientSecret = clientSecret;
@@ -49,27 +51,15 @@ var Store = BaseStore.extend({
         this.emit('change');
     },
 
-    request : function(method, path, data, cb)
+    _request : function(options, cb)
     {
-        this.beginSync();
-
         if (! _.isFunction(cb)) {
             throw "callback must be a function";
         }
 
-        var httpLib = (this.port === 443) ? https : http,
-            self    = this;
+        var httpLib = (options.port === 443) ? https : http;
 
-        var req = httpLib.request({
-            hostname : this.hostname,
-            port     : this.port,
-            method   : method,
-            path     : path,
-            headers  : {
-                'Accept'       : 'application/json',
-                'Content-Type' : 'application/json'
-            }
-        }, function(res) {
+        var req = httpLib.request(options, function (res) {
             var resText = '';
 
             res.on('data', function(chunk) {
@@ -81,30 +71,74 @@ var Store = BaseStore.extend({
                 try {
                     json = JSON.parse(resText);
                 } catch (e) {
-                    self.emit('error', res);
-                    cb(e);
-                    return;
+                    json = {};
                 }
 
-                cb(false, json);
-
-                self.finishSync();
-                self.emit('change');
+                cb(false, {
+                    data    : json,
+                    headers : res.headers,
+                    status  : res.statusCode
+                });
             });
         });
 
         req.on('error', function(e) {
             cb(e);
-
-            this.abortSync();
-            self.emit('error', e);
         });
 
-        if (data) {
-            req.write(JSON.stringify(data));
+        if (options.data) {
+            req.write(JSON.stringify(options.data));
         }
 
         req.end();
+
+        return {
+            uri     : req.uri,
+            data    : req.body,
+            headers : req._headers
+        };
+    },
+
+    oauthRequest : function(method, path, data, cb)
+    {
+        if (! this.accessToken) {
+            // Next tick because async callbacks should always be async
+            setTimeout(function() {
+                cb('Missing access token for OAuth request');
+            }, 0);
+
+            return;
+        }
+
+        var options = {
+            hostname : this.hostname,
+            port     : this.port,
+            method   : method,
+            path     : path,
+            headers  : {
+                'Accept'       : 'application/json',
+                'Content-Type' : 'application/json',
+                'Authorization': this.tokenParam + ' ' + this.accessToken
+            }
+        };
+
+        return this._request(options, cb);
+    },
+
+    request : function(method, path, data, cb)
+    {
+        var options = {
+            hostname : this.hostname,
+            port     : this.port,
+            method   : method,
+            path     : path,
+            headers  : {
+                'Accept'       : 'application/json',
+                'Content-Type' : 'application/json'
+            }
+        };
+
+        return this._request(options, cb);
     },
 
     serializeToLocalStorage : function()

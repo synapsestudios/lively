@@ -10,11 +10,7 @@ module.exports = function(req, res) {
     var reqUrl = url.parse(req.url),
         query  = qs.parse(reqUrl.query);
 
-    console.log(query);
-
     var httpLib = config.oauth2.port === 443 ? https : http;
-
-    console.log(query);
 
     var proxyReq = httpLib.request({
         hostname           : config.oauth2.hostname,

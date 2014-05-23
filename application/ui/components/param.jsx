@@ -51,7 +51,7 @@ module.exports = React.createClass({
         } else if (this.props.type === 'boolean' || this.props.type === 'bool') {
             return <Select options={['true', 'false']} ref='input' />;
         } else {
-            return <Text ref='input' />;
+            return <Text defaultValue={this.props.defaultValue} ref='input' />;
         }
     },
 
@@ -59,7 +59,7 @@ module.exports = React.createClass({
     {
         return (
             <tr>
-                <td>{this.props.name}</td>
+                <td><code>{this.props.name}</code></td>
                 <td>{this.getInput()}</td>
                 <td><code>{this.props.type}</code></td>
                 <td>{this.props.description}</td>

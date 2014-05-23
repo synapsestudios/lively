@@ -47,11 +47,11 @@ module.exports = React.createClass({
                         <h2>OAuth2</h2>
                     </div>
                     <label htmlFor='clientId'>Client ID</label>
-                    <TextInput name='clientId' ref='clientId' value='command-synter-v1' />
+                    <TextInput name='clientId' ref='clientId' />
                     <label htmlFor='clientSecret'>Client Secret</label>
-                    <TextInput name='clientSecret' ref='clientSecret' value='' />
+                    <TextInput name='clientSecret' ref='clientSecret' />
                     <label htmlFor='scope'>Scope</label>
-                    <TextInput name='scope' ref='scope' value='' />
+                    <TextInput name='scope' ref='scope' />
                     <a onClick={this.handleClick}>Connect</a>
                     <hr />
                     <pre>Access token: {this.state.oauthData.accessToken}</pre>

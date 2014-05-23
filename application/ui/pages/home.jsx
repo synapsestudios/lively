@@ -35,6 +35,23 @@ module.exports = React.createClass({
                                     defaultValue : '',
                                     type : 'string',
                                     description: 'User\'s password'
+                                },
+                                {
+                                    name        : 'aBool',
+                                    required    : true,
+                                    type        : 'bool',
+                                    description : 'some boolean value'
+                                },
+                                {
+                                    name        : 'anEnum',
+                                    required    : true,
+                                    type        : 'enum',
+                                    description : 'a list of possible values',
+                                    enumValues  : [
+                                        'foo',
+                                        'bar',
+                                        'baz'
+                                    ]
                                 }
                             ]
                         }
@@ -46,9 +63,11 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var resources = this.props.resources.map(function(resource) {
+        var resources = this.props.resources.map(function(resource, idx) {
             return (
-                <Resource name={resource.name} methods={resource.methods} />
+                <Resource key={idx}
+                          name={resource.name}
+                          methods={resource.methods} />
             );
         });
 

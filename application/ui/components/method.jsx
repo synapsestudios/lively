@@ -2,9 +2,11 @@
 'use strict';
 
 var React  = require('react');
-var Params = require('./params-table');
+var Params = require('./params-list');
 
 module.exports = React.createClass({
+
+    displayName : 'Method',
 
     propTypes : {
         name     : React.PropTypes.string.isRequired,
@@ -24,19 +26,22 @@ module.exports = React.createClass({
         };
     },
 
+    onSubmit : function()
+    {
+        console.log(this.refs.params.getValues());
+    },
+
     render : function()
     {
-        var params = this.props.params.length ? <Params params={this.props.params} /> : '';
-
         return (
-            <div className="panel__wrapper">
-                <div className="panel">
-                    <div className="panel__header">
+            <div className='panel__wrapper'>
+                <div className='panel'>
+                    <div className='panel__header'>
                         <h2>{this.props.name}</h2>
                     </div>
                     {this.props.synopsis}
-                    {params}
-                    <a>Try it</a>
+                    <Params params={this.props.params} ref='params' />
+                    <a onClick={this.onSubmit}>Try it</a>
                 </div>
             </div>
         );

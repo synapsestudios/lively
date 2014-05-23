@@ -10,20 +10,22 @@ var https       = require('https');
 
 var Store = BaseStore.extend({
 
+    namespace : null,
+
     clientId     : null,
     clientSecret : null,
     hostname     : null,
     port         : 80,
-    authorizeUrl : null,
-    tokenUrl     : null,
+    secure       : false,
     tokenParam   : 'Bearer',
     accessToken  : null,
     tokenType    : null,
     rawData      : null,
 
-    constructor : function()
+    constructor : function(namespace)
     {
-        if (store.get('oauth')) {
+        this.namespace = namespace + '-';
+        if (store.get(this.namespace + 'oauth')) {
             this.unserializeFromLocalStorage();
         }
 
@@ -32,14 +34,14 @@ var Store = BaseStore.extend({
         });
     },
 
-    setOptions : function(clientId, clientSecret, hostname, port, authorizeUrl, tokenUrl, tokenParam)
+    setOptions : function(options)
     {
-        this.clientId     = clientId;
-        this.clientSecret = clientSecret;
-        this.hostname     = hostname;
-        this.port         = port;
-        this.authorizeUrl = authorizeUrl;
-        this.tokenUrl     = tokenUrl;
+        this.clientId     = options.clientId;
+        this.clientSecret = options.clientSecret;
+        this.hostname     = options.api.hostname;
+        this.port         = options.api.port || 80;
+        this.secure       = options.api.secure;
+        this.tokenParam   = options.oauth2.tokenParam;
         this.emit('change');
     },
 
@@ -57,7 +59,7 @@ var Store = BaseStore.extend({
             throw "callback must be a function";
         }
 
-        var httpLib = (options.port === 443) ? https : http;
+        var httpLib = (this.secure === true) ? https : http;
 
         var req = httpLib.request(options, function (res) {
             var resText = '';
@@ -112,12 +114,12 @@ var Store = BaseStore.extend({
         }
 
         var options = {
-            hostname : this.hostname,
-            port     : this.port,
-            method   : method,
-            path     : path,
-            headers  : {
-                'X-Debug': true,
+            hostname        : this.hostname,
+            port            : this.port,
+            method          : method,
+            path            : path,
+            withCredentials : false,
+            headers         : {
                 'Accept'       : 'application/json',
                 'Content-Type' : 'application/json',
                 'Authorization': this.tokenParam + ' ' + this.accessToken
@@ -130,11 +132,12 @@ var Store = BaseStore.extend({
     request : function(method, path, data, cb)
     {
         var options = {
-            hostname : this.hostname,
-            port     : this.port,
-            method   : method,
-            path     : path,
-            headers  : {
+            hostname        : this.hostname,
+            port            : this.port,
+            method          : method,
+            path            : path,
+            withCredentials : false,
+            headers         : {
                 'Accept'       : 'application/json',
                 'Content-Type' : 'application/json'
             }
@@ -145,7 +148,7 @@ var Store = BaseStore.extend({
 
     serializeToLocalStorage : function()
     {
-        store.set('oauth', {
+        store.set(this.namespace + 'oauth', {
             clientId     : this.clientId,
             clientSecret : this.clientSecret,
             hostname     : this.hostname,
@@ -160,7 +163,7 @@ var Store = BaseStore.extend({
 
     unserializeFromLocalStorage : function()
     {
-        var data = store.get('oauth');
+        var data = store.get(this.namespace + 'oauth');
 
         this.clientId     = data.clientId;
         this.clientSecret = data.clientSecret;

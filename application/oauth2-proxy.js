@@ -4,18 +4,19 @@ var http   = require('http');
 var https  = require('https');
 var url    = require('url');
 var qs     = require('querystring');
-var config = require('./config.api');
+var config = require('./config');
 
 module.exports = function(req, res) {
     var reqUrl = url.parse(req.url),
         query  = qs.parse(reqUrl.query);
 
-    var httpLib = config.oauth2.port === 443 ? https : http;
+    var apiConfig = config[query.api];
 
+    var httpLib = apiConfig.oauth2.port === 443 ? https : http;
     var proxyReq = httpLib.request({
-        hostname           : config.oauth2.hostname,
-        port               : config.oauth2.port,
-        path               : config.oauth2.tokenUrl,
+        hostname           : apiConfig.oauth2.hostname,
+        port               : apiConfig.oauth2.port,
+        path               : apiConfig.oauth2.tokenUrl,
         method             : 'POST',
         rejectUnauthorized : false,
         headers  : {
@@ -32,7 +33,7 @@ module.exports = function(req, res) {
             var json = JSON.parse(data);
 
             res.writeHead(302, {
-                Location : 'http://127.0.0.1:9001/?' + qs.stringify(json)
+                Location : 'http://127.0.0.1:9001/'+query.api+'?' + qs.stringify(json)
             });
 
             res.end();

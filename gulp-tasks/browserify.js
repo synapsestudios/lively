@@ -3,10 +3,8 @@
 
 var gulp       = require('gulp'),
     gutil      = require('gulp-util'),
-    browserify = require('browserify'),
     watchify   = require('watchify'),
     reactify   = require('reactify'),
-    envify     = require('envify/custom'),
     source     = require('vinyl-source-stream'),
     streamify  = require('gulp-streamify'),
     connect    = require('gulp-connect'),
@@ -39,18 +37,4 @@ gulp.task('watchify:app', function() {
     bundler.on('log', gutil.log);
     bundler.on('update', rebundle);
     return rebundle();
-});
-
-gulp.task('browserify:config', function() {
-    var env = (! gutil.env.build ) ? 'development' : gutil.env.build;
-    return browserify()
-        .require('./application/config/config.'+env+'.js', { expose : 'config' })
-        .transform(envify({
-            NODE_ENV: (gutil.env.build === 'production') ? 'production' : 'development'
-        }))
-        .bundle()
-        .pipe(source('config.js'))
-        .pipe(streamify(uglify()))
-        .pipe(gulp.dest('./build/js'))
-        .pipe(connect.reload());
 });

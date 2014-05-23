@@ -1,12 +1,20 @@
 module.exports = {
-    "baseUrl" : "api.github.com",
-    "oauth2"  : {
+    "name" : "GitHub v3 API",
+    "api"  : {
+        "hostname" : "api.github.com",
+        "port"     : 443,
+        "secure"   : true
+    },
+    "oauth2" : {
         "type"         : "authorization-code",
-        "baseUrl"      : 'https://api.github.com',
         "hostname"     : "github.com",
         "port"         : 443,
+        "secure"       : true,
         "authorizeUrl" : "/login/oauth/authorize",
         "tokenUrl"     : "/login/oauth/access_token",
         "tokenParam"   : "token"
-    }
+    },
+    "resources" : [
+        require('./github/issues')
+    ]
 };

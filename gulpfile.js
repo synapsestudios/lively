@@ -15,7 +15,7 @@ require('./gulp-tasks/sass');
 gulp.task('default', ['build']);
 
 // Alias
-gulp.task('browserify', ['browserify:config', 'watchify:app']);
+gulp.task('browserify', ['watchify:app']);
 
 // Task that builds our entire application
 gulp.task('build', ['html', 'media', 'concat', 'sass', 'browserify']);

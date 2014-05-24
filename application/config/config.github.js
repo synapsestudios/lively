@@ -19,6 +19,7 @@ module.exports = {
         require('./github/issues/assignees'),
         require('./github/issues/comments'),
         require('./github/issues/events'),
-        require('./github/issues/labels')
+        require('./github/issues/labels'),
+        require('./github/issues/milestones')
     ]
 };

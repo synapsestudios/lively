@@ -53,7 +53,8 @@ module.exports = React.createClass({
     onSubmit : function()
     {
         var params = this.refs.params.getValues(),
-            uri = this.props.uri;
+            method = this.props.method,
+            uri    = this.props.uri;
 
         var headerParams = {},
             bodyParams   = {},
@@ -79,7 +80,7 @@ module.exports = React.createClass({
 
             if (paramData.location === 'header') {
                 headerParams[name] = value;
-            } else if (paramData.location === 'query') {
+            } else if (paramData.location === 'query' || method === 'GET') {
                 queryParams[name] = value;
             } else {
                 bodyParams[name] = value;
@@ -96,14 +97,14 @@ module.exports = React.createClass({
         var requestInfo;
         if (this.refs.sendToken.getValue() === true) {
             requestInfo = this.props.oauthStore.oauthRequest(
-                this.props.method,
+                method,
                 uri,
                 params,
                 _.bind(this.apiCallback, this)
             );
         } else {
             requestInfo = this.props.oauthStore.request(
-                this.props.method,
+                method,
                 uri,
                 params,
                 _.bind(this.apiCallback, this)

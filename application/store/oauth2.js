@@ -7,6 +7,7 @@ var SyncMachine = require('synapse-common/lib/sync-machine');
 var store       = require('store');
 var http        = require('http');
 var https       = require('https');
+var url         = require('url');
 
 var Store = BaseStore.extend({
 
@@ -113,34 +114,36 @@ var Store = BaseStore.extend({
             return;
         }
 
-        var options = {
-            hostname        : this.hostname,
-            port            : this.port,
-            method          : method,
-            path            : path,
-            withCredentials : false,
-            headers         : {
-                'Accept'       : 'application/json',
-                'Content-Type' : 'application/json',
-                'Authorization': this.tokenParam + ' ' + this.accessToken
-            }
-        };
+        data.header = _.extend(data.header, {
+            Authorization : this.tokenParam + ' ' + this.accessToken
+        });
 
-        return this._request(options, data, cb);
+        return this.request(method, path, data, cb);
     },
 
     request : function(method, path, data, cb)
     {
+        var headers = _.extend({
+            'Accept'       : 'application/json',
+            'Content-Type' : 'application/json'
+        }, data.header);
+
+        var urlParts = url.parse(path, true);
+        var query    = _.extend({}, urlParts.query, data.query);
+
+        var fixedPath = url.format({
+            pathname : urlParts.pathname,
+            query    : query,
+            hash     : urlParts.hash
+        });
+
         var options = {
             hostname        : this.hostname,
             port            : this.port,
             method          : method,
-            path            : path,
+            path            : fixedPath,
             withCredentials : false,
-            headers         : {
-                'Accept'       : 'application/json',
-                'Content-Type' : 'application/json'
-            }
+            headers         : headers
         };
 
         return this._request(options, data, cb);

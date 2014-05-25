@@ -4,6 +4,7 @@ var paramOwner = {
     name        : 'owner',
     required    : true,
     type        : 'string',
+    location    : 'uri',
     description : 'The owner of the repo.'
 };
 
@@ -11,7 +12,16 @@ var paramRepo = {
     name        : 'repo',
     required    : true,
     type        : 'string',
+    location    : 'uri',
     description : 'The name of the repo.'
+};
+
+var paramAssignee = {
+    name        : 'assignee',
+    required    : true,
+    type        : 'string',
+    location    : 'uri',
+    description : 'The assignee being looked up.'
 };
 
 module.exports = {
@@ -37,12 +47,7 @@ module.exports = {
             params   : [
                 paramOwner,
                 paramRepo,
-                {
-                    name: 'assignee',
-                    required: true,
-                    type: 'string',
-                    description: 'The assignee being looked up.'
-                }
+                paramAssignee
             ]
         }
     ]

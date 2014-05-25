@@ -4,6 +4,7 @@ var paramOwner = {
     name        : 'owner',
     required    : true,
     type        : 'string',
+    location    : 'uri',
     description : 'The owner of the repo.'
 };
 
@@ -11,6 +12,7 @@ var paramRepo = {
     name        : 'repo',
     required    : true,
     type        : 'string',
+    location    : 'uri',
     description : 'The name of the repo.'
 };
 
@@ -18,6 +20,7 @@ var paramIssueNumber = {
     name        : 'issue_number',
     required    : true,
     type        : 'integer',
+    location    : 'uri',
     description : 'The issue number.'
 };
 

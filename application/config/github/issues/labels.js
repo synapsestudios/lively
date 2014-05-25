@@ -4,6 +4,7 @@ var paramOwner = {
     name        : 'owner',
     required    : true,
     type        : 'string',
+    location    : 'uri',
     description : 'The owner of the repo.'
 };
 
@@ -11,6 +12,7 @@ var paramRepo = {
     name        : 'repo',
     required    : true,
     type        : 'string',
+    location    : 'uri',
     description : 'The name of the repo.'
 };
 
@@ -18,13 +20,23 @@ var paramName = {
     name        : 'name',
     required    : true,
     type        : 'string',
+    location    : 'uri',
     description : 'The name of the label.'
 };
+
+var paramNameBody = {
+    name        : 'name',
+    required    : true,
+    type        : 'string',
+    location    : 'body',
+    description : 'The name of the label.'
+}
 
 var paramColor = {
     name        : 'color',
     required    : true,
     type        : 'string',
+    location    : 'body',
     description : 'A 6 character hex code, without the leading #, identifying the color.'
 };
 
@@ -32,6 +44,7 @@ var paramNumber = {
     name        : 'number',
     required    : true,
     type        : 'integer',
+    location    : 'uri',
     description : 'The issue number.'
 };
 
@@ -39,6 +52,7 @@ var paramMilestoneNumber = {
     name        : 'number',
     required    : true,
     type        : 'integer',
+    location    : 'uri',
     description : 'The milestone number.'
 };
 
@@ -77,7 +91,7 @@ module.exports = {
             params   : [
                 paramOwner,
                 paramRepo,
-                paramName,
+                paramNameBody,
                 paramColor
             ]
         },

@@ -4,6 +4,7 @@ var paramOwner = {
     name        : 'owner',
     required    : true,
     type        : 'string',
+    location    : 'uri',
     description : 'The owner of the repo.'
 };
 
@@ -11,6 +12,7 @@ var paramRepo = {
     name        : 'repo',
     required    : true,
     type        : 'string',
+    location    : 'uri',
     description : 'The name of the repo.'
 };
 
@@ -18,6 +20,7 @@ var paramNumber = {
     name        : 'number',
     required    : true,
     type        : 'integer',
+    location    : 'uri',
     description : 'The issue number.'
 };
 
@@ -26,6 +29,7 @@ var paramSort = {
     required     : false,
     defaultValue : 'created',
     type         : 'enum',
+    location     : 'query',
     description  : 'What to sort results by.',
     enumValues   : [
         'created',
@@ -38,6 +42,7 @@ var paramDirection = {
     required     : false,
     defaultValue : 'desc',
     type         : 'enum',
+    location     : 'query',
     description  : 'The direction of the sort. Ignored without the `sort` parameter.',
     enumValues   : [
         'desc',
@@ -46,24 +51,27 @@ var paramDirection = {
 };
 
 var paramSince = {
-    name         : 'since',
-    required     : false,
-    type         : 'string',
-    description  : 'Only comments updated at or after this time are returned. This is a timestamp in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.'
+    name        : 'since',
+    required    : false,
+    type        : 'string',
+    location    : 'query',
+    description : 'Only comments updated at or after this time are returned. This is a timestamp in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.'
 };
 
 var paramId = {
-    name         : 'id',
-    required     : true,
-    type         : 'integer',
-    description  : 'The ID of the comment'
+    name        : 'id',
+    required    : true,
+    type        : 'integer',
+    location    : 'uri',
+    description : 'The ID of the comment'
 }
 
 var paramBody = {
-    name         : 'body',
-    required     : true,
-    type         : 'string',
-    description  : 'The contents of the comment'
+    name        : 'body',
+    required    : true,
+    type        : 'string',
+    location    : 'body',
+    description : 'The contents of the comment'
 }
 
 module.exports = {

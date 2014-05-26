@@ -20,6 +20,10 @@ module.exports = {
         require('./github/issues/comments'),
         require('./github/issues/events'),
         require('./github/issues/labels'),
-        require('./github/issues/milestones')
+        require('./github/issues/milestones'),
+
+        require('./github/organizations'),
+        require('./github/organizations/members'),
+        require('./github/organizations/teams')
     ]
 };

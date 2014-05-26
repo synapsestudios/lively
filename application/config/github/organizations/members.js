@@ -15,7 +15,7 @@ var paramFilter = {
     type         : 'enum',
     location     : 'query',
     description  : 'Filter members returned in the list.',
-    enumValue    : [
+    enumValues   : [
         'all',
         '2fa_disabled'
     ]

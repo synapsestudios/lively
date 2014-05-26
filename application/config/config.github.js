@@ -24,6 +24,12 @@ module.exports = {
 
         require('./github/organizations'),
         require('./github/organizations/members'),
-        require('./github/organizations/teams')
+        require('./github/organizations/teams'),
+
+        require('./github/miscellaneous/emojis'),
+        require('./github/miscellaneous/gitignore'),
+        require('./github/miscellaneous/markdown'),
+        require('./github/miscellaneous/meta'),
+        require('./github/miscellaneous/rate_limit')
     ]
 };

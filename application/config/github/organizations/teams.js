@@ -85,7 +85,7 @@ module.exports = {
             ]
         },
         {
-            name     : 'List teams',
+            name     : 'Get teams',
             synopsis : '',
             method   : 'GET',
             uri      : '/teams/:id',

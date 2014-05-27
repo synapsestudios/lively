@@ -53,33 +53,58 @@ module.exports = React.createClass({
     onSubmit : function()
     {
         var params = this.refs.params.getValues(),
-            uri = this.props.uri;
+            method = this.props.method,
+            uri    = this.props.uri;
 
-        _.each(params, function(value, name) {
-            if (value !== '') {
-                var regex = new RegExp(':' + name);
+        var headerParams = {},
+            bodyParams   = {},
+            queryParams  = {};
 
-                if (!! regex.test(uri)) {
-                    uri = uri.replace(regex, encodeURIComponent(value));
-                    delete params[name];
-                }
-            } else {
-                // Don't send empty params
-                delete params[name];
+        _.each(params, _.bind(function(value, name)
+        {
+            if (value === '') {
+                // skip empty params
+                return;
             }
-        });
+
+            var regex = new RegExp(':' + name);
+
+            // if the param is named in the query, then we will ignore the
+            // stated location (if any)
+            if (!! regex.test(uri)) {
+                uri = uri.replace(regex, encodeURIComponent(value));
+                return;
+            }
+
+            var paramData = _.findWhere(this.props.params, { name : name });
+
+            if (paramData.location === 'header') {
+                headerParams[name] = value;
+            } else if (paramData.location === 'query' || method === 'GET') {
+                queryParams[name] = value;
+            } else {
+                bodyParams[name] = value;
+            }
+
+        }, this));
+
+        params = {
+            header : headerParams,
+            query  : queryParams,
+            body   : bodyParams
+        };
 
         var requestInfo;
         if (this.refs.sendToken.getValue() === true) {
             requestInfo = this.props.oauthStore.oauthRequest(
-                this.props.method,
+                method,
                 uri,
                 params,
                 _.bind(this.apiCallback, this)
             );
         } else {
             requestInfo = this.props.oauthStore.request(
-                this.props.method,
+                method,
                 uri,
                 params,
                 _.bind(this.apiCallback, this)

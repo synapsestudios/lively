@@ -10,7 +10,7 @@ module.exports = React.createClass({
     render : function()
     {
         var links = this.props.list.map(function(api) {
-            return (<a href={"/"+api.slug}>{api.name}</a>);
+            return (<p><a href={"/"+api.slug}>{api.name}</a></p>);
         });
 
         return (

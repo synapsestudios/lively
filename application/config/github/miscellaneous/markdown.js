@@ -51,6 +51,6 @@ module.exports = {
             uri      : '/markdown/raw',
             oauth    : false,
             params   : []
-        },
+        }
     ]
 };

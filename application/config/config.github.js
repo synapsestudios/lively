@@ -15,6 +15,12 @@ module.exports = {
         "tokenParam"   : "token"
     },
     "resources" : [
+        require('./github/git_data/blobs'),
+        require('./github/git_data/commits'),
+//        require('./github/git_data/references'),
+//        require('./github/git_data/tags'),
+//        require('./github/git_data/trees'),
+
         require('./github/issues'),
         require('./github/issues/assignees'),
         require('./github/issues/comments'),
@@ -22,14 +28,14 @@ module.exports = {
         require('./github/issues/labels'),
         require('./github/issues/milestones'),
 
-        require('./github/organizations'),
-        require('./github/organizations/members'),
-        require('./github/organizations/teams'),
-
         require('./github/miscellaneous/emojis'),
         require('./github/miscellaneous/gitignore'),
         require('./github/miscellaneous/markdown'),
         require('./github/miscellaneous/meta'),
-        require('./github/miscellaneous/rate_limit')
+        require('./github/miscellaneous/rate_limit'),
+
+        require('./github/organizations'),
+        require('./github/organizations/members'),
+        require('./github/organizations/teams')
     ]
 };

@@ -131,17 +131,15 @@ module.exports = React.createClass({
         }
 
         return (
-            <div className='panel__wrapper'>
-                <div className='panel'>
-                    <div className='panel__header'>
-                        <h2>{this.props.method} - {this.props.name}</h2>
-                    </div>
-                    {this.props.synopsis}
-                    <Params params={this.props.params} ref='params' />
-                    Include OAuth Token?<Checkbox defaultChecked={this.props.oauth} ref="sendToken" /><br />
-                    <a onClick={this.onSubmit}>Try it</a>
-                    {apiCallInfo}
+            <div className='panel-section'>
+                <div className='panel__header'>
+                    <h2>{this.props.method} - {this.props.name}</h2>
                 </div>
+                {this.props.synopsis}
+                <Params params={this.props.params} ref='params' />
+                Include OAuth Token?<Checkbox defaultChecked={this.props.oauth} ref="sendToken" /><br />
+                <a onClick={this.onSubmit}>Try it</a>
+                {apiCallInfo}
             </div>
         );
     }

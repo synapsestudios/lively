@@ -10,11 +10,11 @@ module.exports = React.createClass({
     render : function()
     {
         var links = this.props.list.map(function(api) {
-            return (<p><a href={"/"+api.slug}>{api.name}</a></p>);
+            return (<a href={"/"+api.slug}>{api.name}</a>);
         });
 
         return (
-            <div className='panel__wrapper'>
+            <div className='panel__wrapper panel__wrapper--full-width'>
                 <div className='panel'>
                     <div className='panel__header'>
                         <h2>API List</h2>

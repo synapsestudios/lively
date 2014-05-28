@@ -29,13 +29,11 @@ module.exports = React.createClass({
     render : function()
     {
         return (
-            <div className='panel__wrapper'>
-                <div className='panel'>
-                    <div className='panel__header'>
-                        <h2>{this.props.name}</h2>
-                    </div>
-                    {this.props.methods.map(this.getMethodComponent)}
+            <div className='panel'>
+                <div className='panel__header'>
+                    <h2>{this.props.name}</h2>
                 </div>
+                {this.props.methods.map(this.getMethodComponent)}
             </div>
         );
     }

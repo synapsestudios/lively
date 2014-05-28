@@ -9,6 +9,8 @@ var OAuthConnectPanel = require('../components/oauth');
 var store             = require('store');
 var qs                = require('querystring');
 var url               = require('url');
+var MainNav           = require('../components/navigation/main-nav');
+
 
 module.exports = React.createClass({
 
@@ -105,8 +107,11 @@ module.exports = React.createClass({
 
         return (
             <div>
-                <OAuthConnectPanel stores={stores} onOAuthStart={this.handleOAuthStart} />
-                {resources}
+                <MainNav />
+                <div className="panel__wrapper">
+                    <OAuthConnectPanel stores={stores} onOAuthStart={this.handleOAuthStart} />
+                    {resources}
+                </div>
             </div>
         );
     }

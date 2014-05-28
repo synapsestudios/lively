@@ -15,6 +15,9 @@ module.exports = React.createClass({
         type         : React.PropTypes.string.isRequired,
         description  : React.PropTypes.string,
         enumValues   : React.PropTypes.array,
+        location     : React.PropTypes.oneOf([
+            'header', 'query', 'body', 'uri'
+        ]),
         defaultValue : React.PropTypes.oneOfType([
             React.PropTypes.string,
             React.PropTypes.number
@@ -36,7 +39,8 @@ module.exports = React.createClass({
             required      : false,
             description   : '',
             allowedValues : [],
-            enumValues    : []
+            enumValues    : [],
+            location      : 'body'
         };
     },
 

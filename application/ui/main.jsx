@@ -28,7 +28,7 @@ module.exports = React.createClass({
             var stores = { oauth : new OAuthStore(slug) };
             return [
                 <Location key={slug}
-                          path={'/:'+slug}
+                          path={'/'+slug}
                           handler={ApiModule}
                           config={config}
                           slug={slug}

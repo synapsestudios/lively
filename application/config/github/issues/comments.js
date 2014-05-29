@@ -94,7 +94,7 @@ module.exports = {
             synopsis : '',
             method   : 'GET',
             uri      : '/repos/:owner/:repo/issues/comments',
-            oauth    : true,
+            oauth    : false,
             params   : [
                 paramOwner,
                 paramRepo,

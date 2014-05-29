@@ -1,0 +1,91 @@
+.checkbox-label {
+    margin-bottom        : 10px;
+}
+
+.onoffswitch {
+    position             : relative;
+    width                : 60px;
+    margin-left          : 40px;
+    margin-top          : 20px;
+    @include user-select(none);
+
+    input[type="checkbox"]+label {
+        margin           : 0;
+    }
+
+    .onoffswitch-checkbox {
+        display              : none;
+    }
+
+    .onoffswitch-label {
+        display              : block;
+        overflow             : hidden;
+        cursor               : pointer;
+        border               : 1px solid #999;
+        border-radius        : 35px;
+    }
+
+    .onoffswitch-inner {
+        display              : block;
+        width                : 200%;
+        margin-left          : -100%;
+        @include transition(margin 300ms ease-in 0s);
+    }
+
+    .onoffswitch-inner:before,
+    .onoffswitch-inner:after {
+        font-family          : $font-awesome;
+        display              : block;
+        float                : left;
+        width                : 50%;
+        height               : 25px;
+        padding              : 0;
+        line-height          : 27px;
+        font-size            : 18px;
+        color                : $white;
+    }
+
+    .onoffswitch-inner:before {
+        content              : "\f00c";
+        padding-left         : 8px;
+        background-color     : $statusGreen;
+        box-shadow           : inset 0 1px 2px shade($statusGreen, 30%), inset 0 -1px 2px tint($statusGreen, 70%);
+        border-radius        : 35px 0 0 35px;
+        color                : $white;
+    }
+
+    .onoffswitch-inner:after {
+        content              : "\f00d";
+        padding-right        : 12px;
+        background-color     : $statusRed;
+        box-shadow           : inset 0 1px 2px shade($statusRed, 50%), inset 0 -1px 2px tint($statusRed, 50%);
+        border-radius        : 0 35px 35px 0;
+        color                : $white;
+        text-align           : right;
+    }
+
+    .onoffswitch-switch {
+        display              : block;
+        width                : 29px;
+        height               : 29px;
+        margin               : 2px;
+        background           : $white;
+        border               : 1px solid #999;
+        box-shadow           : inset 0 0 1px rgba($black, .5);
+        border-radius        : 50%;
+        position             : absolute;
+        top                  : -3px;
+        bottom               : 0;
+        right                : 33px;
+        @include transition(all 300ms ease-in 0s);
+    }
+
+    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+        margin-left          : 0;
+    }
+
+    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+        right                : -3px;
+    }
+
+}

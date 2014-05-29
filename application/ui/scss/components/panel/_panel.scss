@@ -14,10 +14,10 @@
         width            : calc(100% - 60px);
         margin           : 0 auto;
         border-radius    : 3px;
-        padding-top      : 30px;
-        padding-bottom   : 30px;
+        padding-top      : 20px;
+        padding-bottom   : 20px;
         margin-bottom    : 30px;
-        border           : 1px solid $themeMGray;
+        border           : 1px solid tint($themeMLGray, 50%);;
         background-color : $white;
         @include clearfix;
 
@@ -60,7 +60,7 @@
 
     }
 
-    a {
+    >a {
         padding-left     : 20px;
         color            : $themeDDGray;
         text-decoration  : underline;
@@ -92,7 +92,7 @@
 
     }
 
-    span {
+    p {
         margin-bottom    : rem-calc(20);
     }
 

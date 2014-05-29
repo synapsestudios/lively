@@ -12,16 +12,15 @@
 	@extend .ff-source-bold;
 	min-width            : rem-calc(140);
     padding              : rem-calc(7 10);
-	border               : 1px solid $themeMLGray;
 	background-color     : $themeLLGray;
-	border-color         : $themeLLGray;
+	border               : 1px solid tint($themeMLGray, 50%);
 	border-radius        : 2px;
 	box-shadow           : inset 0 0 1px rgba($white, .5);
     margin-bottom        : rem-calc(20);
     margin-top           : rem-calc(20);
-
-
+    color                : $themeMLGray;
 	@include background-image(linear-gradient(rgba($white, .1), rgba($white, 0)));
+    @include transition(all 300ms ease-in-out);
 
 	&:hover {
 		background-color : darken($themeLGray, 5%);

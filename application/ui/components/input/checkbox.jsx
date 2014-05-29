@@ -13,6 +13,14 @@ module.exports = React.createClass({
 
     render : function()
     {
-        return this.transferPropsTo(<input type='checkbox' ref='input' />);
+        return this.transferPropsTo(
+            <div className="onoffswitch">
+                <input type="checkbox" ref='input' name={this.props.name} className="onoffswitch-checkbox" id={this.props.name} />
+                <label className="onoffswitch-label" htmlFor={this.props.name}>
+                    <span className="onoffswitch-inner"></span>
+                    <span className="onoffswitch-switch"></span>
+                </label>
+            </div>
+        );
     }
 });

@@ -24,7 +24,7 @@ module.exports = React.createClass({
     render : function()
     {
         return this.transferPropsTo(
-            <select ref='input'>
+            <select className="select" ref='input'>
                 {this.props.options.map(this.getOptions)}
             </select>
         );

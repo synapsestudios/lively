@@ -135,10 +135,11 @@ module.exports = React.createClass({
                 <div className='panel__header'>
                     <h2>{this.props.method} - {this.props.name}</h2>
                 </div>
-                {this.props.synopsis}
+                <p>{this.props.synopsis}</p>
                 <Params params={this.props.params} ref='params' />
-                Include OAuth Token?<Checkbox defaultChecked={this.props.oauth} ref="sendToken" /><br />
-                <a onClick={this.onSubmit}>Try it</a>
+                <p className="checkbox-label">Include OAuth Token?</p>
+                <Checkbox defaultChecked={this.props.oauth} ref="sendToken" name={this.props.name}/>
+                <a className="button" onClick={this.onSubmit}>Try it</a>
                 {apiCallInfo}
             </div>
         );

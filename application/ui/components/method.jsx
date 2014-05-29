@@ -137,8 +137,10 @@ module.exports = React.createClass({
                 </div>
                 <p>{this.props.synopsis}</p>
                 <Params params={this.props.params} ref='params' />
-                <p className="checkbox-label">Include OAuth Token?</p>
-                <Checkbox defaultChecked={this.props.oauth} ref="sendToken" name={this.props.name}/>
+                <div className="switch__container">
+                    <p className="checkbox-label">Include OAuth Token?</p>
+                    <Checkbox defaultChecked={this.props.oauth} ref="sendToken" name={this.props.name}/>
+                </div>
                 <a className="button" onClick={this.onSubmit}>Try it</a>
                 {apiCallInfo}
             </div>

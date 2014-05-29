@@ -14,6 +14,7 @@
 .form__input {
 	margin               : 0 0 rem-calc(32);
 	position             : relative;
+    width                : 100%;
 
     select {
         @extend .ff-source;

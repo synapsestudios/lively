@@ -10,7 +10,7 @@
 
 .button {
 	@extend .ff-source-bold;
-	min-width            : rem-calc(140);
+	min-width            : rem-calc(200);
     padding              : rem-calc(7 10);
 	background-color     : $themeLLGray;
 	border               : 1px solid tint($themeMLGray, 50%);

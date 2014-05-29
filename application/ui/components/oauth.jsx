@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 'use strict';
 
-var React           = require('react');
+var React           = require('react/addons');
 var TextInput       = require('./input/text');
 var StoreWatchMixin = require('synapse-common/ui/mixins/store-watch');
 var util = require('util');

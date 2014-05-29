@@ -28,8 +28,8 @@ module.exports = React.createClass({
     getStateFromStores : function()
     {
         return {
-            hasOAuth : (this.props.stores.oauth.accessToken !== null),
-            oauthData : (this.props.stores.oauth),
+                hasOAuth : (this.props.stores.oauth.accessToken !== null),
+                oauthData : (this.props.stores.oauth),
             oAuthPanelHidden : true
         };
     },
@@ -39,7 +39,7 @@ module.exports = React.createClass({
         return this.getStateFromStores();
     },
 
-    toggleOAuthTab : function()
+    toggleOAuthPanel : function()
     {
         this.setState({
             oAuthPanelHidden : ! this.state.oAuthPanelHidden
@@ -50,12 +50,20 @@ module.exports = React.createClass({
     {
         var oAuthPanelClasses = React.addons.classSet({
             'panel'         : true,
-            'panel--hidden' : this.state.oAuthPanelHidden
+            'panel--hidden' : this.state.oAuthPanelHidden,
+            'panel--shown'  : ! this.state.oAuthPanelHidden
+        });
+
+        var oAuthTabClasses = React.addons.classSet({
+            'panel__toggle-tab' : true,
+            'fa'                : true,
+            'fa-lock'           : this.state.hasOAuth,
+            'fa-unlock-alt'     : ! this.state.hasOAuth
         });
 
         return (
             <div className={oAuthPanelClasses}>
-                <div className="panel__toggle-tab" onClick={this.toggleOAuthTab}><span>OAuth2</span></div>
+                <div className={oAuthTabClasses} onClick={this.toggleOAuthPanel}><span>OAuth2</span></div>
                 <div className='panel__header'>
                     <h2>OAuth2</h2>
                 </div>

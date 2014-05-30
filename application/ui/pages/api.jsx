@@ -4,17 +4,21 @@
 
 var React             = require('react');
 var StoreWatchMixin   = require('synapse-common/ui/mixins/store-watch');
-var Resource          = require('../components/resource');
 var OAuthConnectPanel = require('../components/oauth');
+var MainNav           = require('../components/navigation/main-nav');
+var ResourcePage      = require('./resource');
 var store             = require('store');
 var qs                = require('querystring');
 var url               = require('url');
-var MainNav           = require('../components/navigation/main-nav');
 
+var Router    = require('react-router-component');
+var Locations = Router.Locations;
+var Location  = Router.Location;
+var NotFound  = Router.NotFound;
 
 module.exports = React.createClass({
 
-    displayName : 'HomeModule',
+    displayName : 'ApiPage',
 
     mixins : [ StoreWatchMixin ],
 
@@ -88,32 +92,41 @@ module.exports = React.createClass({
         window.location = redirectUrl;
     },
 
+    slugify : function(text)
+    {
+        return text.toLowerCase()
+            .replace(/ /g, '-')
+            .replace(/[^\w-]+/g, '');
+    },
+
     render : function()
     {
         var self = this;
-
-        var resources = this.props.config.resources.map(function(resource, idx) {
-            return (
-                <Resource key={idx}
-                          name={resource.name}
-                          methods={resource.methods}
-                          oauthStore={self.props.stores.oauth} />
-            );
-        });
 
         var stores = {
             oauth : this.props.stores.oauth
         };
 
-        var name = this.props.config.name;
-        var logo = this.props.config.logo;
+        var resources = this.props.config.resources.map(function(resource, idx) {
+            return (
+                <Location key={idx}
+                          handler={ResourcePage}
+                          path={'/'+self.slugify(resource.name)}
+                          config={resource}
+                          stores={stores} />
+            );
+        });
+
+        resources.push(<NotFound handler={React.DOM.div} />);
 
         return (
             <div>
-                <MainNav logo={logo} name={name} slug={this.props.slug} />
+                <MainNav logo={this.props.config.name} name={this.props.config.logo} slug={this.props.slug} />
                 <div className="panel__wrapper">
                     <OAuthConnectPanel stores={stores} onOAuthStart={this.handleOAuthStart} />
-                    {resources}
+                    <Locations contextual>
+                        {resources}
+                    </Locations>
                 </div>
             </div>
         );

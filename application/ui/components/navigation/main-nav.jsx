@@ -1,8 +1,10 @@
 /** @jsx React.DOM */
 'use strict';
 
-var _     = require('underscore');
-var React = require('react');
+var _      = require('underscore');
+var React  = require('react');
+var Router = require('react-router-component');
+var Link   = Router.Link;
 
 module.exports = React.createClass({
 
@@ -18,11 +20,11 @@ module.exports = React.createClass({
     navItemFromResource : function(resource)
     {
         return (
-            <a key={this.slugify(resource.name)} className="main-nav__link">
+            <Link href={'/'+this.slugify(resource.name)} key={this.slugify(resource.name)} className="main-nav__link">
                 <li className="main-nav__item">
                     {resource.name}
                 </li>
-            </a>
+            </Link>
         );
     },
 

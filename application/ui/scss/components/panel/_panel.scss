@@ -15,7 +15,7 @@
         position         : relative;
         width            : calc(100% - 60px);
         margin           : 0 auto;
-        top              : -375px;
+        top              : -314px;
         border-radius    : 3px;
         padding-top      : rem-calc(20);
         padding-bottom   : rem-calc(20);
@@ -28,7 +28,7 @@
         &.panel--shown {
             top          : 0;
             right        : 0;
-            margin-bottom: 405px;
+            margin-bottom: 344px;
             height       : rem-calc(420);
 
             .panel__toggle-tab {
@@ -100,16 +100,13 @@
             position                 : relative;
             height                   : rem-calc(50);
             width                    : 100%;
-            border-radius            : 3px 3px 0 0;
-            margin-bottom            : rem-calc(30);
+            line-height              : rem-calc(50);
 
             h2 {
                 margin               : 0;
                 text-align           : left;
                 color                : $themeDDGray;
-                line-height          : rem-calc(50);
-                font-size            : rem-calc(48);
-                padding-left         : rem-calc(20);
+                padding              : rem-calc(0 0 0 20);
             }
 
         }
@@ -131,20 +128,138 @@
     width                : 100%;
     background-color     : $white;
     height               : auto;
-    border-radius        : 0 0 3px 3px;
     padding              : 20px;
-
 
     .panel__header {
 
-        h2 {
-            padding-left : 0 !important;
+        &::before,
+        &::after {
+            content              : '';
+            position             : absolute;
+            top                  : 0;
+            width                : rem-calc(20);
+            height               : rem-calc(50);
+        }
 
-            span {
-                font-size: 28px;
+        &::before {
+            left                 : rem-calc(-20);
+        }
+
+        &::after {
+            right                : rem-calc(-20);
+        }
+
+
+        &.panel__header--get {
+            background-color     : tint($statusBlue, 50%);
+
+            &::before {
+                background-color : $statusBlue;
+            }
+
+            &::after {
+                background-color     : tint($statusBlue, 50%);
+            }
+
+            h2 span:first-child {
+                background-color : $statusBlue;
             }
 
         }
+
+        &.panel__header--post {
+            background-color     : tint($statusGreen, 50%);
+
+            &::before {
+                background-color : $statusGreen;
+            }
+
+            &::after {
+                background-color     : tint($statusGreen, 50%);
+            }
+
+            h2 span:first-child {
+                background-color : $statusGreen;
+            }
+
+        }
+
+        &.panel__header--patch {
+            background-color     : tint($statusOrange, 50%);
+
+            &::before {
+                background-color : $statusOrange;
+            }
+
+            &::after {
+                background-color     : tint($statusOrange, 50%);
+            }
+
+            h2 span:first-child {
+                background-color : $statusOrange;
+            }
+
+        }
+
+        &.panel__header--put {
+            background-color     : tint($statusYellow, 50%);
+
+            &::before {
+                background-color : $statusYellow;
+            }
+
+            &::after {
+                background-color     : tint($statusYellow, 50%);
+            }
+
+            h2 span:first-child {
+                background-color : $statusYellow;
+            }
+
+        }
+
+        &.panel__header--delete {
+            background-color     : tint($statusRed, 50%);
+
+            &::before {
+                background-color : $statusRed;
+            }
+
+            &::after {
+                background-color     : tint($statusRed, 50%);
+            }
+
+            h2 span:first-child {
+                background-color : $statusRed;
+            }
+
+        }
+
+        h2 {
+            height       : rem-calc(50);
+            padding-left : 0 !important;
+
+            span {
+                font-size            : 28px;
+                height               : rem-calc(50);
+                padding              : rem-calc(9 20 4 0);
+                margin-right         : rem-calc(20);
+
+            }
+
+        }
+
+       .panel__header-x {
+            position                 : absolute;
+            top                      : rem-calc(18);
+            right                    : rem-calc(15);
+            height                   : rem-calc(15);
+            width                    : rem-calc(15);
+            color                    : $themeDDGray;
+            background-color         : $white;
+            border-radius            : 50%;
+        }
+
 
     }
 

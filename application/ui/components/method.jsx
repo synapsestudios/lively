@@ -130,10 +130,19 @@ module.exports = React.createClass({
             );
         }
 
+        var panelHeaderClasses = React.addons.classSet({
+            'panel__header'          : true,
+            'panel__header--get'     : this.props.method === 'GET',
+            'panel__header--post'    : this.props.method === 'POST',
+            'panel__header--patch'   : this.props.method === 'PATCH',
+            'panel__header--put'     : this.props.method === 'PUT',
+            'panel__header--delete'  : this.props.method === 'DELETE'
+        });
+
         return (
             <div className='panel-section'>
-                <div className='panel__header'>
-                    <h2>{this.props.method} - {this.props.name}</h2>
+                <div className={panelHeaderClasses}>
+                    <h2><span>{this.props.method}</span><span>{this.props.name}</span></h2>
                 </div>
                 <p>{this.props.synopsis}</p>
                 <Params params={this.props.params} ref='params' />

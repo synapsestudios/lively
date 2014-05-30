@@ -1,0 +1,40 @@
+.data__wrapper {
+    padding              : rem-calc(20);
+    background-color     : tint($themeLLGray, 50%);
+
+    .data__container {
+
+        .data__header {
+            @extend .ff-source;
+            font-size    : rem-calc(20);
+            padding      : 0;
+            color        : $themeDDGray;
+            margin       : 20px 0 0;
+        }
+
+        .data__code {
+            display                  : block;
+            max-height               : 500px;
+            overflow-y               : scroll;
+            padding                  : rem-calc(5);
+            background-color         : $white;
+            color                    : $themeDDGray;
+            border                   : 1px solid #ddd;
+
+            &.data__code--success {
+                background-color         : tint($statusGreen, 92%);
+                color                    : shade($statusGreen, 10%);
+                border                   : 1px solid tint($statusGreen, 70%);
+            }
+
+            &.data__code--failure {
+                background-color         : tint($statusRed, 92%);
+                color                    : $statusRed;
+                border                   : 1px solid tint($statusRed, 70%);
+            }
+
+        }
+
+    }
+
+}

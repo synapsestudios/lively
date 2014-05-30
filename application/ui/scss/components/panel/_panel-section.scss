@@ -1,0 +1,135 @@
+// log & project panels
+
+.panel-section {
+    position             : relative;
+    width                : 100%;
+    background-color     : $white;
+    height               : auto;
+    padding              : 20px;
+
+    .panel__header {
+
+        &::before,
+        &::after {
+            content              : '';
+            position             : absolute;
+            top                  : 0;
+            width                : rem-calc(20);
+            height               : rem-calc(50);
+        }
+
+        &::before {
+            left                 : rem-calc(-20);
+        }
+
+        &::after {
+            right                : rem-calc(-20);
+        }
+
+
+        &.panel__header--get {
+            background-color     : tint($statusBlue, 50%);
+
+            &::before {
+                background-color : $statusBlue;
+            }
+
+            &::after {
+                background-color     : tint($statusBlue, 50%);
+            }
+
+            h2 span:first-child {
+                background-color : $statusBlue;
+            }
+
+        }
+
+        &.panel__header--post {
+            background-color     : tint($statusGreen, 50%);
+
+            &::before {
+                background-color : $statusGreen;
+            }
+
+            &::after {
+                background-color     : tint($statusGreen, 50%);
+            }
+
+            h2 span:first-child {
+                background-color : $statusGreen;
+            }
+
+        }
+
+        &.panel__header--patch {
+            background-color     : tint($statusOrange, 50%);
+
+            &::before {
+                background-color : $statusOrange;
+            }
+
+            &::after {
+                background-color     : tint($statusOrange, 50%);
+            }
+
+            h2 span:first-child {
+                background-color : $statusOrange;
+            }
+
+        }
+
+        &.panel__header--put {
+            background-color     : tint($statusYellow, 50%);
+
+            &::before {
+                background-color : $statusYellow;
+            }
+
+            &::after {
+                background-color     : tint($statusYellow, 50%);
+            }
+
+            h2 span:first-child {
+                background-color : $statusYellow;
+            }
+
+        }
+
+        &.panel__header--delete {
+            background-color     : tint($statusRed, 50%);
+
+            &::before {
+                background-color : $statusRed;
+            }
+
+            &::after {
+                background-color     : tint($statusRed, 50%);
+            }
+
+            h2 span:first-child {
+                background-color : $statusRed;
+            }
+
+        }
+
+        h2 {
+            height       : rem-calc(50);
+            padding-left : 0 !important;
+
+            span {
+                font-size            : 28px;
+                height               : rem-calc(50);
+                padding              : rem-calc(9 20 4 0);
+                margin-right         : rem-calc(20);
+
+            }
+
+        }
+
+    }
+
+    p {
+        margin           : rem-calc(20 0);
+    }
+
+}

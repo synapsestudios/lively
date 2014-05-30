@@ -1,5 +1,6 @@
 module.exports = {
     "name" : "GitHub v3 API",
+    "logo" : "/images/logos/github-mark.png",
     "api"  : {
         "hostname" : "api.github.com",
         "port"     : 443,

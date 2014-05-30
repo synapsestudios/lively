@@ -10,11 +10,9 @@ module.exports = React.createClass({
     render : function()
     {
         var links = this.props.list.map(function(api) {
-            var image = api.logo ? (<img src={api.logo} alt={api.name} />) : '';
 
             return (
-                <a href={'/' + api.slug}>
-                    {image}
+                <a className="panel__link fa fa-github" href={'/' + api.slug}>
                     {api.name}
                 </a>
             );

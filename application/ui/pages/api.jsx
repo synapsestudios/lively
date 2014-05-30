@@ -2,6 +2,7 @@
 /* global window */
 'use strict';
 
+var _                 = require('underscore');
 var React             = require('react');
 var StoreWatchMixin   = require('synapse-common/ui/mixins/store-watch');
 var OAuthConnectPanel = require('../components/oauth');
@@ -99,33 +100,70 @@ module.exports = React.createClass({
             .replace(/[^\w-]+/g, '');
     },
 
+    mapFlatResourceLocations : function(resource, idx)
+    {
+        return (
+            <Location key={idx}
+                      handler={ResourcePage}
+                      path={'/'+this.slugify(resource.name)}
+                      config={resource}
+                      stores={this.props.stores} />
+        );
+    },
+
+    mapNestedResourceLocations : function(data)
+    {
+        return _.map(data, this.mapFlatResourceLocations, this);
+    },
+
+    mapFlatNavLocations : function(resource, idx)
+    {
+        return <Location
+            handler={MainNav}
+            config={this.props.config}
+            path={'/'+this.slugify(resource.name)}
+            active={this.slugify(resource.name)}
+            logo={this.props.config.logo}
+            name={this.props.config.name}
+            slug={this.props.slug} />;
+    },
+
+    mapNestedNavLocations : function(data)
+    {
+        return _.map(data, this.mapFlatNavLocations, this);
+    },
+
     render : function()
     {
-        var self = this;
+        var navLocations, resourceLocations;
 
-        var stores = {
-            oauth : this.props.stores.oauth
-        };
+        if (_.isArray(this.props.config.resources)) {
+            resourceLocations = _.map(this.props.config.resources, this.mapFlatResourceLocations, this);
+            navLocations      = _.map(this.props.config.resources, this.mapFlatNavLocations, this);
+        } else {
+            resourceLocations = _.flatten(_.map(this.props.config.resources, this.mapNestedResourceLocations, this));
+            navLocations      = _.flatten(_.map(this.props.config.resources, this.mapNestedNavLocations, this));
+        }
 
-        var resources = this.props.config.resources.map(function(resource, idx) {
-            return (
-                <Location key={idx}
-                          handler={ResourcePage}
-                          path={'/'+self.slugify(resource.name)}
-                          config={resource}
-                          stores={stores} />
-            );
-        });
 
-        resources.push(<NotFound handler={React.DOM.div} />);
+        resourceLocations.push(<NotFound handler={React.DOM.div} />);
+        navLocations.push(<NotFound
+            handler={MainNav}
+            config={this.props.config}
+            active={false}
+            logo={this.props.config.logo}
+            name={this.props.config.name}
+            slug={this.props.slug} />);
 
         return (
             <div>
-                <MainNav logo={this.props.config.name} name={this.props.config.logo} slug={this.props.slug} />
+                <Locations contextual>
+                    {navLocations}
+                </Locations>
                 <div className="panel__wrapper">
-                    <OAuthConnectPanel stores={stores} onOAuthStart={this.handleOAuthStart} />
+                    <OAuthConnectPanel stores={this.props.stores} onOAuthStart={this.handleOAuthStart} />
                     <Locations contextual>
-                        {resources}
+                        {resourceLocations}
                     </Locations>
                 </div>
             </div>

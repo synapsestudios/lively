@@ -1,9 +1,10 @@
 .panel__wrapper {
     position             : relative;
-    left                 : 350px;
+    left                 : rem-calc(350);
     margin               : 0 30px 30px 0;
-    padding-top          : 30px;
+    padding-top          : rem-calc(30);
     width                : calc(100% - 350px);
+    overflow             : hidden;
 
     &.panel__wrapper--full-width {
         width            : 100%;
@@ -11,49 +12,101 @@
     }
 
     .panel {
+        position         : relative;
         width            : calc(100% - 60px);
         margin           : 0 auto;
+        top              : -314px;
         border-radius    : 3px;
-        padding-top      : 20px;
-        padding-bottom   : 20px;
-        margin-bottom    : 30px;
+        padding-top      : rem-calc(20);
+        padding-bottom   : rem-calc(20);
+        margin-bottom    : rem-calc(30);
         border           : 1px solid tint($themeMLGray, 50%);;
         background-color : $white;
+        @include transition(all 300ms ease-in);
         @include clearfix;
+
+        &.panel--shown {
+            top          : 0;
+            right        : 0;
+            margin-bottom: 344px;
+            height       : rem-calc(420);
+
+            .panel__toggle-tab {
+                display  : none;
+            }
+        }
+
+        &.panel--hidden {
+            top          : 0;
+            right        : calc(-100% + 30px);
+        @include transition(all 300ms ease-in);
+
+            .panel__toggle-tab {
+                font-family          : $font-awesome;
+                content              : '\f13e';
+                color                : $themeDDGray;
+                position             : absolute;
+                top                  : rem-calc(60);
+                left                 : rem-calc(-95);
+                width                : rem-calc(100);
+                height               : rem-calc(60);
+                background-color     : $white;
+                border               : 1px solid #ddd;
+                border-radius        : 6px 0 0 6px;
+                cursor               : pointer;
+                z-index              : 2;
+                box-shadow           : 0 1px 2px rgba($black, .1);
+                @include transition(all 300ms ease-in);
+
+                span {
+                    position         : absolute;
+                    bottom           : rem-calc(5);
+                    left             : 0;
+                    width            : 100px;
+                    text-align       : center;
+                    color            : $themeLGray;
+                    @include transition(all 300ms ease-in);
+
+                }
+
+                &::before {
+                    color            : $themeLGray;
+                    position         : absolute;
+                    font-size        : rem-calc(28);
+                    top              : rem-calc(11);
+                    left             : rem-calc(37);
+                    @include transition(all 300ms ease-in);
+                }
+
+                &:hover {
+                    left             : rem-calc(-100);
+                    box-shadow       : 0 1px 2px rgba($black, .1), inset 1px 1px 2px rgba($themeLLGray, .8), inset 0 -1px 2px rgba($themeLLGray, .8);
+
+                    span {
+                        color            : $themeDDGray;
+                    }
+
+                    &::before {
+                        color: $themeMLGray;
+                    }
+
+                }
+
+            }
+        }
 
         .panel__header {
             @extend .ff-source-bold;
             position                 : relative;
             height                   : rem-calc(50);
             width                    : 100%;
-            border-radius            : 3px 3px 0 0;
-            margin-bottom            : rem-calc(30);
-
-            &.panel__header--center {
-                h2 {
-                    text-align       : center;
-                }
-            }
+            line-height              : rem-calc(50);
 
             h2 {
                 margin               : 0;
                 text-align           : left;
                 color                : $themeDDGray;
-                line-height          : rem-calc(50);
-                font-size            : rem-calc(48);
-                padding-left         : rem-calc(20);
-            }
-
-            .panel__header--x {
-                position             : absolute;
-                top                  : 18px;
-                right                : 15px;
-                height               : 15px;
-                width                : 15px;
-                color                : $themeDDGray;
-                background-color     : $white;
-                border-radius        : 50%;
-                text-align           : center;
+                padding              : rem-calc(0 0 0 20);
             }
 
         }
@@ -61,7 +114,7 @@
     }
 
     >a {
-        padding-left     : 20px;
+        padding-left     : rem-calc(20);
         color            : $themeDDGray;
         text-decoration  : underline;
     }
@@ -75,20 +128,138 @@
     width                : 100%;
     background-color     : $white;
     height               : auto;
-    border-radius        : 0 0 3px 3px;
     padding              : 20px;
-
 
     .panel__header {
 
-        h2 {
-            padding-left : 0 !important;
+        &::before,
+        &::after {
+            content              : '';
+            position             : absolute;
+            top                  : 0;
+            width                : rem-calc(20);
+            height               : rem-calc(50);
+        }
 
-            span {
-                font-size: 28px;
+        &::before {
+            left                 : rem-calc(-20);
+        }
+
+        &::after {
+            right                : rem-calc(-20);
+        }
+
+
+        &.panel__header--get {
+            background-color     : tint($statusBlue, 50%);
+
+            &::before {
+                background-color : $statusBlue;
+            }
+
+            &::after {
+                background-color     : tint($statusBlue, 50%);
+            }
+
+            h2 span:first-child {
+                background-color : $statusBlue;
             }
 
         }
+
+        &.panel__header--post {
+            background-color     : tint($statusGreen, 50%);
+
+            &::before {
+                background-color : $statusGreen;
+            }
+
+            &::after {
+                background-color     : tint($statusGreen, 50%);
+            }
+
+            h2 span:first-child {
+                background-color : $statusGreen;
+            }
+
+        }
+
+        &.panel__header--patch {
+            background-color     : tint($statusOrange, 50%);
+
+            &::before {
+                background-color : $statusOrange;
+            }
+
+            &::after {
+                background-color     : tint($statusOrange, 50%);
+            }
+
+            h2 span:first-child {
+                background-color : $statusOrange;
+            }
+
+        }
+
+        &.panel__header--put {
+            background-color     : tint($statusYellow, 50%);
+
+            &::before {
+                background-color : $statusYellow;
+            }
+
+            &::after {
+                background-color     : tint($statusYellow, 50%);
+            }
+
+            h2 span:first-child {
+                background-color : $statusYellow;
+            }
+
+        }
+
+        &.panel__header--delete {
+            background-color     : tint($statusRed, 50%);
+
+            &::before {
+                background-color : $statusRed;
+            }
+
+            &::after {
+                background-color     : tint($statusRed, 50%);
+            }
+
+            h2 span:first-child {
+                background-color : $statusRed;
+            }
+
+        }
+
+        h2 {
+            height       : rem-calc(50);
+            padding-left : 0 !important;
+
+            span {
+                font-size            : 28px;
+                height               : rem-calc(50);
+                padding              : rem-calc(9 20 4 0);
+                margin-right         : rem-calc(20);
+
+            }
+
+        }
+
+       .panel__header-x {
+            position                 : absolute;
+            top                      : rem-calc(18);
+            right                    : rem-calc(15);
+            height                   : rem-calc(15);
+            width                    : rem-calc(15);
+            color                    : $themeDDGray;
+            background-color         : $white;
+            border-radius            : 50%;
+        }
+
 
     }
 

@@ -68,6 +68,6 @@ module.exports = {
                 paramContent,
                 paramEncoding
             ]
-        },
+        }
     ]
 };

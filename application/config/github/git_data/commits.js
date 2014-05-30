@@ -76,6 +76,6 @@ module.exports = {
                 paramTree,
                 paramParents // @TODO optional committer and author parameters are excluded for now
             ]
-        },
+        }
     ]
 };

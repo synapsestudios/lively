@@ -30,7 +30,7 @@ var paramNameBody = {
     type        : 'string',
     location    : 'body',
     description : 'The name of the label.'
-}
+};
 
 var paramColor = {
     name        : 'color',

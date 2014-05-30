@@ -64,7 +64,7 @@ var paramId = {
     type        : 'integer',
     location    : 'uri',
     description : 'The ID of the comment'
-}
+};
 
 var paramBody = {
     name        : 'body',
@@ -72,7 +72,7 @@ var paramBody = {
     type        : 'string',
     location    : 'body',
     description : 'The contents of the comment'
-}
+};
 
 module.exports = {
     name    : 'Comments',

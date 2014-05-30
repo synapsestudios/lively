@@ -8,11 +8,16 @@ module.exports = React.createClass({
     displayName : 'MainNav',
 
     render : function() {
+        var logo = this.props.logo ? this.props.logo : '/images/logos/logomark.svg';
+
         return (
             <div className="main-nav__wrapper">
+                <div className="header__back-link">
+                    <a className="back-link" href="/">&lt; Back to API List</a>
+                </div>
                 <div className="header__branding">
-                    <a href="/">
-                        <img className="branding" src="/images/logos/logomark.svg" alt="Lively" />
+                    <a href={'/' + this.props.slug}>
+                        <img className="branding" src={logo} alt={this.props.name} />
                     </a>
                 </div>
                 <ul className="main-nav">

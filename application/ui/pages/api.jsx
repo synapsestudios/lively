@@ -105,9 +105,12 @@ module.exports = React.createClass({
             oauth : this.props.stores.oauth
         };
 
+        var name = this.props.config.name;
+        var logo = this.props.config.logo;
+
         return (
             <div>
-                <MainNav />
+                <MainNav logo={logo} name={name} slug={this.props.slug} />
                 <div className="panel__wrapper">
                     <OAuthConnectPanel stores={stores} onOAuthStart={this.handleOAuthStart} />
                     {resources}

@@ -26,9 +26,9 @@ module.exports = React.createClass({
                     <h3 className="data__header">Response Status</h3>
                     <code className="data__code">{this.props.response.status}</code>
                     <h3 className="data__header">Response Headers</h3>
-                    <code className="data__code">{util.inspect(this.props.response.headers)}</code>
+                    <code className="data__code data__code--failure">{util.inspect(this.props.response.headers)}</code>
                     <h3 className="data__header">Response Body</h3>
-                    <code className="data__code">{util.inspect(this.props.response.data)}</code>
+                    <code className="data__code data__code--success">{util.inspect(this.props.response.data)}</code>
                 </div>
             );
         }

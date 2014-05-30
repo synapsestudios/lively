@@ -23,8 +23,9 @@
 
             &.data__code--success {
                 background-color         : tint($statusGreen, 92%);
-                color                    : shade($statusGreen, 10%);
+                color                    : shade($statusGreen, 50%);
                 border                   : 1px solid tint($statusGreen, 70%);
+                line-height              : rem-calc(18);
             }
 
             &.data__code--failure {

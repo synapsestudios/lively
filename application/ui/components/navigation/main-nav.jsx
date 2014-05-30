@@ -59,17 +59,12 @@ module.exports = React.createClass({
     },
 
     render : function() {
-        var logo = this.props.logo ? this.props.logo : '/images/logos/logomark.svg';
 
         return (
             <div className="main-nav__wrapper">
-                <div className="header__back-link">
-                    <a className="back-link" href="/">&lt; Back to API List</a>
-                </div>
+                <a className="header__back-link fa fa-arrow-left" href="/">Back to API List</a>
                 <div className="header__branding">
-                    <a href={'/' + this.props.slug}>
-                        <img className="branding" src={logo} alt={this.props.name} />
-                    </a>
+                    <a className="branding fa fa-github" href={'/' + this.props.slug}></a>
                 </div>
                 <ul className="main-nav">
                     {this.buildNavList()}

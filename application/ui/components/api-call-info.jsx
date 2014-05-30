@@ -8,13 +8,13 @@ module.exports = React.createClass({
     render : function()
     {
         var requestData = (
-            <div>
-                <h3>Request URI</h3>
-                <code>{this.props.request.uri}</code>
-                <h3>Request Headers</h3>
-                <code>{util.inspect(this.props.request.headers)}</code>
-                <h3>Request Body</h3>
-                <code>{util.inspect(this.props.request.body)}</code>
+            <div className="data__container">
+                <h3 className="data__header">Request URI</h3>
+                <code className="data__code">{this.props.request.uri}</code>
+                <h3 className="data__header">Request Headers</h3>
+                <code className="data__code">{util.inspect(this.props.request.headers)}</code>
+                <h3 className="data__header">Request Body</h3>
+                <code className="data__code">{util.inspect(this.props.request.body)}</code>
             </div>
         );
 
@@ -22,18 +22,18 @@ module.exports = React.createClass({
         var responseData = '';
         if (this.props.status === 'loaded' && this.props.response) {
             responseData = (
-                <div>
-                    <h3>Response Status</h3>
-                    <code>{this.props.response.status}</code>
-                    <h3>Response Headers</h3>
-                    <code>{util.inspect(this.props.response.headers)}</code>
-                    <h3>Response Body</h3>
-                    <code>{util.inspect(this.props.response.data)}</code>
+                <div className="data__container">
+                    <h3 className="data__header">Response Status</h3>
+                    <code className="data__code">{this.props.response.status}</code>
+                    <h3 className="data__header">Response Headers</h3>
+                    <code className="data__code">{util.inspect(this.props.response.headers)}</code>
+                    <h3 className="data__header">Response Body</h3>
+                    <code className="data__code">{util.inspect(this.props.response.data)}</code>
                 </div>
             );
         }
         return (
-            <div>
+            <div className="data__wrapper">
                 {requestData}
                 {responseData}
             </div>

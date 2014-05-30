@@ -41,7 +41,11 @@ module.exports = React.createClass({
         });
 
         var list = _.map(this.props.configs, function(config, slug) {
-            return { name : config.name, slug : slug};
+            return {
+              name : config.name,
+              slug : slug,
+              logo : config.logo
+            };
         });
 
         apiLocations = _.flatten(apiLocations);

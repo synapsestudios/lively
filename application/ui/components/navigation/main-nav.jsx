@@ -38,8 +38,8 @@ module.exports = React.createClass({
         return _.flatten(_.map(this.props.config.resources, function(subResources, categoryName) {
             var items = _.map(subResources, this.navItemFromResource, this);
             items.unshift(
-                <a className='main-nav__link'>
-                    <li key={'c-'+this.slugify(categoryName)} className='main-nav__item main-nav__item--bold'>
+                <a key={'c-'+this.slugify(categoryName)} className='main-nav__link'>
+                    <li className='main-nav__item main-nav__item--bold'>
                         {categoryName}
                     </li>
                 </a>

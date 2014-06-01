@@ -28,8 +28,8 @@ module.exports = React.createClass({
     getStateFromStores : function()
     {
         return {
-                hasOAuth : (this.props.stores.oauth.accessToken !== null),
-                oauthData : (this.props.stores.oauth),
+            hasOAuth         : (this.props.stores.oauth.accessToken !== null),
+            oauthData        : (this.props.stores.oauth),
             oAuthPanelHidden : true
         };
     },

@@ -1,7 +1,7 @@
 // *******************************************
 // *******************************************
 
-	// Button Styles
+    // Button Styles
 
 // *******************************************
 // *******************************************
@@ -9,26 +9,26 @@
 // button vars
 
 .button {
-	@extend .ff-source-bold;
-	min-width            : rem-calc(200);
+    @extend .ff-source-bold;
+    min-width            : rem-calc(200);
     padding              : rem-calc(7 10);
-	background-color     : $themeLLGray;
-	border               : 1px solid tint($themeMLGray, 50%);
-	border-radius        : 2px;
-	box-shadow           : inset 0 0 1px rgba($white, .5);
+    background-color     : $themeLLGray;
+    border               : 1px solid tint($themeMLGray, 50%);
+    border-radius        : 2px;
+    box-shadow           : inset 0 0 1px rgba($white, .5);
     margin-bottom        : rem-calc(20);
     margin-top           : rem-calc(20);
     color                : $themeMLGray;
-	@include background-image(linear-gradient(rgba($white, .1), rgba($white, 0)));
+    @include background-image(linear-gradient(rgba($white, .1), rgba($white, 0)));
     @include transition(all 300ms ease-in-out);
 
-	&:hover {
-		background-color : darken($themeLGray, 5%);
-	}
+    &:hover {
+        background-color : darken($themeLGray, 5%);
+    }
 
-	&:focus {
-		background-color : $themeMLGray;
-	}
+    &:focus {
+        background-color : $themeMLGray;
+    }
 
 }
 
@@ -51,30 +51,30 @@
 }
 
 .button--secondary {
-	background-color     : $secondary;
-	border-color         : $secondary;
+    background-color     : $secondary;
+    border-color         : $secondary;
 
-	&:hover {
-		background-color : darken($secondary, 5%);
-	}
+    &:hover {
+        background-color : darken($secondary, 5%);
+    }
 
-	&:focus {
-		background-color : $secondary;
-	}
+    &:focus {
+        background-color : $secondary;
+    }
 
 }
 
 .button--tertiary {
-	background-color     : $tertiary;
-	border-color         : $tertiary;
+    background-color     : $tertiary;
+    border-color         : $tertiary;
 
-	&:hover {
-		background-color : darken($tertiary, 5%);
-	}
+    &:hover {
+        background-color : darken($tertiary, 5%);
+    }
 
-	&:focus {
-		background-color : $tertiary;
-	}
+    &:focus {
+        background-color : $tertiary;
+    }
 
 }
 

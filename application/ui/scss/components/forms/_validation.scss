@@ -2,13 +2,13 @@
 // validate single field inputs
 
 // <div class="form__input validate validate--failed validate--show">
-// 	<input class="input--large input--rounded" type="text" placeholder="Name" />
-// 	<span class="validate__field-error">&#215;</span>
-// 	<span class="validate__field-message">Please enter your name</span>
+//  <input class="input--large input--rounded" type="text" placeholder="Name" />
+//  <span class="validate__field-error">&#215;</span>
+//  <span class="validate__field-message">Please enter your name</span>
 // </div>
 
 .validate {
-	position  :  relative;
+    position  :  relative;
 }
 
 // error over input on right side
@@ -27,7 +27,7 @@
 // adjust dimensions for large inputs
 
 .input--large ~ .validate__field-error {
-	height       :  rem-calc(21);
+    height       :  rem-calc(21);
     width        :  rem-calc(21);
 }
 
@@ -43,17 +43,17 @@
 // <span class="validate__field-message">Please select a repo</span>
 
 .validate__field-message {
-	@extend .ff-source;
+    @extend .ff-source;
     position    : absolute;
     bottom      : -26px;
     left        : 0;
     width       : 100%;
-	margin      : rem-calc(-2 0 0 0);
-	padding     : rem-calc(6);
-	display     : none;
-	font-size   : rem-calc(13);
-	color       : $statusRed;
-	box-shadow  : inset 0 0 1px rgba($white, .5);
+    margin      : rem-calc(-2 0 0 0);
+    padding     : rem-calc(6);
+    display     : none;
+    font-size   : rem-calc(13);
+    color       : $statusRed;
+    box-shadow  : inset 0 0 1px rgba($white, .5);
 }
 
 // color coding error states
@@ -64,15 +64,15 @@
 
 .validate--passed {
 
-	.validate__field-error {
-		background   :  $statusGreen;
-		border       :  1px solid $statusGreen;
-	}
+    .validate__field-error {
+        background   :  $statusGreen;
+        border       :  1px solid $statusGreen;
+    }
 
-	.validate__field-message {
-		background  :  $statusGreen;
-		border      :  1px solid $statusGreen;
-	}
+    .validate__field-message {
+        background  :  $statusGreen;
+        border      :  1px solid $statusGreen;
+    }
 
 }
 
@@ -81,15 +81,15 @@
 .validate--failed {
     margin-bottom    : 0;
 
-	.validate__field-error {
-		background   :  $statusRed;
-		border       :  1px solid $statusRed;
-	}
+    .validate__field-error {
+        background   :  $statusRed;
+        border       :  1px solid $statusRed;
+    }
 
-	.validate__field-message {
-		background  :  $statusRed;
-		border      :  1px solid $statusRed;
-	}
+    .validate__field-message {
+        background  :  $statusRed;
+        border      :  1px solid $statusRed;
+    }
 
 }
 
@@ -97,15 +97,15 @@
 
 .validate--warnings {
 
-	.validate__field-error {
-		background   :  $statusOrange;
-		border       :  1px solid $statusOrange;
-	}
+    .validate__field-error {
+        background   :  $statusOrange;
+        border       :  1px solid $statusOrange;
+    }
 
-	.validate__field-message {
-		background  :  $statusOrange;
-		border      :  1px solid $statusOrange;
-	}
+    .validate__field-message {
+        background  :  $statusOrange;
+        border      :  1px solid $statusOrange;
+    }
 
 }
 
@@ -113,9 +113,9 @@
 
 .validate--show {
 
-	.validate__field-error,
-	.validate__field-message {
-		display  :  block;
-	}
+    .validate__field-error,
+    .validate__field-message {
+        display  :  block;
+    }
 
 }

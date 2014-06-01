@@ -66,15 +66,15 @@ $inconsolata : 'inconsolata';
 }
 
 .ff-source-light {
-	font-family: 'source_sans_prolight', "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+    font-family: 'source_sans_prolight', "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 }
 
 .ff-source {
-	font-family: 'source_sans_proregular', "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+    font-family: 'source_sans_proregular', "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 }
 
 .ff-source-bold {
-	font-family: 'source_sans_prosemibold', "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+    font-family: 'source_sans_prosemibold', "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 }
 
 .inconsolata {
@@ -82,11 +82,11 @@ $inconsolata : 'inconsolata';
 }
 
 .ital-text {
-	font-style:italic;
-	padding-right: 3px;
+    font-style:italic;
+    padding-right: 3px;
 }
 
 .ital-text__bold {
-	@extend .ital-text;
-	font-weight: bold;
+    @extend .ital-text;
+    font-weight: bold;
 }

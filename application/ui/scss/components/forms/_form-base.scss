@@ -3,7 +3,7 @@
 // see forms/_vadiations.scss
 
 // <div class="form__input">
-// 	<input type="text" placeholder="Name" />
+//  <input type="text" placeholder="Name" />
 // </div>
 
 .form__input-row {
@@ -12,8 +12,8 @@
 }
 
 .form__input {
-	margin               : 0 0 rem-calc(32);
-	position             : relative;
+    margin               : 0 0 rem-calc(32);
+    position             : relative;
     width                : 100%;
 
     select {
@@ -28,15 +28,15 @@
         color            : rgba($themeDGray, .5) !important;
     }
 
-	input,
+    input,
     .input,
-	textarea {
-		@extend .ff-source;
+    textarea {
+        @extend .ff-source;
         font-size        : rem-calc(18);
-		color            : $themeDDGray;
+        color            : $themeDDGray;
         margin           : 0;
         line-height      : rem-calc(18);
-	    border-radius    : 2px;
+        border-radius    : 2px;
         padding          : rem-calc(0 10);
         overflow         : hidden;
     }

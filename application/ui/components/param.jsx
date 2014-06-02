@@ -1,9 +1,11 @@
 /** @jsx React.DOM */
+/* global console */
 'use strict';
 
 var React  = require('react');
 var Select = require('./input/select');
 var Text   = require('./input/text');
+var marked = require('marked');
 
 module.exports = React.createClass({
 
@@ -61,12 +63,15 @@ module.exports = React.createClass({
 
     render : function()
     {
+        marked.setOptions({ sanitize: true });
+        var description = (this.props.required ? '**Required**. ' : '') + this.props.description;
+
         return (
             <tr>
                 <td><code>{this.props.name}</code></td>
                 <td>{this.getInput()}</td>
                 <td><code>{this.props.type}</code></td>
-                <td>{this.props.description}</td>
+                <td dangerouslySetInnerHTML={{__html: marked(description)}}></td>
             </tr>
         );
     }

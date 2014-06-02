@@ -44,6 +44,24 @@
 
         }
 
+        &.panel__header--head {
+            background-color     : tint($statusBlurple, 50%);
+
+            &::before {
+                background-color : $statusBlurple;
+            }
+
+            &::after {
+                background-color     : tint($statusBlurple, 50%);
+            }
+
+            h2 span:first-child {
+                background-color : $statusBlurple;
+            }
+
+        }
+
+
         &.panel__header--post {
             background-color     : tint($statusGreen, 50%);
 

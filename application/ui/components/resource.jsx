@@ -28,8 +28,14 @@ module.exports = React.createClass({
 
     render : function()
     {
+
+        var panelClasses = React.addons.classSet({
+            'panel'         : true,
+            'panel--moveup' : ! this.props.oAuthPanelHidden
+        });
+
         return (
-            <div className='panel'>
+            <div className={panelClasses}>
                 <div className='panel__header'>
                     <h2>{this.props.name}</h2>
                 </div>

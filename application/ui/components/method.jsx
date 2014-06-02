@@ -133,6 +133,7 @@ module.exports = React.createClass({
         var panelHeaderClasses = React.addons.classSet({
             'panel__header'          : true,
             'panel__header--get'     : this.props.method === 'GET',
+            'panel__header--head'    : this.props.method === 'HEAD',
             'panel__header--post'    : this.props.method === 'POST',
             'panel__header--patch'   : this.props.method === 'PATCH',
             'panel__header--put'     : this.props.method === 'PUT',

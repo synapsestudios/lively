@@ -60,6 +60,11 @@ module.exports = React.createClass({
                 tokenType   : queryString.token_type,
                 rawData     : queryString
             });
+        } else {
+            this.props.stores.oauth.setOptions({
+                api          : config.api,
+                oauth2       : config.oauth2
+            });
         }
     },
 

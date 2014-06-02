@@ -45,18 +45,18 @@
         }
 
         &.panel__header--head {
-            background-color     : tint($statusBlurple, 50%);
+            background-color     : tint($statusPurple, 80%);
 
             &::before {
-                background-color : $statusBlurple;
+                background-color : tint($statusPurple, 50%);
             }
 
             &::after {
-                background-color     : tint($statusBlurple, 50%);
+                background-color     : tint($statusPurple, 80%);
             }
 
             h2 span:first-child {
-                background-color : $statusBlurple;
+                background-color : tint($statusPurple, 50%);
             }
 
         }

@@ -3,6 +3,7 @@
 
 var gulp       = require('gulp'),
     gutil      = require('gulp-util'),
+    path       = require('path'),
     sass       = require('gulp-sass'),
     minifyCss  = require('gulp-minify-css'),
     connect    = require('gulp-connect');
@@ -14,13 +15,17 @@ gulp.task('sass', function() {
 
     if (isProduction) {
         sourceComments = 'none';
-    } else if (process.platform === 'win32') {
-        sourceComments = 'normal';
     } else {
         sourceComments = 'map';
     }
 
     gulp.src('./application/ui/scss/app.scss')
+        .on('data', function(file) {
+            if (process.platform === 'win32') {
+                file.path = path.relative('.', file.path);
+                file.path = file.path.replace(/\\/g, '/');
+            }
+        })
         .pipe(sass({
             errLogToConsole : true,
             sourceComments : sourceComments,

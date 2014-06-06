@@ -10,6 +10,7 @@ function Application(configs) {
     this.configs    = configs;
 
     this.start = function() {
+        window.React = React;
         React.initializeTouchEvents(true);
 
         this.react = React.renderComponent(Main({

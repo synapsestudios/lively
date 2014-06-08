@@ -45,6 +45,11 @@ module.exports = {
             require('./github/organizations'),
             require('./github/organizations/members'),
             require('./github/organizations/teams')
+        ],
+
+        "Pull Requests": [
+            require('./github/pull_requests'),
+            require('./github/pull_requests/review_comments')
         ]
     }
 };

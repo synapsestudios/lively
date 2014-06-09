@@ -1,7 +1,8 @@
 /** @jsx React.DOM */
 'use strict';
 
-var React           = require('react/addons');
+var React           = require('react');
+var cx              = require('react/lib/cx');
 var TextInput       = require('./input/text');
 var StoreWatchMixin = require('synapse-common/ui/mixins/store-watch');
 var util = require('util');
@@ -48,13 +49,13 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var oAuthPanelClasses = React.addons.classSet({
+        var oAuthPanelClasses = cx.classSet({
             'panel'         : true,
             'panel--hidden' : this.state.oAuthPanelHidden,
             'panel--shown'  : ! this.state.oAuthPanelHidden
         });
 
-        var oAuthTabClasses = React.addons.classSet({
+        var oAuthTabClasses = cx.classSet({
             'panel__toggle-tab' : true,
             'fa'                : true,
             'fa-lock'           : this.state.hasOAuth,

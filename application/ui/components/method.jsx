@@ -3,6 +3,7 @@
 
 var _           = require('underscore');
 var React       = require('react');
+var cx          = require('react/lib/cx');
 var Params      = require('./params-list');
 var ApiCallInfo = require('./api-call-info');
 var Checkbox    = require('./input/checkbox');
@@ -130,7 +131,7 @@ module.exports = React.createClass({
             );
         }
 
-        var panelHeaderClasses = React.addons.classSet({
+        var panelHeaderClasses = cx.classSet({
             'panel__header'          : true,
             'panel__header--get'     : this.props.method === 'GET',
             'panel__header--head'    : this.props.method === 'HEAD',

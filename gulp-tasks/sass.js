@@ -11,14 +11,6 @@ var gulp       = require('gulp'),
 gulp.task('sass', function() {
     var isProduction = gutil.env.build === 'production';
 
-    var sourceComments;
-
-    if (isProduction) {
-        sourceComments = 'none';
-    } else {
-        sourceComments = 'map';
-    }
-
     gulp.src('./application/ui/scss/app.scss')
         .on('data', function(file) {
             if (process.platform === 'win32') {
@@ -28,7 +20,8 @@ gulp.task('sass', function() {
         })
         .pipe(sass({
             errLogToConsole : true,
-            sourceComments : sourceComments,
+            sourceComments : isProduction ? 'none' : 'map',
+            sourceMap      : 'sass',
             outputStyle    : 'compressed',
             includePaths   : [
                 './bower_components/foundation/scss'

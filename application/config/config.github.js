@@ -18,10 +18,10 @@ module.exports = {
     "resources" : {
         "Git Data" : [
             require('./github/git_data/blobs'),
-            require('./github/git_data/commits')
-            // require('./github/git_data/references'),
-            // require('./github/git_data/tags'),
-            // require('./github/git_data/trees'),
+            require('./github/git_data/commits'),
+            require('./github/git_data/references'),
+            require('./github/git_data/tags'),
+            require('./github/git_data/trees')
         ],
 
         "Issues" : [

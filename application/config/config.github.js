@@ -16,6 +16,11 @@ module.exports = {
         "tokenParam"   : "token"
     },
     "resources" : {
+        "Gists" : [
+            require('./github/gists'),
+            require('./github/gists/comments')
+        ],
+
         "Git Data" : [
             require('./github/git_data/blobs'),
             require('./github/git_data/commits'),

@@ -69,7 +69,7 @@ var paramSince = {
     required     : false,
     type         : 'string',
     location     : 'query',
-    description  : 'OOnly comments updated at or after this time are returned. This is a timestamp in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.'
+    description  : 'Only comments updated at or after this time are returned. This is a timestamp in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.'
 };
 
 module.exports = {

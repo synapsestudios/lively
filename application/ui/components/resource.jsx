@@ -30,7 +30,7 @@ module.exports = React.createClass({
     render : function()
     {
 
-        var panelClasses = cx.classSet({
+        var panelClasses = cx({
             'panel'         : true,
             'panel--moveup' : ! this.props.oAuthPanelHidden
         });

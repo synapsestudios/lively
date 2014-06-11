@@ -131,7 +131,7 @@ module.exports = React.createClass({
             );
         }
 
-        var panelHeaderClasses = cx.classSet({
+        var panelHeaderClasses = cx({
             'panel__header'          : true,
             'panel__header--get'     : this.props.method === 'GET',
             'panel__header--head'    : this.props.method === 'HEAD',

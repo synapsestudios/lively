@@ -33,7 +33,7 @@ var paramId = {
 };
 
 module.exports = {
-    name     : 'Comments',
+    name     : 'GistsComments',
     methods : [
         {
             name     : 'List comments on a gist',

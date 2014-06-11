@@ -49,13 +49,13 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var oAuthPanelClasses = cx.classSet({
+        var oAuthPanelClasses = cx({
             'panel'         : true,
             'panel--hidden' : this.state.oAuthPanelHidden,
             'panel--shown'  : ! this.state.oAuthPanelHidden
         });
 
-        var oAuthTabClasses = cx.classSet({
+        var oAuthTabClasses = cx({
             'panel__toggle-tab' : true,
             'fa'                : true,
             'fa-lock'           : this.state.hasOAuth,

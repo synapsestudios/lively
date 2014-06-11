@@ -75,7 +75,7 @@ var paramBody = {
 };
 
 module.exports = {
-    name    : 'Comments',
+    name    : 'IssuesComments',
     methods : [
         {
             name     : 'List comments on an issue',

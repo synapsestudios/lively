@@ -28,11 +28,18 @@ module.exports = React.createClass({
 
     getValue : function()
     {
-        if (this.props.type === 'bool' || this.props.type === 'boolean') {
-            return Boolean(this.refs.input.getValue());
-        } else {
-            return this.refs.input.getValue();
+        var value = this.refs.input.getValue(),
+            type  = this.props.type;
+
+        if (type === 'int' || type = 'integer') {
+            return parseInt(value, 10);
+        } else if (type === 'bool' || type === 'boolean') {
+            return (value === 'true');
+        } else if (type === 'float') {
+            return parseFloat(value);
         }
+
+        return value;
     },
 
     getDefaultProps : function()

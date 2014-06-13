@@ -31,7 +31,7 @@ module.exports = React.createClass({
         var value = this.refs.input.getValue(),
             type  = this.props.type;
 
-        if (type === 'int' || type = 'integer') {
+        if (type === 'int' || type === 'integer') {
             return parseInt(value, 10);
         } else if (type === 'bool' || type === 'boolean') {
             return (value === 'true');

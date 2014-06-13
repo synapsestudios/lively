@@ -7,10 +7,12 @@ jest.dontMock('underscore');
 
 describe('MainNav', function() {
     it('contains links for sections and resources', function() {
-        var MainNav = require(testedFilePath);
-        var TestUtils = require('react/lib/ReactTestUtils');
+        var MainNav, TestUtils, config, mainNav;
 
-        var config = {
+        MainNav = require(testedFilePath);
+        TestUtils = require('react/lib/ReactTestUtils');
+
+        config = {
             'resources' : {
                 'Section' : [
                     {
@@ -23,7 +25,7 @@ describe('MainNav', function() {
             }
         };
 
-        var mainNav = <MainNav config={config} />;
+        mainNav = <MainNav config={config} />;
         TestUtils.renderIntoDocument(mainNav);
 
         links = TestUtils.scryRenderedDOMComponentsWithClass(mainNav, 'main-nav__link');
@@ -35,13 +37,15 @@ describe('MainNav', function() {
     });
 
     it('renders back link', function() {
-        var MainNav = require(testedFilePath);
-        var TestUtils = require('react/lib/ReactTestUtils');
+        var MainNav, TestUtils, mainNav, backLink;
 
-        var mainNav = <MainNav config={{}} />;
+        MainNav = require(testedFilePath);
+        TestUtils = require('react/lib/ReactTestUtils');
+
+        mainNav = <MainNav config={{}} />;
         TestUtils.renderIntoDocument(mainNav);
 
-        var backLink = TestUtils.findRenderedDOMComponentWithClass(
+        backLink = TestUtils.findRenderedDOMComponentWithClass(
             mainNav,
             'header__back-link'
         );

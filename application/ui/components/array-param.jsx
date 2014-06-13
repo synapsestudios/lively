@@ -2,29 +2,16 @@
 /* global console */
 'use strict';
 
+var _      = require('underscore');
 var React  = require('react');
+var Param  = require('param');
 var Select = require('./input/select');
 var Text   = require('./input/text');
 var marked = require('marked');
 
-module.exports = React.createClass({
+module.exports = _.extend(Param, {
 
     displayName : 'ArrayParameter',
-
-    propTypes : {
-        name         : React.PropTypes.string.isRequired,
-        required     : React.PropTypes.bool,
-        type         : React.PropTypes.string.isRequired,
-        description  : React.PropTypes.string,
-        enumValues   : React.PropTypes.array,
-        location     : React.PropTypes.oneOf([
-            'header', 'query', 'body', 'uri'
-        ]),
-        defaultValue : React.PropTypes.oneOfType([
-            React.PropTypes.string,
-            React.PropTypes.number
-        ])
-    },
 
     getInitialState : function()
     {
@@ -35,14 +22,7 @@ module.exports = React.createClass({
 
     getValue : function()
     {
-        var valueArray = [],
-            instance   = this;
-
-        this.state.values.forEach(function (value) {
-            valueArray.push(instance.getInputValue(value));
-        });
-
-        return valueArray;
+        return this.state.values;
     },
 
     getInputValue : function(value)
@@ -58,17 +38,6 @@ module.exports = React.createClass({
         }
 
         return value;
-    },
-
-    getDefaultProps : function()
-    {
-        return {
-            required      : false,
-            description   : '',
-            allowedValues : [],
-            enumValues    : [],
-            location      : 'body'
-        };
     },
 
     getInputs : function()

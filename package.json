@@ -7,6 +7,9 @@
     "type": "git",
     "url": "https://github.com/synapsestudios/lively.git"
   },
+  "scripts": {
+    "test": "jest"
+  },
   "devDependencies": {
     "browserify": "^3.43.0",
     "reactify": "^0.11.0",
@@ -24,7 +27,9 @@
     "gulp-streamify": "0.0.5",
     "gulp-uglify": "^0.2.1",
     "envify": "^1.2.1",
-    "watchify": "^0.6.4"
+    "watchify": "^0.6.4",
+    "react-tools": "~0.10.0",
+    "jest-cli": "~0.1.15"
   },
   "dependencies": {
     "react": "^0.10.0",
@@ -52,5 +57,11 @@
   },
   "browserify-shim": {
     "underscore": "_"
+  },
+  "jest": {
+    "scriptPreprocessor": "./preprocessor.js",
+    "unmockedModulePathPatterns": [
+      "./node_modules/react"
+    ]
   }
 }

@@ -1,8 +1,9 @@
 /** @jsx React.DOM */
 'use strict';
 
-var React = require('react');
-var Param = require('./param');
+var React      = require('react');
+var Param      = require('./param');
+var ArrayParam = require('./array-param');
 
 module.exports = React.createClass({
 
@@ -14,6 +15,10 @@ module.exports = React.createClass({
 
     getParamComponent : function(param)
     {
+        if (param.type.substring(0, 5) === 'array') {
+            return this.getArrayParamComponent(param);
+        }
+
         return <Param ref={param.name}
                       key={param.name}
                       name={param.name}
@@ -24,6 +29,22 @@ module.exports = React.createClass({
                       enumValues={param.enumValues} />;
     },
 
+    getArrayParamComponent : function(param)
+    {
+        var arrayType = param.type.match(/\[(.*?)\]/);
+
+        arrayType = (arrayType === null) ? 'string' : arrayType[0];
+
+        return <ArrayParam ref={param.name}
+                  key={param.name}
+                  name={param.name}
+                  required={param.required}
+                  type={arrayType}
+                  description={param.description}
+                  defaultValue={param.defaultValue}
+                  enumValues={param.enumValues} />;
+    },
+
     getValues : function()
     {
         var self   = this,
@@ -32,6 +53,8 @@ module.exports = React.createClass({
         this.props.params.forEach(function(param) {
             values[param.name] = self.refs[param.name].getValue();
         });
+
+        console.log(values);
 
         return values;
     },

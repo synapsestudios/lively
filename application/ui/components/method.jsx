@@ -144,7 +144,7 @@ module.exports = React.createClass({
         return (
             <div className='panel-section'>
                 <div className={panelHeaderClasses}>
-                    <h2><span>{this.props.method}</span><span>{this.props.name}</span></h2>
+                    <h2><span>{this.props.method}</span><span>{this.props.name}</span><span>{this.props.uri}</span></h2>
                 </div>
                 <p>{this.props.synopsis}</p>
                 <Params params={this.props.params} ref='params' />

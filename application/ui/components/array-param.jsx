@@ -16,8 +16,17 @@ module.exports = React.createClass(_.extend(ParamObject, {
     getInitialState : function()
     {
         return {
-            values : [this.defaultValue]
+            values : [this.getDefaultValue()]
         };
+    },
+
+    getDefaultValue : function()
+    {
+        if (this.props.type === 'enum') {
+            return this.props.defaultValue || this.props.enumValues[0];
+        } else {
+            return this.props.defaultValue;
+        }
     },
 
     getValue : function()
@@ -46,14 +55,21 @@ module.exports = React.createClass(_.extend(ParamObject, {
                 console.warn('Missing enumValues for param: ' + this.props.name);
             }
 
-            field = <Select options={this.props.enumValues} ref='input' />;
+            field = <Select
+                options={this.props.enumValues}
+                handleChange={this.updateField}
+                key={index}
+             />;
         } else if (this.props.type === 'boolean' || this.props.type === 'bool') {
-            field = <Select options={['true', 'false']} ref='input' />;
+            field = <Select
+                options={['true', 'false']}
+                handleChange={this.updateField}
+                key={index}
+            />;
         } else {
             field = <Text
                 value={value}
                 handleChange={this.updateField}
-                ref='input'
                 key={index}
             />;
         }
@@ -72,7 +88,7 @@ module.exports = React.createClass(_.extend(ParamObject, {
     {
         var values = this.state.values;
 
-        values.push('');
+        values.push(this.getDefaultValue());
 
         this.setState({
             values : values
@@ -83,7 +99,7 @@ module.exports = React.createClass(_.extend(ParamObject, {
     {
         var key    = component.props.key,
             values = this.state.values,
-            value  = event.target.value;
+            value  = this.getValueFromTarget(event.target);
 
         values[key] = this.filterValue(value);
 
@@ -94,6 +110,15 @@ module.exports = React.createClass(_.extend(ParamObject, {
         this.setState({
             values : values
         });
+    },
+
+    getValueFromTarget : function(target)
+    {
+        if (this.props.type === 'enum') {
+            return target.options[target.selectedIndex].text;
+        }
+
+        return target.value;
     },
 
     removeField : function(index)

@@ -69,7 +69,7 @@ module.exports = {
         } else if (this.props.type === 'boolean' || this.props.type === 'bool') {
             return <Select options={['true', 'false']} ref='input' />;
         } else {
-            return <Text defaultValue={this.props.defaultValue} ref='input' />;
+            return <Text value={this.props.defaultValue} ref='input' />;
         }
     },
 

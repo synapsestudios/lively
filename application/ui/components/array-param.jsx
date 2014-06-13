@@ -22,11 +22,15 @@ module.exports = React.createClass(_.extend(ParamObject, {
 
     getDefaultValue : function()
     {
-        if (this.props.type === 'enum') {
+        var type = this.getParamType();
+
+        if (type === 'enum') {
             return this.props.defaultValue || this.props.enumValues[0];
-        } else {
-            return this.props.defaultValue;
+        } else if (type === 'boolean') {
+            return this.props.defaultValue || true;
         }
+
+        return this.props.defaultValue;
     },
 
     getValue : function()
@@ -60,7 +64,7 @@ module.exports = React.createClass(_.extend(ParamObject, {
                 handleChange={this.updateField}
                 key={index}
              />;
-        } else if (this.props.type === 'boolean' || this.props.type === 'bool') {
+        } else if (this.props.type === 'boolean') {
             field = <Select
                 options={['true', 'false']}
                 handleChange={this.updateField}

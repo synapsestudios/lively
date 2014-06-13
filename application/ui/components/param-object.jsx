@@ -34,17 +34,37 @@ module.exports = {
 
     filterValue : function(value)
     {
-        var type = this.props.type;
+        var type = this.getParamType();
 
-        if (type === 'int' || type === 'integer') {
+        if (type === 'integer') {
             return parseInt(value, 10);
-        } else if (type === 'bool' || type === 'boolean') {
+        } else if (type === 'boolean') {
             return (value === 'true');
         } else if (type === 'float') {
             return parseFloat(value);
         }
 
         return value;
+    },
+
+    /**
+     * Get the type of param
+     *
+     * Used to normalize aliases for integer and boolean
+     *
+     * @return string
+     */
+    getParamType : function()
+    {
+        var type = this.props.type;
+
+        if (type === 'int') {
+            return 'integer';
+        } else if (type === 'bool') {
+            return 'boolean';
+        }
+
+        return type;
     },
 
     getDefaultProps : function()
@@ -60,13 +80,15 @@ module.exports = {
 
     getInput : function()
     {
-        if (this.props.type === 'enum') {
+        var type = this.getParamType();
+
+        if (type === 'enum') {
             if (! this.props.enumValues.length) {
                 console.warn('Missing enumValues for param: ' + this.props.name);
             }
 
             return <Select options={this.props.enumValues} ref='input' />;
-        } else if (this.props.type === 'boolean' || this.props.type === 'bool') {
+        } else if (type === 'boolean') {
             return <Select options={['true', 'false']} ref='input' />;
         } else {
             return <Text value={this.props.defaultValue} ref='input' />;

@@ -2,14 +2,14 @@
 /* global console */
 'use strict';
 
-var _      = require('underscore');
-var React  = require('react');
-var Param  = require('param');
-var Select = require('./input/select');
-var Text   = require('./input/text');
-var marked = require('marked');
+var _           = require('underscore');
+var React       = require('react');
+var ParamObject = require('./param-object');
+var Select      = require('./input/select');
+var Text        = require('./input/text');
+var marked      = require('marked');
 
-module.exports = _.extend(Param, {
+module.exports = React.createClass(_.extend(ParamObject, {
 
     displayName : 'ArrayParameter',
 
@@ -135,4 +135,4 @@ module.exports = _.extend(Param, {
             </tr>
         );
     }
-});
+}));

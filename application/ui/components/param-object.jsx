@@ -27,8 +27,14 @@ module.exports = {
 
     getValue : function()
     {
-        var value = this.refs.input.getValue(),
-            type  = this.props.type;
+        var value = this.refs.input.getValue();
+
+        return this.filterValue(value);
+    },
+
+    filterValue : function(value)
+    {
+        var type = this.props.type;
 
         if (type === 'int' || type === 'integer') {
             return parseInt(value, 10);

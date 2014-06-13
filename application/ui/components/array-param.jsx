@@ -25,21 +25,6 @@ module.exports = React.createClass(_.extend(ParamObject, {
         return this.state.values;
     },
 
-    getInputValue : function(value)
-    {
-        var type = this.props.type;
-
-        if (type === 'int' || type === 'integer') {
-            return parseInt(value, 10);
-        } else if (type === 'bool' || type === 'boolean') {
-            return (value === 'true');
-        } else if (type === 'float') {
-            return parseFloat(value);
-        }
-
-        return value;
-    },
-
     getInputs : function()
     {
         var inputs   = [],
@@ -97,14 +82,18 @@ module.exports = React.createClass(_.extend(ParamObject, {
     updateField : function(event, component)
     {
         var key    = component.props.key,
-            values = this.state.values;
+            values = this.state.values,
+            value  = event.target.value;
 
-        values[key] = event.target.value;
+        values[key] = this.filterValue(value);
+
+        if (isNaN(values[key])) {
+            values[key] = value;
+        }
 
         this.setState({
             values : values
         });
-
     },
 
     removeField : function(index)

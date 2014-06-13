@@ -1,3 +1,4 @@
+/** @jsx React.DOM */
 'use strict';
 
 var React = require('react');
@@ -16,9 +17,9 @@ module.exports = React.createClass({
         return element.options[element.selectedIndex].value;
     },
 
-    getOptions : function(option, idx)
+    getOptions : function(option, index)
     {
-        return <option key={idx} value={option}>{option}</option>;
+        return <option key={index} value={option}>{option}</option>;
     },
 
     render : function()

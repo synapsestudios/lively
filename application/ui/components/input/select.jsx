@@ -21,10 +21,22 @@ module.exports = React.createClass({
         return <option key={idx} value={option}>{option}</option>;
     },
 
+    handleChange : function(event)
+    {
+        var callback = this.props.handleChange,
+            toString = Object.prototype.toString;
+
+        if (toString.call(callback) !== '[object Function]') {
+            return;
+        }
+
+        this.props.handleChange(event, this);
+    },
+
     render : function()
     {
         return this.transferPropsTo(
-            <select className="select" ref='input'>
+            <select className="select" ref='input' onChange={this.handleChange}>
                 {this.props.options.map(this.getOptions)}
             </select>
         );

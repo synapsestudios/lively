@@ -54,8 +54,6 @@ module.exports = React.createClass({
             values[param.name] = self.refs[param.name].getValue();
         });
 
-        console.log(values);
-
         return values;
     },
 

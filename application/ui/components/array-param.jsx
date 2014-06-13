@@ -45,10 +45,9 @@ module.exports = React.createClass({
         return valueArray;
     },
 
-    getInputValue : function()
+    getInputValue : function(value)
     {
-        var value = this.refs.input.getValue(),
-            type  = this.props.type;
+        var type = this.props.type;
 
         if (type === 'int' || type === 'integer') {
             return parseInt(value, 10);
@@ -77,28 +76,42 @@ module.exports = React.createClass({
         var inputs   = [],
             instance = this;
 
-        this.state.values.forEach(function (value) {
-            inputs.push(instance.getInput(value));
+        this.state.values.forEach(function (value, index) {
+            inputs.push(instance.getInput(value, index));
         });
 
         return inputs;
     },
 
-    getInput : function(value)
+    getInput : function(value, index)
     {
+        var callback, field, instance = this;
+
         if (this.props.type === 'enum') {
             if (! this.props.enumValues.length) {
                 console.warn('Missing enumValues for param: ' + this.props.name);
             }
 
-            return <Select options={this.props.enumValues} ref='input' />;
+            field = <Select options={this.props.enumValues} ref='input' />;
         } else if (this.props.type === 'boolean' || this.props.type === 'bool') {
-            return <Select options={['true', 'false']} ref='input' />;
-        } else if (this.props.type.substring(0, 5) === 'array') {
-            return this.getArrayInputs();
+            field = <Select options={['true', 'false']} ref='input' />;
         } else {
-            return <Text defaultValue={this.props.defaultValue} ref='input' />;
+            field = <Text
+                value={value}
+                handleChange={this.updateField}
+                ref='input'
+                key={index}
+            />;
         }
+
+        callback = function () {
+            instance.removeField(index);
+        };
+
+        return [
+            <a onClick={callback}>-</a>,
+            field
+        ];
     },
 
     addField : function()
@@ -112,9 +125,32 @@ module.exports = React.createClass({
         });
     },
 
+    updateField : function(event, component)
+    {
+        var key    = component.props.key,
+            values = this.state.values;
+
+        values[key] = event.target.value;
+
+        this.setState({
+            values : values
+        });
+
+    },
+
+    removeField : function(index)
+    {
+        var values = this.state.values;
+
+        values.splice(index, 1);
+
+        this.setState({
+            values : values
+        });
+    },
+
     render : function()
     {
-        console.log('rendering');
         marked.setOptions({ sanitize: true });
         var description = (this.props.required ? '**Required**. ' : '') + this.props.description;
 

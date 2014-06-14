@@ -60,18 +60,21 @@ module.exports = React.createClass(_.extend(ParamObject, {
             }
 
             field = <Select
+                className="array-input"
                 options={this.props.enumValues}
                 handleChange={this.updateField}
                 key={index}
              />;
         } else if (this.props.type === 'boolean') {
             field = <Select
+                className="array-input"
                 options={['true', 'false']}
                 handleChange={this.updateField}
                 key={index}
             />;
         } else {
             field = <Text
+                className="array-input"
                 value={value}
                 handleChange={this.updateField}
                 key={index}
@@ -83,7 +86,7 @@ module.exports = React.createClass(_.extend(ParamObject, {
         };
 
         return [
-            <a onClick={callback}>-</a>,
+            <a className="button field-button--remove" onClick={callback}>–</a>,
             field
         ];
     },
@@ -143,13 +146,13 @@ module.exports = React.createClass(_.extend(ParamObject, {
 
         return (
             <tr>
-                <td><code>{this.props.name}</code></td>
-                <td>
+                <td className="array-title"><code>{this.props.name}</code></td>
+                <td className="array-td td--max-width">
                     {this.getInputs()}
-                    <a onClick={this.addField}>+</a>
+                    <a className="button field-button--add" onClick={this.addField}>{'+ Add Field'}</a>
                 </td>
-                <td>Array of <code>{this.props.type}</code>s</td>
-                <td dangerouslySetInnerHTML={{__html: marked(description)}}></td>
+                <td className="array-title">Array of <code>{this.props.type}</code>s</td>
+                <td className="array-title" dangerouslySetInnerHTML={{__html: marked(description)}}></td>
             </tr>
         );
     }

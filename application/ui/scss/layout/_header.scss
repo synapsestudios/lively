@@ -1,40 +1,38 @@
 header {
-    position             : fixed;
+    position             : absolute;
     width                : 100%;
     z-index              : 1000;
     color                : $white;
-    background-color     : $themeDDGray;
+    background-color     : $themeLGray;
     height               : 60px;
 
-    .header__container {
-        max-width        : 1440px;
-        margin           : 0 auto;
-    }
-
     .header__branding {
+        @extend .source-bold;
         float            : left;
-        height           : rem-calc(60);
-        @include transition(all 300ms ease-in-out);
-
-        a {
-            display          : block;
-        }
-
-        .branding {
-            padding      : rem-calc(20);
-            height       : rem-calc(20);
-            @include box-sizing(content-box);
-            @include animation(spinner 20s infinite);
-            @include backface-visibility(visible);
-            @include transition (all 300ms ease-in-out);
-        }
-
+        line-height      : rem-calc(60);
+        padding-left     : rem-calc(20);
     }
 
-    .login {
+    .header__auth {
+        position         : relative;
         float            : right;
-        line-height      : 60px;
+        line-height      : rem-calc(60);
         padding-right    : rem-calc(20);
+        padding-left     : rem-calc(20);
+        cursor           : pointer;
+        @include user-select(none);
+
+        &::before {
+            font-family  : 'FontAwesome';
+            content      : '\f13e';
+            color        : $white;
+            position     : absolute;
+            font-size    : rem-calc(20);
+            top          : 0;
+            left         : rem-calc(0);
+            transition   : all 300ms ease-in-out;
+        }
+
     }
 
     .header__toggle-nav {

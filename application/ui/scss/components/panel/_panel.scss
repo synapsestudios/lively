@@ -2,7 +2,7 @@
     position             : relative;
     left                 : rem-calc(350);
     margin               : 0 30px 30px 0;
-    padding-top          : rem-calc(30);
+    padding-top          : rem-calc(90);
     width                : calc(100% - 350px);
     overflow             : hidden;
 
@@ -122,6 +122,10 @@
                 text-align           : left;
                 color                : $themeDDGray;
                 padding              : rem-calc(0 0 0 20);
+
+                span:first-of-type {
+                    padding-left: 20px;
+                }
             }
 
             .panel__header-x {

@@ -8,124 +8,95 @@
     padding              : 20px;
 
     .panel__header {
-
-        &::before,
-        &::after {
-            content              : '';
-            position             : absolute;
-            top                  : 0;
-            width                : rem-calc(20);
-            height               : rem-calc(50);
-        }
+        left             : rem-calc(-30);
+        width            : calc(100% + 55px) !important;
+        box-shadow       : 0 3px 3px rgba($black, .15);
 
         &::before {
-            left                 : rem-calc(-20);
+            content      : '';
+            position     : absolute;
+            left         : 0;
+            top          : rem-calc(50);
+            width        : 0;
+            height       : 0;
+            border-width : rem-calc(0 10 10 0);
+            border-style : solid;
         }
-
-        &::after {
-            right                : rem-calc(-20);
-        }
-
 
         &.panel__header--get {
-            background-color     : tint($statusBlue, 50%);
+            background-color       : tint($statusBlue, 50%);
 
             &::before {
-                background-color : $statusBlue;
-            }
-
-            &::after {
-                background-color     : tint($statusBlue, 50%);
+                border-color       : transparent shade($statusBlue, 40%) transparent transparent;
             }
 
             h2 span:first-child {
-                background-color : $statusBlue;
+                background-color   : $statusBlue;
             }
 
         }
 
         &.panel__header--head {
-            background-color     : tint($statusPurple, 80%);
+            background-color       : tint($statusPurple, 80%);
 
             &::before {
-                background-color : tint($statusPurple, 50%);
-            }
-
-            &::after {
-                background-color     : tint($statusPurple, 80%);
+                border-color       : transparent shade($statusPurple, 40%) transparent transparent;
             }
 
             h2 span:first-child {
-                background-color : tint($statusPurple, 50%);
+                background-color   : $statusPurple;
             }
 
         }
 
-
         &.panel__header--post {
-            background-color     : tint($statusGreen, 50%);
+            background-color       : tint($statusGreen, 80%);
 
             &::before {
-                background-color : $statusGreen;
-            }
-
-            &::after {
-                background-color     : tint($statusGreen, 50%);
+                border-color       : transparent shade($statusGreen, 40%) transparent transparent;
             }
 
             h2 span:first-child {
-                background-color : $statusGreen;
+                background-color   : $statusGreen;
             }
 
         }
 
         &.panel__header--patch {
-            background-color     : tint($statusOrange, 50%);
+            background-color       : tint($statusOrange, 80%);
 
             &::before {
-                background-color : $statusOrange;
-            }
-
-            &::after {
-                background-color     : tint($statusOrange, 50%);
+                border-color       : transparent shade($statusOrange, 40%) transparent transparent;
             }
 
             h2 span:first-child {
-                background-color : $statusOrange;
+                background-color   : $statusOrange;
             }
 
         }
 
         &.panel__header--put {
-            background-color     : tint($statusYellow, 50%);
+            background-color       : tint($statusYellow, 80%);
 
             &::before {
-                background-color : $statusYellow;
-            }
-
-            &::after {
-                background-color     : tint($statusYellow, 50%);
+                border-color       : transparent shade($statusYellow, 40%) transparent transparent;
             }
 
             h2 span:first-child {
-                background-color : $statusYellow;
+                background-color   : $statusYellow;
             }
 
         }
 
         &.panel__header--delete {
-            background-color     : tint($statusRed, 50%);
+            background-color       : tint($statusRed, 80%);
 
             &::before {
-                background-color : $statusRed;
-            }
-
-            &::after {
-                background-color     : tint($statusRed, 50%);
+                border-color       : transparent shade($statusRed, 40%) transparent transparent;
             }
 
             h2 span:first-child {
-                background-color : $statusRed;
+                background-color   : $statusRed;
             }
 
         }
@@ -135,10 +106,10 @@
             padding-left : 0 !important;
 
             span {
-                font-size            : 28px;
-                height               : rem-calc(50);
-                padding              : rem-calc(9 20 4 0);
-                margin-right         : rem-calc(20);
+                font-size          : 28px;
+                height             : rem-calc(50);
+                padding            : rem-calc(9 20 4 0);
+                margin-right       : rem-calc(20);
 
             }
 

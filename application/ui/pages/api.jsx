@@ -6,6 +6,7 @@ var _                 = require('underscore');
 var React             = require('react');
 var StoreWatchMixin   = require('synapse-common/ui/mixins/store-watch');
 var OAuthConnectPanel = require('../components/oauth');
+var SiteHeader        = require('../layouts/header');
 var MainNav           = require('../components/navigation/main-nav');
 var ResourcePage      = require('./resource');
 var store             = require('store');
@@ -162,6 +163,7 @@ module.exports = React.createClass({
 
         return (
             <div>
+                <SiteHeader />
                 <Locations contextual>
                     {navLocations}
                 </Locations>

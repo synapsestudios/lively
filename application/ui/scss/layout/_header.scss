@@ -8,16 +8,19 @@ header {
 
     .header__branding {
         @extend .source-bold;
+        font-size        : rem-calc(24);
+        letter-spacing   : 10px;
         float            : left;
         line-height      : rem-calc(60);
-        padding-left     : rem-calc(20);
+        padding-left     : rem-calc(30);
     }
 
     .header__auth {
         position         : relative;
+        z-index          : 1000;
         float            : right;
         line-height      : rem-calc(60);
-        padding-right    : rem-calc(20);
+        padding-right    : rem-calc(30);
         padding-left     : rem-calc(20);
         cursor           : pointer;
         @include user-select(none);

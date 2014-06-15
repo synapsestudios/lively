@@ -163,12 +163,11 @@ module.exports = React.createClass({
 
         return (
             <div>
-                <SiteHeader />
+                <SiteHeader stores={this.props.stores} onOAuthStart={this.handleOAuthStart} />
                 <Locations contextual>
                     {navLocations}
                 </Locations>
                 <div className="panel__wrapper">
-                    <OAuthConnectPanel stores={this.props.stores} onOAuthStart={this.handleOAuthStart} />
                     <Locations contextual>
                         {resourceLocations}
                     </Locations>

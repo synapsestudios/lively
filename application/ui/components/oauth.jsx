@@ -51,8 +51,8 @@ module.exports = React.createClass({
     {
         var oAuthPanelClasses = cx({
             'panel'         : true,
+            'oauth__panel'  : true,
             'panel--hidden' : this.state.oAuthPanelHidden,
-            'panel--shown'  : ! this.state.oAuthPanelHidden
         });
 
         var oAuthTabClasses = cx({
@@ -64,7 +64,6 @@ module.exports = React.createClass({
 
         return (
             <div className={oAuthPanelClasses}>
-                <div className={oAuthTabClasses} onClick={this.toggleOAuthPanel}><span>OAuth2</span></div>
                 <div className='panel__header'>
                     <h2>OAuth2</h2><a className="panel__header-x" onClick={this.toggleOAuthPanel}></a>
                 </div>

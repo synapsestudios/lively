@@ -16,179 +16,118 @@
 
     }
 
-    .panel {
-        position         : relative;
-        width            : calc(100% - 60px);
-        margin           : 0 auto;
-        border-radius    : 3px;
-        padding-top      : rem-calc(20);
-        padding-bottom   : rem-calc(20);
-        margin-bottom    : rem-calc(30);
-        border           : 1px solid tint($themeMLGray, 50%);;
+}
+
+.panel {
+    position         : relative;
+    width            : calc(100% - 60px);
+    margin           : 0 auto;
+    border-radius    : 3px;
+    padding-top      : rem-calc(20);
+    padding-bottom   : rem-calc(20);
+    margin-bottom    : rem-calc(30);
+    border           : 1px solid tint($themeMLGray, 50%);;
+    background-color : $white;
+    @include transition(all 300ms ease-in);
+    @include clearfix;
+
+    &.oauth__panel {
+        position         : absolute;
+        top              : 65px;
+        right            : 5px;
+        height           : rem-calc(420);
+        width            : calc(100% - 10px);
         background-color : $white;
-        @include transition(all 300ms ease-in);
-        @include clearfix;
-
-        &.panel--moveup {
-            top          : rem-calc(-450);
-        }
-
-        .panel__toggle-tab {
-            font-family          : $font-awesome;
-            content              : '\f13e';
-            color                : $themeDDGray;
-            position             : absolute;
-            top                  : rem-calc(60);
-            left                 : rem-calc(-125);
-            width                : rem-calc(100);
-            height               : rem-calc(60);
-            background-color     : $white;
-            border               : 1px solid #ddd;
-            border-radius        : 6px 0 0 6px;
-            cursor               : pointer;
-            z-index              : 2;
-            box-shadow           : 0 1px 2px rgba($black, .1);
-            @include transition(all 300ms ease-in);
-
-            span {
-                position         : absolute;
-                bottom           : rem-calc(5);
-                left             : 0;
-                width            : 100px;
-                text-align       : center;
-                color            : $themeLGray;
-                @include transition(all 300ms ease-in-out);
-            }
-
-            &::before {
-                color            : $themeLGray;
-                position         : absolute;
-                font-size        : rem-calc(28);
-                top              : rem-calc(11);
-                left             : rem-calc(37);
-                @include transition(all 300ms ease-in-out);
-            }
-
-            &:hover {
-                left             : rem-calc(-130);
-                box-shadow       : 0 1px 2px rgba($black, .1), inset 1px 1px 2px rgba($themeLLGray, .8), inset 0 -1px 2px rgba($themeLLGray, .8);
-
-                span {
-                    color            : $themeDDGray;
-                }
-
-                &::before {
-                    color: $themeMLGray;
-                }
-
-            }
-
-        }
-
-
-        &.panel--shown {
-            top          : 0;
-            right        : 0;
-            height       : rem-calc(420);
-
-            .panel__toggle-tab {
-                left                 : calc(100% - 70px);
-                opacity              : 0;
-                z-index              : -1;
-            }
-
-        }
+        margin           : 0 auto;
+        z-index          : 999;
+        box-shadow       : 0 2px 5px rgba($black, .2);
+        @include transition(all 300ms ease-in-out);
 
         &.panel--hidden {
-            top          : 0;
-            right        : -100%;
-            height       : rem-calc(420);
-
-            .panel__toggle-tab {
-                opacity              : 1;
-            }
-        }
-
-        .panel__header {
-            @extend .ff-source-bold;
-            position                 : relative;
-            height                   : rem-calc(50);
-            width                    : 100%;
-            line-height              : rem-calc(50);
-            @include user-select(none);
-
-            h2 {
-                margin               : 0;
-                text-align           : left;
-                color                : $themeDDGray;
-                padding              : rem-calc(0 0 0 20);
-
-                span:first-of-type {
-                    padding-left: 20px;
-                }
-            }
-
-            .panel__header-x {
-                position             : absolute;
-                top                  : 0;
-                right                : rem-calc(20);
-                height               : rem-calc(30);
-                width                : rem-calc(30);
-                color                : $themeDDGray;
-                background-color     : $white;
-                border-radius        : 50%;
-                border               : 1px solid $themeMLGray;
-                @include transition(all 300ms ease-in-out);
-
-                &::before {
-                    content          : '\f00d';
-                    font-family      : $font-awesome;
-                    position         : absolute;
-                    top              : -11px;
-                    left             : rem-calc(5);
-                    font-size        : rem-calc(22);
-                    color            : $themeMLGray;
-                    @include transition(all 300ms ease-in-out);
-                }
-
-                &:hover {
-                    border           : 1px solid $themeDDGray;
-
-                    &::before {
-                        color        : $themeDDGray;
-                    }
-
-                }
-
-            }
+            top              : rem-calc(-420);
 
         }
 
-        .panel__link {
-            padding-left : 20px;
-            color        : $themeMLGray;
-            @include transition(color 300ms ease-in-out);
+    }
+
+    .panel__header {
+        @extend .ff-source-bold;
+        position                 : relative;
+        height                   : rem-calc(50);
+        width                    : 100%;
+        line-height              : rem-calc(50);
+        @include user-select(none);
+
+        h2 {
+            margin               : 0;
+            text-align           : left;
+            color                : $themeDDGray;
+            padding              : rem-calc(0 0 0 20);
+
+            span:first-of-type {
+                padding-left: 20px;
+            }
+        }
+
+        .panel__header-x {
+            position             : absolute;
+            top                  : 0;
+            right                : rem-calc(20);
+            height               : rem-calc(30);
+            width                : rem-calc(30);
+            color                : $themeDDGray;
+            background-color     : $white;
+            border-radius        : 50%;
+            border               : 1px solid $themeMLGray;
+            @include transition(all 300ms ease-in-out);
 
             &::before {
-                padding-right        : 5px;
+                content          : '\f00d';
+                font-family      : $font-awesome;
+                position         : absolute;
+                top              : -11px;
+                left             : rem-calc(5);
+                font-size        : rem-calc(22);
+                color            : $themeMLGray;
+                @include transition(all 300ms ease-in-out);
             }
 
             &:hover {
-                color    : $themeDDGray;
-            }
+                border           : 1px solid $themeDDGray;
 
-            &:first-of-type {
-                margin-top: 20px;
+                &::before {
+                    color        : $themeDDGray;
+                }
+
             }
 
         }
 
     }
 
-    >a {
-        padding-left     : rem-calc(20);
-        color            : $themeDDGray;
-        text-decoration  : underline;
+    .panel__link {
+        padding-left : 20px;
+        color        : $themeMLGray;
+        @include transition(color 300ms ease-in-out);
+
+        &::before {
+            padding-right        : 5px;
+        }
+
+        &:hover {
+            color    : $themeDDGray;
+        }
+
+        &:first-of-type {
+            margin-top: 20px;
+        }
+
     }
 
+}
+
+>a {
+    padding-left     : rem-calc(20);
+    color            : $themeDDGray;
+    text-decoration  : underline;
 }

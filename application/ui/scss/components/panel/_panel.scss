@@ -188,3 +188,15 @@
     }
 
 }
+
+.method-panel {
+    max-height           : 9999px;
+    @include transition(all 500ms ease-in-out);
+
+    &.method-panel--hidden {
+        max-height       : 0px;
+        overflow         : hidden;
+
+    }
+
+}

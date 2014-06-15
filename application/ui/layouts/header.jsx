@@ -9,11 +9,17 @@ module.exports = React.createClass({
 
     displayName : 'SiteHeader',
 
-    getInitialState : function()
+    getStateFromStores : function()
     {
         return {
-            hidden : true
+            hasOAuth : (this.props.stores.oauth.accessToken !== null),
+            oAuthPanelHidden : true
         };
+    },
+
+    getInitialState : function()
+    {
+        return this.getStateFromStores();
     },
 
     toggleOAuthPanel : function()
@@ -25,13 +31,7 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var stores = this.props.stores;
-        var handleOAuthStart = this.props.handleOAuthStart;
-
-        var oAuthPanelClasses = cx({
-            'panel'         : true,
-            'panel--hidden' : this.state.hidden
-        });
+        var hidden = this.props.hidden;
 
         var oAuthLinkClasses = cx({
             'header__auth'      : true,
@@ -46,7 +46,7 @@ module.exports = React.createClass({
                     <span className="header__branding">LIVELY</span>
                     <span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}>{'OAuth2'}</span>
                 </header>
-                <OAuthConnectPanel stores={this.props.stores} oAuthPanelHidden={this.oAuthPanelHidden} onOAuthStart={this.handleOAuthStart} />
+                <OAuthConnectPanel oAuthPanelHidden={this.oAuthPanelHidden}/>
             </div>
         );
     }

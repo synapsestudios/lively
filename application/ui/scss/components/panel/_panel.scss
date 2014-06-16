@@ -26,7 +26,8 @@
     padding-top          : rem-calc(20);
     padding-bottom       : rem-calc(20);
     margin-bottom        : rem-calc(30);
-    border               : 1px solid tint($themeMLGray, 50%);;
+    border               : 1px solid tint($themeMLGray, 90%);
+    box-shadow           : 0 1px 5px rgba($black, .10);
     background-color     : $white;
     @include transition(all 300ms ease-in);
     @include clearfix;

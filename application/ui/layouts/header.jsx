@@ -12,7 +12,6 @@ module.exports = React.createClass({
     getStateFromStores : function()
     {
         return {
-            hasOAuth : (this.props.stores.oauth.accessToken !== null),
             oAuthPanelHidden : true
         };
     },
@@ -46,7 +45,7 @@ module.exports = React.createClass({
                     <span className="header__branding">LIVELY</span>
                     <span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}>{'OAuth2'}</span>
                 </header>
-                <OAuthConnectPanel oAuthPanelHidden={this.oAuthPanelHidden}/>
+                {this.props.children}
             </div>
         );
     }

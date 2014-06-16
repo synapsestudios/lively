@@ -6,13 +6,14 @@
     width                : rem-calc(320);
     background-color     : $themeLLGray;
     border-radius        : 3px;
-    box-shadow           : 0 1px 5px rgba($black, .2);
+    box-shadow           : 0 1px 5px rgba($black, .15);
     overflow             : hidden;
 
-    .header__back-link {
+    .main-nav__back-link {
         @extend .ff-source-bold;
         display          : inline-block;
         color            : $themeLGray;
+        text-decoration  : none;
         padding          : rem-calc(0 0 0 20);
         line-height      : rem-calc(40);
         font-size        : rem-calc(13);
@@ -37,7 +38,7 @@
 
     }
 
-    .header__branding {
+    .main-nav__branding {
         width            : 100%;
         height           : rem-calc(100);
         padding          : rem-calc(20);
@@ -51,6 +52,7 @@
             display      : block;
             font-size    : rem-calc(68);
             color        : $themeDDGray;
+            text-decoration: none;
         }
 
     }
@@ -62,19 +64,20 @@
             position     : relative;
             display      : block;
             color        : $themeDGray;
+            text-decoration: none;
 
             &::before {
-                content          : '';
-                position         : absolute;
-                top              : 50%;
-                left             : 0px;
-                width            : 0;
-                height           : 0;
-                margin-top       : rem-calc(-6);
-                margin-left      : rem-calc(-30);
-                border-style     : solid;
-                border-width     : rem-calc(5 0 5 8);
-                border-color     : transparent transparent transparent $themeDDGray;
+                content            : '';
+                position           : absolute;
+                top                : 50%;
+                left               : 0px;
+                width              : 0;
+                height             : 0;
+                margin-top         : rem-calc(-6);
+                margin-left        : rem-calc(-30);
+                border-style       : solid;
+                border-width       : rem-calc(6 0 6 6);
+                border-color       : transparent transparent transparent $themeDDGray;
                 @include transition(margin-left 300ms ease-in-out);
             }
 
@@ -82,7 +85,19 @@
                 color    : $themeDDGray;
 
                 &::before {
-                    margin-left      : rem-calc(-20);
+                    margin-left    : rem-calc(-20);
+                }
+
+            }
+
+            &.main-nav__link--active {
+                text-decoration    : underline;
+
+                &::before {
+                    border-width   : rem-calc(4);
+                    border-color   : $themeLGray;
+                    margin-left    : rem-calc(-4);
+                    @include transform(rotate(45deg));
                 }
 
             }

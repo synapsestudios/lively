@@ -3,6 +3,7 @@
 
 var _      = require('underscore');
 var React  = require('react');
+var cx     = require('react/lib/cx');
 var Router = require('react-router-component');
 var Link   = Router.Link;
 
@@ -19,8 +20,13 @@ module.exports = React.createClass({
 
     navItemFromResource : function(resource)
     {
+        var navLinkClasses = cx({
+            'main-nav__link'         : true,
+
+        });
+
         return (
-            <Link href={'/'+this.slugify(resource.name)} key={this.slugify(resource.name)} className="main-nav__link">
+            <Link href={'/'+this.slugify(resource.name)} key={this.slugify(resource.name)} className={navLinkClasses}>
                 <li className="main-nav__item">
                     {resource.name}
                 </li>
@@ -62,8 +68,8 @@ module.exports = React.createClass({
 
         return (
             <div className="main-nav__wrapper">
-                <a className="header__back-link fa fa-arrow-left" href="/">Back to API List</a>
-                <div className="header__branding">
+                <a className="main-nav__back-link fa fa-arrow-left" href="/">Back to API List</a>
+                <div className="main-nav__branding">
                     <a className="branding fa fa-github" href={'/' + this.props.slug}></a>
                 </div>
                 <ul className="main-nav">

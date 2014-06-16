@@ -1,10 +1,8 @@
 /** @jsx React.DOM */
-/* global console */
 'use strict';
 
 var React  = require('react');
-var Select = require('./input/select');
-var Text   = require('./input/text');
+
 var marked = require('marked');
 
 module.exports = {
@@ -21,7 +19,8 @@ module.exports = {
         ]),
         defaultValue : React.PropTypes.oneOfType([
             React.PropTypes.string,
-            React.PropTypes.number
+            React.PropTypes.number,
+            React.PropTypes.bool
         ])
     },
 
@@ -76,23 +75,6 @@ module.exports = {
             enumValues    : [],
             location      : 'body'
         };
-    },
-
-    getInput : function()
-    {
-        var type = this.getParamType();
-
-        if (type === 'enum') {
-            if (! this.props.enumValues.length) {
-                console.warn('Missing enumValues for param: ' + this.props.name);
-            }
-
-            return <Select options={this.props.enumValues} ref='input' />;
-        } else if (type === 'boolean') {
-            return <Select options={['true', 'false']} ref='input' />;
-        } else {
-            return <Text value={this.props.defaultValue} ref='input' />;
-        }
     },
 
     render : function()

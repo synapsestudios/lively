@@ -154,10 +154,10 @@ module.exports = React.createClass({
     {
         var uri = this.props.uri;
 
-        _.each(this.refs.params.getValues(), _.bind(function(value, name)
+        _.each(this.refs.params.getValues(), function(value, name)
         {
             uri = uri.replace(':' + name, encodeURIComponent(value));
-        }));
+        });
 
         return uri;
     },

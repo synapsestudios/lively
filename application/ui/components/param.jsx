@@ -2,10 +2,11 @@
 /* global console */
 'use strict';
 
-var React  = require('react');
-var Select = require('./input/select');
-var Text   = require('./input/text');
-var marked = require('marked');
+var React           = require('react');
+var Select          = require('./input/select');
+var Text            = require('./input/text');
+var ResumableUpload = require('./input/resumable-upload.jsx');
+var marked          = require('marked');
 
 module.exports = React.createClass({
 
@@ -28,8 +29,15 @@ module.exports = React.createClass({
 
     getValue : function()
     {
-        var value = this.refs.input.getValue(),
-            type  = this.props.type;
+        var value, type;
+
+        type = this.props.type;
+
+        if (this.props.type === 'resumable-upload') {
+            return null;
+        }
+
+        value = this.refs.input.getValue();
 
         if (type === 'int' || type === 'integer') {
             return parseInt(value, 10);
@@ -37,9 +45,9 @@ module.exports = React.createClass({
             return (value === 'true');
         } else if (type === 'float') {
             return parseFloat(value);
+        } else {
+            return value;
         }
-
-        return value;
     },
 
     getDefaultProps : function()
@@ -63,6 +71,8 @@ module.exports = React.createClass({
             return <Select options={this.props.enumValues} ref='input' />;
         } else if (this.props.type === 'boolean' || this.props.type === 'bool') {
             return <Select options={['true', 'false']} ref='input' />;
+        } else if (this.props.type === 'resumable-upload') {
+            return <ResumableUpload target={this.props.uri} resumableUploadCallback={this.props.resumableUploadCallback}/>;
         } else {
             return <Text defaultValue={this.props.defaultValue} ref='input' />;
         }

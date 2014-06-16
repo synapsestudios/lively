@@ -7,6 +7,7 @@ var cx          = require('react/lib/cx');
 var Params      = require('./params-list');
 var ApiCallInfo = require('./api-call-info');
 var Checkbox    = require('./input/checkbox');
+var Resumable   = require('../../../bower_components/resumablejs/resumable');
 
 var LOADED  = 'loaded',
     LOADING = 'loading';
@@ -118,6 +119,45 @@ module.exports = React.createClass({
         });
     },
 
+    initResumableUpload: function(buttonDOMNode)
+    {
+        var r, uri, component = this;
+
+        r = new Resumable({
+            headers: {
+                Authorization: this.props.oauthStore.getAuthorizationHeader()
+            }
+        });
+
+        r.assignBrowse(buttonDOMNode);
+
+        r.on('fileAdded', function(file) {
+            this.opts.target = 'http://' + component.props.oauthStore.hostname + component.getUri()
+            this.upload();
+        })
+
+        r.on('error', function(message, file) {
+            this.cancel();
+        });
+    },
+
+    /**
+     * Get the URI with placeholders replaced
+     *
+     * @return {String}
+     */
+    getUri : function()
+    {
+        var uri = this.props.uri;
+
+        _.each(this.refs.params.getValues(), _.bind(function(value, name)
+        {
+            uri = uri.replace(':' + name, encodeURIComponent(value));
+        }));
+
+        return uri;
+    },
+
     render : function()
     {
         var apiCallInfo = '';
@@ -147,7 +187,7 @@ module.exports = React.createClass({
                     <h2><span>{this.props.method}</span><span>{this.props.name}</span><span>{this.props.uri}</span></h2>
                 </div>
                 <p>{this.props.synopsis}</p>
-                <Params params={this.props.params} ref='params' />
+                <Params params={this.props.params} resumableUploadCallback={this.initResumableUpload} ref='params' />
                 <div className="switch__container">
                     <p className="checkbox-label">Include OAuth Token?</p>
                     <Checkbox defaultChecked={this.props.oauth} ref="sendToken" name={this.props.name}/>
@@ -156,5 +196,6 @@ module.exports = React.createClass({
                 {apiCallInfo}
             </div>
         );
+
     }
 });

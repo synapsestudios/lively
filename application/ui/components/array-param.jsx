@@ -55,7 +55,7 @@ module.exports = React.createClass(_.extend(ParamObject, {
     {
         var callback, field, instance = this;
 
-        if (this.props.type === 'enum') {
+        if (this.getParamType() === 'enum') {
             if (! this.props.enumValues.length) {
                 console.warn('Missing enumValues for param: ' + this.props.name);
             }
@@ -63,13 +63,15 @@ module.exports = React.createClass(_.extend(ParamObject, {
             field = <Select
                 className="array-input"
                 options={this.props.enumValues}
+                value={value}
                 handleChange={this.updateField}
                 key={index}
              />;
-        } else if (this.props.type === 'boolean') {
+        } else if (this.getParamType() === 'boolean') {
             field = <Select
                 className="array-input"
                 options={['true', 'false']}
+                value={value}
                 handleChange={this.updateField}
                 key={index}
             />;
@@ -122,7 +124,7 @@ module.exports = React.createClass(_.extend(ParamObject, {
 
     getValueFromTarget : function(target)
     {
-        if (this.props.type === 'enum') {
+        if (this.getParamType() === 'enum') {
             return target.options[target.selectedIndex].text;
         }
 
@@ -152,7 +154,7 @@ module.exports = React.createClass(_.extend(ParamObject, {
                     <a className="button field-button--add" onClick={this.addField}>{'+ Add Field'}</a>
                     {this.getInputs()}
                 </td>
-                <td className="array-title">Array of <code>{this.props.type}</code>s</td>
+                <td className="array-title">Array of <code>{this.getParamType()}</code>s</td>
                 <td className="array-title" dangerouslySetInnerHTML={{__html: marked(description)}}></td>
             </tr>
         );

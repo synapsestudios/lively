@@ -3,7 +3,6 @@
 
 var React             = require('react');
 var cx                = require('react/lib/cx');
-var OAuthConnectPanel = require('../components/oauth');
 
 module.exports = React.createClass({
 
@@ -30,8 +29,6 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var hidden = this.props.hidden;
-
         var oAuthLinkClasses = cx({
             'header__auth'      : true,
             'fa'                : true,
@@ -42,8 +39,11 @@ module.exports = React.createClass({
         return (
             <div>
                 <header className="header">
-                    <span className="header__branding">LIVELY</span>
+                    <a className="header__branding fa fa-angle-left">LIVELY</a>
                     <span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}>{'OAuth2'}</span>
+                    <span className="header__api-branding">
+                        <a className="api-branding fa fa-github" href={'/' + this.props.slug}></a>
+                    </span>
                 </header>
                 {this.props.children}
             </div>

@@ -9,54 +9,6 @@
     box-shadow           : 0 1px 5px rgba($black, .15);
     overflow             : hidden;
 
-    .main-nav__back-link {
-        @extend .ff-source-bold;
-        display          : inline-block;
-        color            : $themeLGray;
-        text-decoration  : none;
-        padding          : rem-calc(0 0 0 20);
-        line-height      : rem-calc(40);
-        font-size        : rem-calc(13);
-        @include transition(color 300ms ease-in-out);
-
-        &::before {
-            position     : relative;
-            left         : 0px;
-            font-family  : $font-awesome;
-            padding-right: 5px;
-            @include transition(left 300ms ease-in-out);
-        }
-
-        &:hover {
-            color        : $themeDDGray;
-
-            &::before {
-                left     : -2px;
-            }
-
-        }
-
-    }
-
-    .main-nav__branding {
-        width            : 100%;
-        height           : rem-calc(100);
-        padding          : rem-calc(20);
-
-        a.branding {
-            width        : rem-calc(60);
-            height       : rem-calc(60);
-            line-height  : rem-calc(64);
-            margin       : 0 auto;
-            text-align   : center;
-            display      : block;
-            font-size    : rem-calc(68);
-            color        : $themeDDGray;
-            text-decoration: none;
-        }
-
-    }
-
     .main-nav {
         padding          : rem-calc(20);
 

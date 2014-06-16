@@ -140,10 +140,12 @@
     left                 : 0;
     background           : rgba($black, .5) url('/images/css-images/overlay-pattern.png') repeat;
     z-index              : 998;
-    @include transition(bottom 300ms ease-in-out);
+    opacity              : 1;
+    @include transition(opacity 300ms ease-in-out);
 
     &.overlay-pattern--hidden {
         bottom           : 100%;
+        opacity          : 0;
     }
 
 }

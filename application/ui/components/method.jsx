@@ -140,8 +140,32 @@ module.exports = React.createClass({
             this.upload();
         })
 
+        resumable.on('fileSuccess', function(file, message) {
+            component.state.request = {
+                headers : this.opts.headers,
+                uri     : this.opts.target
+            };
+
+            component.apiCallback(null, {
+                status  : 200,
+                headers : {},
+                data    : _.last(file.chunks).message()
+            });
+        });
+
         resumable.on('error', function(message, file) {
-            this.cancel();
+            component.state.request = {
+                headers : this.opts.headers,
+                uri     : this.opts.target
+            };
+
+            component.apiCallback(null, {
+                status  : 500,
+                headers : {},
+                data    : file.chunks.length ?
+                    _.last(file.chunks).message() :
+                    'Unknown Error'
+            });
         });
     },
 

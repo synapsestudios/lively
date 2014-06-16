@@ -121,22 +121,26 @@ module.exports = React.createClass({
 
     initResumableUpload: function(buttonDOMNode)
     {
-        var r, uri, component = this;
+        var resumable, uri, component = this;
 
-        r = new Resumable({
-            headers: {
-                Authorization: this.props.oauthStore.getAuthorizationHeader()
+        resumable = new Resumable();
+
+        resumable.assignBrowse(buttonDOMNode);
+
+        resumable.on('fileAdded', function(file) {
+            // Add authorization header if oauth input checked
+            if (component.refs.sendToken.getValue()) {
+                var headers = this.opts.headers || {};
+                headers.Authorization = component.props.oauthStore.getAuthorizationHeader();
+                this.opts.headers = headers;
             }
-        });
-
-        r.assignBrowse(buttonDOMNode);
-
-        r.on('fileAdded', function(file) {
+            // Set URI, replacing placeholders with values from user input
             this.opts.target = 'http://' + component.props.oauthStore.hostname + component.getUri()
+
             this.upload();
         })
 
-        r.on('error', function(message, file) {
+        resumable.on('error', function(message, file) {
             this.cancel();
         });
     },

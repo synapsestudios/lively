@@ -158,6 +158,19 @@ module.exports = React.createClass({
         return uri;
     },
 
+    getTryItButton: function()
+    {
+        var hasUpload = false;
+
+        _.each(this.props.params, function(value) {
+            if (value.type === 'resumable-upload') {
+                hasUpload = true;
+            }
+        });
+
+        return hasUpload ? null : <a className="button" onClick={this.onSubmit}>Try it</a>;
+    },
+
     render : function()
     {
         var apiCallInfo = '';
@@ -192,7 +205,7 @@ module.exports = React.createClass({
                     <p className="checkbox-label">Include OAuth Token?</p>
                     <Checkbox defaultChecked={this.props.oauth} ref="sendToken" name={this.props.name}/>
                 </div>
-                <a className="button" onClick={this.onSubmit}>Try it</a>
+                {this.getTryItButton()}
                 {apiCallInfo}
             </div>
         );

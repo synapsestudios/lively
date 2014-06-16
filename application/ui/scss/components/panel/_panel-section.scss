@@ -26,12 +26,13 @@
         &.panel__header--get {
             background-color       : tint($statusBlue, 50%);
 
-            &::before {
-                border-color       : transparent shade($statusBlue, 40%) transparent transparent;
+            h2>span:first-of-type {
+                padding              : rem-calc(9 41 4);
+                background-color     : $statusBlue;
             }
 
-            h2 span:first-child {
-                background-color   : $statusBlue;
+            &::before {
+                border-color       : transparent shade($statusBlue, 40%) transparent transparent;
             }
 
         }
@@ -39,12 +40,13 @@
         &.panel__header--head {
             background-color       : tint($statusPurple, 80%);
 
-            &::before {
-                border-color       : transparent shade($statusPurple, 40%) transparent transparent;
+            h2>span:first-of-type {
+                padding              : rem-calc(9 32 4);
+                background-color     : tint($statusPurple, 20%);
             }
 
-            h2 span:first-child {
-                background-color   : $statusPurple;
+            &::before {
+                border-color       : transparent shade($statusPurple, 40%) transparent transparent;
             }
 
         }
@@ -52,12 +54,13 @@
         &.panel__header--post {
             background-color       : tint($statusGreen, 80%);
 
-            &::before {
-                border-color       : transparent shade($statusGreen, 40%) transparent transparent;
+            h2>span:first-of-type {
+                padding              : rem-calc(9 32 4 33);
+                background-color     : $statusGreen;
             }
 
-            h2 span:first-child {
-                background-color   : $statusGreen;
+            &::before {
+                border-color       : transparent shade($statusGreen, 40%) transparent transparent;
             }
 
         }
@@ -65,12 +68,13 @@
         &.panel__header--patch {
             background-color       : tint($statusOrange, 80%);
 
-            &::before {
-                border-color       : transparent shade($statusOrange, 40%) transparent transparent;
+            h2>span:first-of-type {
+                padding              : rem-calc(9 26 4);
+                background-color     : $statusOrange;
             }
 
-            h2 span:first-child {
-                background-color   : $statusOrange;
+            &::before {
+                border-color       : transparent shade($statusOrange, 40%) transparent transparent;
             }
 
         }
@@ -78,12 +82,13 @@
         &.panel__header--put {
             background-color       : tint($statusYellow, 80%);
 
-            &::before {
-                border-color       : transparent shade($statusYellow, 40%) transparent transparent;
+            h2>span:first-of-type {
+                padding              : rem-calc(9 40 4);
+                background-color     : $statusYellow;
             }
 
-            h2 span:first-child {
-                background-color   : $statusYellow;
+            &::before {
+                border-color       : transparent shade($statusYellow, 40%) transparent transparent;
             }
 
         }
@@ -91,25 +96,41 @@
         &.panel__header--delete {
             background-color       : tint($statusRed, 80%);
 
-            &::before {
-                border-color       : transparent shade($statusRed, 40%) transparent transparent;
+            h2>span:first-of-type {
+                padding              : rem-calc(9 19 4 20);
+                background-color   : $statusRed;
             }
 
-            h2 span:first-child {
-                background-color   : $statusRed;
+            &::before {
+                border-color       : transparent shade($statusRed, 40%) transparent transparent;
             }
 
         }
 
         h2 {
-            height       : rem-calc(50);
-            padding-left : 0 !important;
+            position                 : relative;
+            height                   : rem-calc(50);
+            padding-left             : 0 !important;
+            white-space              : nowrap;
 
             span {
                 font-size          : 28px;
-                height             : rem-calc(50);
-                padding            : rem-calc(9 20 4 0);
-                margin-right       : rem-calc(20);
+
+                &:nth-of-type(2) {
+                    display          : inline-block;
+                    position         : absolute;
+                    top              : rem-calc(3);
+                    font-size        : rem-calc(20);
+                    margin-left      : rem-calc(20);
+                }
+
+                &:nth-of-type(3) {
+                    display          : inline-block;
+                    position         : absolute;
+                    top              : rem-calc(30);
+                    margin-left      : rem-calc(20);
+                    font-size        : rem-calc(12);
+                }
 
             }
 

@@ -38,8 +38,16 @@ module.exports = React.createClass({
         return {
             status   : false,
             error    : false,
-            response : null
+            response : null,
+            methodPanelHidden : true
         };
+    },
+
+    toggleMethodPanel : function()
+    {
+        this.setState({
+            methodPanelHidden : ! this.state.methodPanelHidden
+        });
     },
 
     apiCallback : function(err, resp)
@@ -141,19 +149,38 @@ module.exports = React.createClass({
             'panel__header--delete'  : this.props.method === 'DELETE'
         });
 
+        var methodPanelClasses = cx({
+            'method-panel'          : true,
+            'method-panel--hidden'  : this.state.methodPanelHidden
+        });
+
+        var naviconButtonClasses = cx({
+            'navicon-button' : true,
+            'open'           : ! this.state.methodPanelHidden
+        });
+
         return (
             <div className='panel-section'>
                 <div className={panelHeaderClasses}>
-                    <h2><span>{this.props.method}</span><span>{this.props.name}</span><span>{this.props.uri}</span></h2>
+                    <h2>
+                        <span>{this.props.method}</span>
+                        <span>{this.props.name}</span>
+                        <span>{this.props.uri}</span>
+                    </h2>
+                    <span className={naviconButtonClasses} onClick={this.toggleMethodPanel}>
+                        <div className="navicon"></div>
+                    </span>
                 </div>
-                <p>{this.props.synopsis}</p>
-                <Params params={this.props.params} ref='params' />
-                <div className="switch__container">
-                    <p className="checkbox-label">Include OAuth Token?</p>
-                    <Checkbox defaultChecked={this.props.oauth} ref="sendToken" name={this.props.name}/>
+                <div className={methodPanelClasses}>
+                    <p>{this.props.synopsis}</p>
+                    <Params params={this.props.params} ref='params' />
+                    <div className="switch__container">
+                        <p className="checkbox-label">Include OAuth Token?</p>
+                        <Checkbox defaultChecked={this.props.oauth} ref="sendToken" name={this.props.name}/>
+                    </div>
+                    <a className="button" onClick={this.onSubmit}>Try it</a>
+                    {apiCallInfo}
                 </div>
-                <a className="button" onClick={this.onSubmit}>Try it</a>
-                {apiCallInfo}
             </div>
         );
     }

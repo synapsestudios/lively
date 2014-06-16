@@ -5,6 +5,7 @@
 var _                 = require('underscore');
 var React             = require('react');
 var StoreWatchMixin   = require('synapse-common/ui/mixins/store-watch');
+var SiteHeader        = require('../layouts/header');
 var OAuthConnectPanel = require('../components/oauth');
 var MainNav           = require('../components/navigation/main-nav');
 var ResourcePage      = require('./resource');
@@ -162,11 +163,13 @@ module.exports = React.createClass({
 
         return (
             <div>
+                <SiteHeader hasOAuth={this.state.hasOAuth} slug={this.props.slug}>
+                    <OAuthConnectPanel stores={this.props.stores} onOAuthStart={this.handleOAuthStart} />
+                </SiteHeader>
                 <Locations contextual>
                     {navLocations}
                 </Locations>
                 <div className="panel__wrapper">
-                    <OAuthConnectPanel stores={this.props.stores} onOAuthStart={this.handleOAuthStart} />
                     <Locations contextual>
                         {resourceLocations}
                     </Locations>

@@ -3,46 +3,30 @@
 
 var React             = require('react');
 var cx                = require('react/lib/cx');
-var OAuthConnectPanel = require('../components/oauth');
+var dispatcher        = require('synapse-common/lib/dispatcher');
 
 module.exports = React.createClass({
 
     displayName : 'SiteHeader',
 
-    getStateFromStores : function()
-    {
-        return {
-            oAuthPanelHidden : true
-        };
-    },
-
-    getInitialState : function()
-    {
-        return this.getStateFromStores();
-    },
-
     toggleOAuthPanel : function()
     {
-        this.setState({
-            oAuthPanelHidden : ! this.state.oAuthPanelHidden
-        });
+        dispatcher.emit('toggleOauthPanel');
     },
 
     render : function()
     {
-        var hidden = this.props.hidden;
-
         var oAuthLinkClasses = cx({
             'header__auth'      : true,
             'fa'                : true,
-            'fa-lock'           : this.state.hasOAuth,
-            'fa-unlock-alt'     : ! this.state.hasOAuth
+            'fa-lock'           : this.props.hasOAuth,
+            'fa-unlock-alt'     : ! this.props.hasOAuth
         });
 
         return (
             <div>
                 <header className="header">
-                    <span className="header__branding">LIVELY</span>
+                    <span className="header__branding">Lively</span>
                     <span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}>{'OAuth2'}</span>
                 </header>
                 {this.props.children}

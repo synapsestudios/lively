@@ -11,6 +11,7 @@ header {
         @extend .source-bold;
         font-size        : rem-calc(24);
         letter-spacing   : 10px;
+        text-transform   : uppercase;
         float            : left;
         line-height      : rem-calc(60);
         padding-left     : rem-calc(30);

@@ -1,20 +1,28 @@
 /** @jsx React.DOM */
 'use strict';
 
-var React           = require('react');
-var cx              = require('react/lib/cx');
-var TextInput       = require('./input/text');
-var StoreWatchMixin = require('synapse-common/ui/mixins/store-watch');
-var util = require('util');
+var React      = require('react');
+var cx         = require('react/lib/cx');
+var TextInput  = require('./input/text');
+var StoreWatch = require('synapse-common/ui/mixins/store-watch');
+var Events     = require('synapse-common/ui/mixins/events');
+var util       = require('util');
 
 module.exports = React.createClass({
 
     displayName : 'OAuthPanel',
-
-    mixins : [ StoreWatchMixin ],
-
+    mixins : [ StoreWatch, Events ],
     propTypes : {
         onOAuthStart : React.PropTypes.func.isRequired
+    },
+
+    componentWillMount : function()
+    {
+        this.subscribe('toggleOauthPanel', function() {
+            this.setState({
+                oAuthPanelHidden : ! this.state.oAuthPanelHidden
+            });
+        }.bind(this));
     },
 
     handleClick : function()

@@ -168,11 +168,9 @@ module.exports = React.createClass({
             };
 
             component.apiCallback(null, {
-                status  : 500,
+                status  : '???',
                 headers : {},
-                data    : file.chunks.length ?
-                    _.last(file.chunks).message() :
-                    'Unknown Error'
+                data    : message || 'Unknown Error'
             });
         });
     },

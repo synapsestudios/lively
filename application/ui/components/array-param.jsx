@@ -8,6 +8,7 @@ var ParamObject = require('./param-object');
 var Select      = require('./input/select');
 var Text        = require('./input/text');
 var marked      = require('marked');
+var ArrayObject = require('synapse-common/lib/array-object');
 
 module.exports = React.createClass(_.extend(ParamObject, {
 
@@ -16,7 +17,7 @@ module.exports = React.createClass(_.extend(ParamObject, {
     getInitialState : function()
     {
         return {
-            values : [this.getDefaultValue()]
+            values : ArrayObject
         };
     },
 
@@ -35,7 +36,7 @@ module.exports = React.createClass(_.extend(ParamObject, {
 
     getValue : function()
     {
-        return this.state.values;
+        return this.state.values.getAsArray();
     },
 
     getInputs : function()
@@ -108,7 +109,7 @@ module.exports = React.createClass(_.extend(ParamObject, {
             values = this.state.values,
             value  = this.getValueFromTarget(event.target);
 
-        values[key] = this.filterValue(value);
+        values.edit(key, this.filterValue(value));
 
         if (isNaN(values[key])) {
             values[key] = value;
@@ -132,7 +133,7 @@ module.exports = React.createClass(_.extend(ParamObject, {
     {
         var values = this.state.values;
 
-        values.splice(index, 1);
+        values.remove(index);
 
         this.setState({
             values : values
@@ -148,8 +149,8 @@ module.exports = React.createClass(_.extend(ParamObject, {
             <tr>
                 <td className="array-title"><code>{this.props.name}</code></td>
                 <td className="array-td td--max-width">
-                    {this.getInputs()}
                     <a className="button field-button--add" onClick={this.addField}>{'+ Add Field'}</a>
+                    {this.getInputs()}
                 </td>
                 <td className="array-title">Array of <code>{this.props.type}</code>s</td>
                 <td className="array-title" dangerouslySetInnerHTML={{__html: marked(description)}}></td>

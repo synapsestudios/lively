@@ -30,11 +30,16 @@ module.exports = function(req, res) {
         });
 
         proxyRes.on('end', function() {
-            var json = JSON.parse(data);
+            try {
+                var json = JSON.parse(data);
 
-            res.writeHead(302, {
-                Location : 'http://127.0.0.1:9001/'+query.api+'?' + qs.stringify(json)
-            });
+                res.writeHead(302, {
+                    Location : 'http://127.0.0.1:9001/'+query.api+'?' + qs.stringify(json)
+                });
+
+            } catch (e) {
+                res.write(data);
+            }
 
             res.end();
         });

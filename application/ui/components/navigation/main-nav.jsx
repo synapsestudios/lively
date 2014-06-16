@@ -68,10 +68,6 @@ module.exports = React.createClass({
 
         return (
             <div className="main-nav__wrapper">
-                <a className="main-nav__back-link fa fa-arrow-left" href="/">Back to API List</a>
-                <div className="main-nav__branding">
-                    <a className="branding fa fa-github" href={'/' + this.props.slug}></a>
-                </div>
                 <ul className="main-nav">
                     {this.buildNavList()}
                 </ul>

@@ -11,6 +11,7 @@
         left             : rem-calc(-30);
         width            : calc(100% + 55px) !important;
         box-shadow       : 0 3px 3px rgba($black, .15);
+        cursor           : pointer;
 
         &::before,
         &::after {
@@ -40,19 +41,12 @@
             background-color       : tint($statusBlue, 50%);
 
             h2>span:first-of-type {
-                padding              : rem-calc(9 42 4 21);
+                padding              : rem-calc(9 41 4);
+                background-color     : $statusBlue;
             }
 
             &::before {
-                border-color         : transparent shade($statusBlue, 40%) transparent transparent;
-            }
-
-            &::after {
-                background-color     : tint($statusBlue, 50%);
-            }
-
-            h2 span:first-child {
-                background-color     : $statusBlue;
+                border-color       : transparent shade($statusBlue, 40%) transparent transparent;
             }
 
         }
@@ -64,16 +58,13 @@
                 padding              : rem-calc(9 33 4 12);
             }
 
+            h2>span:first-of-type {
+                padding              : rem-calc(9 32 4);
+                background-color     : tint($statusPurple, 20%);
+            }
+
             &::before {
-                border-color         : transparent shade($statusPurple, 40%) transparent transparent;
-            }
-
-            &::after {
-                background-color     : tint($statusPurple, 80%);
-            }
-
-            h2 span:first-child {
-                background-color     : tint($statusPurple, 50%);
+                border-color       : transparent shade($statusPurple, 40%) transparent transparent;
             }
 
         }
@@ -85,16 +76,13 @@
                 padding              : rem-calc(9 33 4 13);
             }
 
-            &::before {
-                border-color         : transparent shade($statusGreen, 40%) transparent transparent;
-            }
-
-            &::after {
-                background-color     : tint($statusGreen, 50%);
-            }
-
-            h2 span:first-child {
+            h2>span:first-of-type {
+                padding              : rem-calc(9 32 4 33);
                 background-color     : $statusGreen;
+            }
+
+            &::before {
+                border-color       : transparent shade($statusGreen, 40%) transparent transparent;
             }
 
         }
@@ -106,16 +94,13 @@
                 padding              : rem-calc(9 27 4 6);
             }
 
-            &::before {
-                border-color         : transparent shade($statusOrange, 40%) transparent transparent;
-            }
-
-            &::after {
-                background-color     : tint($statusOrange, 50%);
-            }
-
-            h2 span:first-child {
+            h2>span:first-of-type {
+                padding              : rem-calc(9 26 4);
                 background-color     : $statusOrange;
+            }
+
+            &::before {
+                border-color       : transparent shade($statusOrange, 40%) transparent transparent;
             }
 
         }
@@ -127,16 +112,13 @@
                 padding              : rem-calc(9 41 4 20);
             }
 
-            &::before {
-                border-color         : transparent shade($statusYellow, 40%) transparent transparent;
-            }
-
-            &::after {
-                background-color     : tint($statusYellow, 50%);
-            }
-
-            h2 span:first-child {
+            h2>span:first-of-type {
+                padding              : rem-calc(9 40 4);
                 background-color     : $statusYellow;
+            }
+
+            &::before {
+                border-color       : transparent shade($statusYellow, 40%) transparent transparent;
             }
 
         }
@@ -148,16 +130,13 @@
                 padding              : rem-calc(9 20 4 0);
             }
 
+            h2>span:first-of-type {
+                padding              : rem-calc(9 19 4 20);
+                background-color   : $statusRed;
+            }
+
             &::before {
-                border-color         : transparent shade($statusRed, 40%) transparent transparent;
-            }
-
-            &::after {
-                background-color     : tint($statusRed, 50%);
-            }
-
-            h2 span:first-child {
-                background-color     : $statusRed;
+                border-color       : transparent shade($statusRed, 40%) transparent transparent;
             }
 
         }

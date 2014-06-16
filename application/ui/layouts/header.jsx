@@ -1,9 +1,9 @@
 /** @jsx React.DOM */
 'use strict';
 
-var React             = require('react');
-var cx                = require('react/lib/cx');
-var dispatcher        = require('synapse-common/lib/dispatcher');
+var React      = require('react');
+var cx         = require('react/lib/cx');
+var dispatcher = require('synapse-common/lib/dispatcher');
 
 module.exports = React.createClass({
 
@@ -26,8 +26,11 @@ module.exports = React.createClass({
         return (
             <div>
                 <header className="header">
-                    <span className="header__branding">Lively</span>
+                    <a className="header__branding fa fa-angle-left">Lively</a>
                     <span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}>{'OAuth2'}</span>
+                    <span className="header__api-branding">
+                        <a className="api-branding fa fa-github" href={'/' + this.props.slug}></a>
+                    </span>
                 </header>
                 {this.props.children}
             </div>

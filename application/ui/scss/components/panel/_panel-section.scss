@@ -12,105 +12,180 @@
         width            : calc(100% + 55px) !important;
         box-shadow       : 0 3px 3px rgba($black, .15);
 
-        &::before {
+        &::before,
+        &::after {
             content      : '';
             position     : absolute;
-            left         : 0;
-            top          : rem-calc(50);
-            width        : 0;
-            height       : 0;
+            top          : 0;
+            width        : rem-calc(20);
+            height       : rem-calc(50);
+        }
+
+        &::before {
+            left                     : rem-calc(-20);
             border-width : rem-calc(0 10 10 0);
             border-style : solid;
+            width        : 0;
+            height       : 0;
+            left         : 0;
+            top          : rem-calc(50);
         }
+
+        &::after {
+            right                    : rem-calc(-20);
+        }
+
 
         &.panel__header--get {
             background-color       : tint($statusBlue, 50%);
 
+            h2>span:first-of-type {
+                padding              : rem-calc(9 42 4 21);
+            }
+
             &::before {
-                border-color       : transparent shade($statusBlue, 40%) transparent transparent;
+                border-color         : transparent shade($statusBlue, 40%) transparent transparent;
+            }
+
+            &::after {
+                background-color     : tint($statusBlue, 50%);
             }
 
             h2 span:first-child {
-                background-color   : $statusBlue;
+                background-color     : $statusBlue;
             }
 
         }
 
         &.panel__header--head {
-            background-color       : tint($statusPurple, 80%);
+            background-color         : tint($statusPurple, 80%);
+
+            h2>span:first-of-type {
+                padding              : rem-calc(9 33 4 12);
+            }
 
             &::before {
-                border-color       : transparent shade($statusPurple, 40%) transparent transparent;
+                border-color         : transparent shade($statusPurple, 40%) transparent transparent;
+            }
+
+            &::after {
+                background-color     : tint($statusPurple, 80%);
             }
 
             h2 span:first-child {
-                background-color   : $statusPurple;
+                background-color     : tint($statusPurple, 50%);
             }
 
         }
 
         &.panel__header--post {
-            background-color       : tint($statusGreen, 80%);
+            background-color         : tint($statusGreen, 50%);
+
+            h2>span:first-of-type {
+                padding              : rem-calc(9 33 4 13);
+            }
 
             &::before {
-                border-color       : transparent shade($statusGreen, 40%) transparent transparent;
+                border-color         : transparent shade($statusGreen, 40%) transparent transparent;
+            }
+
+            &::after {
+                background-color     : tint($statusGreen, 50%);
             }
 
             h2 span:first-child {
-                background-color   : $statusGreen;
+                background-color     : $statusGreen;
             }
 
         }
 
         &.panel__header--patch {
-            background-color       : tint($statusOrange, 80%);
+            background-color         : tint($statusOrange, 50%);
+
+            h2>span:first-of-type {
+                padding              : rem-calc(9 27 4 6);
+            }
 
             &::before {
-                border-color       : transparent shade($statusOrange, 40%) transparent transparent;
+                border-color         : transparent shade($statusOrange, 40%) transparent transparent;
+            }
+
+            &::after {
+                background-color     : tint($statusOrange, 50%);
             }
 
             h2 span:first-child {
-                background-color   : $statusOrange;
+                background-color     : $statusOrange;
             }
 
         }
 
         &.panel__header--put {
-            background-color       : tint($statusYellow, 80%);
+            background-color         : tint($statusYellow, 50%);
+
+            h2>span:first-of-type {
+                padding              : rem-calc(9 41 4 20);
+            }
 
             &::before {
-                border-color       : transparent shade($statusYellow, 40%) transparent transparent;
+                border-color         : transparent shade($statusYellow, 40%) transparent transparent;
+            }
+
+            &::after {
+                background-color     : tint($statusYellow, 50%);
             }
 
             h2 span:first-child {
-                background-color   : $statusYellow;
+                background-color     : $statusYellow;
             }
 
         }
 
         &.panel__header--delete {
-            background-color       : tint($statusRed, 80%);
+            background-color         : tint($statusRed, 50%);
+
+            h2>span:first-of-type {
+                padding              : rem-calc(9 20 4 0);
+            }
 
             &::before {
-                border-color       : transparent shade($statusRed, 40%) transparent transparent;
+                border-color         : transparent shade($statusRed, 40%) transparent transparent;
+            }
+
+            &::after {
+                background-color     : tint($statusRed, 50%);
             }
 
             h2 span:first-child {
-                background-color   : $statusRed;
+                background-color     : $statusRed;
             }
 
         }
 
         h2 {
-            height       : rem-calc(50);
-            padding-left : 0 !important;
+            position                 : relative;
+            height                   : rem-calc(50);
+            padding-left             : 0 !important;
+            white-space              : nowrap;
 
             span {
-                font-size          : 28px;
-                height             : rem-calc(50);
-                padding            : rem-calc(9 20 4 0);
-                margin-right       : rem-calc(20);
+                font-size            : 28px;
 
+                &:nth-of-type(2) {
+                    display          : inline-block;
+                    position         : absolute;
+                    top              : rem-calc(3);
+                    font-size        : rem-calc(20);
+                    margin-left      : rem-calc(20);
+                }
+
+                &:nth-of-type(3) {
+                    display          : inline-block;
+                    position         : absolute;
+                    top              : rem-calc(30);
+                    margin-left      : rem-calc(20);
+                    font-size        : rem-calc(12);
+                }
             }
 
         }

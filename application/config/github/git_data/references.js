@@ -93,7 +93,7 @@ module.exports = {
                     description : 'The SHA1 value to set this reference to.'
                 },
                 {
-                    name         : 'ref',
+                    name         : 'force',
                     required     : false,
                     defaultValue : false,
                     type         : 'boolean',

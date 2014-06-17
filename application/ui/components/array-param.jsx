@@ -113,10 +113,6 @@ module.exports = React.createClass(_.extend(ParamObject, {
 
         values.edit(key, this.filterValue(value));
 
-        if (isNaN(values[key])) {
-            values[key] = value;
-        }
-
         this.setState({
             values : values
         });

@@ -26,7 +26,8 @@ module.exports = React.createClass({
         return (
             <div>
                 <header className="header">
-                    <a href="/" className="header__branding fa fa-angle-left">Lively</a>
+                    <a href="/" className="header__api fa fa-angle-left">{this.props.name}</a>
+                    <span className="header__branding">Lively</span>
                     <span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}>{'OAuth2'}</span>
                     <span className="header__api-branding">
                         <a className="api-branding fa fa-github" href={'/' + this.props.slug}></a>

@@ -163,7 +163,7 @@ module.exports = React.createClass({
 
         return (
             <div>
-                <SiteHeader hasOAuth={this.state.hasOAuth} slug={this.props.slug}>
+                <SiteHeader hasOAuth={this.state.hasOAuth} slug={this.props.slug} name={this.props.config.name}>
                     <OAuthConnectPanel stores={this.props.stores} onOAuthStart={this.handleOAuthStart} />
                 </SiteHeader>
                 <Locations contextual>

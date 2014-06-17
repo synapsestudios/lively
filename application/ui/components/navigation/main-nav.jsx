@@ -21,7 +21,7 @@ module.exports = React.createClass({
     navItemFromResource : function(resource)
     {
         var navLinkClasses = cx({
-            'main-nav__link'         : true,
+            'main-nav__link'         : true
 
         });
 
@@ -68,6 +68,7 @@ module.exports = React.createClass({
 
         return (
             <div className="main-nav__wrapper">
+                <h3 className="main-nav__header">API Resources</h3>
                 <ul className="main-nav">
                     {this.buildNavList()}
                 </ul>

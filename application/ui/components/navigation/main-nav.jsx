@@ -4,7 +4,7 @@
 var _      = require('underscore');
 var React  = require('react');
 var cx     = require('react/lib/cx');
-var Router = require('react-router-component');
+var Router = require('react-router');
 var Link   = Router.Link;
 
 module.exports = React.createClass({
@@ -21,12 +21,15 @@ module.exports = React.createClass({
     navItemFromResource : function(resource)
     {
         var navLinkClasses = cx({
-            'main-nav__link'         : true,
-
+            'main-nav__link'         : true
         });
 
         return (
-            <Link href={'/'+this.slugify(resource.name)} key={this.slugify(resource.name)} className={navLinkClasses}>
+            <Link to='api-resource'
+                  apiSlug={this.props.slug}
+                  resourceSlug={this.slugify(resource.name)}
+                  key={this.slugify(resource.name)}
+                  className={navLinkClasses}>
                 <li className="main-nav__item">
                     {resource.name}
                 </li>
@@ -68,6 +71,7 @@ module.exports = React.createClass({
 
         return (
             <div className="main-nav__wrapper">
+                <h3 className="main-nav__header">API Resources</h3>
                 <ul className="main-nav">
                     {this.buildNavList()}
                 </ul>

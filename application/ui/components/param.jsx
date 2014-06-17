@@ -23,7 +23,8 @@ module.exports = React.createClass({
         ]),
         defaultValue : React.PropTypes.oneOfType([
             React.PropTypes.string,
-            React.PropTypes.number
+            React.PropTypes.number,
+            React.PropTypes.bool
         ])
     },
 

@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 'use strict';
 
+var _     = require('underscore');
 var React = require('react');
 
 module.exports = React.createClass({
@@ -9,11 +10,11 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var links = this.props.list.map(function(api) {
+        var links = _.map(this.props.config, function(config, slug) {
 
             return (
-                <a className="panel__link fa fa-github" href={'/' + api.slug}>
-                    {api.name}
+                <a className="panel__link fa fa-github" href={'/' + slug} key={slug}>
+                    {config.name}
                 </a>
             );
         });

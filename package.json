@@ -40,7 +40,7 @@
     "request": "^2.34.0",
     "node-jsx": "^0.10.0",
     "synapse-common": "git://github.com/synapsestudios/synapse-common",
-    "react-router-component": "git://github.com/bjyoungblood/react-router-component#inject-batching-strategy",
+    "react-router": "git://github.com/rpflorence/react-router",
     "oauth": "^0.9.12",
     "connect-livereload": "^0.4.0",
     "tiny-lr": "0.0.7",

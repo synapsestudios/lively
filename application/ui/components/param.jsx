@@ -21,11 +21,11 @@ module.exports = React.createClass(_.extend(AbstractParam, {
                 console.warn('Missing enumValues for param: ' + this.props.name);
             }
 
-            return <Select value={this.props.defaultValue} options={this.props.enumValues} ref='input' />;
+            return <Select options={this.props.enumValues} ref='input' />;
         } else if (type === 'boolean') {
-            return <Select value={this.props.defaultValue} options={['true', 'false']} ref='input' />;
+            return <Select options={['true', 'false']} ref='input' />;
         } else {
-            return <Text value={this.props.defaultValue} ref='input' />;
+            return <Text defaultValue={this.props.defaultValue} ref='input' />;
         }
     }
 }));

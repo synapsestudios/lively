@@ -7,16 +7,47 @@
     background-color     : $themeLLGray;
     border-radius        : 3px;
     box-shadow           : 0 1px 5px rgba($black, .15);
-    overflow             : hidden;
+    @include user-select(none);
+
+    .main-nav__header {
+        @extend .ff-source;
+        position         : relative;
+        left             : rem-calc(-10);
+        width            : calc(100% + 15px);
+        background-color : tint($themeLGray, 40%);
+        height           : rem-calc(50);
+        margin-top       : 0;
+        line-height      : rem-calc(50);
+        color            : $white;
+        padding-left     : rem-calc(15);
+        box-shadow       : 0 3px 3px rgba($black, .15);
+
+        &::before {
+            content      : '';
+            position     : absolute;
+            left         : rem-calc(-25);
+            border-width : rem-calc(0 10 8 0);
+            border-style : solid;
+            width        : 0;
+            height       : 0;
+            left         : 0;
+            top          : rem-calc(50);
+            border-color : transparent shade($themeLGray, 30%) transparent transparent;
+
+        }
+
+    }
 
     .main-nav {
         padding          : rem-calc(20);
+        overflow         : hidden;
 
         .main-nav__link {
             position     : relative;
             display      : block;
             color        : $themeDGray;
             text-decoration: none;
+            padding-left : 0;
 
             &::before {
                 content            : '';
@@ -48,7 +79,7 @@
                 &::before {
                     border-width   : rem-calc(4);
                     border-color   : $themeLGray;
-                    margin-left    : rem-calc(-4);
+                    margin-left    : rem-calc(-14);
                     @include transform(rotate(45deg));
                 }
 

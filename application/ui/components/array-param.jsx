@@ -2,22 +2,22 @@
 /* global console */
 'use strict';
 
-var _           = require('underscore');
-var React       = require('react');
-var ParamObject = require('./param-object');
-var Select      = require('./input/select');
-var Text        = require('./input/text');
-var marked      = require('marked');
-var ArrayObject = require('synapse-common/lib/array-object');
+var _             = require('underscore');
+var React         = require('react');
+var AbstractParam = require('./abstract-param');
+var Select        = require('./input/select');
+var Text          = require('./input/text');
+var marked        = require('marked');
+var ArrayObject   = require('synapse-common/lib/array-object');
 
-module.exports = React.createClass(_.extend(ParamObject, {
+module.exports = React.createClass(_.extend(AbstractParam, {
 
     displayName : 'ArrayParameter',
 
     getInitialState : function()
     {
         return {
-            values : ArrayObject
+            values : new ArrayObject()
         };
     },
 

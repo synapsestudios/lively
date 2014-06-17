@@ -168,7 +168,7 @@ module.exports = React.createClass({
             };
 
             component.apiCallback(null, {
-                status  : '???',
+                status  : this.statusCode || '???',
                 headers : {},
                 data    : message || 'Unknown Error'
             });

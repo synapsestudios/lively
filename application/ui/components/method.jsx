@@ -155,7 +155,7 @@ module.exports = React.createClass({
             };
 
             component.apiCallback(null, {
-                status  : 200,
+                status  : this.statusCode || '200',
                 headers : {},
                 data    : _.last(file.chunks).message()
             });

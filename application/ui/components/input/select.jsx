@@ -1,5 +1,6 @@
 'use strict';
 
+var _     = require('underscore');
 var React = require('react');
 
 module.exports = React.createClass({
@@ -23,10 +24,9 @@ module.exports = React.createClass({
 
     handleChange : function(event)
     {
-        var callback = this.props.handleChange,
-            toString = Object.prototype.toString;
+        var callback = this.props.handleChange;
 
-        if (toString.call(callback) !== '[object Function]') {
+        if (! _.isFunction(callback)) {
             return;
         }
 

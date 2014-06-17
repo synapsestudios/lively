@@ -39,7 +39,7 @@ module.exports = React.createClass({
         } else {
             arrayType = arrayTypeMatches[0].substring(
                 1,
-                arrayType[0].length - 1
+                arrayTypeMatches[0].length - 1
             );
         }
 

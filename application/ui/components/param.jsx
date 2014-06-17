@@ -2,14 +2,15 @@
 /* global console */
 'use strict';
 
-var React       = require('react');
-var _           = require('underscore');
-var ParamObject = require('./param-object');
-var Select      = require('./input/select');
-var Text        = require('./input/text');
+var React         = require('react');
+var _             = require('underscore');
+var AbstractParam = require('./abstract-param');
+var Select        = require('./input/select');
+var Text          = require('./input/text');
 
-module.exports = React.createClass(_.extend(ParamObject, {
+module.exports = React.createClass(_.extend(AbstractParam, {
 
+    displayName : 'Parameter',
 
     getInput : function()
     {

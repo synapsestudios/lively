@@ -2,11 +2,9 @@
 'use strict';
 
 var React  = require('react');
-
 var marked = require('marked');
 
 module.exports = {
-    displayName : 'Parameter',
 
     propTypes : {
         name         : React.PropTypes.string.isRequired,
@@ -91,4 +89,5 @@ module.exports = {
             </tr>
         );
     }
+
 };

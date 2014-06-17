@@ -60,7 +60,7 @@ module.exports = React.createClass({
         var oAuthPanelClasses = cx({
             'panel'         : true,
             'oauth__panel'  : true,
-            'panel--hidden' : this.state.oAuthPanelHidden,
+            'panel--hidden' : this.state.oAuthPanelHidden
         });
 
         var overlayClasses = cx({

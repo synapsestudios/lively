@@ -16,20 +16,6 @@ var paramRepo = {
     description : 'The name of the repo.'
 };
 
-var paramState = {
-    name         : 'state',
-    required     : false,
-    defaultValue : 'open',
-    type         : 'enum',
-    location     : 'query',
-    description  : 'Either `open`, `closed`, or `all` to filter by state. Default: `open`',
-    enumValues   : [
-        'open',
-        'closed',
-        'all'
-    ]
-};
-
 var paramNumber = {
     name        : 'number',
     required    : true,
@@ -74,7 +60,7 @@ var paramSince = {
 
 module.exports = {
     name     : 'Review Comments',
-    synopsis : 'Pull Request Review Comments are comments on a portion of the unified diff. These are separate from Commit Comments (which are applied directly to a commit, outside of the Pull Request view), and Issue Comments (which do not reference a portion of the unified diff).', 
+    synopsis : 'Pull Request Review Comments are comments on a portion of the unified diff. These are separate from Commit Comments (which are applied directly to a commit, outside of the Pull Request view), and Issue Comments (which do not reference a portion of the unified diff).',
     methods : [
         {
             name     : 'List comments on a pull request',

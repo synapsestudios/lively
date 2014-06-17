@@ -1,21 +1,5 @@
 'use strict';
 
-var paramUser = {
-    name        : 'user',
-    required    : true,
-    type        : 'string',
-    location    : 'uri',
-    description : 'The user.'
-};
-
-var paramSince = {
-    name         : 'since',
-    required     : false,
-    type         : 'string',
-    location     : 'query',
-    description  : 'A timestamp in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`. Only gists updated at or after this time are returned.'
-};
-
 var paramGistId = {
     name        : 'gist_id',
     required    : true,

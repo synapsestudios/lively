@@ -1,4 +1,4 @@
-/* global setTimeout */
+/* global console */
 'use strict';
 
 var _           = require('underscore');
@@ -107,9 +107,9 @@ var Store = BaseStore.extend({
     {
         if (! this.accessToken) {
             // Next tick because async callbacks should always be async
-            setTimeout(function() {
+            _.defer(function() {
                 cb('Missing access token for OAuth request');
-            }, 0);
+            });
 
             return;
         }

@@ -1,5 +1,6 @@
 'use strict';
 
+var _     = require('underscore');
 var React = require('react');
 
 module.exports = React.createClass({
@@ -21,10 +22,21 @@ module.exports = React.createClass({
         return <option key={idx} value={option}>{option}</option>;
     },
 
+    handleChange : function(event)
+    {
+        var callback = this.props.handleChange;
+
+        if (! _.isFunction(callback)) {
+            return;
+        }
+
+        this.props.handleChange(event, this);
+    },
+
     render : function()
     {
         return this.transferPropsTo(
-            <select className="select" ref='input'>
+            <select className="select" ref='input' onChange={this.handleChange}>
                 {this.props.options.map(this.getOptions)}
             </select>
         );

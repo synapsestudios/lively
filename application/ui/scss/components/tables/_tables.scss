@@ -17,8 +17,11 @@ table {
         }
 
         td {
-
             line-height              : rem-calc(20);
+
+            &.td--max-width {
+                max-width          : rem-calc(220);
+            }
 
             select {
                 margin-bottom        : 0;

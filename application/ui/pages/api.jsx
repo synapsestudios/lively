@@ -4,7 +4,7 @@
 
 var _                 = require('underscore');
 var React             = require('react');
-var StoreWatchMixin   = require('synapse-common/ui/mixins/store-watch');
+var OAuthStore        = require('../../store/oauth2');
 var SiteHeader        = require('../layouts/header');
 var OAuthConnectPanel = require('../components/oauth');
 var MainNav           = require('../components/navigation/main-nav');
@@ -13,41 +13,25 @@ var store             = require('store');
 var qs                = require('querystring');
 var url               = require('url');
 
-var Router    = require('react-router-component');
-var Locations = Router.Locations;
-var Location  = Router.Location;
-var NotFound  = Router.NotFound;
-
 module.exports = React.createClass({
 
     displayName : 'ApiPage',
-
-    mixins : [ StoreWatchMixin ],
 
     propTypes : {
         config : React.PropTypes.object.isRequired
     },
 
-    getStateFromStores : function()
-    {
-        return {
-            hasOAuth : (this.props.stores.oauth.accessToken !== null)
-        };
-    },
-
-    getInitialState : function()
-    {
-        return this.getStateFromStores();
-    },
-
     componentWillMount : function()
     {
-        var options = store.get(this.props.slug + '-client');
-        var config  = this.props.config;
+        var options = store.get(this.props.params.apiSlug + '-client');
+        var config  = this.props.config[this.props.params.apiSlug];
+
+        this.config     = config;
+        this.oauthStore = new OAuthStore(this.props.params.apiSlug);
 
         if (window.location.search.length > 1 && options) {
 
-            this.props.stores.oauth.setOptions({
+            this.oauthStore.setOptions({
                 clientId     : options.clientId,
                 clientSecret : options.clientSecret,
                 api          : config.api,
@@ -56,13 +40,13 @@ module.exports = React.createClass({
 
             var queryString = qs.parse(window.location.search.substring(1));
 
-            this.props.stores.oauth.setToken({
+            this.oauthStore.setToken({
                 accessToken : queryString.access_token,
                 tokenType   : queryString.token_type,
                 rawData     : queryString
             });
         } else {
-            this.props.stores.oauth.setOptions({
+            this.oauthStore.setOptions({
                 api          : config.api,
                 oauth2       : config.oauth2
             });
@@ -71,14 +55,14 @@ module.exports = React.createClass({
 
     handleOAuthStart : function(options)
     {
-        store.set(this.props.slug + '-client', options);
+        store.set(this.props.params.apiSlug + '-client', options);
 
-        var config = this.props.config.oauth2;
+        var config = this.config.oauth2;
 
         var redirectQs = qs.stringify({
             'client_id'     : options.clientId,
             'client_secret' : options.clientSecret,
-            'api'           : this.props.slug
+            'api'           : this.props.params.apiSlug
         });
 
         var redirectUrl = url.format({
@@ -106,32 +90,33 @@ module.exports = React.createClass({
             .replace(/[^\w-]+/g, '');
     },
 
-    mapFlatResourceLocations : function(resource, idx)
+    findResource : function(resource)
     {
-        return (
-            <Location key={idx}
-                      handler={ResourcePage}
-                      path={'/'+this.slugify(resource.name)}
-                      config={resource}
-                      stores={this.props.stores} />
-        );
+        if (this.slugify(resource.name) === this.props.params.resourceSlug) {
+            return true;
+        }
     },
 
-    mapNestedResourceLocations : function(data)
+    getFlatResources : function(categories)
     {
-        return _.map(data, this.mapFlatResourceLocations, this);
+        var resources = [];
+
+        _.each(categories, function(category) {
+            resources = resources.concat(category);
+        });
+
+        return resources;
     },
 
     mapFlatNavLocations : function(resource, idx)
     {
-        return <Location
-            handler={MainNav}
-            config={this.props.config}
-            path={'/'+this.slugify(resource.name)}
+        return <MainNav
+            key={'nav-'+resource.name}
+            config={this.config}
             active={this.slugify(resource.name)}
-            logo={this.props.config.logo}
-            name={this.props.config.name}
-            slug={this.props.slug} />;
+            logo={this.config.logo}
+            name={this.config.name}
+            slug={this.props.params.apiSlug} />;
     },
 
     mapNestedNavLocations : function(data)
@@ -141,38 +126,30 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var navLocations, resourceLocations;
+        var nav, resource, resourcePage,
+            stores = { oauth : this.oauthStore };
 
-        if (_.isArray(this.props.config.resources)) {
-            resourceLocations = _.map(this.props.config.resources, this.mapFlatResourceLocations, this);
-            navLocations      = _.map(this.props.config.resources, this.mapFlatNavLocations, this);
+        if (_.isArray(this.config.resources)) {
+            nav      = _.map(this.config.resources, this.mapFlatNavLocations, this);
+            resource = _.find(this.config.resources, this.findResource, this);
         } else {
-            resourceLocations = _.flatten(_.map(this.props.config.resources, this.mapNestedResourceLocations, this));
-            navLocations      = _.flatten(_.map(this.props.config.resources, this.mapNestedNavLocations, this));
+            nav      = _.flatten(_.map(this.config.resources, this.mapNestedNavLocations, this));
+            resource = _.find(this.getFlatResources(this.config.resources), this.findResource, this);
         }
 
-
-        resourceLocations.push(<NotFound handler={React.DOM.div} />);
-        navLocations.push(<NotFound
-            handler={MainNav}
-            config={this.props.config}
-            active={false}
-            logo={this.props.config.logo}
-            name={this.props.config.name}
-            slug={this.props.slug} />);
+        if (resource) {
+            resourcePage = <ResourcePage config={resource}
+                stores={{oauth : this.oauthStore}} />;
+        }
 
         return (
             <div>
-                <SiteHeader hasOAuth={this.state.hasOAuth} slug={this.props.slug} name={this.props.config.name}>
-                    <OAuthConnectPanel stores={this.props.stores} onOAuthStart={this.handleOAuthStart} />
+                <SiteHeader stores={stores} slug={this.props.params.apiSlug} name={this.config.name}>
+                    <OAuthConnectPanel stores={stores} onOAuthStart={this.handleOAuthStart} />
                 </SiteHeader>
-                <Locations contextual>
-                    {navLocations}
-                </Locations>
+                {nav}
                 <div className="panel__wrapper">
-                    <Locations contextual>
-                        {resourceLocations}
-                    </Locations>
+                    {resourcePage}
                 </div>
             </div>
         );

@@ -2,12 +2,26 @@
 'use strict';
 
 var React      = require('react');
+var StoreWatch = require('synapse-common/ui/mixins/store-watch');
 var cx         = require('react/lib/cx');
 var dispatcher = require('synapse-common/lib/dispatcher');
 
 module.exports = React.createClass({
 
     displayName : 'SiteHeader',
+    mixins      : [ StoreWatch ],
+
+    getStateFromStores : function()
+    {
+        return {
+            hasOAuth : (this.props.stores.oauth.accessToken !== null)
+        };
+    },
+
+    getInitialState : function()
+    {
+        return this.getStateFromStores();
+    },
 
     toggleOAuthPanel : function()
     {
@@ -19,8 +33,8 @@ module.exports = React.createClass({
         var oAuthLinkClasses = cx({
             'header__auth'      : true,
             'fa'                : true,
-            'fa-lock'           : this.props.hasOAuth,
-            'fa-unlock-alt'     : ! this.props.hasOAuth
+            'fa-lock'           : this.state.hasOAuth,
+            'fa-unlock-alt'     : ! this.state.hasOAuth
         });
 
         return (

@@ -31,15 +31,15 @@ module.exports = React.createClass({
 
     getArrayParamComponent : function(param)
     {
-        var arrayType = param.type.match(/\[(.*?)\]/),
-            end;
+        var arrayType = param.type.match(/\[(.*?)\]/);
 
         if (arrayType === null) {
             arrayType = 'string';
         } else {
-            end = arrayType[0].length - 1;
-
-            arrayType = arrayType[0].substring(1, end);
+            arrayType = arrayType[0].substring(
+                1,
+                arrayType[0].length - 1
+            );
         }
 
         return <ArrayParam ref={param.name}

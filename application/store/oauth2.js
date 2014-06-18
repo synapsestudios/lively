@@ -67,6 +67,13 @@ var Store = BaseStore.extend({
 
             res.on('data', function(chunk) {
                 resText += chunk;
+
+                // Check for too much data from flood attack or faulty client
+                if (resText.length > 1e6) {
+                    resText = '';
+                    res.writeHead(413, {'Content-Type': 'text/plain'}).end();
+                    req.connection.destroy();
+                }
             });
 
             res.on('end', function() {

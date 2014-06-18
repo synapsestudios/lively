@@ -27,7 +27,7 @@ module.exports = React.createClass(_.extend(AbstractParam, {
         } else if (type === 'boolean') {
             return <Select options={['true', 'false']} ref='input' />;
         } else if (this.props.type === 'resumable-upload') {
-            return <ResumableUpload target={this.props.uri} resumableUploadCallback={this.props.resumableUploadCallback}/>;
+            return <ResumableUpload target={this.props.uri} resumableUploadCallback={this.props.resumableUploadCallback} ref='input'/>;
         } else {
             return <Text defaultValue={this.props.defaultValue} ref='input' />;
         }

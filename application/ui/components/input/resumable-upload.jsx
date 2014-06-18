@@ -6,6 +6,12 @@ var React     = require('react');
 module.exports = React.createClass({
     displayName : 'ResumableUpload',
 
+    // Not relevant for this input type, but it needs to return something
+    getValue: function()
+    {
+        return null;
+    },
+
     render: function()
     {
         return (

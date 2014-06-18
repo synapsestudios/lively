@@ -105,7 +105,7 @@ var Store = BaseStore.extend({
 
         return {
             uri     : req.uri,
-            data    : req.body,
+            data    : data,
             headers : req._headers
         };
     },
@@ -135,6 +135,12 @@ var Store = BaseStore.extend({
             'Content-Type' : 'application/json'
         }, data.header);
 
+        // @todo update where we send data.body to request() to make it always a string
+        // then we can remove the JSON.stringify from here and just do data.body.length
+        if (data && data.body) {
+            headers['Content-Length'] = JSON.stringify(data.body).length;
+        }
+
         var urlParts = url.parse(path, true);
         var query    = _.extend({}, urlParts.query, data.query);
 
@@ -153,7 +159,7 @@ var Store = BaseStore.extend({
             headers         : headers
         };
 
-        return this._request(options, data, cb);
+        return this._request(options, data.body, cb);
     },
 
     serializeToLocalStorage : function()

@@ -4,7 +4,7 @@
 var _      = require('underscore');
 var React  = require('react');
 var cx     = require('react/lib/cx');
-var Router = require('react-router');
+var Router = require('react-nested-router');
 var Link   = Router.Link;
 
 module.exports = React.createClass({

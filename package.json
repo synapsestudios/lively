@@ -47,17 +47,6 @@
     "connect-history-api-fallback": "0.0.4",
     "marked": "~0.3.2"
   },
-  "browserify": {
-    "transform": [
-      "browserify-shim"
-    ]
-  },
-  "browser": {
-    "underscore": "./node_modules/underscore/underscore.js"
-  },
-  "browserify-shim": {
-    "underscore": "_"
-  },
   "jest": {
     "scriptPreprocessor": "./preprocessor.js",
     "unmockedModulePathPatterns": [

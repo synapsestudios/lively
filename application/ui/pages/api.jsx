@@ -65,6 +65,8 @@ module.exports = React.createClass({
             'api'           : this.props.params.apiSlug
         });
 
+        var redirectHost = window.location.hostname + ':' + window.location.port;
+
         var redirectUrl = url.format({
             protocol : config.secure ? 'https' : 'http',
             hostname : config.hostname,
@@ -74,7 +76,7 @@ module.exports = React.createClass({
                 'client_id'     : options.clientId,
                 'client_secret' : options.clientSecret,
                 'response_type' : 'code',
-                'redirect_uri'  : 'http://' + this.props.config.livelyHost + '/oauth2-redirect?' + redirectQs,
+                'redirect_uri'  : 'http://' + redirectHost + '/oauth2-redirect?' + redirectQs,
                 'scope'         : options.scope,
                 'state'         : Math.random()
             }

@@ -35,7 +35,7 @@ module.exports = function(req, res) {
                 var json = JSON.parse(data);
 
                 res.writeHead(302, {
-                    Location : 'http://' + config.livelyHost + '/'+query.api+'?' + qs.stringify(json)
+                    Location : 'http://' + req.headers.host + '/'+query.api+'?' + qs.stringify(json)
                 });
             } catch (e) {
                 res.write(data);

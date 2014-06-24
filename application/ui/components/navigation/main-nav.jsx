@@ -18,7 +18,7 @@ module.exports = React.createClass({
             .replace(/[^\w-]+/g, '');
     },
 
-    navItemFromResource : function(resource)
+    navItemFromResource : function(resource, idx)
     {
         var navLinkClasses = cx({
             'main-nav__link'         : true
@@ -28,7 +28,7 @@ module.exports = React.createClass({
             <Link to='api-resource'
                   apiSlug={this.props.slug}
                   resourceSlug={this.slugify(resource.name)}
-                  key={this.slugify(resource.name)}
+                  key={idx+'-'+this.slugify(resource.name)}
                   className={navLinkClasses}>
                 <li className="main-nav__item">
                     {resource.name}

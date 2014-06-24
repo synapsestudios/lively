@@ -110,34 +110,23 @@ module.exports = React.createClass({
         return resources;
     },
 
-    mapFlatNavLocations : function(resource, idx)
-    {
-        return <MainNav
-            key={'nav-'+resource.name+'-'+idx}
-            config={this.config}
-            active={this.slugify(resource.name)}
-            logo={this.config.logo}
-            name={this.config.name}
-            slug={this.props.params.apiSlug} />;
-    },
-
-    mapNestedNavLocations : function(data)
-    {
-        return _.map(data, this.mapFlatNavLocations, this);
-    },
-
     render : function()
     {
         var nav, resource, resourcePage,
             stores = { oauth : this.oauthStore };
 
         if (_.isArray(this.config.resources)) {
-            nav      = _.map(this.config.resources, this.mapFlatNavLocations, this);
             resource = _.find(this.config.resources, this.findResource, this);
         } else {
-            nav      = _.flatten(_.map(this.config.resources, this.mapNestedNavLocations, this));
             resource = _.find(this.getFlatResources(this.config.resources), this.findResource, this);
         }
+
+        nav = <MainNav
+            config={this.config}
+            active={resource ? this.slugify(resource.name) : null}
+            logo={this.config.logo}
+            name={this.config.name}
+            slug={this.props.params.apiSlug} />;
 
         if (resource) {
             resourcePage = <ResourcePage config={resource}

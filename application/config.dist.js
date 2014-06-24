@@ -1,3 +1,5 @@
 module.exports = {
-    github : require('./config/config.github')
+    apis: {
+        github : require('./config/config.github')
+    }
 };

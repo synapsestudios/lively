@@ -11,7 +11,7 @@ module.exports = function(req, res) {
     var reqUrl = url.parse(req.url),
         query  = qs.parse(reqUrl.query);
 
-    var apiConfig = config[query.api];
+    var apiConfig = config.apis[query.api];
 
     var httpLib = apiConfig.oauth2.port === 443 ? https : http;
     var proxyReq = httpLib.request({
@@ -35,9 +35,8 @@ module.exports = function(req, res) {
                 var json = JSON.parse(data);
 
                 res.writeHead(302, {
-                    Location : 'http://127.0.0.1:9001/'+query.api+'?' + qs.stringify(json)
+                    Location : 'http://' + req.headers.host + '/'+query.api+'?' + qs.stringify(json)
                 });
-
             } catch (e) {
                 res.write(data);
             }

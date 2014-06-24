@@ -111,7 +111,7 @@ module.exports = React.createClass({
     mapFlatNavLocations : function(resource, idx)
     {
         return <MainNav
-            key={'nav-'+resource.name}
+            key={'nav-'+resource.name+'-'+idx}
             config={this.config}
             active={this.slugify(resource.name)}
             logo={this.config.logo}

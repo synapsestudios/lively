@@ -159,16 +159,6 @@ module.exports = React.createClass({
             'open'           : ! this.state.methodPanelHidden
         });
 
-        var methodPanelClasses = cx({
-            'method-panel'          : true,
-            'method-panel--hidden'  : this.state.methodPanelHidden
-        });
-
-        var naviconButtonClasses = cx({
-            'navicon-button' : true,
-            'open'           : ! this.state.methodPanelHidden
-        });
-
         return (
             <div className='panel-section'>
                 <div className={panelHeaderClasses} onClick={this.toggleMethodPanel}>

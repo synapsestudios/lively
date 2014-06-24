@@ -1,12 +1,22 @@
 /** @jsx React.DOM */
 'use strict';
 
-var _     = require('underscore');
-var React = require('react');
+var _          = require('underscore');
+var React      = require('react');
+var dispatcher = require('synapse-common/lib/dispatcher');
 
 module.exports = React.createClass({
 
     displayName : 'ApiList',
+
+    componentWillMount : function()
+    {
+        if (_.size(this.props.config) === 1) {
+            dispatcher.emit('router:redirect', 'api', {
+                apiSlug : _.keys(this.props.config)[0]
+            });
+        }
+    },
 
     render : function()
     {

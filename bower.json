@@ -18,6 +18,7 @@
   "dependencies": {
     "foundation": "~5.0.2",
     "modernizr": "~2.7.1",
-    "bourbon": "~3.1.8"
+    "bourbon": "~3.1.8",
+    "resumablejs": "v1.0"
   }
 }

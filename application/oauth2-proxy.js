@@ -31,11 +31,15 @@ module.exports = function(req, res) {
         });
 
         proxyRes.on('end', function() {
-            var json = JSON.parse(data);
+            try {
+                var json = JSON.parse(data);
 
-            res.writeHead(302, {
-                Location : 'http://' + config.livelyHost + '/'+query.api+'?' + qs.stringify(json)
-            });
+                res.writeHead(302, {
+                    Location : 'http://' + config.livelyHost + '/'+query.api+'?' + qs.stringify(json)
+                });
+            } catch (e) {
+                res.write(data);
+            }
 
             res.end();
         });

@@ -7,6 +7,7 @@ var cx          = require('react/lib/cx');
 var Params      = require('./params-list');
 var ApiCallInfo = require('./api-call-info');
 var Checkbox    = require('./input/checkbox');
+var Resumable   = require('../../../bower_components/resumablejs/resumable');
 
 var LOADED  = 'loaded',
     LOADING = 'loading';
@@ -126,6 +127,84 @@ module.exports = React.createClass({
         });
     },
 
+    initResumableUpload: function(buttonDOMNode)
+    {
+        var resumable, uri, component = this;
+
+        resumable = new Resumable();
+
+        resumable.assignBrowse(buttonDOMNode);
+
+        resumable.on('fileAdded', function(file) {
+            // Add authorization header if oauth input checked
+            if (component.refs.sendToken.getValue()) {
+                var headers = this.opts.headers || {};
+                headers.Authorization = component.props.oauthStore.getAuthorizationHeader();
+                this.opts.headers = headers;
+            }
+            // Set URI, replacing placeholders with values from user input
+            this.opts.target = 'http://' + component.props.oauthStore.hostname + component.getUri()
+
+            this.upload();
+        })
+
+        resumable.on('fileSuccess', function(file, message) {
+            component.state.request = {
+                headers : this.opts.headers,
+                uri     : this.opts.target
+            };
+
+            component.apiCallback(null, {
+                status  : this.statusCode || '200',
+                headers : {},
+                data    : _.last(file.chunks).message()
+            });
+        });
+
+        resumable.on('error', function(message, file) {
+            component.state.request = {
+                headers : this.opts.headers,
+                uri     : this.opts.target
+            };
+
+            component.apiCallback(null, {
+                status  : this.statusCode || '???',
+                headers : {},
+                data    : message || 'Unknown Error'
+            });
+        });
+    },
+
+    /**
+     * Get the URI with placeholders replaced
+     *
+     * @return {String}
+     */
+    getUri : function()
+    {
+        var uri = this.props.uri;
+
+        _.each(this.refs.params.getValues(), function(value, name)
+        {
+            uri = uri.replace(':' + name, encodeURIComponent(value));
+        });
+
+        return uri;
+    },
+
+    getTryItButton: function()
+    {
+        var hasUpload = false;
+
+        _.each(this.props.params, function(value) {
+            if (value.type === 'resumable-upload') {
+                hasUpload = true;
+            }
+        });
+
+        return hasUpload ? null : <a className="button" onClick={this.onSubmit}>Try it</a>;
+    },
+
     render : function()
     {
         var apiCallInfo = '';
@@ -183,15 +262,16 @@ module.exports = React.createClass({
                 </div>
                 <div className={methodPanelClasses}>
                     <p>{this.props.synopsis}</p>
-                    <Params params={this.props.params} ref='params' />
+                    <Params params={this.props.params} resumableUploadCallback={this.initResumableUpload} ref='params' />
                     <div className="switch__container">
                         <p className="checkbox-label">Include OAuth Token?</p>
                         <Checkbox defaultChecked={this.props.oauth} ref="sendToken" name={this.props.name}/>
                     </div>
-                    <a className="button" onClick={this.onSubmit}>Try it</a>
+                    {this.getTryItButton()}
                     {apiCallInfo}
                 </div>
             </div>
         );
+
     }
 });

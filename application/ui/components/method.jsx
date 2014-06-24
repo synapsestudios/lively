@@ -72,7 +72,7 @@ module.exports = React.createClass({
 
         _.each(params, _.bind(function(value, name)
         {
-            if (value === '') {
+            if (value === '' || _(value).isNaN() || value === null) {
                 // skip empty params
                 return;
             }
@@ -226,16 +226,6 @@ module.exports = React.createClass({
             'panel__header--patch'  : this.props.method === 'PATCH',
             'panel__header--put'    : this.props.method === 'PUT',
             'panel__header--delete' : this.props.method === 'DELETE'
-        });
-
-        var methodPanelClasses = cx({
-            'method-panel'          : true,
-            'method-panel--hidden'  : this.state.methodPanelHidden
-        });
-
-        var naviconButtonClasses = cx({
-            'navicon-button' : true,
-            'open'           : ! this.state.methodPanelHidden
         });
 
         var methodPanelClasses = cx({

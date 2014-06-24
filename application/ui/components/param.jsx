@@ -4,9 +4,11 @@
 
 var React         = require('react');
 var _             = require('underscore');
+var marked          = require('marked');
 var AbstractParam = require('./abstract-param');
 var Select        = require('./input/select');
 var Text          = require('./input/text');
+var ResumableUpload = require('./input/resumable-upload.jsx');
 
 module.exports = React.createClass(_.extend(AbstractParam, {
 
@@ -24,6 +26,8 @@ module.exports = React.createClass(_.extend(AbstractParam, {
             return <Select options={this.props.enumValues} ref='input' />;
         } else if (type === 'boolean') {
             return <Select options={['true', 'false']} ref='input' />;
+        } else if (this.props.type === 'resumable-upload') {
+            return <ResumableUpload target={this.props.uri} resumableUploadCallback={this.props.resumableUploadCallback} ref='input'/>;
         } else {
             return <Text defaultValue={this.props.defaultValue} ref='input' />;
         }

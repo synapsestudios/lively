@@ -122,10 +122,20 @@ var Store = BaseStore.extend({
         }
 
         data.header = _.extend(data.header, {
-            Authorization : this.tokenParam + ' ' + this.accessToken
+            Authorization : this.getAuthorizationHeader()
         });
 
         return this.request(method, path, data, cb);
+    },
+
+    /**
+     * Get the value of the Authorization header
+     *
+     * @return
+     */
+    getAuthorizationHeader: function()
+    {
+        return this.tokenParam + ' ' + (this.accessToken);
     },
 
     request : function(method, path, data, cb)

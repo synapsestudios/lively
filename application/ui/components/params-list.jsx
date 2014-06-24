@@ -26,7 +26,8 @@ module.exports = React.createClass({
                       type={param.type}
                       description={param.description}
                       defaultValue={param.defaultValue}
-                      enumValues={param.enumValues} />;
+                      enumValues={param.enumValues}
+                      resumableUploadCallback={this.props.resumableUploadCallback} />;
     },
 
     getArrayParamComponent : function(param)

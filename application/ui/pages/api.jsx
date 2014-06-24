@@ -24,7 +24,7 @@ module.exports = React.createClass({
     componentWillMount : function()
     {
         var options = store.get(this.props.params.apiSlug + '-client');
-        var config  = this.props.config[this.props.params.apiSlug];
+        var config  = this.props.config.apis[this.props.params.apiSlug];
 
         this.config     = config;
         this.oauthStore = new OAuthStore(this.props.params.apiSlug);
@@ -74,7 +74,7 @@ module.exports = React.createClass({
                 'client_id'     : options.clientId,
                 'client_secret' : options.clientSecret,
                 'response_type' : 'code',
-                'redirect_uri'  : 'http://127.0.0.1:9001/oauth2-redirect?' + redirectQs,
+                'redirect_uri'  : 'http://' + this.props.config.livelyHost + '/oauth2-redirect?' + redirectQs,
                 'scope'         : options.scope,
                 'state'         : Math.random()
             }

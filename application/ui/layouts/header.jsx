@@ -5,6 +5,7 @@ var React      = require('react');
 var StoreWatch = require('synapse-common/ui/mixins/store-watch');
 var cx         = require('react/lib/cx');
 var dispatcher = require('synapse-common/lib/dispatcher');
+var Link       = require('react-nested-router').Link;
 
 module.exports = React.createClass({
 
@@ -40,7 +41,7 @@ module.exports = React.createClass({
         return (
             <div>
                 <header className="header">
-                    <a href="/" className="header__api fa fa-angle-left">{this.props.name}</a>
+                    <Link to='api-list' className="header__api fa fa-angle-left">{this.props.name}</Link>
                     <span className="header__branding">Lively</span>
                     <span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}>{'OAuth2'}</span>
                     <span className="header__api-branding">

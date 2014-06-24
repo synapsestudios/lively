@@ -43,6 +43,10 @@ function Application(config) {
             </Route>
         );
 
+        dispatcher.on('router:redirect', function(route, params) {
+            Router.transitionTo(route, params || {});
+        }.bind(this));
+
         this.router.renderComponent(window.document.body);
     };
 }

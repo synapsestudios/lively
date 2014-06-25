@@ -86,7 +86,7 @@ var Store = BaseStore.extend({
 
                 cb(false, {
                     data    : json,
-                    headers : res.headers,
+                    headers : req.xhr.getAllResponseHeaders(),
                     status  : res.statusCode
                 });
             });
@@ -106,7 +106,7 @@ var Store = BaseStore.extend({
         return {
             uri     : req.uri,
             data    : data,
-            headers : req._headers
+            headers : options.headers
         };
     },
 

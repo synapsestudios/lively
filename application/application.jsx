@@ -12,6 +12,8 @@ var SiteLayout   = require('./ui/layouts/site');
 var ApiList      = require('./ui/pages/api-list');
 var ApiPage      = require('./ui/pages/api');
 
+var URLStore     = require('react-nested-router/modules/stores/URLStore');
+
 function Application(config) {
     this.dispatcher = dispatcher;
     this.config     = config;
@@ -42,6 +44,10 @@ function Application(config) {
                        config={this.config} />
             </Route>
         );
+
+        URLStore.addChangeListener(function() {
+            window.scrollTo(0,0);
+        });
 
         dispatcher.on('router:redirect', function(route, params) {
             Router.transitionTo(route, params || {});

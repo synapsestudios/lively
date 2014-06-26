@@ -4,6 +4,7 @@
 var gulp       = require('gulp'),
     gutil      = require('gulp-util'),
     watchify   = require('watchify'),
+    brfs       = require('brfs'),
     reactify   = require('reactify'),
     source     = require('vinyl-source-stream'),
     streamify  = require('gulp-streamify'),
@@ -17,7 +18,8 @@ gulp.task('watchify:app', function() {
             extensions: ['.js', '.jsx']
         })
         .external('config')
-        .transform(reactify);
+        .transform(reactify)
+        .transform(brfs);
 
     var rebundle = function() {
         var stream = bundler.bundle({

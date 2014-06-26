@@ -39,16 +39,16 @@ module.exports = React.createClass({
             'fa-unlock-alt'     : ! this.state.hasOAuth
         });
 
-        if (!this.props.showBackButton) {
+        if (this.props.showBackButton) {
             backButton = <Link to='api-list' className="header__api fa fa-angle-left">{this.props.name}</Link>;
         } else {
-            backButton = this.props.name;
+            backButton = <span className="header__api header__api--no-hover">{this.props.name}</span>;
         }
 
         return (
             <div>
                 <header className="header">
-                    <span className="header__api">{backButton}</span>
+                    <span>{backButton}</span>
                     <span className="header__branding">Lively</span>
                     <span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}>{'OAuth2'}</span>
                     <span className="header__api-branding">

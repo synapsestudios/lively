@@ -15,15 +15,7 @@ module.exports = React.createClass({
             React.PropTypes.number
         ]),
         request   : React.PropTypes.object,
-        response  : React.PropTypes.object,
-        formatter : React.PropTypes.func
-    },
-
-    getDefaultProps : function()
-    {
-        return {
-            formatter : _.partial(JSON.stringify, _, null, 4)
-        };
+        response  : React.PropTypes.object
     },
 
     formatHeadersFromObject : function(headersObject)
@@ -31,6 +23,15 @@ module.exports = React.createClass({
         return _.map(headersObject, function(value, key) {
             return key + ': ' + value;
         }).join("\n");
+    },
+
+    formatResponse : function(text)
+    {
+        try {
+            return JSON.stringify(text, null, 4);
+        } catch (e) {
+            return text;
+        }
     },
 
     render : function()
@@ -67,7 +68,7 @@ module.exports = React.createClass({
                     <h3 className="data__header">Response Headers</h3>
                     <pre><code className={successClasses}>{this.props.response.headers}</code></pre>
                     <h3 className="data__header">Response Body</h3>
-                    <pre><code className={successClasses}>{this.props.formatter(this.props.response.data)}</code></pre>
+                    <pre><code className={successClasses}>{this.formatResponse(this.props.response.data)}</code></pre>
                 </div>
             );
         }

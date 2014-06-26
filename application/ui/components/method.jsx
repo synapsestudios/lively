@@ -214,7 +214,6 @@ module.exports = React.createClass({
         {
             apiCallInfo = (
                 <ApiCallInfo status={this.state.status}
-                             formatter={this.props.formatter}
                              request={this.state.request}
                              response={this.state.response} />
             );

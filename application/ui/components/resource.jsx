@@ -22,8 +22,7 @@ module.exports = React.createClass({
                        uri={method.uri}
                        oauth={method.oauth}
                        params={method.params}
-                       oauthStore={this.props.oauthStore}
-                       formatter={method.formatter} />;
+                       oauthStore={this.props.oauthStore} />;
     },
 
     render : function()

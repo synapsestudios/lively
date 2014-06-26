@@ -48,7 +48,7 @@ module.exports = React.createClass({
         return (
             <div>
                 <header className="header">
-                    <span>{backButton}</span>
+                    {backButton}
                     <span className="header__branding">Lively</span>
                     <span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}>{'OAuth2'}</span>
                     <span className="header__api-branding">

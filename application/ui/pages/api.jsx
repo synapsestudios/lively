@@ -9,6 +9,7 @@ var SiteHeader        = require('../layouts/header');
 var OAuthConnectPanel = require('../components/oauth');
 var MainNav           = require('../components/navigation/main-nav');
 var ResourcePage      = require('./resource');
+var SummaryPage       = require('./summary');
 var store             = require('store');
 var qs                = require('querystring');
 var url               = require('url');
@@ -132,6 +133,8 @@ module.exports = React.createClass({
         if (resource) {
             resourcePage = <ResourcePage config={resource}
                 stores={{oauth : this.oauthStore}} />;
+        } else {
+            resourcePage = <SummaryPage summaryHtml={this.config.summary} />;
         }
 
         return (

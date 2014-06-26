@@ -16,6 +16,7 @@ module.exports = React.createClass({
     {
         return (
             <Resource name={this.props.config.name}
+                      synopsis={this.props.config.synopsis}
                       methods={this.props.config.methods}
                       oauthStore={this.props.stores.oauth} />
         );

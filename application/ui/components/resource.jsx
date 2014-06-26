@@ -3,6 +3,7 @@
 
 var React  = require('react');
 var Method = require('./method');
+var marked = require('marked');
 
 module.exports = React.createClass({
 
@@ -10,7 +11,15 @@ module.exports = React.createClass({
 
     propTypes : {
         name    : React.PropTypes.string.isRequired,
-        methods : React.PropTypes.array.isRequired
+        methods : React.PropTypes.array.isRequired,
+        synopsis : React.PropTypes.string
+    },
+
+    getDefaultProps : function()
+    {
+        return {
+            synopsis : ''
+        };
     },
 
     getMethodComponent : function(method)
@@ -32,6 +41,7 @@ module.exports = React.createClass({
                 <div className='panel__header'>
                     <h2>{this.props.name}</h2>
                 </div>
+                <p dangerouslySetInnerHTML={{__html: marked(this.props.synopsis)}} />
                 {this.props.methods.map(this.getMethodComponent)}
             </div>
         );

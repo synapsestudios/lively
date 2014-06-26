@@ -23,8 +23,9 @@ module.exports = React.createClass({
 
     componentWillMount : function()
     {
-        var options = store.get(this.props.params.apiSlug + '-client');
-        var config  = this.props.config.apis[this.props.params.apiSlug];
+        var options         = store.get(this.props.params.apiSlug + '-client');
+        var config          = this.props.config.apis[this.props.params.apiSlug];
+        var hasMultipleApis = (this.props.config.apis.length > 1)
 
         this.config     = config;
         this.oauthStore = new OAuthStore(this.props.params.apiSlug);
@@ -135,7 +136,7 @@ module.exports = React.createClass({
 
         return (
             <div>
-                <SiteHeader stores={stores} slug={this.props.params.apiSlug} name={this.config.name}>
+                <SiteHeader stores={stores} slug={this.props.params.apiSlug} name={this.config.name} showBackButton={this.hasMultipleApis}>
                     <OAuthConnectPanel stores={stores} onOAuthStart={this.handleOAuthStart} />
                 </SiteHeader>
                 {nav}

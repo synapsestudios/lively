@@ -40,7 +40,7 @@ module.exports = React.createClass({
         });
 
         if (!this.props.showBackButton) {
-            backButton = <Link to='api-list' className="fa fa-angle-left">{this.props.name}</Link>;
+            backButton = <Link to='api-list' className="header__api fa fa-angle-left">{this.props.name}</Link>;
         } else {
             backButton = this.props.name;
         }

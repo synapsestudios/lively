@@ -10,7 +10,10 @@ module.exports = React.createClass({
     displayName : 'ApiCallInfo',
 
     propTypes : {
-        status    : React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
+        status    : React.PropTypes.oneOfType([
+            React.PropTypes.string,
+            React.PropTypes.number
+        ]),
         request   : React.PropTypes.object,
         response  : React.PropTypes.object,
         formatter : React.PropTypes.func

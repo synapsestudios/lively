@@ -129,7 +129,7 @@ module.exports = React.createClass({
 
     initResumableUpload: function(buttonDOMNode)
     {
-        var resumable, uri, component = this;
+        var resumable, component = this;
 
         resumable = new Resumable();
 
@@ -142,11 +142,12 @@ module.exports = React.createClass({
                 headers.Authorization = component.props.oauthStore.getAuthorizationHeader();
                 this.opts.headers = headers;
             }
+
             // Set URI, replacing placeholders with values from user input
-            this.opts.target = 'http://' + component.props.oauthStore.hostname + component.getUri()
+            this.opts.target = 'http://' + component.props.oauthStore.hostname + component.getUri();
 
             this.upload();
-        })
+        });
 
         resumable.on('fileSuccess', function(file, message) {
             component.state.request = {
@@ -213,6 +214,7 @@ module.exports = React.createClass({
         {
             apiCallInfo = (
                 <ApiCallInfo status={this.state.status}
+                             formatter={this.props.formatter}
                              request={this.state.request}
                              response={this.state.response} />
             );

@@ -2,12 +2,11 @@
 /* global console */
 'use strict';
 
-var React         = require('react');
-var _             = require('underscore');
-var marked          = require('marked');
-var AbstractParam = require('./abstract-param');
-var Select        = require('./input/select');
-var Text          = require('./input/text');
+var React           = require('react');
+var _               = require('underscore');
+var AbstractParam   = require('./abstract-param');
+var Select          = require('./input/select');
+var Text            = require('./input/text');
 var ResumableUpload = require('./input/resumable-upload.jsx');
 
 module.exports = React.createClass(_.extend(AbstractParam, {

@@ -25,7 +25,6 @@ module.exports = React.createClass({
     {
         var options         = store.get(this.props.params.apiSlug + '-client');
         var config          = this.props.config.apis[this.props.params.apiSlug];
-        var hasMultipleApis = (this.props.config.apis.length > 1)
 
         this.config     = config;
         this.oauthStore = new OAuthStore(this.props.params.apiSlug);
@@ -114,7 +113,8 @@ module.exports = React.createClass({
     render : function()
     {
         var nav, resource, resourcePage,
-            stores = { oauth : this.oauthStore };
+            showBackButton = this.props.config.apis.length > 1,
+            stores         = { oauth : this.oauthStore };
 
         if (_.isArray(this.config.resources)) {
             resource = _.find(this.config.resources, this.findResource, this);
@@ -136,7 +136,7 @@ module.exports = React.createClass({
 
         return (
             <div>
-                <SiteHeader stores={stores} slug={this.props.params.apiSlug} name={this.config.name} showBackButton={this.hasMultipleApis}>
+                <SiteHeader stores={stores} slug={this.props.params.apiSlug} name={this.config.name} showBackButton={showBackButton}>
                     <OAuthConnectPanel stores={stores} onOAuthStart={this.handleOAuthStart} />
                 </SiteHeader>
                 {nav}

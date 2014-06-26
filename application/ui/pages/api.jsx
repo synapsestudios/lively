@@ -25,7 +25,6 @@ module.exports = React.createClass({
     {
         var options         = store.get(this.props.params.apiSlug + '-client');
         var config          = this.props.config.apis[this.props.params.apiSlug];
-        var hasMultipleApis = (this.props.config.apis.length > 1)
 
         this.config     = config;
         this.oauthStore = new OAuthStore(this.props.params.apiSlug);

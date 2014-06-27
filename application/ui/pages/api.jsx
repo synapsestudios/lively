@@ -52,6 +52,26 @@ module.exports = React.createClass({
         }
     },
 
+    componentDidMount : function()
+    {
+        var title = [this.config.name, 'Lively Docs'],
+            resource;
+
+        if (this.config.resources) {
+            if (_.isArray(this.config.resources)) {
+                resource = _.find(this.config.resources, this.findResource, this);
+            } else {
+                resource = _.find(this.getFlatResources(this.config.resources), this.findResource, this);
+            }
+
+            if (resource) {
+                title.unshift(resource.name);
+            }
+        }
+
+        window.document.title = title.join(' | ');
+    },
+
     handleOAuthStart : function(options)
     {
         store.set(this.props.params.apiSlug + '-client', options);

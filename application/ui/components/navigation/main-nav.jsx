@@ -25,15 +25,15 @@ module.exports = React.createClass({
         });
 
         return (
-            <Link to='api-resource'
-                  apiSlug={this.props.slug}
-                  resourceSlug={this.slugify(resource.name)}
-                  key={idx+'-'+this.slugify(resource.name)}
-                  className={navLinkClasses}>
-                <li className="main-nav__item">
+            <li className="main-nav__item">
+                <Link to='api-resource'
+                    apiSlug={this.props.slug}
+                    resourceSlug={this.slugify(resource.name)}
+                    key={idx+'-'+this.slugify(resource.name)}
+                    className={navLinkClasses}>
                     {resource.name}
-                </li>
-            </Link>
+                </Link>
+            </li>
         );
     },
 
@@ -47,11 +47,11 @@ module.exports = React.createClass({
         return _.flatten(_.map(this.props.config.resources, function(subResources, categoryName) {
             var items = _.map(subResources, this.navItemFromResource, this);
             items.unshift(
-                <a key={'c-'+this.slugify(categoryName)} className='main-nav__link'>
-                    <li className='main-nav__item main-nav__item--bold'>
+                <li className='main-nav__item main-nav__item--bold'>
+                    <a key={'c-'+this.slugify(categoryName)} className='main-nav__link'>
                         {categoryName}
-                    </li>
-                </a>
+                    </a>
+                </li>
             );
 
             return items;

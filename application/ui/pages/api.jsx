@@ -30,7 +30,7 @@ module.exports = React.createClass({
         this.config     = config;
         this.oauthStore = new OAuthStore(this.props.params.apiSlug);
 
-        if (window.location.search.length > 1 && options) {
+        if (this.props.query && this.props.query.access_token && options) {
 
             this.oauthStore.setOptions({
                 clientId     : options.clientId,
@@ -39,12 +39,10 @@ module.exports = React.createClass({
                 oauth2       : config.oauth2
             });
 
-            var queryString = qs.parse(window.location.search.substring(1));
-
             this.oauthStore.setToken({
-                accessToken : queryString.access_token,
-                tokenType   : queryString.token_type,
-                rawData     : queryString
+                accessToken : this.props.query.access_token,
+                tokenType   : this.props.query.token_type,
+                rawData     : this.props.query
             });
         } else {
             this.oauthStore.setOptions({

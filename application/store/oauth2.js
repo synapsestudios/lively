@@ -1,15 +1,20 @@
 /* global console */
 'use strict';
 
-var _           = require('underscore');
-var BaseStore   = require('synapse-common/store/base');
-var SyncMachine = require('synapse-common/lib/sync-machine');
-var store       = require('store');
-var http        = require('http');
-var https       = require('https');
-var url         = require('url');
+var _            = require('underscore');
+var Extendable   = require('synapse-common/lib/extendable');
+var EventEmitter = require('events').EventEmitter;
+var store        = require('store');
+var http         = require('http');
+var https        = require('https');
+var url          = require('url');
 
-var Store = BaseStore.extend({
+var Store = function() {};
+_.extend(Store.prototype, EventEmitter.prototype);
+
+Store.extend = Extendable.extend;
+
+module.exports = Store.extend({
 
     namespace : null,
 
@@ -202,7 +207,3 @@ var Store = BaseStore.extend({
         this.rawData      = data.rawData;
     }
 });
-
-_.extend(Store.prototype, SyncMachine);
-
-module.exports = Store;

@@ -50,6 +50,12 @@
 
     }
 
+    &.summary__panel {
+        padding          : rem-calc(20 20 30);
+        overflow-x       : hidden;
+        overflow-y       : scroll;
+    }
+
     .panel__header {
         @extend .ff-source-bold;
         position                   : relative;
@@ -103,6 +109,10 @@
 
         }
 
+    }
+
+    >p {
+        padding          : rem-calc(0 20);
     }
 
     .panel__link {

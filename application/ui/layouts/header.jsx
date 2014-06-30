@@ -31,7 +31,7 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var backButton,
+        var backButton = '',
             oAuthLinkClasses = cx({
             'header__auth'      : true,
             'fa'                : true,
@@ -40,15 +40,14 @@ module.exports = React.createClass({
         });
 
         if (this.props.showBackButton) {
-            backButton = <Link to='api-list' className="header__api fa fa-angle-left">{this.props.name}</Link>;
-        } else {
-            backButton = <span className="header__api header__api--no-hover">{this.props.name}</span>;
+            backButton = <Link to='api-list' className="header__back-button">&#xf104;</Link>;
         }
 
         return (
             <div>
                 <header className="header">
                     {backButton}
+                    <Link to='api-list' className="header__api">{this.props.name}</Link>
                     <span className="header__branding">Lively</span>
                     <span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}>{'OAuth2'}</span>
                     <span className="header__api-branding">

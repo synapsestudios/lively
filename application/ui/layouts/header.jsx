@@ -50,8 +50,8 @@ module.exports = React.createClass({
                     <Link to='api' apiSlug={this.props.slug} className='header__api'>{this.props.name}</Link>
                     <span className='header__branding'>{'Lively'}</span>
                     <span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}>{'OAuth2'}</span>
-                    <span className="header__api-branding">
-                        <a className="api-branding fa fa-github" href={'/' + this.props.slug}></a>
+                    <span className='header__api-branding'>
+                        <Link to='api' apiSlug={this.props.slug} className='api-branding'></Link>
                     </span>
                 </header>
                 {this.props.children}

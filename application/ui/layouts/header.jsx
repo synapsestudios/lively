@@ -31,7 +31,8 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var backButton = '',
+        var backButton,
+            logoMark,
             oAuthLinkClasses = cx({
             'header__auth'      : true,
             'fa'                : true,
@@ -40,19 +41,27 @@ module.exports = React.createClass({
         });
 
         if (this.props.showBackButton) {
-            backButton = <Link to='api-list' className="header__back-button">&#xf104;</Link>;
+            backButton = <Link to='api-list' className='header__back-button'>&#xf104;</Link>;
+        }
+
+        if (this.props.logo) {
+            logoMark = (
+                <span className='header__api-branding'>
+                    <Link to='api' apiSlug={this.props.slug} className='api-branding'>
+                        <img src={this.props.logo} alt={this.props.name} />
+                    </Link>
+                </span>
+            );
         }
 
         return (
             <div>
-                <header className="header">
+                <header className='header'>
                     {backButton}
                     <Link to='api' apiSlug={this.props.slug} className='header__api'>{this.props.name}</Link>
                     <span className='header__branding'>{'Lively'}</span>
                     <span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}>{'OAuth2'}</span>
-                    <span className='header__api-branding'>
-                        <Link to='api' apiSlug={this.props.slug} className='api-branding'></Link>
-                    </span>
+                    {logoMark}
                 </header>
                 {this.props.children}
             </div>

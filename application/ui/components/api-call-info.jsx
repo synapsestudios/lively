@@ -59,7 +59,8 @@ module.exports = React.createClass({
         });
 
         // @todo show loading indicator while loading
-        var responseData = '';
+        var responseData;
+
         if (this.props.status === 'loaded' && this.props.response) {
             responseData = (
                 <div className="data__container">

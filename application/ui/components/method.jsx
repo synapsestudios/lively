@@ -209,7 +209,7 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var apiCallInfo = '';
+        var apiCallInfo;
 
         if (this.state.status === LOADED || this.state.status === LOADING)
         {

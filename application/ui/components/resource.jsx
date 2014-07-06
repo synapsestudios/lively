@@ -41,7 +41,7 @@ module.exports = React.createClass({
                 <div className='panel__header'>
                     <h2>{this.props.name}</h2>
                 </div>
-                <p dangerouslySetInnerHTML={{__html: marked(this.props.synopsis)}} />
+                <div dangerouslySetInnerHTML={{__html: marked(this.props.synopsis)}} />
                 {this.props.methods.map(this.getMethodComponent)}
             </div>
         );

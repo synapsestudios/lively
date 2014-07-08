@@ -17,9 +17,9 @@ module.exports = React.createClass({
         return element.options[element.selectedIndex].value;
     },
 
-    getOptions : function(option, idx)
+    getOptions : function(option, index)
     {
-        return <option key={idx} value={option}>{option}</option>;
+        return <option key={'option-' + index} value={option}>{option}</option>;
     },
 
     handleChange : function(event)
@@ -36,7 +36,7 @@ module.exports = React.createClass({
     render : function()
     {
         return this.transferPropsTo(
-            <select className="select" ref='input' onChange={this.handleChange}>
+            <select className='select' ref='input' onChange={this.handleChange}>
                 {this.props.options.map(this.getOptions)}
             </select>
         );

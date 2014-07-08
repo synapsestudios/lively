@@ -161,7 +161,7 @@ module.exports = React.createClass({
                     <OAuthConnectPanel stores={stores} onOAuthStart={this.handleOAuthStart} />
                 </SiteHeader>
                 {nav}
-                <div className="panel__wrapper">
+                <div className='panel__wrapper'>
                     {resourcePage}
                 </div>
             </div>

@@ -62,7 +62,7 @@ module.exports = Store.extend({
     _request : function(options, data, cb)
     {
         if (! _.isFunction(cb)) {
-            throw "callback must be a function";
+            throw 'callback must be a function';
         }
 
         var httpLib = (this.secure === true) ? https : http;

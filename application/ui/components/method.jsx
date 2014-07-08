@@ -204,7 +204,7 @@ module.exports = React.createClass({
             }
         });
 
-        return hasUpload ? null : <a className="button" onClick={this.onSubmit}>Try it</a>;
+        return hasUpload ? null : <a className='button' onClick={this.onSubmit}>Try it</a>;
     },
 
     render : function()
@@ -249,15 +249,15 @@ module.exports = React.createClass({
                         <span>{this.props.uri}</span>
                     </h2>
                     <span className={naviconButtonClasses}>
-                        <div className="navicon"></div>
+                        <div className='navicon'></div>
                     </span>
                 </div>
                 <div className={methodPanelClasses}>
                     <div dangerouslySetInnerHTML={{__html: marked(this.props.synopsis)}} />
                     <Params params={this.props.params} resumableUploadCallback={this.initResumableUpload} ref='params' />
-                    <div className="switch__container">
-                        <p className="checkbox-label">Include OAuth Token?</p>
-                        <Checkbox defaultChecked={this.props.oauth} ref="sendToken" name={this.props.name}/>
+                    <div className='switch__container'>
+                        <p className='checkbox-label'>Include OAuth Token?</p>
+                        <Checkbox defaultChecked={this.props.oauth} ref='sendToken' name={this.props.name}/>
                     </div>
                     {this.getTryItButton()}
                     {apiCallInfo}

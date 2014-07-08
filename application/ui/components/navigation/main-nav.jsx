@@ -8,7 +8,7 @@ var Router = require('react-nested-router');
 var Link   = Router.Link;
 
 var GroupHeader = React.createClass({
-    displayName : "GroupHeader",
+    displayName : 'GroupHeader',
 
     slugify : function(text)
     {
@@ -66,19 +66,20 @@ module.exports = React.createClass({
             .replace(/[^\w-]+/g, '');
     },
 
-    navItemFromResource : function(resource, idx)
+    navItemFromResource : function(resource, index)
     {
         var navLinkClasses = cx({
             'main-nav__link'         : true
         });
 
         return (
-            <li className="main-nav__item" key={idx+'-'+this.slugify(resource.name)}>
-                <Link to='api-resource'
-                    apiSlug={this.props.slug}
-                    resourceSlug={this.slugify(resource.name)}
-                    className={navLinkClasses}
-                    activeClassName='main-nav__link--active'>
+            <li className='main-nav__item' key={'resource-' + index}>
+                <Link
+                    to              = 'api-resource'
+                    apiSlug         = {this.props.slug}
+                    resourceSlug    = {this.slugify(resource.name)}
+                    className       = {navLinkClasses}
+                    activeClassName = 'main-nav__link--active'>
                     {resource.name}
                 </Link>
             </li>
@@ -116,9 +117,9 @@ module.exports = React.createClass({
     render : function() {
 
         return (
-            <div className="main-nav__wrapper">
-                <h3 className="main-nav__header">API Resources</h3>
-                <div className="main-nav">
+            <div className='main-nav__wrapper'>
+                <h3 className='main-nav__header'>API Resources</h3>
+                <div className='main-nav'>
                     {this.buildNavList()}
                 </div>
             </div>

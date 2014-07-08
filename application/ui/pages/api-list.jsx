@@ -29,7 +29,7 @@ module.exports = React.createClass({
         var links = _.map(this.props.config.apis, function(config, slug) {
 
             return (
-                <a className="panel__link fa fa-github" href={'/' + slug} key={slug}>
+                <a className='panel__link fa fa-github' href={'/' + slug} key={slug}>
                     {config.name}
                 </a>
             );

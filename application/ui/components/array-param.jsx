@@ -60,28 +60,34 @@ module.exports = React.createClass(_.extend(AbstractParam, {
                 console.warn('Missing enumValues for param: ' + this.props.name);
             }
 
-            field = <Select
-                className="array-input"
-                options={this.props.enumValues}
-                value={value}
-                handleChange={this.updateField}
-                key={index}
-             />;
+            field = (
+                <Select
+                    className    = 'array-input'
+                    options      = {this.props.enumValues}
+                    value        = {value}
+                    handleChange = {this.updateField}
+                    key          = {index}
+                />
+            );
         } else if (this.getParamType() === 'boolean') {
-            field = <Select
-                className="array-input"
-                options={['true', 'false']}
-                value={value}
-                handleChange={this.updateField}
-                key={index}
-            />;
+            field = (
+                <Select
+                    className    = 'array-input'
+                    options      = {['true', 'false']}
+                    value        = {value}
+                    handleChange = {this.updateField}
+                    key          = {index}
+                />
+            );
         } else {
-            field = <Text
-                className="array-input"
-                value={value}
-                handleChange={this.updateField}
-                key={index}
-            />;
+            field = (
+                <Text
+                    className    = 'array-input'
+                    value        = {value}
+                    handleChange = {this.updateField}
+                    key          = {index}
+                />
+            );
         }
 
         callback = function () {
@@ -89,7 +95,7 @@ module.exports = React.createClass(_.extend(AbstractParam, {
         };
 
         return [
-            <a className="button field-button--remove" onClick={callback}>–</a>,
+            <a className='button field-button--remove' onClick={callback}>–</a>,
             field
         ];
     },
@@ -145,13 +151,13 @@ module.exports = React.createClass(_.extend(AbstractParam, {
 
         return (
             <tr>
-                <td className="array-title"><code>{this.props.name}</code></td>
-                <td className="array-td td--max-width">
-                    <a className="button field-button--add" onClick={this.addField}>{'+ Add Field'}</a>
+                <td className='array-title'><code>{this.props.name}</code></td>
+                <td className='array-td td--max-width'>
+                    <a className='button field-button--add' onClick={this.addField}>{'+ Add Field'}</a>
                     {this.getInputs()}
                 </td>
-                <td className="array-title">Array of <code>{this.getParamType()}</code>s</td>
-                <td className="array-title" dangerouslySetInnerHTML={{__html: marked(description)}}></td>
+                <td className='array-title'>Array of <code>{this.getParamType()}</code>s</td>
+                <td className='array-title' dangerouslySetInnerHTML={{__html: marked(description)}}></td>
             </tr>
         );
     }

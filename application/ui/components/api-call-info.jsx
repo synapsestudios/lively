@@ -22,7 +22,7 @@ module.exports = React.createClass({
     {
         return _.map(headersObject, function(value, key) {
             return key + ': ' + value;
-        }).join("\n");
+        }).join('\n');
     },
 
     formatResponse : function(text)
@@ -37,13 +37,13 @@ module.exports = React.createClass({
     render : function()
     {
         var requestData = (
-            <div className="data__container">
-                <h3 className="data__header">Request URI</h3>
-                <code className="data__code">{this.props.request.uri}</code>
-                <h3 className="data__header">Request Headers</h3>
-                <pre><code className="data__code">{this.formatHeadersFromObject(this.props.request.headers)}</code></pre>
-                <h3 className="data__header">Request Body</h3>
-                <pre><code className="data__code">{JSON.stringify(this.props.request.body, null, 4)}</code></pre>
+            <div className='data__container'>
+                <h3 className='data__header'>Request URI</h3>
+                <code className='data__code'>{this.props.request.uri}</code>
+                <h3 className='data__header'>Request Headers</h3>
+                <pre><code className='data__code'>{this.formatHeadersFromObject(this.props.request.headers)}</code></pre>
+                <h3 className='data__header'>Request Body</h3>
+                <pre><code className='data__code'>{JSON.stringify(this.props.request.body, null, 4)}</code></pre>
             </div>
         );
 
@@ -63,18 +63,18 @@ module.exports = React.createClass({
 
         if (this.props.status === 'loaded' && this.props.response) {
             responseData = (
-                <div className="data__container">
-                    <h3 className="data__header">Response Status</h3>
+                <div className='data__container'>
+                    <h3 className='data__header'>Response Status</h3>
                     <code className={successClasses}>{this.props.response.status}</code>
-                    <h3 className="data__header">Response Headers</h3>
+                    <h3 className='data__header'>Response Headers</h3>
                     <pre><code className={successClasses}>{this.props.response.headers}</code></pre>
-                    <h3 className="data__header">Response Body</h3>
+                    <h3 className='data__header'>Response Body</h3>
                     <pre><code className={successClasses}>{this.formatResponse(this.props.response.data)}</code></pre>
                 </div>
             );
         }
         return (
-            <div className="data__wrapper">
+            <div className='data__wrapper'>
                 {requestData}
                 {responseData}
             </div>

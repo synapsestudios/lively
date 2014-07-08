@@ -198,7 +198,7 @@ $navicon-size : rem-calc(24);
         left             : 0;
         background-color : transparent;
         @include transition(all 300ms ease-in-out);
-        @include transform-origin(50% 50%);
+        // @include transform-origin(50% 50%);
 
 
         &::before {
@@ -223,7 +223,15 @@ $navicon-size : rem-calc(24);
 
     &.open {
         .navicon {
-            @include transform(rotate3d(0, 0, 1, 135deg));
+            &::before {
+                @include transform-origin(25% 25%);
+                @include transform(rotate3d(0, 0, 1, 180deg));
+            }
+
+            &::after {
+                @include transform-origin(25% 25%);
+                @include transform(rotate3d(0, 0, 1, 180deg));
+            }
         }
 
     }

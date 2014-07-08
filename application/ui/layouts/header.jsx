@@ -42,10 +42,10 @@ module.exports = React.createClass({
 
         var apiSummaryClasses = cx({
             'header__api-summary'            : true,
-            'header__api-summary--no-margin' : !this.props.showBackButton
+            'header__api-summary--no-margin' : this.props.showBackButton
         });
 
-        if (!this.props.showBackButton) {
+        if (this.props.showBackButton) {
             backButton = <Link to='api-list' className='header__back-button'>&#xf104;</Link>;
         }
 

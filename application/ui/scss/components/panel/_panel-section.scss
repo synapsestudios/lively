@@ -54,9 +54,9 @@
         &.panel__header--head {
             background-color         : tint($statusPurple, 80%);
 
-            h2>span:first-of-type {
-                padding              : rem-calc(9 33 4 12);
-            }
+            // h2>span:first-of-type {
+            //     padding              : rem-calc(9 33 4 12);
+            // }
 
             h2>span:first-of-type {
                 padding              : rem-calc(9 32 4);
@@ -73,10 +73,6 @@
             background-color         : tint($statusGreen, 50%);
 
             h2>span:first-of-type {
-                padding              : rem-calc(9 33 4 13);
-            }
-
-            h2>span:first-of-type {
                 padding              : rem-calc(9 32 4 33);
                 background-color     : $statusGreen;
             }
@@ -89,10 +85,6 @@
 
         &.panel__header--patch {
             background-color         : tint($statusOrange, 50%);
-
-            h2>span:first-of-type {
-                padding              : rem-calc(9 27 4 6);
-            }
 
             h2>span:first-of-type {
                 padding              : rem-calc(9 26 4);
@@ -109,10 +101,6 @@
             background-color         : tint($statusYellow, 50%);
 
             h2>span:first-of-type {
-                padding              : rem-calc(9 41 4 20);
-            }
-
-            h2>span:first-of-type {
                 padding              : rem-calc(9 40 4);
                 background-color     : $statusYellow;
             }
@@ -125,10 +113,6 @@
 
         &.panel__header--delete {
             background-color         : tint($statusRed, 50%);
-
-            h2>span:first-of-type {
-                padding              : rem-calc(9 20 4 0);
-            }
 
             h2>span:first-of-type {
                 padding              : rem-calc(9 19 4 20);

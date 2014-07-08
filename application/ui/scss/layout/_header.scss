@@ -8,80 +8,39 @@ header {
     box-shadow           : 0 2px 2px rgba($black, .15);
     @include user-select(none);
 
-    .header__api,
     .header__back-button {
-        @extend .ff-source;
-        position         : relative;
-        color            : shade($white, 10%);
-        text-decoration  : none;
-        line-height      : rem-calc(60);
-        font-size        : rem-calc(24);
-        padding-left     : rem-calc(30);
-    }
-
-    .header__api {
-        @include transition(color 300ms ease-in-out);
-
-        &:hover {
-            color: $white;
-        }
-
-    }
-
-    .header__back-button {
+        @extend .tool-tip;
         position         : relative;
         font-family      : FontAwesome;
+        color            : shade($white, 10%);
+        line-height      : rem-calc(60);
+        font-size        : rem-calc(24);
         padding          : rem-calc(18 20);
         @include transition(left 300ms ease-in-out);
 
-        &::before {
-            content      : '';
-            position     : absolute;
-            top          : 45px;
-            left         : 24px;
-            width        : 0;
-            height       : 0;
-            border-style : solid;
-            border-width : 0;
-            opacity      : .9;
-            border-color : transparent transparent $white;
-            @include transition(all 200ms 750ms ease-in-out);
-        }
-
         &::after {
             content      : 'back to api list';
-            position     : absolute;
-            top          : 45px;
-            left         : 10px;
-            width        : 90px;
-            height       : 16px;
-            max-height   : 0;
-            opacity      : 0;
-            border-radius: 2px;
-            overflow     : hidden;
-            line-height  : 16px;
-            white-space  : nowrap;
-            font-size    : rem-calc(12);
-            color        : $black;
-            text-align   : center;
-            background-color: $white;
-            @include transition(all 200ms 750ms ease-in-out);
         }
+
+    }
+
+    .header__api-summary {
+        @extend .ff-source;
+        position         : relative;
+        text-decoration  : none;
+        color            : shade($white, 10%);
+        line-height      : rem-calc(60);
+        font-size        : rem-calc(24);
+        margin-left      : rem-calc(30);
+        @include transition(color 300ms ease-in-out);
 
         &:hover {
-
-            &::before {
-                left         : 20px;
-                border-width : 0 5px 4px;
-            }
-
-            &::after {
-                top                  : 49px;
-                opacity              : .9;
-                max-height           : 9999px;
-            }
+            color        : $white;
         }
 
+        &.header__api-summary--no-margin {
+            margin-left  : 0;
+        }
 
     }
 
@@ -98,20 +57,17 @@ header {
         @include transform(translateX(-50%));
     }
 
-    .header__api-branding {
-        display          : inline;
+    .header__api-link {
+        @extend .tool-tip;
+        position         : relative;
         float            : right;
-        padding-right    : 50px;
-        height           : rem-calc(60);
+        right            : rem-calc(20);
+        width            : rem-calc(40);
+        height           : rem-calc(40);
+        margin           : rem-calc(10);
 
-        a.api-branding {
-            width        : rem-calc(50);
-            height       : rem-calc(50);
-            line-height  : rem-calc(60);
-            margin       : 0 auto;
-            font-size    : rem-calc(50);
-            color        : shade($white, 10%);
-            text-decoration: none;
+        &::after {
+            content      : 'link to api home';
         }
 
     }
@@ -119,11 +75,12 @@ header {
     .header__auth {
         @extend .ff-source-bold;
         position         : relative;
-        color            : shade($white, 10%);
-        z-index          : 1000;
+        text-align       : right;
         float            : right;
+        width            : rem-calc(70);
+        color            : shade($white, 10%);
         line-height      : rem-calc(60);
-        padding-right    : rem-calc(30);
+        margin-right     : rem-calc(30);
         cursor           : pointer;
         @include transition(all 300ms ease-in-out);
 
@@ -132,7 +89,7 @@ header {
             position     : absolute;
             font-size    : rem-calc(20);
             top          : 0;
-            left         : rem-calc(-20);
+            left         : 0;
             padding-right: rem-calc(6);
         }
 

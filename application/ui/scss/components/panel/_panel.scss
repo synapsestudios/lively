@@ -157,7 +157,7 @@
     &.method-panel--hidden {
         max-height       : 0px;
         overflow         : hidden;
-
+        @include transition(all 500ms cubic-bezier(.05, .71, .12, .98));
     }
 
 }

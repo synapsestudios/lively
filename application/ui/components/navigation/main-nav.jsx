@@ -7,6 +7,54 @@ var cx     = require('react/lib/cx');
 var Router = require('react-nested-router');
 var Link   = Router.Link;
 
+var GroupHeader = React.createClass({
+    displayName : "GroupHeader",
+
+    slugify : function(text)
+    {
+        return text.toLowerCase()
+            .replace(/ /g, '-')
+            .replace(/[^\w-]+/g, '');
+    },
+
+    getInitialState : function() {
+        return {
+            collapse : false
+        };
+    },
+
+    toggleNavCollapse : function() {
+        this.setState({
+            collapse : ! this.state.collapse
+        });
+    },
+
+    render : function()
+    {
+        var classes = cx({
+            'main-nav__group'           : true,
+            'main-nav__group--collapse' : this.state.collapse
+        });
+
+        return (
+            <div className={classes}>
+                <div className='main-nav__group-header' onClick={this.toggleNavCollapse}>
+                    <span key={'c-'+this.slugify(this.props.categoryName)}
+                        className='main-nav__group-title'
+                        onClick={this.toggleNavCollapse}>
+                        {this.props.categoryName}
+                    </span>
+                </div>
+                <ul>
+                    {this.props.children}
+                </ul>
+            </div>
+        );
+    }
+
+});
+
+
 module.exports = React.createClass({
 
     displayName : 'MainNav',
@@ -25,12 +73,12 @@ module.exports = React.createClass({
         });
 
         return (
-            <li className="main-nav__item">
+            <li className="main-nav__item" key={idx+'-'+this.slugify(resource.name)}>
                 <Link to='api-resource'
                     apiSlug={this.props.slug}
                     resourceSlug={this.slugify(resource.name)}
-                    key={idx+'-'+this.slugify(resource.name)}
-                    className={navLinkClasses}>
+                    className={navLinkClasses}
+                    activeClassName='main-nav__link--active'>
                     {resource.name}
                 </Link>
             </li>
@@ -46,15 +94,13 @@ module.exports = React.createClass({
     {
         return _.flatten(_.map(this.props.config.resources, function(subResources, categoryName) {
             var items = _.map(subResources, this.navItemFromResource, this);
-            items.unshift(
-                <li className='main-nav__item main-nav__item--bold'>
-                    <a key={'c-'+this.slugify(categoryName)} className='main-nav__link'>
-                        {categoryName}
-                    </a>
-                </li>
+            var output=(
+                <GroupHeader categoryName={categoryName} onClick={this.onClick}>
+                    {items}
+                </GroupHeader>
             );
 
-            return items;
+            return output;
         }, this));
     },
 
@@ -72,10 +118,9 @@ module.exports = React.createClass({
         return (
             <div className="main-nav__wrapper">
                 <h3 className="main-nav__header">API Resources</h3>
-                <ul className="main-nav">
+                <div className="main-nav">
                     {this.buildNavList()}
-                </ul>
-
+                </div>
             </div>
         );
     }

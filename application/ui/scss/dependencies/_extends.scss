@@ -5,8 +5,61 @@
 }
 
 .absolute-position-center {
-    position     : absolute;
-    top          : 50%;
-    left         : 50%;
+    position             : absolute;
+    top                  : 50%;
+    left                 : 50%;
     @include transform(translate(-50%, -50%));
+}
+
+.tool-tip {
+
+    &::before {
+        content          : '';
+        position         : absolute;
+        top              : 45px;
+        left             : 24px;
+        width            : 0;
+        height           : 0;
+        border-style     : solid;
+        border-width     : 0;
+        opacity          : .9;
+        border-color     : transparent transparent $white;
+        @include transition(all 200ms 750ms ease-in-out);
+    }
+
+    &::after {
+        content          : '';
+        position         : absolute;
+        top              : 45px;
+        left             : 10px;
+        width            : 90px;
+        height           : 16px;
+        max-height       : 0;
+        opacity          : 0;
+        border-radius    : 2px;
+        overflow         : hidden;
+        line-height      : 16px;
+        white-space      : nowrap;
+        font-size        : rem-calc(12);
+        color            : $black;
+        text-align       : center;
+        background-color : $white;
+        box-shadow       : 0 1px 1px rgba($black, .1);
+        @include transition(all 200ms 750ms ease-in-out);
+    }
+
+    &:hover {
+
+            &::before {
+                left         : 20px;
+                border-width : 0 5px 4px;
+            }
+
+            &::after {
+                top                  : 49px;
+                opacity              : .9;
+                max-height           : 9999px;
+            }
+        }
+
 }

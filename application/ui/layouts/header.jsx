@@ -32,28 +32,39 @@ module.exports = React.createClass({
     render : function()
     {
         var backButton,
+            apiLogo,
             oAuthLinkClasses = cx({
-            'header__auth'      : true,
-            'fa'                : true,
-            'fa-lock'           : this.state.hasOAuth,
-            'fa-unlock-alt'     : ! this.state.hasOAuth
+            'header__auth'  : true,
+            'fa'            : true,
+            'fa-lock'       : this.state.hasOAuth,
+            'fa-unlock-alt' : ! this.state.hasOAuth
         });
 
-        if (this.props.showBackButton) {
-            backButton = <Link to='api-list' className="header__api fa fa-angle-left">{this.props.name}</Link>;
-        } else {
-            backButton = <span className="header__api header__api--no-hover">{this.props.name}</span>;
+        var apiSummaryClasses = cx({
+            'header__api-summary'            : true,
+            'header__api-summary--no-margin' : !this.props.showBackButton
+        });
+
+        if (!this.props.showBackButton) {
+            backButton = <Link to='api-list' className='header__back-button'>&#xf104;</Link>;
+        }
+
+        if (this.props.logo) {
+            apiLogo = (
+                <Link to='api' apiSlug={this.props.slug} className='header__api-link'>
+                    <img src={this.props.logo} alt={this.props.name} />
+                </Link>
+            );
         }
 
         return (
             <div>
-                <header className="header">
+                <header className='header'>
                     {backButton}
-                    <span className="header__branding">Lively</span>
+                    <Link to='api' apiSlug={this.props.slug} className={apiSummaryClasses}>{this.props.name}</Link>
+                    <span className='header__branding'>{'Lively'}</span>
                     <span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}>{'OAuth2'}</span>
-                    <span className="header__api-branding">
-                        <a className="api-branding fa fa-github" href={'/' + this.props.slug}></a>
-                    </span>
+                    {apiLogo}
                 </header>
                 {this.props.children}
             </div>

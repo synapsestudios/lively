@@ -157,7 +157,7 @@ module.exports = React.createClass({
 
         return (
             <div>
-                <SiteHeader stores={stores} slug={this.props.params.apiSlug} name={this.config.name} showBackButton={showBackButton}>
+                <SiteHeader stores={stores} slug={this.props.params.apiSlug} name={this.config.name} logo={this.config.logo} showBackButton={showBackButton}>
                     <OAuthConnectPanel stores={stores} onOAuthStart={this.handleOAuthStart} />
                 </SiteHeader>
                 {nav}

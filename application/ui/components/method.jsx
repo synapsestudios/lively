@@ -4,7 +4,6 @@
 var _           = require('underscore');
 var React       = require('react');
 var cx          = require('react/lib/cx');
-var marked      = require('marked');
 var Params      = require('./params-list');
 var ApiCallInfo = require('./api-call-info');
 var Checkbox    = require('./input/checkbox');
@@ -253,7 +252,7 @@ module.exports = React.createClass({
                     </span>
                 </div>
                 <div className={methodPanelClasses}>
-                    <div dangerouslySetInnerHTML={{__html: marked(this.props.synopsis)}} />
+                    <div dangerouslySetInnerHTML={{__html: this.props.synopsis}} />
                     <Params params={this.props.params} resumableUploadCallback={this.initResumableUpload} ref='params' />
                     <div className='switch__container'>
                         <p className='checkbox-label'>Include OAuth Token?</p>

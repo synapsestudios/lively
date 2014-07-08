@@ -3,7 +3,6 @@
 
 var React  = require('react');
 var Method = require('./method');
-var marked = require('marked');
 
 module.exports = React.createClass({
 
@@ -43,7 +42,7 @@ module.exports = React.createClass({
 
         if (this.props.synopsis) {
             synopsis = (
-                <div className='panel__synopsis' dangerouslySetInnerHTML={{__html: marked(this.props.synopsis)}} />
+                <div className='panel__synopsis' dangerouslySetInnerHTML={{__html: this.props.synopsis}} />
             );
         }
 

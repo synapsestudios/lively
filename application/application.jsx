@@ -22,10 +22,8 @@ function Application(config) {
         window.React = React;
         React.initializeTouchEvents(true);
 
-        Router.useHistory();
-
-        this.router = Router(
-            <Route handler={SiteLayout}>
+        var router = (
+            <Route handler={SiteLayout} location='history'>
                 <Route name='api-list'
                        path='/'
                        handler={ApiList}
@@ -50,10 +48,10 @@ function Application(config) {
         });
 
         dispatcher.on('router:redirect', function(route, params) {
-            Router.transitionTo(route, params || {});
+            ReactRouter.transitionTo(route, params || {});
         }.bind(this));
 
-        this.router.renderComponent(window.document.body);
+        React.renderComponent(router, window.document.body);
     };
 }
 

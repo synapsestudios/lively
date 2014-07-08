@@ -209,7 +209,7 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var apiCallInfo = '';
+        var apiCallInfo;
 
         if (this.state.status === LOADED || this.state.status === LOADING)
         {
@@ -253,7 +253,7 @@ module.exports = React.createClass({
                     </span>
                 </div>
                 <div className={methodPanelClasses}>
-                    <p dangerouslySetInnerHTML={{__html: marked(this.props.synopsis)}} />
+                    <div dangerouslySetInnerHTML={{__html: marked(this.props.synopsis)}} />
                     <Params params={this.props.params} resumableUploadCallback={this.initResumableUpload} ref='params' />
                     <div className="switch__container">
                         <p className="checkbox-label">Include OAuth Token?</p>

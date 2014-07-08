@@ -1,4 +1,5 @@
 /** @jsx React.DOM */
+/* global window */
 'use strict';
 
 var _          = require('underscore');
@@ -16,6 +17,11 @@ module.exports = React.createClass({
                 apiSlug : _.keys(this.props.config.apis)[0]
             });
         }
+    },
+
+    componentDidMount : function()
+    {
+        window.document.title = 'Lively Docs';
     },
 
     render : function()

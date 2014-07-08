@@ -38,10 +38,10 @@ module.exports = React.createClass({
     {
         return (
             <div className="panel">
-                <div className='panel__header'>
-                    <h2>{this.props.name}</h2>
+                <div className='panel__summary'>
+                    <h1>{this.props.name}</h1>
                 </div>
-                <div dangerouslySetInnerHTML={{__html: marked(this.props.synopsis)}} />
+                <div className="panel__synopsis" dangerouslySetInnerHTML={{__html: marked(this.props.synopsis)}} />
                 {this.props.methods.map(this.getMethodComponent)}
             </div>
         );

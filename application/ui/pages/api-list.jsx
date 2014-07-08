@@ -39,7 +39,7 @@ module.exports = React.createClass({
             <div className='panel__wrapper panel__wrapper--full-width'>
                 <div className='panel'>
                     <div className='panel__header'>
-                        <h2>API List</h2>
+                        <h1>API List</h1>
                     </div>
                     {links}
                 </div>

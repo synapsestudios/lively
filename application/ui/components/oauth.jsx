@@ -72,7 +72,7 @@ module.exports = React.createClass({
             <div>
                 <div className={oAuthPanelClasses}>
                     <div className='panel__header'>
-                        <h2>OAuth2</h2><a className="panel__header-x" onClick={this.toggleOAuthPanel}></a>
+                        <h1>OAuth2</h1><a className="panel__header-x" onClick={this.toggleOAuthPanel}></a>
                     </div>
                     <div className="small-4 columns">
                         <label className="panel-form__label" htmlFor='clientId'>Client ID</label>

@@ -155,8 +155,13 @@
 
     }
 
-    p {
-        margin           : rem-calc(20 0);
+    .panel__synopsis {
+        padding          : rem-calc(20 0);
+
+        p {
+            margin-bottom    : 0;
+        }
+
     }
 
 }

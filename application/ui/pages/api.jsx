@@ -132,7 +132,7 @@ module.exports = React.createClass({
     render : function()
     {
         var nav, resource, resourcePage,
-            showBackButton = this.props.config.apis.length > 1,
+            showBackButton = (_.size(this.props.config.apis) !== 1),
             stores         = { oauth : this.oauthStore };
 
         if (_.isArray(this.config.resources)) {

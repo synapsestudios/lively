@@ -5,7 +5,7 @@
     width                : 100%;
     background-color     : $white;
     height               : auto;
-    padding              : rem-calc(20 20 0);
+    padding              : rem-calc(20 20 5);
 
     .panel__header {
         left             : rem-calc(-30);
@@ -151,15 +151,6 @@
                 }
             }
 
-        }
-
-    }
-
-    .panel__synopsis {
-        padding          : rem-calc(20 0);
-
-        p {
-            margin-bottom    : 0;
         }
 
     }

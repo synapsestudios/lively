@@ -252,7 +252,7 @@ module.exports = React.createClass({
                     </span>
                 </div>
                 <div className={methodPanelClasses}>
-                    <div dangerouslySetInnerHTML={{__html: this.props.synopsis}} />
+                    <div className='panel__synopsis' dangerouslySetInnerHTML={{__html: this.props.synopsis}} />
                     <Params params={this.props.params} resumableUploadCallback={this.initResumableUpload} ref='params' />
                     <div className='switch__container'>
                         <p className='checkbox-label'>Include OAuth Token?</p>

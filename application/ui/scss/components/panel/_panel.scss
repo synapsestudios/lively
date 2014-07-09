@@ -1,7 +1,7 @@
 .panel__wrapper {
     position             : relative;
     left                 : rem-calc(350);
-    margin               : 0 30px 30px 0;
+    margin               : rem-calc(0 30 30 0);
     padding-top          : rem-calc(90);
     width                : calc(100% - 350px);
     overflow             : hidden;
@@ -50,8 +50,8 @@
 
     &.oauth__panel {
         position         : absolute;
-        top              : 65px;
-        right            : 5px;
+        top              : rem-calc(65);
+        right            : rem-calc(5);
         height           : rem-calc(420);
         width            : calc(100% - 10px);
         background-color : $white;
@@ -84,7 +84,7 @@
             padding                  : rem-calc(0 0 0 20);
 
             span:first-of-type {
-                padding-left         : 20px;
+                padding-left         : rem-calc(20);
             }
         }
 
@@ -124,17 +124,13 @@
 
     }
 
-    >p {
-        padding          : 0 20px;
-    }
-
     .panel__link {
-        padding-left                 : 20px;
+        padding-left                 : rem-calc(20);
         color                        : $themeMLGray;
         @include transition(color 300ms ease-in-out);
 
         &::before {
-            padding-right            : 5px;
+            padding-right            : rem-calc(5);
         }
 
         &:hover {
@@ -142,15 +138,9 @@
         }
 
         &:first-of-type {
-            margin-top               : 20px;
+            margin-top               : rem-calc(20);
         }
 
-    }
-
-    >a {
-        padding-left         : rem-calc(20);
-        color                : $themeDDGray;
-        text-decoration      : underline;
     }
 
 }

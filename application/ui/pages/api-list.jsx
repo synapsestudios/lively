@@ -12,7 +12,7 @@ module.exports = React.createClass({
 
     componentWillMount : function()
     {
-        if (_.size(this.props.config) === 1) {
+        if (_.size(this.props.config.apis) === 1) {
             dispatcher.emit('router:redirect', 'api', {
                 apiSlug : _.keys(this.props.config.apis)[0]
             });

@@ -5,7 +5,7 @@
     width                : 100%;
     background-color     : $white;
     height               : auto;
-    padding              : 20px;
+    padding              : rem-calc(20 20 0);
 
     .panel__header {
         left             : rem-calc(-30);

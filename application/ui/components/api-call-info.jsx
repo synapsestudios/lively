@@ -1,9 +1,19 @@
 /** @jsx React.DOM */
 'use strict';
 
-var _     = require('underscore');
-var React = require('react');
-var cx    = require('react/lib/cx');
+var _        = require('underscore');
+var React    = require('react');
+var cx       = require('react/lib/cx');
+var marked   = require('marked');
+var renderer = new marked.Renderer();
+
+renderer.paragraph = function(text) {
+    return text;
+};
+
+marked.setOptions({
+  renderer: renderer
+});
 
 module.exports = React.createClass({
 
@@ -36,6 +46,14 @@ module.exports = React.createClass({
 
     render : function()
     {
+        var requestBody;
+
+        if (this.props.request.body) {
+            requestBody = <code className='data__code'>{JSON.stringify(this.props.request.body, null, 4)}</code>;
+        } else {
+            requestBody = <code className='data__code' dangerouslySetInnerHTML={{__html: marked('*empty*')}}></code>;
+        }
+
         var requestData = (
             <div className='data__container'>
                 <h3 className='data__header'>Request URI</h3>
@@ -45,7 +63,7 @@ module.exports = React.createClass({
                 <pre><code className='data__code'>{this.formatHeadersFromObject(this.props.request.headers)}</code></pre>
 
                 <h3 className='data__header'>Request Body</h3>
-                <pre><code className='data__code'>{JSON.stringify(this.props.request.body, null, 4)}</code></pre>
+                <pre>{requestBody}</pre>
             </div>
         );
 

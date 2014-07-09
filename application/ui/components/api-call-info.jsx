@@ -11,10 +11,6 @@ renderer.paragraph = function(text) {
     return text;
 };
 
-marked.setOptions({
-  renderer: renderer
-});
-
 module.exports = React.createClass({
 
     displayName : 'ApiCallInfo',
@@ -51,7 +47,7 @@ module.exports = React.createClass({
         if (this.props.request.body) {
             requestBody = <code className='data__code'>{JSON.stringify(this.props.request.body, null, 4)}</code>;
         } else {
-            requestBody = <code className='data__code' dangerouslySetInnerHTML={{__html: marked('*empty*')}}></code>;
+            requestBody = <code className='data__code' dangerouslySetInnerHTML={{__html: marked('*empty*', {renderer: renderer})}}></code>;
         }
 
         var requestData = (

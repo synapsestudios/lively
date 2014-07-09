@@ -14,8 +14,8 @@ module.exports = React.createClass({
     render : function()
     {
         return (
-            <div className='panel panel--padded'>
-                <div className='panel__summary' dangerouslySetInnerHTML={{__html : this.props.summaryHtml}} />
+            <div className='panel'>
+                <div className='panel__synopsis' dangerouslySetInnerHTML={{__html : this.props.summaryHtml}} />
             </div>
         );
     }

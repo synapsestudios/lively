@@ -59,7 +59,7 @@ module.exports = React.createClass({
     {
         var oAuthPanelClasses = cx({
             'panel'         : true,
-            'oauth__panel'  : true,
+            'oauth-panel'   : true,
             'panel--hidden' : this.state.oAuthPanelHidden
         });
 
@@ -74,27 +74,29 @@ module.exports = React.createClass({
                     <div className='panel__header'>
                         <h1>OAuth2</h1><a className='panel__header-x' onClick={this.toggleOAuthPanel}></a>
                     </div>
-                    <div className='small-4 columns'>
-                        <label className='panel-form__label' htmlFor='clientId'>Client ID</label>
-                        <TextInput className='form__input panel-form__input' name='clientId' ref='clientId' />
-                    </div>
-                    <div className='small-4 columns'>
-                        <label className='panel-form__label' htmlFor='clientSecret'>Client Secret</label>
-                        <TextInput className='form__input panel-form__input' name='clientSecret' ref='clientSecret' />
-                    </div>
-                    <div className='small-4 columns'>
-                        <label className='panel-form__label' htmlFor='scope'>Scope</label>
-                        <TextInput className='form__input panel-form__input' name='scope' ref='scope' />
-                    </div>
-                    <div className='small-12 columns'>
-                        <a className='button right' onClick={this.handleClick}>Connect</a>
-                    </div>
-                    <hr />
-                    <div className='small-6 columns'>
-                        <pre>Access token: {this.state.oauthData.accessToken}</pre>
-                    </div>
-                    <div className='small-6 columns'>
-                        <pre>Token data: {util.inspect(this.state.oauthData.rawData)}</pre>
+                    <div className='oauth-panel__form'>
+                        <div className='small-4 columns'>
+                            <label className='panel-form__label' htmlFor='clientId'>Client ID</label>
+                            <TextInput className='form__input panel-form__input' name='clientId' ref='clientId' />
+                        </div>
+                        <div className='small-4 columns'>
+                            <label className='panel-form__label' htmlFor='clientSecret'>Client Secret</label>
+                            <TextInput className='form__input panel-form__input' name='clientSecret' ref='clientSecret' />
+                        </div>
+                        <div className='small-4 columns'>
+                            <label className='panel-form__label' htmlFor='scope'>Scope</label>
+                            <TextInput className='form__input panel-form__input' name='scope' ref='scope' />
+                        </div>
+                        <div className='small-12 columns'>
+                            <a className='button right' onClick={this.handleClick}>Connect</a>
+                        </div>
+                        <hr />
+                        <div className='small-6 columns'>
+                            <pre>Access token: {this.state.oauthData.accessToken}</pre>
+                        </div>
+                        <div className='small-6 columns'>
+                            <pre>Token data: {util.inspect(this.state.oauthData.rawData)}</pre>
+                        </div>
                     </div>
                 </div>
                 <div className={overlayClasses} />

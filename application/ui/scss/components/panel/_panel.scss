@@ -50,7 +50,7 @@
 
     }
 
-    &.oauth__panel {
+    &.oauth-panel {
         position         : absolute;
         top              : rem-calc(65);
         right            : rem-calc(5);
@@ -66,11 +66,15 @@
             top          : rem-calc(-420);
         }
 
+        .oauth-panel__form {
+            padding      : rem-calc(20 0);
+        }
+
     }
 
     .panel__summary,
     .panel__synopsis {
-        padding      : rem-calc(0 20);
+        padding          : rem-calc(0 20);
     }
 
     .panel__header {
@@ -104,9 +108,9 @@
 
             &::before {
                 content              : '\f00d';
-                font-family          : $font-awesome;
+                font-family          : FontAwesome;
                 position             : absolute;
-                top                  : -11px;
+                top                  : rem-calc(3);
                 left                 : rem-calc(5);
                 font-size            : rem-calc(22);
                 color                : $themeMLGray;
@@ -122,6 +126,25 @@
 
             }
 
+        }
+
+    }
+
+    .panel__link {
+        padding-left     : rem-calc(20);
+        color            : $themeMLGray;
+        @include transition(color 300ms ease-in-out);
+
+        &::before {
+            padding-right: rem-calc(5);
+        }
+
+        &:hover {
+            color        : $themeDDGray;
+        }
+
+        &:first-of-type {
+            margin-top   : rem-calc(20);
         }
 
     }

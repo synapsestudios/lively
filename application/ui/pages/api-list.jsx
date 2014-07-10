@@ -26,10 +26,9 @@ module.exports = React.createClass({
 
     render : function()
     {
-
         var links = _.map(this.props.config.apis, function(config, slug) {
 
-             var apiLogo;
+            var apiLogo;
 
             if (config.logo) {
                 apiLogo = (
@@ -38,7 +37,6 @@ module.exports = React.createClass({
             }
 
             return (
-
                 <a className='panel__link' href={'/' + slug} key={slug}>
                     {apiLogo}
                     {config.name}

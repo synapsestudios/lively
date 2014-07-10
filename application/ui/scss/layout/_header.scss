@@ -45,16 +45,26 @@ header {
     }
 
     .header__branding {
-        @extend .ff-source;
         position         : absolute;
         left             : 50%;
         top              : 0;
-        font-size        : rem-calc(22);
-        letter-spacing   : 10px;
-        text-transform   : uppercase;
-        line-height      : rem-calc(60);
-        color            : shade($themeLLGray, 20%);
         @include transform(translateX(-50%));
+
+        img {
+            padding      : rem-calc(9 0);
+            vertical-align: top;
+        }
+
+        span {
+            @extend .ff-source-bold;
+            line-height              : rem-calc(60);
+            text-transform           : uppercase;
+            font-size                : rem-calc(24);
+            letter-spacing           : 20px;
+            color                    : $themeLLGray;
+            padding-left             : rem-calc(30);
+        }
+
     }
 
     .header__api-link {

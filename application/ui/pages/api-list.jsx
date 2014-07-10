@@ -26,22 +26,36 @@ module.exports = React.createClass({
 
     render : function()
     {
+
         var links = _.map(this.props.config.apis, function(config, slug) {
 
+             var apiLogo;
+
+            if (config.logo) {
+                apiLogo = (
+                    <img className="panel__link-logo" src={config.logo} alt={config.name} />
+                );
+            }
+
             return (
-                <a className='panel__link fa fa-github' href={'/' + slug} key={slug}>
+
+                <a className='panel__link' href={'/' + slug} key={slug}>
+                    {apiLogo}
                     {config.name}
                 </a>
             );
         });
 
         return (
-            <div className='panel__wrapper panel__wrapper--full-width'>
-                <div className='panel'>
-                    <div className='panel__header'>
+            <div>
+                <header className='header'>
+                    <span className='header__branding'><img src="images/logos/livelydocs-logomark.png" alt="" /><span>{'Lively'}</span></span>
+                </header>
+                <div className='panel__wrapper panel__wrapper--full-width'>
+                    <div className='panel'>
                         <h1>API List</h1>
+                        {links}
                     </div>
-                    {links}
                 </div>
             </div>
         );

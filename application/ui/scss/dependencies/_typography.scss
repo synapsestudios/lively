@@ -1,8 +1,3 @@
-html,
-body {
-    color                : $themeDDGray;
-}
-
 h1,
 h2,
 h3,
@@ -10,12 +5,14 @@ h4,
 h5,
 h6 {
     @extend .ff-source-bold;
+    color                : $themeMLGray;
 }
 
 p,
 a,
 span {
     @extend .ff-source;
+    color                : $themeDDGray;
 }
 
 code,
@@ -80,8 +77,8 @@ ul {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
-     readers do not read off random characters that represent icons */
+// Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
+//     readers do not read off random characters that represent icons
 .fa-glass:before {
     content: "\f000";
 }

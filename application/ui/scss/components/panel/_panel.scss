@@ -12,6 +12,8 @@
 
         .panel {
             top          : 0;
+            min-height   : rem-calc(300);
+            padding      : rem-calc(20 20 30);
         }
 
     }
@@ -120,25 +122,6 @@
 
             }
 
-        }
-
-    }
-
-    .panel__link {
-        padding-left                 : rem-calc(20);
-        color                        : $themeMLGray;
-        @include transition(color 300ms ease-in-out);
-
-        &::before {
-            padding-right            : rem-calc(5);
-        }
-
-        &:hover {
-            color                    : $themeDDGray;
-        }
-
-        &:first-of-type {
-            margin-top               : rem-calc(20);
         }
 
     }

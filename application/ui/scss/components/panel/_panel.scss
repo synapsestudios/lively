@@ -12,6 +12,8 @@
 
         .panel {
             top          : 0;
+            min-height   : rem-calc(300);
+            padding      : rem-calc(20 20 30);
         }
 
     }

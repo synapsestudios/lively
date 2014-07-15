@@ -62,7 +62,7 @@ module.exports = React.createClass({
                 <header className='header'>
                     {backButton}
                     <Link to='api' apiSlug={this.props.slug} className={apiSummaryClasses}>{this.props.name}</Link>
-                    <span className='header__branding'>{'Lively'}</span>
+                    <span className='header__branding'><img src="../images/logos/livelydocs-logomark.png" alt="" /><span>{'Lively'}</span></span>
                     <span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}>{'OAuth2'}</span>
                     {apiLogo}
                 </header>

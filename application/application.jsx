@@ -5,7 +5,6 @@ var React        = require('react');
 var dispatcher   = require('synapse-common/lib/dispatcher');
 
 var ReactRouter  = require('react-nested-router');
-var Router       = ReactRouter.Router;
 var Route        = ReactRouter.Route;
 
 var SiteLayout   = require('./ui/layouts/site');

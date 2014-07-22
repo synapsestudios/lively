@@ -27,22 +27,10 @@ Application.prototype.start = function() {
 
     var router = (
         <Route handler={SiteLayout} location='history'>
-            <Route name='api-list'
-                   path='/'
-                   handler={ApiList}
-                   config={this.config} />
-            <Route name='api-oauth-callback'
-                   path='/oauth2/callback/:apiSlug'
-                   handler={ApiPage}
-                   config={this.config} />
-            <Route name='api'
-                   path='/:apiSlug'
-                   handler={ApiPage}
-                   config={this.config} />
-            <Route name='api-resource'
-                   path='/:apiSlug/:resourceSlug'
-                   handler={ApiPage}
-                   config={this.config} />
+            <Route name='api-list'           path='/'                         handler={ApiList} config={this.config} />
+            <Route name='api-oauth-callback' path='/oauth2/callback/:apiSlug' handler={ApiPage} config={this.config} />
+            <Route name='api'                path='/:apiSlug'                 handler={ApiPage} config={this.config} />
+            <Route name='api-resource'       path='/:apiSlug/:resourceSlug'   handler={ApiPage} config={this.config} />
         </Route>
     );
 

@@ -2,7 +2,7 @@
 'use strict';
 
 var React        = require('react');
-window.React     = React;
+window.React     = React; // react-nested-router requires this
 
 var dispatcher   = require('synapse-common/lib/dispatcher');
 

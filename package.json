@@ -40,7 +40,7 @@
     "node-jsx"                     : "0.10.0",
     "oauth"                        : "0.9.12",
     "react"                        : "0.11.0",
-    "react-nested-router"          : "git://github.com/rpflorence/react-nested-router",
+    "react-nested-router"          : "0.3.4",
     "request"                      : "2.34.0",
     "store"                        : "1.3.14",
     "synapse-common"               : "git://github.com/synapsestudios/synapse-common",

@@ -2,24 +2,22 @@
 'use strict';
 
 var React        = require('react');
-window.React     = React; // react-nested-router requires this
+window.React     = React; // react-router requires this
 
 var dispatcher   = require('synapse-common/lib/dispatcher');
 
-var ReactRouter  = require('react-nested-router');
-var Router       = ReactRouter.Router;
-var Route        = ReactRouter.Route;
+var Router  = require('react-router');
+var Route   = Router.Route;
 
 var SiteLayout   = require('./ui/layouts/site');
 var ApiList      = require('./ui/pages/api-list');
 var ApiPage      = require('./ui/pages/api');
 
-var URLStore     = require('react-nested-router/modules/stores/URLStore');
+var URLStore     = require('react-router/modules/stores/URLStore');
 
 var Application = function(config) {
     this.dispatcher = dispatcher;
     this.config     = config;
-    this.router     = Router;
 };
 
 Application.prototype.start = function() {
@@ -39,7 +37,7 @@ Application.prototype.start = function() {
     });
 
     dispatcher.on('router:redirect', function(route, params) {
-        ReactRouter.transitionTo(route, params || {});
+        Router.transitionTo(route, params || {});
     }.bind(this));
 
     React.renderComponent(router, window.document.body);

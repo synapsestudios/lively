@@ -1,9 +1,9 @@
 /** @jsx React.DOM */
 'use strict';
 
-var React      = require('react');
-var cx         = require('react/lib/cx');
-var Link       = require('react-nested-router').Link;
+var React = require('react');
+var cx    = require('react/lib/cx');
+var Link  = require('react-router').Link;
 
 module.exports = React.createClass({
 

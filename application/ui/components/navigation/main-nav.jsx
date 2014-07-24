@@ -64,7 +64,6 @@ module.exports = React.createClass({
 
     getStateFromStores : function()
     {
-        console.log(this.props.stores);
         return {
             hasOAuth : (this.props.stores.oauth.accessToken !== null)
         };

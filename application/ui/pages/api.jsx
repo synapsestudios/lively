@@ -13,6 +13,7 @@ var SummaryPage       = require('./summary');
 var store             = require('store');
 var qs                = require('querystring');
 var url               = require('url');
+var livelyConfig      = require('../../config').lively;
 
 module.exports = React.createClass({
 
@@ -84,7 +85,7 @@ module.exports = React.createClass({
             'api'           : this.props.params.apiSlug
         });
 
-        var redirectHost = window.location.hostname + ':' + window.location.port;
+        var redirectHost = livelyConfig.hostname + ':' + livelyConfig.port;
 
         var redirectUrl = url.format({
             protocol : config.secure ? 'https' : 'http',

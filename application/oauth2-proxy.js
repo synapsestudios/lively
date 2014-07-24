@@ -28,14 +28,23 @@ module.exports = function(req, res) {
         var data = '';
         proxyRes.on('data', function(chunk) {
             data += chunk;
+
+            // Check for too much data from flood attack or faulty client
+            if (data.length > 1e6) {
+                data = '';
+                res.writeHead(413, {'Content-Type': 'text/plain'}).end();
+                req.connection.destroy();
+            }
         });
 
         proxyRes.on('end', function() {
             try {
-                var json = JSON.parse(data);
+                var json     = JSON.parse(data),
+                    hostname = config.lively.hostname,
+                    port     = config.lively.port;
 
                 res.writeHead(302, {
-                    Location : 'http://' + req.headers.host + '/'+query.api+'?' + qs.stringify(json)
+                    Location : 'http://' + hostname + ':' + port + '/'+query.api + '?' + qs.stringify(json)
                 });
             } catch (e) {
                 res.write(data);

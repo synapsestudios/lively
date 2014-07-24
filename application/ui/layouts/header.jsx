@@ -5,7 +5,7 @@ var React      = require('react');
 var StoreWatch = require('synapse-common/ui/mixins/store-watch');
 var cx         = require('react/lib/cx');
 var dispatcher = require('synapse-common/lib/dispatcher');
-var Link       = require('react-nested-router').Link;
+var Link       = require('react-router').Link;
 
 module.exports = React.createClass({
 

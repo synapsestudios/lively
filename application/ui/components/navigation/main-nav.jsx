@@ -1,11 +1,10 @@
 /** @jsx React.DOM */
 'use strict';
 
-var _      = require('underscore');
-var React  = require('react');
-var cx     = require('react/lib/cx');
-var Router = require('react-nested-router');
-var Link   = Router.Link;
+var _     = require('underscore');
+var React = require('react');
+var cx    = require('react/lib/cx');
+var Link  = require('react-router').Link;
 
 var GroupHeader = React.createClass({
     displayName : 'GroupHeader',

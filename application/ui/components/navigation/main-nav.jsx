@@ -1,25 +1,28 @@
 /** @jsx React.DOM */
 'use strict';
 
-var _     = require('underscore');
-var React = require('react');
-var cx    = require('react/lib/cx');
-var Link  = require('react-router').Link;
+var _          = require('underscore');
+var React      = require('react');
+var cx         = require('react/lib/cx');
+var StoreWatch = require('synapse-common/ui/mixins/store-watch');
+var Link       = require('react-router').Link;
+var dispatcher = require('synapse-common/lib/dispatcher');
 
 var GroupHeader = React.createClass({
     displayName : 'GroupHeader',
+
+    getInitialState : function()
+    {
+        return {
+            collapse : false
+        };
+    },
 
     slugify : function(text)
     {
         return text.toLowerCase()
             .replace(/ /g, '-')
             .replace(/[^\w-]+/g, '');
-    },
-
-    getInitialState : function() {
-        return {
-            collapse : false
-        };
     },
 
     toggleNavCollapse : function() {
@@ -38,6 +41,7 @@ var GroupHeader = React.createClass({
         return (
             <div className={classes}>
                 <div className='main-nav__group-header' onClick={this.toggleNavCollapse}>
+
                     <span key={'c-'+this.slugify(this.props.categoryName)}
                         className='main-nav__group-title'
                         onClick={this.toggleNavCollapse}>
@@ -53,10 +57,28 @@ var GroupHeader = React.createClass({
 
 });
 
-
 module.exports = React.createClass({
 
     displayName : 'MainNav',
+    mixins      : [ StoreWatch ],
+
+    getStateFromStores : function()
+    {
+        return {
+            hasOAuth : (this.props.stores.oauth.accessToken !== null)
+        };
+    },
+
+    getInitialState : function()
+    {
+        return this.getStateFromStores();
+    },
+
+    toggleOAuthPanel : function()
+    {
+        dispatcher.emit('toggleOauthPanel');
+    },
+
 
     slugify : function(text)
     {
@@ -115,9 +137,17 @@ module.exports = React.createClass({
 
     render : function() {
 
+        var oAuthLinkClasses = cx({
+            'o-auth'        : true,
+            'fa'            : true,
+            'fa-lock'       : this.state.hasOAuth,
+            'fa-unlock-alt' : ! this.state.hasOAuth
+        });
+
+
         return (
             <div className='main-nav__wrapper'>
-                <h3 className='main-nav__header'>API Resources</h3>
+                <h3 className='main-nav__header'>API Resources<span className='o-auth__tooltip'><span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}></span></span></h3>
                 <div className='main-nav'>
                     {this.buildNavList()}
                 </div>

@@ -146,6 +146,7 @@ module.exports = React.createClass({
             active={resource ? this.slugify(resource.name) : null}
             logo={this.config.logo}
             name={this.config.name}
+            stores={{oauth : this.oauthStore}}
             slug={this.props.params.apiSlug} />;
 
         if (resource) {

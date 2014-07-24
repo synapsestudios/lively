@@ -5,9 +5,8 @@ var _          = require('underscore');
 var React      = require('react');
 var cx         = require('react/lib/cx');
 var StoreWatch = require('synapse-common/ui/mixins/store-watch');
-var Router     = require('react-nested-router');
+var Link       = require('react-router').Link;
 var dispatcher = require('synapse-common/lib/dispatcher');
-var Link       = Router.Link;
 
 var GroupHeader = React.createClass({
     displayName : 'GroupHeader',

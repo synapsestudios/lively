@@ -21,7 +21,8 @@ module.exports = React.createClass({
             React.PropTypes.number
         ]),
         request   : React.PropTypes.object,
-        response  : React.PropTypes.object
+        response  : React.PropTypes.object,
+        clear     : React.PropTypes.func
     },
 
     formatHeadersFromObject : function(headersObject)
@@ -92,6 +93,7 @@ module.exports = React.createClass({
         }
         return (
             <div className='data__wrapper'>
+                <a className='button' onClick={this.props.clear}>Clear</a>
                 {requestData}
                 {responseData}
             </div>

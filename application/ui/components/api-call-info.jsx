@@ -21,7 +21,8 @@ module.exports = React.createClass({
             React.PropTypes.number
         ]),
         request   : React.PropTypes.object,
-        response  : React.PropTypes.object
+        response  : React.PropTypes.object,
+        latency   : React.PropTypes.number.isRequired
     },
 
     formatHeadersFromObject : function(headersObject)
@@ -79,6 +80,9 @@ module.exports = React.createClass({
         if (this.props.status === 'loaded' && this.props.response) {
             responseData = (
                 <div className='data__container'>
+                    <h3 className='data__header'>Response Time</h3>
+                    <code className={successClasses}>{this.props.latency}ms</code>
+
                     <h3 className='data__header'>Response Status</h3>
                     <code className={successClasses}>{this.props.response.status}</code>
 

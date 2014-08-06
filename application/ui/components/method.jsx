@@ -40,7 +40,9 @@ module.exports = React.createClass({
         return {
             status   : false,
             error    : false,
+            request  : null,
             response : null,
+            latency  : null,
             methodPanelHidden : true
         };
     },
@@ -52,12 +54,15 @@ module.exports = React.createClass({
         });
     },
 
-    apiCallback : function(err, resp)
+    apiCallback : function(startTime, err, resp)
     {
+        var now = new Date().getTime();
+
         this.setState({
             status   : LOADED,
             response : resp,
-            error    : err
+            error    : err,
+            latency  : now - startTime
         });
     },
 
@@ -105,20 +110,26 @@ module.exports = React.createClass({
             body   : bodyParams
         };
 
-        var requestInfo;
+        var requestInfo, apiCallback;
+
+        apiCallback = _.partial(
+            _.bind(this.apiCallback, this),
+            new Date().getTime()
+        );
+
         if (this.refs.sendToken.getValue() === true) {
             requestInfo = this.props.oauthStore.oauthRequest(
                 method,
                 uri,
                 params,
-                _.bind(this.apiCallback, this)
+                apiCallback
             );
         } else {
             requestInfo = this.props.oauthStore.request(
                 method,
                 uri,
                 params,
-                _.bind(this.apiCallback, this)
+                apiCallback
             );
         }
 
@@ -214,9 +225,12 @@ module.exports = React.createClass({
         if (this.state.status === LOADED || this.state.status === LOADING)
         {
             apiCallInfo = (
-                <ApiCallInfo status={this.state.status}
-                             request={this.state.request}
-                             response={this.state.response} />
+                <ApiCallInfo
+                    status   = {this.state.status}
+                    request  = {this.state.request}
+                    response = {this.state.response}
+                    latency  = {this.state.latency}
+                />
             );
         }
 

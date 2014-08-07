@@ -25,14 +25,15 @@ module.exports = React.createClass({
     getMethodComponent : function(method)
     {
         return (
-            <Method key   = {method.name}
-               name       = {method.name}
-               synopsis   = {method.synopsis}
-               method     = {method.method}
-               uri        = {method.uri}
-               oauth      = {method.oauth}
-               params     = {method.params}
-               oauthStore = {this.props.oauthStore}
+           <Method key           = {method.name}
+               name              = {method.name}
+               synopsis          = {method.synopsis}
+               method            = {method.method}
+               uri               = {method.uri}
+               oauth             = {method.oauth}
+               params            = {method.params}
+               oauthStore        = {this.props.oauthStore}
+               methodPanelHidden = {true}
             />
         );
     },
@@ -51,6 +52,7 @@ module.exports = React.createClass({
             <div className='panel'>
                 <div className='panel__summary'>
                     <h1>{this.props.name}</h1>
+                    <button>Expand</button>
                 </div>
                 {synopsis}
                 {this.props.methods.map(this.getMethodComponent)}

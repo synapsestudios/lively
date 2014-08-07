@@ -232,12 +232,12 @@ module.exports = React.createClass({
 
         var methodPanelClasses = cx({
             'method-panel'          : true,
-            'method-panel--hidden'  : this.state.methodPanelHidden
+            'method-panel--hidden'  : this.props.methodPanelHidden
         });
 
         var naviconButtonClasses = cx({
             'navicon-button' : true,
-            'open'           : ! this.state.methodPanelHidden
+            'open'           : ! this.props.methodPanelHidden
         });
 
         return (

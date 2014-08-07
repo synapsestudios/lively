@@ -65,6 +65,21 @@ module.exports = React.createClass({
         );
     },
 
+    handleExpandCollapseClick : function(){
+        var expanded = this.state.expanded;
+        var allExpanded = this.state.allExpanded;
+
+        expanded = expanded.map(function(){
+            return !allExpanded;
+        });
+        allExpanded = !allExpanded;
+
+        this.setState({
+            expanded: expanded,
+            allExpanded: allExpanded
+        });
+    },
+
     render : function()
     {
         var synopsis;
@@ -79,7 +94,7 @@ module.exports = React.createClass({
             <div className='panel'>
                 <div className='panel__summary'>
                     <h1>{this.props.name}</h1>
-                    <button ref="expand-button">{(this.state.allExpanded) ? ('Collapse') : ('Expand')}</button>
+                    <button onClick={this.handleExpandCollapseClick}>{(this.state.allExpanded) ? ('Collapse') : ('Expand')}</button>
                 </div>
                 {synopsis}
                 {this.props.methods.map(this.getMethodComponent)}

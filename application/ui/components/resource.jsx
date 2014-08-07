@@ -22,6 +22,10 @@ module.exports = React.createClass({
         };
     },
 
+    toggleMethodPanel : function(){
+        console.log("HERE");
+    },
+
     getMethodComponent : function(method)
     {
         return (
@@ -34,6 +38,7 @@ module.exports = React.createClass({
                params            = {method.params}
                oauthStore        = {this.props.oauthStore}
                methodPanelHidden = {true}
+               toggleMethodPanel = {this.toggleMethodPanel}
             />
         );
     },

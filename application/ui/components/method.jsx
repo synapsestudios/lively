@@ -47,9 +47,10 @@ module.exports = React.createClass({
 
     toggleMethodPanel : function()
     {
-        this.setState({
-            methodPanelHidden : ! this.state.methodPanelHidden
-        });
+        this.props.toggleMethodPanel();
+        // this.setState({
+        //     methodPanelHidden : ! this.state.methodPanelHidden
+        // });
     },
 
     apiCallback : function(err, resp)

@@ -18,11 +18,13 @@ module.exports = React.createClass({
 
     getInitialState : function()
     {
-        var expanded = new Array(this.props.methods.length).map(function(){
+        var expanded = this.props.methods.map(function(){
             return false;
         });
+
         return {
-            expanded : expanded
+            expanded    : expanded,
+            allExpanded : false
         };
     },
 
@@ -37,8 +39,12 @@ module.exports = React.createClass({
     {
         var expanded = this.state.expanded;
         expanded[id] = !expanded[id];
+
+        var allExpanded = !_.contains(expanded, false);
+
         this.setState({
-            expanded : expanded
+            expanded : expanded,
+            allExpanded : allExpanded
         });
     },
 
@@ -73,7 +79,7 @@ module.exports = React.createClass({
             <div className='panel'>
                 <div className='panel__summary'>
                     <h1>{this.props.name}</h1>
-                    <button>Expand</button>
+                    <button ref="expand-button">{(this.state.allExpanded) ? ('Collapse') : ('Expand')}</button>
                 </div>
                 {synopsis}
                 {this.props.methods.map(this.getMethodComponent)}

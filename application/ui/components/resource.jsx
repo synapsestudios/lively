@@ -4,6 +4,7 @@
 var React  = require('react');
 var Method = require('./method');
 var marked = require('marked');
+var _      = require('underscore');
 
 module.exports = React.createClass({
 
@@ -15,6 +16,16 @@ module.exports = React.createClass({
         synopsis : React.PropTypes.string
     },
 
+    getInitialState : function()
+    {
+        var expanded = new Array(this.props.methods.length).map(function(){
+            return false;
+        });
+        return {
+            expanded : expanded
+        };
+    },
+
     getDefaultProps : function()
     {
         return {
@@ -22,11 +33,16 @@ module.exports = React.createClass({
         };
     },
 
-    toggleMethodPanel : function(){
-        console.log("HERE");
+    toggleDisplayMethod : function(id)
+    {
+        var expanded = this.state.expanded;
+        expanded[id] = !expanded[id];
+        this.setState({
+            expanded : expanded
+        });
     },
 
-    getMethodComponent : function(method)
+    getMethodComponent : function(method, id)
     {
         return (
            <Method key           = {method.name}
@@ -37,8 +53,8 @@ module.exports = React.createClass({
                oauth             = {method.oauth}
                params            = {method.params}
                oauthStore        = {this.props.oauthStore}
-               methodPanelHidden = {true}
-               toggleMethodPanel = {this.toggleMethodPanel}
+               methodPanelHidden = {!this.state.expanded[id]}
+               toggleMethodPanel = {_.partial(this.toggleDisplayMethod, id)}
             />
         );
     },

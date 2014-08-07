@@ -45,6 +45,9 @@ module.exports = React.createClass({
         };
     },
 
+    /**
+     * Uses a callback set in props to ask the parent component to toggle between expanded and collapsed
+     */
     toggleMethodPanel : function()
     {
         this.props.toggleMethodPanel();

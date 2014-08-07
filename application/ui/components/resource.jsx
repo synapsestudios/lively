@@ -16,6 +16,11 @@ module.exports = React.createClass({
         synopsis : React.PropTypes.string
     },
 
+    /**
+     * Sets initial state for keeping track of whether method components are expanded or collapsed
+     *
+     * @return {object}
+     */
     getInitialState : function()
     {
         var expanded = this.props.methods.map(function(){
@@ -35,6 +40,11 @@ module.exports = React.createClass({
         };
     },
 
+    /**
+     * given an array index toggleDisplayMethod will either expand or collapse the method component
+     *
+     * @param  {int} id
+     */
     toggleDisplayMethod : function(id)
     {
         var expanded = this.state.expanded;
@@ -65,6 +75,9 @@ module.exports = React.createClass({
         );
     },
 
+    /**
+     * Click handler for the expand/collapse button on method pages
+     */
     handleExpandCollapseClick : function(){
         var expanded = this.state.expanded;
         var allExpanded = this.state.allExpanded;

@@ -23,6 +23,14 @@ module.exports = {
         'tokenParam'   : 'token'
     },
     'resources' : {
+        'Activity' : [
+            require('./github/activity/events'),
+            require('./github/activity/feeds'),
+            require('./github/activity/notifications'),
+            require('./github/activity/starring'),
+            require('./github/activity/watching')
+        ],
+
         'Gists' : [
             require('./github/gists'),
             require('./github/gists/comments')
@@ -62,6 +70,18 @@ module.exports = {
         'Pull Requests': [
             require('./github/pull_requests'),
             require('./github/pull_requests/review_comments')
+        ],
+
+        'Repositories': [
+            require('./github/repositories')
+        ],
+
+        'Search': [
+            require('./github/search')
+        ],
+
+        'Users': [
+            require('./github/users')
         ]
     }
 };

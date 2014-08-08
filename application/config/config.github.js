@@ -81,7 +81,10 @@ module.exports = {
         ],
 
         'Users': [
-            require('./github/users')
+            require('./github/users'),
+            require('./github/users/emails'),
+            require('./github/users/followers'),
+            require('./github/users/public_keys')
         ]
     }
 };

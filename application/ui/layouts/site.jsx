@@ -10,7 +10,7 @@ module.exports = React.createClass({
     render : function() {
         return (
             <div>
-                {this.props.activeRoute}
+                {this.props.activeRouteHandler()}
             </div>
         );
     }

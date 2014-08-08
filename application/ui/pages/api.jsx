@@ -84,7 +84,7 @@ module.exports = React.createClass({
             'api'           : this.props.params.apiSlug
         });
 
-        var redirectHost = window.location.hostname + ':' + window.location.port;
+        var redirectHost = this.props.config.lively.hostname + ':' + this.props.config.lively.port;
 
         var redirectUrl = url.format({
             protocol : config.secure ? 'https' : 'http',
@@ -146,6 +146,7 @@ module.exports = React.createClass({
             active={resource ? this.slugify(resource.name) : null}
             logo={this.config.logo}
             name={this.config.name}
+            stores={{oauth : this.oauthStore}}
             slug={this.props.params.apiSlug} />;
 
         if (resource) {

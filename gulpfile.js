@@ -12,7 +12,7 @@ require('./gulp-tasks/media');
 require('./gulp-tasks/preprocess');
 require('./gulp-tasks/sass');
 
-gulp.task('default', ['build']);
+gulp.task('default', ['build', 'connect']);
 
 // Alias
 gulp.task('browserify', ['watchify:app']);

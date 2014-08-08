@@ -141,7 +141,21 @@ module.exports = {
             uri      : '/notifications/threads/:id/subscription',
             oauth    : true,
             params   : [
-                paramId
+                paramId,
+                {
+                    name        : 'subscribed',
+                    required    : true,
+                    type        : 'boolean',
+                    location    : 'uri',
+                    description : 'Determines if notifications should be received from this thread'
+                },
+                {
+                    name        : 'ignored',
+                    required    : true,
+                    type        : 'boolean',
+                    location    : 'uri',
+                    description : 'Determines if all notifications should be blocked from this thread'
+                }
             ]
         },
         {

@@ -33,7 +33,7 @@ var paramId = {
 };
 
 module.exports = {
-    name     : 'Comments',
+    name     : 'Repo Comments',
     methods : [
         {
             name     : 'List commit comments for a repository',

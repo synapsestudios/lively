@@ -17,7 +17,7 @@ var paramRepo = {
 };
 
 module.exports = {
-    name     : 'Commits',
+    name     : 'Repo Commits',
     methods : [
         {
             name     : 'List commits on a repository',

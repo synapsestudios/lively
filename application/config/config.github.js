@@ -23,6 +23,12 @@ module.exports = {
         'tokenParam'   : 'token'
     },
     'resources' : {
+        'Activity' : [
+            require('./github/activity/events'),
+            require('./github/activity/event_types'),
+            require('./github/activity/feeds')
+        ],
+
         'Gists' : [
             require('./github/gists'),
             require('./github/gists/comments')

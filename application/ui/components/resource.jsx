@@ -3,7 +3,6 @@
 
 var React  = require('react');
 var Method = require('./method');
-var marked = require('marked');
 
 module.exports = React.createClass({
 
@@ -43,16 +42,16 @@ module.exports = React.createClass({
 
         if (this.props.synopsis) {
             synopsis = (
-                <div className='panel__synopsis' dangerouslySetInnerHTML={{__html: marked(this.props.synopsis)}} />
+                <div dangerouslySetInnerHTML={{__html: this.props.synopsis}} />
             );
         }
 
         return (
             <div className='panel'>
-                <div className='panel__summary'>
+                <div className='panel__synopsis'>
                     <h1>{this.props.name}</h1>
+                    {synopsis}
                 </div>
-                {synopsis}
                 {this.props.methods.map(this.getMethodComponent)}
             </div>
         );

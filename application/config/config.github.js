@@ -74,18 +74,18 @@ module.exports = {
 
         'Repositories': [
             require('./github/repositories'),
-            require('./github/repositories/collaborators.js'),
-            require('./github/repositories/comments.js'),
-            require('./github/repositories/commits.js'),
-            require('./github/repositories/contents.js'),
-            require('./github/repositories/deploy_keys.js'),
-            require('./github/repositories/forks.js'),
-            require('./github/repositories/hooks.js'),
-            require('./github/repositories/merging.js'),
-            require('./github/repositories/pages.js'),
-            require('./github/repositories/releases.js'),
-            require('./github/repositories/statistics.js'),
-            require('./github/repositories/statuses.js')
+            require('./github/repositories/collaborators'),
+            require('./github/repositories/comments'),
+            require('./github/repositories/commits'),
+            require('./github/repositories/contents'),
+            require('./github/repositories/deploy_keys'),
+            require('./github/repositories/forks'),
+            require('./github/repositories/hooks'),
+            require('./github/repositories/merging'),
+            require('./github/repositories/pages'),
+            require('./github/repositories/releases'),
+            require('./github/repositories/statistics'),
+            require('./github/repositories/statuses')
         ],
 
         'Search': [

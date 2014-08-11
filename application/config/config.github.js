@@ -29,6 +29,7 @@ module.exports = {
             require('./github/activity/notifications'),
             require('./github/activity/starring'),
             require('./github/activity/watching')
+            require('./github/activity/event_types'),
         ],
 
         'Gists' : [

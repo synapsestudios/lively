@@ -1,14 +1,18 @@
 'use strict';
 
+var fs               = require('fs');
+var marked           = require('marked');
+var listFeedsSummary = fs.readFileSync(__dirname + '/list-feeds-summary.md').toString();
+
 module.exports = {
     name     : 'Feeds',
     methods : [
         {
             name     : 'List feeds',
-            synopsis : 'GitHub provides several timeline resources in Atom format. The Feeds API lists all the feeds available to the authenticating user',
+            synopsis : marked(listFeedsSummary),
             method   : 'GET',
             uri      : '/feeds',
-            oauth    : true,
+            oauth    : false,
             params   : []
         }
     ]

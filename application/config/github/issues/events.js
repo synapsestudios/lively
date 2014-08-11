@@ -60,13 +60,11 @@ module.exports = {
                 paramOwner,
                 paramRepo,
                 {
-                    {
-                        name        : 'id',
-                        required    : true,
-                        type        : 'integer',
-                        location    : 'uri',
-                        description : 'The event ID'
-                    }
+                    name        : 'id',
+                    required    : true,
+                    type        : 'integer',
+                    location    : 'uri',
+                    description : 'The event ID'
                 }
             ]
         }

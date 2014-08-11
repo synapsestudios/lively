@@ -16,34 +16,23 @@ var paramRepo = {
     description : 'The name of the repo.'
 };
 
-var paramIssueNumber = {
-    name        : 'issue_number',
+var paramId = {
+    name        : 'id',
     required    : true,
     type        : 'integer',
     location    : 'uri',
-    description : 'The issue number.'
+    description : 'The ID of the comment'
 };
 
+
 module.exports = {
-    name    : 'Events',
+    name     : 'Deploy Keys',
     methods : [
         {
-            name     : 'List events for an issue',
+            name     : 'List deploy keys',
             synopsis : '',
             method   : 'GET',
-            uri      : '/repos/:owner/:repo/issues/:issue_number/events',
-            oauth    : false,
-            params   : [
-                paramOwner,
-                paramRepo,
-                paramIssueNumber
-            ]
-        },
-        {
-            name     : 'List events for a repository',
-            synopsis : '',
-            method   : 'GET',
-            uri      : '/repos/:owner/:repo/issues/events',
+            uri      : '/repos/:owner/:repo/keys',
             oauth    : true,
             params   : [
                 paramOwner,
@@ -51,23 +40,38 @@ module.exports = {
             ]
         },
         {
-            name     : 'Get a single event',
+            name     : 'Get a deploy key',
             synopsis : '',
             method   : 'GET',
-            uri      : '/repos/:owner/:repo/issues/events/:id',
+            uri      : '/repos/:owner/:repo/keys/:id',
             oauth    : true,
             params   : [
                 paramOwner,
                 paramRepo,
-                {
-                    {
-                        name        : 'id',
-                        required    : true,
-                        type        : 'integer',
-                        location    : 'uri',
-                        description : 'The event ID'
-                    }
-                }
+                paramId
+            ]
+        },
+        {
+            name     : 'Add a new deploy key',
+            synopsis : '',
+            method   : 'POST',
+            uri      : '/repos/:owner/:repo/keys',
+            oauth    : true,
+            params   : [
+                paramOwner,
+                paramRepo
+            ]
+        },
+        {
+            name     : 'Remove a deploy key',
+            synopsis : '',
+            method   : 'DELETE',
+            uri      : '/repos/:owner/:repo/keys/:id',
+            oauth    : true,
+            params   : [
+                paramOwner,
+                paramRepo,
+                paramId
             ]
         }
     ]

@@ -17,7 +17,7 @@ var paramRepo = {
 };
 
 var paramPath = {
-    name        : 'owner',
+    name        : 'path',
     required    : true,
     type        : 'string',
     location    : 'uri',

@@ -222,6 +222,7 @@ module.exports = {
             uri      : '/orgs/:org/repos',
             oauth    : true,
             params   : [
+                paramOrg,
                 {
                     name        : 'name',
                     required    : true,

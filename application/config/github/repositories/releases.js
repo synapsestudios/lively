@@ -112,6 +112,7 @@ module.exports = {
             params   : [
                 paramOwner,
                 paramRepo,
+                paramId,
                 {
                     name        : 'tag_name',
                     required    : false,

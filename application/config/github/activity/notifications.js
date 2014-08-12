@@ -128,7 +128,7 @@ module.exports = {
             name     : 'Get a Thread Subscription',
             synopsis : 'This checks to see if the current user is subscribed to a thread.',
             method   : 'GET',
-            uri      : 'GET /notifications/threads/:id/subscription',
+            uri      : '/notifications/threads/:id/subscription',
             oauth    : true,
             params   : [
                 paramId

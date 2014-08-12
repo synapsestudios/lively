@@ -64,6 +64,7 @@ module.exports = {
             uri      : '/users/:username/following/:target_user',
             oauth    : false,
             params   : [
+                paramUsername,
                 {
                     name        : 'target_user',
                     required    : true,

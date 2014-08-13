@@ -38,9 +38,15 @@ module.exports = {
                 {
                     name        : 'state',
                     required    : true,
-                    type        : 'string',
+                    type        : 'enum',
                     location    : 'body',
-                    description : 'The state of the status. Can be one of pending, success, error, or failure.'
+                    description : 'The state of the status. Can be one of pending, success, error, or failure.',
+                    enumValues  : [
+                        'pending',
+                        'success',
+                        'error',
+                        'failure'
+                    ]
                 },
                 {
                     name        : 'target_url',
@@ -59,6 +65,7 @@ module.exports = {
                 {
                     name        : 'context',
                     required    : false,
+                    defaultValue: 'default',
                     type        : 'string',
                     location    : 'body',
                     description : 'A string label to differentiate this status from the status of other systems. Default: "default"'

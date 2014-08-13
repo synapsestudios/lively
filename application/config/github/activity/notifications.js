@@ -1,5 +1,7 @@
 'use strict';
 
+var date = new Date();
+
 var paramOwner = {
     name        : 'owner',
     required    : true,
@@ -28,6 +30,7 @@ var paramAll = {
     name        : 'all',
     required    : false,
     type        : 'boolean',
+    defaultValue: false,
     location    : 'uri',
     description : 'If true, show notifications marked as read. Default: false'
 };
@@ -36,6 +39,7 @@ var paramParticipating = {
     name        : 'participating',
     required    : false,
     type        : 'boolean',
+    defaultValue: false,
     location    : 'uri',
     description : 'If true, only shows notifications in which the user is directly participating or mentioned. Default: false'
 };
@@ -44,6 +48,7 @@ var paramSince = {
     name        : 'since',
     required    : false,
     type        : 'string',
+    defaultValue: date.toISOString(),
     location    : 'uri',
     description : 'Filters out any notifications updated before the given time. This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ. Default: Time.now'
 };
@@ -52,6 +57,7 @@ var paramLastReadAt = {
     name        : 'last_read_at',
     required    : false,
     type        : 'string',
+    defaultValue: date.toISOString(),
     location    : 'uri',
     description : 'Describes the last point that notifications were checked. Anything updated since this time will not be updated. This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ. Default: Time.now'
 };
@@ -146,14 +152,14 @@ module.exports = {
                     name        : 'subscribed',
                     required    : true,
                     type        : 'boolean',
-                    location    : 'uri',
+                    location    : 'body',
                     description : 'Determines if notifications should be received from this thread'
                 },
                 {
                     name        : 'ignored',
                     required    : true,
                     type        : 'boolean',
-                    location    : 'uri',
+                    location    : 'body',
                     description : 'Determines if all notifications should be blocked from this thread'
                 }
             ]

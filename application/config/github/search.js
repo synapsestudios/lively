@@ -19,9 +19,14 @@ var paramSort = {
 var paramOrder = {
     name        : 'order',
     required    : false,
-    type        : 'string',
+    defaultValue: 'desc',
+    type        : 'enum',
     location    : 'uri',
-    description : 'The sort order if sort parameter is provided. One of asc or desc. Default: desc'
+    description : 'The sort order if sort parameter is provided. One of asc or desc. Default: desc',
+    enumValues  : [
+        'asc',
+        'desc'
+    ]
 };
 
 module.exports = {

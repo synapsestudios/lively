@@ -90,6 +90,7 @@ module.exports = {
                 {
                     name        : 'draft',
                     required    : false,
+                    defaultValue: false,
                     type        : 'boolean',
                     location    : 'body',
                     description : 'true to create a draft (unpublished) release, false to create a published one. Default: false'
@@ -97,6 +98,7 @@ module.exports = {
                 {
                     name        : 'prerelease',
                     required    : false,
+                    defaultValue: false,
                     type        : 'boolean',
                     location    : 'body',
                     description : 'true to identify the release as a prerelease. false to identify the release as a full release. Default: false'
@@ -144,6 +146,7 @@ module.exports = {
                 {
                     name        : 'draft',
                     required    : false,
+                    defaultValue: false,
                     type        : 'boolean',
                     location    : 'body',
                     description : 'true to create a draft (unpublished) release, false to create a published one. Default: false'
@@ -151,6 +154,7 @@ module.exports = {
                 {
                     name        : 'prerelease',
                     required    : false,
+                    defaultValue: false,
                     type        : 'boolean',
                     location    : 'body',
                     description : 'true to identify the release as a prerelease. false to identify the release as a full release. Default: false'

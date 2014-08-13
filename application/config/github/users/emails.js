@@ -3,7 +3,7 @@
 var paramEmails = {
     name        : 'emails',
     required    : true,
-    type        : 'string',
+    type        : 'array',
     location    : 'body',
     description : 'A single string or an array of email addresses.'
 };

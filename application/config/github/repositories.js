@@ -45,23 +45,43 @@ module.exports = {
                 {
                     name        : 'type',
                     required    : false,
-                    type        : 'string',
+                    defaultValue: 'all',
+                    type        : 'enum',
                     location    : 'uri',
-                    description : 'Can be one of all, owner, public, private, member. Default: all'
+                    description : 'Can be one of all, owner, public, private, member. Default: all',
+                    enumValues   : [
+                        'all',
+                        'owner',
+                        'public',
+                        'private',
+                        'member'
+                    ]
                 },
                 {
                     name        : 'sort',
                     required    : false,
-                    type        : 'string',
+                    defaultValue: 'full_name',
+                    type        : 'enum',
                     location    : 'uri',
-                    description : 'Can be one of created, updated, pushed, full_name. Default: full_name'
+                    description : 'Can be one of created, updated, pushed, full_name. Default: full_name',
+                    enumValues  : [
+                        'created',
+                        'updated',
+                        'pushed',
+                        'full_name'
+                    ]
                 },
                 {
                     name        : 'direction',
                     required    : false,
-                    type        : 'string',
+                    defaultValue: 'desc',
+                    type        : 'enum',
                     location    : 'uri',
-                    description : 'Can be one of asc or desc. Default: when using full_name: asc; otherwise desc'
+                    description : 'Can be one of asc or desc. Default: when using full_name: asc; otherwise desc',
+                    enumValues  : [
+                        'asc',
+                        'desc'
+                    ]
                 }
             ]
         },
@@ -76,23 +96,41 @@ module.exports = {
                 {
                     name        : 'type',
                     required    : false,
-                    type        : 'string',
+                    defaultValue: 'owner',
+                    type        : 'enum',
                     location    : 'uri',
-                    description : 'Can be one of all, owner, member. Default: owner'
+                    description : 'Can be one of all, owner, member. Default: owner',
+                    enumValues   : [
+                        'all',
+                        'owner',
+                        'member'
+                    ]
                 },
                 {
                     name        : 'sort',
                     required    : false,
-                    type        : 'string',
+                    defaultValue: 'full_name',
+                    type        : 'enum',
                     location    : 'uri',
-                    description : 'Can be one of created, updated, pushed, full_name. Default: full_name'
+                    description : 'Can be one of created, updated, pushed, full_name. Default: full_name',
+                    enumValues   : [
+                        'created',
+                        'updated',
+                        'pushed',
+                        'full_name'
+                    ]
                 },
                 {
                     name        : 'direction',
                     required    : false,
-                    type        : 'string',
+                    defaultValue: 'desc',
+                    type        : 'enum',
                     location    : 'uri',
-                    description : 'Can be one of asc or desc. Default: when using full_name: asc, otherwise desc'
+                    description : 'Can be one of asc or desc. Default: when using full_name: asc, otherwise desc',
+                    enumValues   : [
+                        'asc',
+                        'desc'
+                    ]
                 }
             ]
         },
@@ -107,9 +145,18 @@ module.exports = {
                 {
                     name        : 'type',
                     required    : false,
-                    type        : 'string',
+                    defaultValue: 'all',
+                    type        : 'enum',
                     location    : 'uri',
-                    description : 'Can be one of all, public, private, forks, sources, member. Default: all'
+                    description : 'Can be one of all, public, private, forks, sources, member. Default: all',
+                    enumValues   : [
+                        'all',
+                        'forks',
+                        'public',
+                        'private',
+                        'member',
+                        'sources'
+                    ]
                 }
             ]
         },
@@ -123,7 +170,7 @@ module.exports = {
                 {
                     name        : 'since',
                     required    : false,
-                    type        : 'string',
+                    type        : 'integer',
                     location    : 'uri',
                     description : 'The integer ID of the last Repository that you’ve seen.'
                 }
@@ -160,6 +207,7 @@ module.exports = {
                 {
                     name        : 'private',
                     required    : false,
+                    defaultValue: false,
                     type        : 'boolean',
                     location    : 'body',
                     description : 'Either true to create a private repository, or false to create a public one. Creating private repositories requires a paid GitHub account. Default: false'
@@ -167,6 +215,7 @@ module.exports = {
                 {
                     name        : 'has_issues',
                     required    : false,
+                    defaultValue: true,
                     type        : 'boolean',
                     location    : 'body',
                     description : 'Either true to enable issues for this repository, false to disable them. Default: true'
@@ -174,6 +223,7 @@ module.exports = {
                 {
                     name        : 'has_wiki',
                     required    : false,
+                    defaultValue: true,
                     type        : 'boolean',
                     location    : 'body',
                     description : 'Either true to enable the wiki for this repository, false to disable it. Default: true'
@@ -181,6 +231,7 @@ module.exports = {
                 {
                     name        : 'has_downloads',
                     required    : false,
+                    defaultValue: true,
                     type        : 'boolean',
                     location    : 'body',
                     description : 'Either true to enable downloads for this repository, false to disable them. Default: true'
@@ -188,13 +239,14 @@ module.exports = {
                 {
                     name        : 'team_id',
                     required    : false,
-                    type        : 'number',
+                    type        : 'integer',
                     location    : 'body',
                     description : 'The id of the team that will be granted access to this repository. This is only valid when creating a repository in an organization.'
                 },
                 {
                     name        : 'auto_init',
                     required    : false,
+                    defaultValue: false,
                     type        : 'boolean',
                     location    : 'body',
                     description : 'Pass true to create an initial commit with empty README. Default: false'
@@ -247,6 +299,7 @@ module.exports = {
                 {
                     name        : 'private',
                     required    : false,
+                    defaultValue: false,
                     type        : 'boolean',
                     location    : 'body',
                     description : 'Either true to create a private repository, or false to create a public one. Creating private repositories requires a paid GitHub account. Default: false'
@@ -254,6 +307,7 @@ module.exports = {
                 {
                     name        : 'has_issues',
                     required    : false,
+                    defaultValue: true,
                     type        : 'boolean',
                     location    : 'body',
                     description : 'Either true to enable issues for this repository, false to disable them. Default: true'
@@ -261,6 +315,7 @@ module.exports = {
                 {
                     name        : 'has_wiki',
                     required    : false,
+                    defaultValue: true,
                     type        : 'boolean',
                     location    : 'body',
                     description : 'Either true to enable the wiki for this repository, false to disable it. Default: true'
@@ -268,6 +323,7 @@ module.exports = {
                 {
                     name        : 'has_downloads',
                     required    : false,
+                    defaultValue: true,
                     type        : 'boolean',
                     location    : 'body',
                     description : 'Either true to enable downloads for this repository, false to disable them. Default: true'
@@ -275,7 +331,7 @@ module.exports = {
                 {
                     name        : 'team_id',
                     required    : false,
-                    type        : 'number',
+                    type        : 'integer',
                     location    : 'body',
                     description : 'The id of the team that will be granted access to this repository. This is only valid when creating a repository in an organization.'
                 },
@@ -346,6 +402,7 @@ module.exports = {
                 {
                     name        : 'private',
                     required    : false,
+                    defaultValue: false,
                     type        : 'boolean',
                     location    : 'body',
                     description : 'Either true to make the repository private, or false to make it public. Creating private repositories requires a paid GitHub account. Default: false'
@@ -353,6 +410,7 @@ module.exports = {
                 {
                     name        : 'has_issues',
                     required    : false,
+                    defaultValue: true,
                     type        : 'boolean',
                     location    : 'body',
                     description : 'Either true to enable issues for this repository, false to disable them. Default: true'
@@ -360,6 +418,7 @@ module.exports = {
                 {
                     name        : 'has_wiki',
                     required    : false,
+                    defaultValue: true,
                     type        : 'boolean',
                     location    : 'body',
                     description : 'Either true to enable the wiki for this repository, false to disable it. Default: true'
@@ -367,6 +426,7 @@ module.exports = {
                 {
                     name        : 'has_downloads',
                     required    : false,
+                    defaultValue: true,
                     type        : 'boolean',
                     location    : 'body',
                     description : 'Either true to enable downloads for this repository, false to disable them. Default: true'
@@ -392,9 +452,9 @@ module.exports = {
                 {
                     name        : 'anon',
                     required    : false,
-                    type        : 'string',
-                    location    : 'uri',
-                    description : 'Set to 1 or true to include anonymous contributors in results.'
+                    type        : 'boolean',
+                    location    : 'body',
+                    description : 'Set to true to include anonymous contributors in results.'
                 }
             ]
         },

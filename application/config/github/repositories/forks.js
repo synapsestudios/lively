@@ -31,9 +31,15 @@ module.exports = {
                 {
                     name        : 'sort',
                     required    : false,
-                    type        : 'string',
+                    defaultValue: 'newest',
+                    type        : 'enum',
                     location    : 'uri',
-                    description : 'The sort order. Can be either newest, oldest, or stargazers. Default: newest'
+                    description : 'The sort order. Can be either newest, oldest, or stargazers. Default: newest',
+                    enumValues  : [
+                        'newest',
+                        'oldest',
+                        'stargazers'
+                    ]
                 }
             ]
         },

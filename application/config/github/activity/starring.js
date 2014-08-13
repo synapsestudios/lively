@@ -28,16 +28,22 @@ var paramSort = {
     name        : 'sort',
     required    : false,
     type        : 'string',
+    defaultValue: 'created',
     location    : 'uri',
     description : 'One of created (when the repository was starred) or updated (when it was last pushed to). Default: created'
 };
 
 var paramDirection = {
-    name        : 'direction',
-    required    : false,
-    type        : 'string',
-    location    : 'uri',
-    description : 'One of asc (ascending) or desc (descending). Default: desc'
+    name         : 'direction',
+    required     : false,
+    defaultValue : 'desc',
+    type         : 'enum',
+    location     : 'query',
+    description  : 'The direction of the sort.',
+    enumValues   : [
+        'asc',
+        'desc'
+    ]
 };
 
 module.exports = {

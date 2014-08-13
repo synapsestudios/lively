@@ -1,5 +1,7 @@
 'use strict';
 
+var date = new Date();
+
 var paramOwner = {
     name        : 'owner',
     required    : true,
@@ -52,6 +54,7 @@ module.exports = {
                 {
                     name        : 'since',
                     required    : false,
+                    defaultValue: date.toISOString(),
                     type        : 'string',
                     location    : 'uri',
                     description : 'Only commits after this date will be returned. This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.'
@@ -59,6 +62,7 @@ module.exports = {
                 {
                     name        : 'until',
                     required    : false,
+                    defaultValue: date.toISOString(),
                     type        : 'string',
                     location    : 'uri',
                     description : 'Only commits before this date will be returned. This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.'

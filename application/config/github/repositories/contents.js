@@ -182,9 +182,14 @@ module.exports = {
                 {
                     name        : 'archive_format',
                     required    : true,
-                    type        : 'string',
+                    defaultValue: 'tarball',
+                    type        : 'enum',
                     location    : 'uri',
-                    description : 'Can be either tarball or zipball. Default: tarball'
+                    description : 'Can be either tarball or zipball. Default: tarball',
+                    enumValues  : [
+                        'tarball',
+                        'zipball'
+                    ]
                 },
                 {
                     name        : 'ref',

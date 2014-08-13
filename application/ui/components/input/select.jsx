@@ -35,7 +35,14 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var defaultValue = (this.props.defaultValue) ? 'true' : 'false';
+        var defaultValue;
+
+        if (_.isBoolean(this.props.defaultValue)) {
+            defaultValue = (this.props.defaultValue) ? 'true' : 'false';
+        }
+        else {
+            defaultValue = this.props.defaultValue;
+        }
         return this.transferPropsTo(
             <select defaultValue={defaultValue} className='select' ref='input' onChange={this.handleChange}>
                 {this.props.options.map(this.getOptions)}

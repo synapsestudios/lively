@@ -22,7 +22,7 @@ module.exports = React.createClass(_.extend(AbstractParam, {
                 console.warn('Missing enumValues for param: ' + this.props.name);
             }
 
-            return <Select options={this.props.enumValues} ref='input' />;
+            return <Select defaultValue={this.props.defaultValue} options={this.props.enumValues} ref='input' />;
         } else if (type === 'boolean') {
             return <Select defaultValue={this.props.defaultValue} options={['true', 'false']} ref='input' />;
         } else if (this.props.type === 'resumable-upload') {

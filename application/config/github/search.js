@@ -1,29 +1,29 @@
 'use strict';
 
 var paramQ = {
-    name        : 'q',
-    required    : true,
-    type        : 'string',
-    location    : 'uri',
-    description : 'The search keywords.'
+    name         : 'q',
+    required     : true,
+    type         : 'string',
+    location     : 'uri',
+    description  : 'The search keywords.'
 };
 
 var paramSort = {
-    name        : 'sort',
-    required    : false,
-    type        : 'string',
-    location    : 'uri',
-    description : 'The sort field. One of stars, forks, or updated. Default: results are sorted by best match.'
+    name         : 'sort',
+    required     : false,
+    type         : 'string',
+    location     : 'uri',
+    description  : 'The sort field. One of stars, forks, or updated. Default: results are sorted by best match.'
 };
 
 var paramOrder = {
-    name        : 'order',
-    required    : false,
-    defaultValue: 'desc',
-    type        : 'enum',
-    location    : 'uri',
-    description : 'The sort order if sort parameter is provided. One of asc or desc. Default: desc',
-    enumValues  : [
+    name         : 'order',
+    required     : false,
+    defaultValue : 'desc',
+    type         : 'enum',
+    location     : 'uri',
+    description  : 'The sort order if sort parameter is provided. One of asc or desc. Default: desc',
+    enumValues   : [
         'asc',
         'desc'
     ]

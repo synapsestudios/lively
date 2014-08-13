@@ -180,23 +180,23 @@ module.exports = {
                 paramOwner,
                 paramRepo,
                 {
-                    name        : 'archive_format',
-                    required    : true,
-                    defaultValue: 'tarball',
-                    type        : 'enum',
-                    location    : 'uri',
-                    description : 'Can be either tarball or zipball. Default: tarball',
-                    enumValues  : [
+                    name         : 'archive_format',
+                    required     : true,
+                    defaultValue : 'tarball',
+                    type         : 'enum',
+                    location     : 'uri',
+                    description  : 'Can be either tarball or zipball. Default: tarball',
+                    enumValues   : [
                         'tarball',
                         'zipball'
                     ]
                 },
                 {
-                    name        : 'ref',
-                    required    : true,
-                    type        : 'string',
-                    location    : 'uri',
-                    description : 'A valid Git reference. Default: the repository’s default branch (usually master)'
+                    name         : 'ref',
+                    required     : true,
+                    type         : 'string',
+                    location     : 'uri',
+                    description  : 'A valid Git reference. Default: the repository’s default branch (usually master)'
                 }
             ]
         }

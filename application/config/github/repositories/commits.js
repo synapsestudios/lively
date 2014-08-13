@@ -31,41 +31,41 @@ module.exports = {
                 paramOwner,
                 paramRepo,
                 {
-                    name        : 'sha',
-                    required    : false,
-                    type        : 'string',
-                    location    : 'uri',
-                    description : 'SHA or branch to start listing commits from.'
+                    name         : 'sha',
+                    required     : false,
+                    type         : 'string',
+                    location     : 'uri',
+                    description  : 'SHA or branch to start listing commits from.'
                 },
                 {
-                    name        : 'path',
-                    required    : false,
-                    type        : 'string',
-                    location    : 'uri',
-                    description : 'Only commits containing this file path will be returned.'
+                    name         : 'path',
+                    required     : false,
+                    type         : 'string',
+                    location     : 'uri',
+                    description  : 'Only commits containing this file path will be returned.'
                 },
                 {
-                    name        : 'author',
-                    required    : false,
-                    type        : 'string',
-                    location    : 'uri',
-                    description : 'GitHub login or email address by which to filter by commit author.'
+                    name         : 'author',
+                    required     : false,
+                    type         : 'string',
+                    location     : 'uri',
+                    description  : 'GitHub login or email address by which to filter by commit author.'
                 },
                 {
-                    name        : 'since',
-                    required    : false,
-                    defaultValue: date.toISOString(),
-                    type        : 'string',
-                    location    : 'uri',
-                    description : 'Only commits after this date will be returned. This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.'
+                    name         : 'since',
+                    required     : false,
+                    defaultValue : date.toISOString(),
+                    type         : 'string',
+                    location     : 'uri',
+                    description  : 'Only commits after this date will be returned. This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.'
                 },
                 {
-                    name        : 'until',
-                    required    : false,
-                    defaultValue: date.toISOString(),
-                    type        : 'string',
-                    location    : 'uri',
-                    description : 'Only commits before this date will be returned. This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.'
+                    name         : 'until',
+                    required     : false,
+                    defaultValue : date.toISOString(),
+                    type         : 'string',
+                    location     : 'uri',
+                    description  : 'Only commits before this date will be returned. This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.'
                 }
             ]
         },

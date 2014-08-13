@@ -84,6 +84,8 @@ module.exports = {
             uri      : '/repos/:owner/:repo/notifications',
             oauth    : true,
             params   : [
+                paramOwner,
+                paramRepo,
                 paramAll,
                 paramParticipating,
                 paramSince

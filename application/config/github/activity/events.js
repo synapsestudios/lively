@@ -29,12 +29,11 @@ var paramUsername = {
     required    : true,
     type        : 'string',
     location    : 'uri',
-    description : 'The name of the user.'
+    description : 'The username of the user.'
 };
 
-
 module.exports = {
-    name     : 'Events',
+    name     : 'Activity Events',
     synopsis : 'This is a read-only API to the GitHub events. These events power the various activity streams on the site.',
     methods : [
         {
@@ -42,7 +41,8 @@ module.exports = {
             synopsis : '',
             method   : 'GET',
             uri      : '/events',
-            oauth    : false
+            oauth    : false,
+            params   : []
         },
         {
             name     : 'List repository events',
@@ -57,7 +57,7 @@ module.exports = {
         },
         {
             name     : 'List issue events for a repository',
-            synopsis : 'Repository issue events have a different format than other events, as documented in the Issue Events API.',
+            synopsis : '',
             method   : 'GET',
             uri      : '/repos/:owner/:repo/issues/events',
             oauth    : false,

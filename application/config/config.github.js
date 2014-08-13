@@ -25,8 +25,11 @@ module.exports = {
     'resources' : {
         'Activity' : [
             require('./github/activity/events'),
-            require('./github/activity/event_types'),
-            require('./github/activity/feeds')
+            require('./github/activity/feeds'),
+            require('./github/activity/notifications'),
+            require('./github/activity/starring'),
+            require('./github/activity/watching'),
+            require('./github/activity/event_types')
         ],
 
         'Gists' : [
@@ -68,6 +71,33 @@ module.exports = {
         'Pull Requests': [
             require('./github/pull_requests'),
             require('./github/pull_requests/review_comments')
+        ],
+
+        'Repositories': [
+            require('./github/repositories'),
+            require('./github/repositories/collaborators'),
+            require('./github/repositories/comments'),
+            require('./github/repositories/commits'),
+            require('./github/repositories/contents'),
+            require('./github/repositories/deploy_keys'),
+            require('./github/repositories/forks'),
+            require('./github/repositories/hooks'),
+            require('./github/repositories/merging'),
+            require('./github/repositories/pages'),
+            require('./github/repositories/releases'),
+            require('./github/repositories/statistics'),
+            require('./github/repositories/statuses')
+        ],
+
+        'Search': [
+            require('./github/search')
+        ],
+
+        'Users': [
+            require('./github/users'),
+            require('./github/users/emails'),
+            require('./github/users/followers'),
+            require('./github/users/public_keys')
         ]
     }
 };

@@ -24,6 +24,14 @@ var paramNumber = {
     description : 'The issue number.'
 };
 
+var paramId = {
+    name        : 'id',
+    required    : true,
+    type        : 'integer',
+    location    : 'uri',
+    description : 'The ID of the comment.'
+};
+
 var paramSort = {
     name         : 'sort',
     required     : false,
@@ -170,12 +178,12 @@ module.exports = {
             name     : 'Edit a comment',
             synopsis : '',
             method   : 'PATCH',
-            uri      : '/repos/:owner/:repo/pulls/comments/:number',
+            uri      : '/repos/:owner/:repo/pulls/comments/:id',
             oauth    : true,
             params   : [
                 paramOwner,
                 paramRepo,
-                paramNumber,
+                paramId,
                 {
                     name         : 'body',
                     required     : true,
@@ -189,12 +197,12 @@ module.exports = {
             name     : 'Delete a comment',
             synopsis : '',
             method   : 'DELETE',
-            uri      : '/repos/:owner/:repo/pulls/comments/:number',
+            uri      : '/repos/:owner/:repo/pulls/comments/:id',
             oauth    : true,
             params   : [
                 paramOwner,
                 paramRepo,
-                paramNumber
+                paramId
             ]
         }
     ]

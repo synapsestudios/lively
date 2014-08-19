@@ -1,13 +1,13 @@
 /* global jest, describe, it, expect */
 'use strict';
 
-var path = '../../application/util/nested-property-setter';
+var path = '../../application/util/nested-property-handler';
 
 jest.dontMock(path);
 
-var NestedPropertySetter = require(path);
+var NestedPropertyHandler = require(path);
 
-describe('nested-property-setter', function() {
+describe('nested-property-handler', function() {
     describe('set', function() {
         it('sets property as expected', function() {
             var oldVal = 6,
@@ -36,7 +36,29 @@ describe('nested-property-setter', function() {
                 }
             };
 
-            result = NestedPropertySetter.set(object, ['foo', 'bar', 'baz', 0, 'qux'], newVal);
+            result = NestedPropertyHandler.set(object, ['foo', 'bar', 'baz', 0, 'qux'], newVal);
+
+            expect(result).toEqual(expectedResult);
+        });
+    });
+
+    describe('get', function() {
+        it('gets property as expected', function() {
+            var expectedResult = 'test',
+                object,
+                result;
+
+            object = {
+                foo : {
+                    bar : {
+                        baz : [
+                            {qux : expectedResult}
+                        ]
+                    }
+                }
+            };
+
+            result = NestedPropertyHandler.get(object, ['foo', 'bar', 'baz', 0, 'qux']);
 
             expect(result).toEqual(expectedResult);
         });

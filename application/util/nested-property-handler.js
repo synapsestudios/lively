@@ -12,5 +12,20 @@ module.exports = {
         object[nextSegment] = this.set(object[nextSegment], path, value);
 
         return object;
+    },
+
+    get : function(object, path)
+    {
+        var pathCopy = path.slice(),
+            item     = object,
+            nextSegment;
+
+        while (pathCopy.length > 0) {
+            nextSegment = pathCopy.shift();
+
+            item = item[nextSegment];
+        }
+
+        return item;
     }
 };

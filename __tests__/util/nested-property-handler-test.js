@@ -4,6 +4,7 @@
 var path = '../../application/util/nested-property-handler';
 
 jest.dontMock(path);
+jest.dontMock('underscore');
 
 var NestedPropertyHandler = require(path);
 
@@ -40,6 +41,16 @@ describe('nested-property-handler', function() {
 
             expect(result).toEqual(expectedResult);
         });
+
+        it('sets property even if the path is not yet created', function() {
+            var result, expectedResult;
+
+            result = NestedPropertyHandler.set(undefined, ['foo', 'bar', 'baz'], 'qux');
+
+            expectedResult = {foo : {bar : {baz : 'qux'}}};
+
+            expect(result).toEqual(expectedResult);
+        });
     });
 
     describe('get', function() {
@@ -61,6 +72,16 @@ describe('nested-property-handler', function() {
             result = NestedPropertyHandler.get(object, ['foo', 'bar', 'baz', 0, 'qux']);
 
             expect(result).toEqual(expectedResult);
+        });
+
+        it('returns undefined if the property does not exists', function() {
+            expect(
+                NestedPropertyHandler.get(undefined, ['foo', 'bar'])
+            ).toEqual(undefined);
+
+            expect(
+                NestedPropertyHandler.get({foo : {}}, ['foo', 'bar', 'baz'])
+            ).toEqual(undefined);
         });
     });
 });

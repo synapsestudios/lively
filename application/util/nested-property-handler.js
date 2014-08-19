@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('underscore');
+
 module.exports = {
     set : function(object, path, value)
     {
@@ -8,6 +10,10 @@ module.exports = {
         }
 
         var nextSegment = path.shift();
+
+        if (_.isUndefined(object)) {
+            object = {};
+        }
 
         object[nextSegment] = this.set(object[nextSegment], path, value);
 
@@ -22,6 +28,10 @@ module.exports = {
 
         while (pathCopy.length > 0) {
             nextSegment = pathCopy.shift();
+
+            if (_.isUndefined(item)) {
+                return undefined;
+            }
 
             item = item[nextSegment];
         }

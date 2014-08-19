@@ -17,25 +17,8 @@ describe('nested-property-handler', function() {
                 object,
                 result;
 
-            object = {
-                foo : {
-                    bar : {
-                        baz : [
-                            {qux : oldVal}
-                        ]
-                    }
-                }
-            };
-
-            expectedResult = {
-                foo : {
-                    bar : {
-                        baz : [
-                            {qux : newVal}
-                        ]
-                    }
-                }
-            };
+            object         = {foo : {bar : {baz : [{qux : oldVal}]}}};
+            expectedResult = {foo : {bar : {baz : [{qux : newVal}]}}};
 
             result = NestedPropertyHandler.set(object, ['foo', 'bar', 'baz', 0, 'qux'], newVal);
 
@@ -45,8 +28,7 @@ describe('nested-property-handler', function() {
         it('sets property even if the path is not yet created', function() {
             var result, expectedResult;
 
-            result = NestedPropertyHandler.set(undefined, ['foo', 'bar', 'baz'], 'qux');
-
+            result         = NestedPropertyHandler.set(undefined, ['foo', 'bar', 'baz'], 'qux');
             expectedResult = {foo : {bar : {baz : 'qux'}}};
 
             expect(result).toEqual(expectedResult);
@@ -59,16 +41,7 @@ describe('nested-property-handler', function() {
                 object,
                 result;
 
-            object = {
-                foo : {
-                    bar : {
-                        baz : [
-                            {qux : expectedResult}
-                        ]
-                    }
-                }
-            };
-
+            object = {foo : {bar : {baz : [{qux : expectedResult}]}}};
             result = NestedPropertyHandler.get(object, ['foo', 'bar', 'baz', 0, 'qux']);
 
             expect(result).toEqual(expectedResult);
@@ -82,6 +55,19 @@ describe('nested-property-handler', function() {
             expect(
                 NestedPropertyHandler.get({foo : {}}, ['foo', 'bar', 'baz'])
             ).toEqual(undefined);
+        });
+    });
+
+    describe('remove', function() {
+        it('removes properties as expected', function() {
+            var expectedResult, object, result;
+
+            object         = {foo : {bar : {baz : [{qux : expectedResult}]}}};
+            expectedResult = {foo : {bar : {}}};
+
+            result = NestedPropertyHandler.remove(object, ['foo', 'bar', 'baz']);
+
+            expect(result).toEqual(expectedResult);
         });
     });
 });

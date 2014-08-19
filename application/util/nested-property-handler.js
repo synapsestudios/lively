@@ -37,5 +37,24 @@ module.exports = {
         }
 
         return item;
+    },
+
+    remove : function(object, path)
+    {
+        if (path.length === 1) {
+            delete object[_.first(path)];
+
+            return object;
+        }
+
+        var nextSegment = path.shift();
+
+        if (_.isUndefined(object)) {
+            return object;
+        }
+
+        object[nextSegment] = this.remove(object[nextSegment], path);
+
+        return object;
     }
 };

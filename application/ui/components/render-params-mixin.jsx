@@ -102,7 +102,7 @@ module.exports = {
 
     renderHashArrayParams : function(params, path)
     {
-        var values         = NestedPropertyHandler.get(this.props.requestBody, path),
+        var values         = NestedPropertyHandler.get(this.props.requestBody, path) || [],
             renderedHashes = [],
             component      = this,
             newPath;

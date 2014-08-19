@@ -75,10 +75,11 @@ module.exports = {
         );
     },
 
-    renderHashParams : function(params, path)
+    renderHashParams : function(params, path, showRemovalButton)
     {
         var component      = this,
             renderedParams = [],
+            removalButton  = null,
             key;
 
         params.forEach(function(childParam) {
@@ -89,10 +90,15 @@ module.exports = {
 
         key = 'hashParams' + (_.last(path));
 
+        if (showRemovalButton === true) {
+            removalButton = this.renderRemoveArrayElementButton(path);
+        }
+
         return (
             <tr key={key}>
                 <td colSpan={4}>
                     <table>
+                        {removalButton}
                         {renderedParams}
                     </table>
                 </td>
@@ -112,7 +118,7 @@ module.exports = {
             newPath.push(index);
 
             renderedHashes.push(
-                component.renderHashParams(params, newPath)
+                component.renderHashParams(params, newPath, true)
             );
         });
 
@@ -176,11 +182,35 @@ module.exports = {
             var newPath = component.appendPath(path, index);
 
             inputs.push(
+                component.renderRemoveArrayElementButton(newPath)
+            );
+
+            inputs.push(
                 component.renderParamInput(type, param, newPath, param.name + index)
             );
         });
 
         return inputs;
+    },
+
+    renderRemoveArrayElementButton : function(path)
+    {
+        var component = this,
+            callback;
+
+        callback = function() {
+            var values = component.props.requestBody;
+
+            values = NestedPropertyHandler.remove(values, path);
+
+            component.props.updateValues(values);
+        };
+
+        return (
+            <a className='button field-button--remove' onClick={callback}>
+                –
+            </a>
+        );
     },
 
     handleAddField : function(path, defaultValue)

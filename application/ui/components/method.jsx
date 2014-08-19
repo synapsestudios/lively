@@ -1,13 +1,14 @@
 /** @jsx React.DOM */
 'use strict';
 
-var _           = require('underscore');
-var React       = require('react');
-var cx          = require('react/lib/cx');
-var Params      = require('./params-list');
-var ApiCallInfo = require('./api-call-info');
-var Checkbox    = require('./input/checkbox');
-var Resumable   = require('../../../bower_components/resumablejs/resumable');
+var _              = require('underscore');
+var React          = require('react');
+var cx             = require('react/lib/cx');
+var Params         = require('./params-list');
+var ApiCallInfo    = require('./api-call-info');
+var Checkbox       = require('./input/checkbox');
+var Resumable      = require('../../../bower_components/resumablejs/resumable');
+var ParamTypeMixin = require('../../util/param-type-mixin');
 
 var LOADED  = 'loaded',
     LOADING = 'loading';
@@ -25,6 +26,10 @@ module.exports = React.createClass({
         params   : React.PropTypes.array
     },
 
+    mixins : [
+        ParamTypeMixin
+    ],
+
     getDefaultProps : function()
     {
         return {
@@ -37,11 +42,32 @@ module.exports = React.createClass({
     getInitialState : function()
     {
         return {
-            status   : false,
-            error    : false,
-            response : null,
+            requestBody       : this.getDefaultRequestBodyFromConfig(this.props.params),
+            status            : false,
+            error             : false,
+            response          : null,
             methodPanelHidden : true
         };
+    },
+
+    getDefaultRequestBodyFromConfig : function(params)
+    {
+        var initialValues = {},
+            component     = this;
+
+        params.forEach(function(param) {
+            if (param.hasOwnProperty('defaultValue')) {
+                initialValues[param.name] = param.defaultValue;
+            } else if (component.isArray(param.type)) {
+                initialValues[param.name] = [];
+            } else if (component.isHash(param.type)) {
+                initialValues[param.name] = component.getDefaultRequestBodyFromConfig(param.params);
+            } else {
+                initialValues[param.name] = null;
+            }
+        });
+
+        return initialValues;
     },
 
     toggleMethodPanel : function()
@@ -62,7 +88,7 @@ module.exports = React.createClass({
 
     onSubmit : function()
     {
-        var params = this.refs.params.getValues(),
+        var params = this.state.requestBody,
             method = this.props.method,
             uri    = this.props.uri;
 
@@ -206,6 +232,13 @@ module.exports = React.createClass({
         return hasUpload ? null : <a className='button' onClick={this.onSubmit}>Try it</a>;
     },
 
+    handleUpdatedRequestBody : function(newRequestBody)
+    {
+        this.setState({
+            requestBody : newRequestBody
+        });
+    },
+
     render : function()
     {
         var apiCallInfo;
@@ -253,7 +286,13 @@ module.exports = React.createClass({
                 </div>
                 <div className={methodPanelClasses}>
                     <div className='panel__synopsis' dangerouslySetInnerHTML={{__html: this.props.synopsis}} />
-                    <Params params={this.props.params} resumableUploadCallback={this.initResumableUpload} ref='params' />
+                    <Params
+                        params                  = {this.props.params}
+                        requestBody             = {this.state.requestBody}
+                        resumableUploadCallback = {this.initResumableUpload}
+                        updateValues            = {this.handleUpdatedRequestBody}
+                        ref                     = 'params'
+                    />
                     <div className='switch__container'>
                         <p className='checkbox-label'>Include OAuth Token?</p>
                         <Checkbox defaultChecked={this.props.oauth} ref='sendToken' name={this.props.name}/>

@@ -8,7 +8,7 @@ var RenderParamsMixin     = require('./render-params-mixin');
 var ParamTypeMixin        = require('../../util/param-type-mixin');
 var Select                = require('./input/select');
 var Text                  = require('./input/text');
-var ResumableUpload       = require('./input/resumable-upload.jsx');
+var ResumableUpload       = require('./input/resumable-upload');
 var NestedPropertyHandler = require('../../util/nested-property-handler');
 
 module.exports = React.createClass({
@@ -91,7 +91,7 @@ module.exports = React.createClass({
             return null;
         }
 
-        if (this.isArray(param.type)) {
+        if (this.isArrayParam(param.type)) {
             return this.renderArrayParamInputs(this.getArrayType(param.type), param, path);
         }
 

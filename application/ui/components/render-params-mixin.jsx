@@ -13,7 +13,7 @@ module.exports = {
 
     renderInputTypeDescription : function(type)
     {
-        var isArray = this.isArray(type);
+        var isArray = this.isArrayParam(type);
 
         return [
             isArray ? 'Array of ' : null,

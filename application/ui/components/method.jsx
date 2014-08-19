@@ -68,11 +68,11 @@ module.exports = React.createClass({
             return param.defaultValue;
         }
 
-        if (this.isArray(param.type)) {
+        if (this.isArrayParam(param.type)) {
             return [];
         }
 
-        if (this.isHash(param.type)) {
+        if (param.type === 'hash') {
             if (! _.isArray(param.params)) {
                 var message = 'Hash type parameter with no sub-parameters defined: ';
 

@@ -8,36 +8,34 @@ module.exports = React.createClass({
     displayName : 'SelectInput',
 
     propTypes : {
-        options : React.PropTypes.array.isRequired
+        options  : React.PropTypes.array.isRequired,
+        onChange : React.PropTypes.func.isRequired,
+        value    : React.PropTypes.any
     },
 
-    getValue : function()
+    renderOption : function(option, index)
     {
-        var element = this.refs.input.getDOMNode();
-        return element.options[element.selectedIndex].value;
-    },
-
-    getOptions : function(option, index)
-    {
-        return <option key={'option-' + index} value={option}>{option}</option>;
+        return <option key={'option-' + index} value={option}>
+            {option}
+        </option>;
     },
 
     handleChange : function(event)
     {
-        var callback = this.props.handleChange;
+        var callback = this.props.onChange;
 
         if (! _.isFunction(callback)) {
             return;
         }
 
-        this.props.handleChange(event, this);
+        callback(event.target.value);
     },
 
     render : function()
     {
         return this.transferPropsTo(
-            <select className='select' ref='input' onChange={this.handleChange}>
-                {this.props.options.map(this.getOptions)}
+            <select className='select' onChange={this.handleChange} value={this.props.value}>
+                {this.props.options.map(this.renderOption)}
             </select>
         );
     }

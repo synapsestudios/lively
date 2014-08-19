@@ -56,18 +56,34 @@ module.exports = React.createClass({
             component     = this;
 
         params.forEach(function(param) {
-            if (param.hasOwnProperty('defaultValue')) {
-                initialValues[param.name] = param.defaultValue;
-            } else if (component.isArray(param.type)) {
-                initialValues[param.name] = [];
-            } else if (component.isHash(param.type)) {
-                initialValues[param.name] = component.getDefaultRequestBodyFromConfig(param.params);
-            } else {
-                initialValues[param.name] = null;
-            }
+            initialValues[param.name] = component.getDefaulRequestParam(param);
         });
 
         return initialValues;
+    },
+
+    getDefaulRequestParam : function(param)
+    {
+        if (param.hasOwnProperty('defaultValue')) {
+            return param.defaultValue;
+        }
+
+        if (this.isArray(param.type)) {
+            return [];
+        }
+
+        if (this.isHash(param.type)) {
+            if (! _.isArray(param.params)) {
+                var message = 'Hash type parameter with no sub-parameters defined: ';
+
+                message += '[' + param.name + ']' + ' parameter in [' + this.props.name + '] method';
+                throw new Error(message);
+            }
+
+            return this.getDefaultRequestBodyFromConfig(param.params);
+        }
+
+        return null;
     },
 
     toggleMethodPanel : function()

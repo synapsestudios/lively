@@ -1,69 +1,37 @@
 /** @jsx React.DOM */
 'use strict';
 
-var React      = require('react');
-var Param      = require('./param');
-var ArrayParam = require('./array-param');
+var React                 = require('react');
+var NestedPropertyHandler = require('../../util/nested-property-handler');
+var RenderParamsMixin     = require('./render-params-mixin');
+var ParamTypeMixin        = require('../../util/param-type-mixin');
 
 module.exports = React.createClass({
 
     displayName : 'ParameterList',
 
     propTypes : {
-        params : React.PropTypes.array.isRequired
+        params       : React.PropTypes.array.isRequired,
+        requestBody  : React.PropTypes.object,
+        updateValues : React.PropTypes.func.isRequired
     },
 
-    getParamComponent : function(param)
+    mixins : [
+        RenderParamsMixin,
+        ParamTypeMixin
+    ],
+
+    getChangeHandler : function(path)
     {
-        if (param.type.substring(0, 5) === 'array') {
-            return this.getArrayParamComponent(param);
-        }
+        var values    = this.props.requestBody,
+            component = this;
 
-        return <Param ref={param.name}
-                      key={param.name}
-                      name={param.name}
-                      required={param.required}
-                      type={param.type}
-                      description={param.description}
-                      defaultValue={param.defaultValue}
-                      enumValues={param.enumValues}
-                      resumableUploadCallback={this.props.resumableUploadCallback} />;
-    },
+        return function(value)
+        {
+            values = NestedPropertyHandler.set(values, path, value);
 
-    getArrayParamComponent : function(param)
-    {
-        var arrayTypeMatches = param.type.match(/\[(.*?)\]/),
-            arrayType;
-
-        if (arrayTypeMatches === null) {
-            arrayType = 'string';
-        } else {
-            arrayType = arrayTypeMatches[0].substring(
-                1,
-                arrayTypeMatches[0].length - 1
-            );
-        }
-
-        return <ArrayParam ref={param.name}
-                  key={param.name}
-                  name={param.name}
-                  required={param.required}
-                  type={arrayType}
-                  description={param.description}
-                  defaultValue={param.defaultValue}
-                  enumValues={param.enumValues} />;
-    },
-
-    getValues : function()
-    {
-        var self   = this,
-            values = {};
-
-        this.props.params.forEach(function(param) {
-            values[param.name] = self.refs[param.name].getValue();
-        });
-
-        return values;
+            component.props.updateValues(values);
+        };
     },
 
     render : function()
@@ -80,7 +48,7 @@ module.exports = React.createClass({
                     <th>Type</th>
                     <th>Description</th>
                 </tr>
-                {this.props.params.map(this.getParamComponent)}
+                 {this.props.params.map(this.renderParam)}
             </table>
         );
     }

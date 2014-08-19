@@ -12,14 +12,12 @@ var NestedPropertyHandler = require('../../util/nested-property-handler');
 module.exports = {
     renderParam : function(param, path)
     {
-        var component = this,
-            isArray,
+        var isArray,
             isHash,
             type,
             description,
             inputOrInputs,
-            renderedMarkup,
-            renderedParams;
+            renderedMarkup;
 
         if (! _.isArray(path)) {
             path = [param.name];
@@ -56,25 +54,18 @@ module.exports = {
             </tr>
         );
 
-        if (isHash) {
+        if (isHash || param.type === 'array[hash]') {
             renderedMarkup = [renderedMarkup];
-            renderedParams = [];
 
-            param.params.forEach(function(childParam) {
-                renderedParams.push(
-                    component.renderParam(childParam, path)
+            if (isHash) {
+                renderedMarkup.push(
+                    this.renderHashParams(param.params, path)
                 );
-            });
-
-            renderedMarkup.push(
-                <tr key='hashParams'>
-                    <td colSpan={4}>
-                        <table>
-                            {renderedParams}
-                        </table>
-                    </td>
-                </tr>
-            );
+            } else {
+                renderedMarkup = renderedMarkup.concat(
+                    this.renderHashArrayParams(param.params, path)
+                );
+            }
         }
 
         return (
@@ -82,6 +73,50 @@ module.exports = {
                 {renderedMarkup}
             </tbody>
         );
+    },
+
+    renderHashParams : function(params, path)
+    {
+        var component      = this,
+            renderedParams = [],
+            key;
+
+        params.forEach(function(childParam) {
+            renderedParams.push(
+                component.renderParam(childParam, path)
+            );
+        });
+
+        key = 'hashParams' + (_.last(path));
+
+        return (
+            <tr key={key}>
+                <td colSpan={4}>
+                    <table>
+                        {renderedParams}
+                    </table>
+                </td>
+            </tr>
+        );
+    },
+
+    renderHashArrayParams : function(params, path)
+    {
+        var values         = NestedPropertyHandler.get(this.props.requestBody, path),
+            renderedHashes = [],
+            component      = this,
+            newPath;
+
+        values.forEach(function(hash, index) {
+            newPath = path.slice();
+            newPath.push(index);
+
+            renderedHashes.push(
+                component.renderHashParams(params, newPath)
+            );
+        });
+
+        return renderedHashes;
     },
 
     getArrayType : function(type)
@@ -113,6 +148,8 @@ module.exports = {
             return <Select value={value} key={key} options={['true', 'false']} onChange={changeHandler} />;
         } else if (type === 'resumable-upload') {
             return <ResumableUpload key={key} target={options.uri} resumableUploadCallback={options.resumableUploadCallback} />;
+        } else if (type === 'hash') {
+            return null;
         } else {
             return <Text key={key} value={value} onChange={changeHandler} />;
         }
@@ -130,6 +167,10 @@ module.exports = {
         inputs.push(
             <a className='button field-button--add' onClick={addHandler}>{'+ Add Field'}</a>
         );
+
+        if (type === 'hash') {
+            return inputs;
+        }
 
         values.forEach(function(value, index) {
             var newPath = component.appendPath(path, index);

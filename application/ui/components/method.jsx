@@ -51,13 +51,17 @@ module.exports = React.createClass({
         });
     },
 
-    apiCallback : function(err, resp)
+    handleApiResponse : function(err, resp)
     {
+        var buttonNode = this.refs.tryItButton.getDOMNode();
+
         this.setState({
             status   : LOADED,
             response : resp,
             error    : err
         });
+
+        window.scrollTo(0, window.scrollY + buttonNode.getBoundingClientRect().bottom);
     },
 
     onSubmit : function()
@@ -110,14 +114,14 @@ module.exports = React.createClass({
                 method,
                 uri,
                 params,
-                _.bind(this.apiCallback, this)
+                _.bind(this.handleApiResponse, this)
             );
         } else {
             requestInfo = this.props.oauthStore.request(
                 method,
                 uri,
                 params,
-                _.bind(this.apiCallback, this)
+                _.bind(this.handleApiResponse, this)
             );
         }
 
@@ -155,7 +159,7 @@ module.exports = React.createClass({
                 uri     : this.opts.target
             };
 
-            component.apiCallback(null, {
+            component.handleApiResponse(null, {
                 status  : this.statusCode || '200',
                 headers : {},
                 data    : _.last(file.chunks).message()
@@ -168,7 +172,7 @@ module.exports = React.createClass({
                 uri     : this.opts.target
             };
 
-            component.apiCallback(null, {
+            component.handleApiResponse(null, {
                 status  : this.statusCode || '???',
                 headers : {},
                 data    : message || 'Unknown Error'
@@ -203,7 +207,7 @@ module.exports = React.createClass({
             }
         });
 
-        return hasUpload ? null : <a className='button' onClick={this.onSubmit}>Try it</a>;
+        return hasUpload ? null : <a ref='tryItButton' className='button' onClick={this.onSubmit}>Try it</a>;
     },
 
     render : function()

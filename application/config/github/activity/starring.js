@@ -27,10 +27,14 @@ var paramUsername = {
 var paramSort = {
     name         : 'sort',
     required     : false,
-    type         : 'string',
+    type         : 'enum',
     defaultValue : 'created',
     location     : 'uri',
-    description  : 'One of created (when the repository was starred) or updated (when it was last pushed to). Default: created'
+    description  : 'One of created (when the repository was starred) or updated (when it was last pushed to). Default: created',
+    enumValues   : [
+        'created',
+        'updated'
+    ]
 };
 
 var paramDirection = {

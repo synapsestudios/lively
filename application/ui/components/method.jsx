@@ -61,7 +61,7 @@ module.exports = React.createClass({
             error    : err
         });
 
-        window.scrollTo(0, window.scrollY+buttonNode.getBoundingClientRect().bottom);
+        window.scrollTo(0, window.scrollY + buttonNode.getBoundingClientRect().bottom);
     },
 
     onSubmit : function()

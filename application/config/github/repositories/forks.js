@@ -29,11 +29,17 @@ module.exports = {
                 paramOwner,
                 paramRepo,
                 {
-                    name        : 'sort',
-                    required    : false,
-                    type        : 'string',
-                    location    : 'uri',
-                    description : 'The sort order. Can be either newest, oldest, or stargazers. Default: newest'
+                    name         : 'sort',
+                    required     : false,
+                    defaultValue : 'newest',
+                    type         : 'enum',
+                    location     : 'uri',
+                    description  : 'The sort order. Can be either newest, oldest, or stargazers. Default: newest',
+                    enumValues   : [
+                        'newest',
+                        'oldest',
+                        'stargazers'
+                    ]
                 }
             ]
         },

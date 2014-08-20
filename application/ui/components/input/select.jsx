@@ -36,7 +36,7 @@ module.exports = React.createClass({
     render : function()
     {
         return this.transferPropsTo(
-            <select className='select' ref='input' onChange={this.handleChange}>
+            <select defaultValue={this.props.defaultValue} className='select' ref='input' onChange={this.handleChange}>
                 {this.props.options.map(this.getOptions)}
             </select>
         );

@@ -38,30 +38,37 @@ module.exports = {
                 {
                     name        : 'state',
                     required    : true,
-                    type        : 'string',
+                    type        : 'enum',
                     location    : 'body',
-                    description : 'The state of the status. Can be one of pending, success, error, or failure.'
+                    description : 'The state of the status. Can be one of pending, success, error, or failure.',
+                    enumValues  : [
+                        'pending',
+                        'success',
+                        'error',
+                        'failure'
+                    ]
                 },
                 {
-                    name        : 'target_url',
-                    required    : false,
-                    type        : 'string',
-                    location    : 'body',
-                    description : 'The target URL to associate with this status. This URL will be linked from the GitHub UI to allow users to easily see the ‘source’ of the Status.'
+                    name         : 'target_url',
+                    required     : false,
+                    type         : 'string',
+                    location     : 'body',
+                    description  : 'The target URL to associate with this status. This URL will be linked from the GitHub UI to allow users to easily see the ‘source’ of the Status.'
                 },
                 {
-                    name        : 'description',
-                    required    : false,
-                    type        : 'string',
-                    location    : 'body',
-                    description : 'A short description of the status.'
+                    name         : 'description',
+                    required     : false,
+                    type         : 'string',
+                    location     : 'body',
+                    description  : 'A short description of the status.'
                 },
                 {
-                    name        : 'context',
-                    required    : false,
-                    type        : 'string',
-                    location    : 'body',
-                    description : 'A string label to differentiate this status from the status of other systems. Default: "default"'
+                    name         : 'context',
+                    required     : false,
+                    defaultValue : 'default',
+                    type         : 'string',
+                    location     : 'body',
+                    description  : 'A string label to differentiate this status from the status of other systems. Default: "default"'
                 }
             ]
         },

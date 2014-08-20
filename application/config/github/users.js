@@ -95,7 +95,7 @@ module.exports = {
                 {
                     name        : 'since',
                     required    : false,
-                    type        : 'string',
+                    type        : 'integer',
                     location    : 'uri',
                     description : 'The integer ID of the last User that you’ve seen.'
                 }

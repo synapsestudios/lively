@@ -14,11 +14,39 @@ var dataProviderPath = '../../node_modules/synapse-common/lib/test-data-provider
 jest.dontMock(dataProviderPath);
 var using = require(dataProviderPath);
 
-var VARIOUS_STRINGS = ['foo', 'bar', 'really_long_string', '!@#$%^&*()_+-={}'];
+var variousStrings = ['foo', 'bar', 'really_long_string', '!@#$%^&*()_+-={}'];
+
+var stringParam = {
+    name         : 'string_param',
+    type         : 'string',
+    defaultValue : 'foo'
+};
+
+var enumParam = {
+    name       : 'enum_param',
+    type       : 'enum',
+    enumValues : ['bar', 'baz']
+};
+
+var hashParam = {
+    name   : 'hash_param',
+    type   : 'hash',
+    params : [
+        {
+            name : 'a',
+            type : 'string',
+            defaultValue : 'a default'
+        },
+        {
+            name : 'b',
+            type : 'string'
+        }
+    ]
+};
 
 describe('param-helper', function() {
     describe('getArrayType', function() {
-        using('various strings', VARIOUS_STRINGS, function(string) {
+        using('various strings', variousStrings, function(string) {
             it('returns the string inside the brackets of "array[...]"', function() {
                 var arrayType = 'array[' + string + ']';
 
@@ -32,12 +60,35 @@ describe('param-helper', function() {
     });
 
     describe('isArrayParam', function() {
-        using('various strings', VARIOUS_STRINGS, function(string) {
+        using('various strings', variousStrings, function(string) {
             it('returns true as long as the string begins with "array"', function() {
                 var type = 'array' + string;
 
                 expect(ParamHelper.isArrayParam(type)).toBe(true);
             });
+        });
+    });
+
+    describe('getDefaultValuesForParams', function() {
+        it('returns an object with properties for each param that have the correct defaults', function() {
+            var params = [
+                stringParam,
+                enumParam,
+                hashParam
+            ];
+
+            expect(
+                ParamHelper.getDefaultValuesForParams(params)
+            ).toEqual(
+                {
+                    string_param : 'foo',
+                    enum_param   : 'bar',
+                    hash_param   : {
+                        a : 'a default',
+                        b : null
+                    }
+                }
+            );
         });
     });
 
@@ -74,16 +125,8 @@ describe('param-helper', function() {
             var param = {
                 type   : 'hash',
                 params : [
-                    {
-                        name         : 'first',
-                        type         : 'string',
-                        defaultValue : 'foo'
-                    },
-                    {
-                        name       : 'second',
-                        type       : 'enum',
-                        enumValues : ['bar', 'baz']
-                    }
+                    stringParam,
+                    enumParam
                 ]
             };
 
@@ -91,8 +134,8 @@ describe('param-helper', function() {
                 ParamHelper.getDefaultValueForParam(param)
             ).toEqual(
                 {
-                    first  : 'foo',
-                    second : 'bar'
+                    string_param : 'foo',
+                    enum_param   : 'bar'
                 }
             );
         });

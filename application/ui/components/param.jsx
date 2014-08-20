@@ -16,19 +16,26 @@ module.exports = React.createClass(_.extend(AbstractParam, {
     getInput : function()
     {
         var type = this.getParamType();
+        var defaultValue;
+
+        if (_.isBoolean(this.props.defaultValue)) {
+            defaultValue = (this.props.defaultValue) ? 'true' : 'false';
+        } else {
+            defaultValue = this.props.defaultValue;
+        }
 
         if (type === 'enum') {
             if (! this.props.enumValues.length) {
                 console.warn('Missing enumValues for param: ' + this.props.name);
             }
 
-            return <Select defaultValue={this.props.defaultValue} options={this.props.enumValues} ref='input' />;
+            return <Select defaultValue={defaultValue} options={this.props.enumValues} ref='input' />;
         } else if (type === 'boolean') {
-            return <Select defaultValue={this.props.defaultValue} options={['true', 'false']} ref='input' />;
+            return <Select defaultValue={defaultValue} options={['true', 'false']} ref='input' />;
         } else if (this.props.type === 'resumable-upload') {
             return <ResumableUpload target={this.props.uri} resumableUploadCallback={this.props.resumableUploadCallback} ref='input'/>;
         } else {
-            return <Text defaultValue={this.props.defaultValue} ref='input' />;
+            return <Text defaultValue={defaultValue} ref='input' />;
         }
     }
 }));

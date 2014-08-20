@@ -74,7 +74,7 @@ module.exports = {
                 {
                     name         : 'direction',
                     required     : false,
-                    defaultValue : 'desc',
+                    defaultValue : 'asc',
                     type         : 'enum',
                     location     : 'uri',
                     description  : 'Can be one of asc or desc. Default: when using full_name: asc; otherwise desc',
@@ -123,7 +123,7 @@ module.exports = {
                 {
                     name         : 'direction',
                     required     : false,
-                    defaultValue : 'desc',
+                    defaultValue : 'asc',
                     type         : 'enum',
                     location     : 'uri',
                     description  : 'Can be one of asc or desc. Default: when using full_name: asc, otherwise desc',
@@ -338,6 +338,7 @@ module.exports = {
                 {
                     name         : 'auto_init',
                     required     : false,
+                    defaultValue : false,
                     type         : 'boolean',
                     location     : 'body',
                     description  : 'Pass true to create an initial commit with empty README. Default: false'

@@ -3,6 +3,7 @@
 var path = '../../application/util/param-helper';
 
 jest.dontMock(path);
+jest.dontMock('underscore');
 
 ParamHelper = require(path);
 
@@ -37,6 +38,71 @@ describe('param-helper', function() {
 
                 expect(ParamHelper.isArrayParam(type)).toBe(true);
             });
+        });
+    });
+
+    describe('getDefaultValueForParam', function() {
+        it('returns the defaultValue property if defined', function() {
+            var defaultValue = 'foo',
+                param        = {defaultValue : defaultValue};
+
+            expect(
+                ParamHelper.getDefaultValueForParam(param)
+            ).toBe(defaultValue);
+        });
+
+        it('returns an empty array if param is an array param', function() {
+            var param = {type : 'array'};
+
+            expect(
+                ParamHelper.getDefaultValueForParam(param)
+            ).toEqual([]);
+        });
+
+        it('returns the first enumerated value if param is an enum param', function() {
+            var param = {
+                type       : 'enum',
+                enumValues : ['foo', 'bar', 'baz']
+            };
+
+            expect(
+                ParamHelper.getDefaultValueForParam(param)
+            ).toBe('foo');
+        });
+
+        it('returns an object whose properties have the correct defaults if param is a hash', function() {
+            var param = {
+                type   : 'hash',
+                params : [
+                    {
+                        name         : 'first',
+                        type         : 'string',
+                        defaultValue : 'foo'
+                    },
+                    {
+                        name       : 'second',
+                        type       : 'enum',
+                        enumValues : ['bar', 'baz']
+                    }
+                ]
+            };
+
+            expect(
+                ParamHelper.getDefaultValueForParam(param)
+            ).toEqual(
+                {
+                    first  : 'foo',
+                    second : 'bar'
+                }
+            );
+        });
+
+        it('returns null if the param type is not supported', function() {
+            var param = {type : 'some-unsupported-type'};
+
+            expect(
+                ParamHelper.getDefaultValueForParam(param)
+            ).toBe(null);
         });
     });
 });

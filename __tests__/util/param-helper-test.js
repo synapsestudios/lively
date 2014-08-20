@@ -28,6 +28,11 @@ var enumParam = {
     enumValues : ['bar', 'baz']
 };
 
+var booleanParam = {
+    name : 'boolean_param',
+    type : 'boolean'
+};
+
 var hashParam = {
     name   : 'hash_param',
     type   : 'hash',
@@ -108,6 +113,25 @@ describe('param-helper', function() {
             expect(
                 ParamHelper.getDefaultValueForParam(param)
             ).toEqual([]);
+        });
+
+        it('returns true for boolean params if no default is defined', function() {
+            var param = {type : 'boolean'};
+
+            expect(
+                ParamHelper.getDefaultValueForParam(param)
+            ).toEqual(true);
+        });
+
+        it('returns false for boolean params if default is false', function() {
+            var param = {
+                type         : 'boolean',
+                defaultValue : false
+            };
+
+            expect(
+                ParamHelper.getDefaultValueForParam(param)
+            ).toEqual(false);
         });
 
         it('returns the first enumerated value if param is an enum param', function() {

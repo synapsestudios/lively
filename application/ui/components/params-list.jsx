@@ -25,13 +25,17 @@ module.exports = React.createClass({
         RenderParamsMixin
     ],
 
-    getChangeHandler : function(path)
+    getChangeHandler : function(path, type)
     {
         var values    = this.props.requestBody,
             component = this;
 
         return function(value)
         {
+            if (type === 'boolean') {
+                value = (value === 'true');
+            }
+
             values = NestedPropertyHandler.set(values, path, value);
 
             component.props.updateValues(values);
@@ -206,7 +210,7 @@ module.exports = React.createClass({
 
     renderParamInput : function(type, options, path, key)
     {
-        var changeHandler = this.getChangeHandler(path),
+        var changeHandler = this.getChangeHandler(path, type),
             value         = NestedPropertyHandler.get(this.props.requestBody, path);
 
         if (type === 'enum') {

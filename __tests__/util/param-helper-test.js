@@ -148,4 +148,61 @@ describe('param-helper', function() {
             ).toBe(null);
         });
     });
+
+    describe('getDefaultValueForArrayParamElement', function() {
+        var param;
+
+        it('returns the defaultValue property if defined', function() {
+            var defaultValue = 'foo';
+
+            param = {
+                type         : 'array',
+                defaultValue : defaultValue
+            };
+
+            expect(
+                ParamHelper.getDefaultValueForArrayParamElement(param)
+            ).toBe(defaultValue);
+        });
+
+        it('returns the first enumerated value for array[enum] params', function() {
+            param = {
+                type       : 'array[enum]',
+                enumValues : ['foo', 'bar', 'baz']
+            };
+
+            expect(
+                ParamHelper.getDefaultValueForArrayParamElement(param)
+            ).toBe('foo');
+        });
+
+        it('returns an object whose properties have the correct defaults for array[hash] params', function() {
+            param = {
+                type   : 'array[hash]',
+                params : [
+                    stringParam,
+                    enumParam
+                ]
+            };
+
+            expect(
+                ParamHelper.getDefaultValueForArrayParamElement(param)
+            ).toEqual(
+                {
+                    string_param : 'foo',
+                    enum_param   : 'bar'
+                }
+            );
+        });
+
+        it('returns null if the param type is not supported', function() {
+            param = {
+                type : 'array[unsupported-type]'
+            };
+
+            expect(
+                ParamHelper.getDefaultValueForArrayParamElement(param)
+            ).toBe(null);
+        });
+    });
 });

@@ -5,7 +5,7 @@ var _                     = require('underscore');
 var React                 = require('react');
 var NestedPropertyHandler = require('../../util/nested-property-handler');
 var RenderParamsMixin     = require('./render-params-mixin');
-var ParamTypeMixin        = require('../../util/param-type-mixin');
+var ParamHelper           = require('../../util/param-helper');
 var Select                = require('./input/select');
 var Text                  = require('./input/text');
 var ResumableUpload       = require('./input/resumable-upload');
@@ -22,8 +22,7 @@ module.exports = React.createClass({
     },
 
     mixins : [
-        RenderParamsMixin,
-        ParamTypeMixin
+        RenderParamsMixin
     ],
 
     getChangeHandler : function(path)
@@ -39,14 +38,16 @@ module.exports = React.createClass({
         };
     },
 
-    handleAddField : function(path, defaultValue)
+    handleAddField : function(path, param)
     {
         var values = this.props.requestBody,
             array;
 
         array = NestedPropertyHandler.get(values, path) || [];
 
-        array.push(defaultValue);
+        array.push(
+            ParamHelper.getDefaultValueForArrayParamElement(param)
+        );
 
         values = NestedPropertyHandler.set(values, path, array);
 
@@ -91,8 +92,12 @@ module.exports = React.createClass({
             return null;
         }
 
-        if (this.isArrayParam(param.type)) {
-            return this.renderArrayParamInputs(this.getArrayType(param.type), param, path);
+        if (ParamHelper.isArrayParam(param.type)) {
+            return this.renderArrayParamInputs(
+                ParamHelper.getArrayType(param.type),
+                param,
+                path
+            );
         }
 
         return this.renderParamInput(param.type, param, path, param.name);
@@ -174,7 +179,7 @@ module.exports = React.createClass({
             inputs    = [],
             addHandler;
 
-        addHandler = _.partial(this.handleAddField, path, param.defaultValue);
+        addHandler = _.partial(this.handleAddField, path, param);
 
         inputs.push(
             <a className='button field-button--add' onClick={addHandler}>{'+ Add Field'}</a>

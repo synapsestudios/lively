@@ -1,14 +1,14 @@
 /** @jsx React.DOM */
 'use strict';
 
-var _              = require('underscore');
-var React          = require('react');
-var cx             = require('react/lib/cx');
-var Params         = require('./params-list');
-var ApiCallInfo    = require('./api-call-info');
-var Checkbox       = require('./input/checkbox');
-var Resumable      = require('../../../bower_components/resumablejs/resumable');
-var ParamTypeMixin = require('../../util/param-type-mixin');
+var _           = require('underscore');
+var React       = require('react');
+var cx          = require('react/lib/cx');
+var Params      = require('./params-list');
+var ApiCallInfo = require('./api-call-info');
+var Checkbox    = require('./input/checkbox');
+var Resumable   = require('../../../bower_components/resumablejs/resumable');
+var ParamHelper = require('../../util/param-helper');
 
 var LOADED  = 'loaded',
     LOADING = 'loading';
@@ -26,10 +26,6 @@ module.exports = React.createClass({
         params   : React.PropTypes.array
     },
 
-    mixins : [
-        ParamTypeMixin
-    ],
-
     getDefaultProps : function()
     {
         return {
@@ -42,48 +38,12 @@ module.exports = React.createClass({
     getInitialState : function()
     {
         return {
-            requestBody       : this.getDefaultRequestBodyFromConfig(this.props.params),
+            requestBody       : ParamHelper.getDefaultValuesForParams(this.props.params),
             status            : false,
             error             : false,
             response          : null,
             methodPanelHidden : true
         };
-    },
-
-    getDefaultRequestBodyFromConfig : function(params)
-    {
-        var initialValues = {},
-            component     = this;
-
-        params.forEach(function(param) {
-            initialValues[param.name] = component.getDefaulRequestParam(param);
-        });
-
-        return initialValues;
-    },
-
-    getDefaulRequestParam : function(param)
-    {
-        if (param.hasOwnProperty('defaultValue')) {
-            return param.defaultValue;
-        }
-
-        if (this.isArrayParam(param.type)) {
-            return [];
-        }
-
-        if (param.type === 'hash') {
-            if (! _.isArray(param.params)) {
-                var message = 'Hash type parameter with no sub-parameters defined: ';
-
-                message += '[' + param.name + ']' + ' parameter in [' + this.props.name + '] method';
-                throw new Error(message);
-            }
-
-            return this.getDefaultRequestBodyFromConfig(param.params);
-        }
-
-        return null;
     },
 
     toggleMethodPanel : function()

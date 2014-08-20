@@ -1,8 +1,9 @@
 /** @jsx React.DOM */
 'use strict';
 
-var React  = require('react');
-var marked = require('marked');
+var React       = require('react');
+var marked      = require('marked');
+var ParamHelper = require('../../util/param-helper');
 
 module.exports = {
 
@@ -13,7 +14,7 @@ module.exports = {
 
     renderInputTypeDescription : function(type)
     {
-        var isArray = this.isArrayParam(type);
+        var isArray = ParamHelper.isArrayParam(type);
 
         return [
             isArray ? 'Array of ' : null,
@@ -35,20 +36,6 @@ module.exports = {
         return (
             <td dangerouslySetInnerHTML={innerHtml}></td>
         );
-    },
-
-    getArrayType : function(type)
-    {
-        var matches = type.match(/\[(.*?)\]/);
-
-        if (matches === null) {
-            return 'string';
-        } else {
-            return matches[0].substring(
-                1,
-                matches[0].length - 1
-            );
-        }
     },
 
     appendPath : function(path, newPath)

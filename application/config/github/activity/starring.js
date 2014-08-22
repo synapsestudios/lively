@@ -9,35 +9,45 @@ var paramOwner = {
 };
 
 var paramRepo = {
-    name        : 'repo',
-    required    : true,
-    type        : 'string',
-    location    : 'uri',
-    description : 'The name of the repo.'
+    name         : 'repo',
+    required     : true,
+    type         : 'string',
+    location     : 'uri',
+    description  : 'The name of the repo.'
 };
 
 var paramUsername = {
-    name        : 'username',
-    required    : true,
-    type        : 'string',
-    location    : 'uri',
-    description : 'The username of the user.'
+    name         : 'username',
+    required     : true,
+    type         : 'string',
+    location     : 'uri',
+    description  : 'The username of the user.'
 };
 
 var paramSort = {
-    name        : 'sort',
-    required    : false,
-    type        : 'string',
-    location    : 'uri',
-    description : 'One of created (when the repository was starred) or updated (when it was last pushed to). Default: created'
+    name         : 'sort',
+    required     : false,
+    type         : 'enum',
+    defaultValue : 'created',
+    location     : 'uri',
+    description  : 'One of created (when the repository was starred) or updated (when it was last pushed to). Default: created',
+    enumValues   : [
+        'created',
+        'updated'
+    ]
 };
 
 var paramDirection = {
-    name        : 'direction',
-    required    : false,
-    type        : 'string',
-    location    : 'uri',
-    description : 'One of asc (ascending) or desc (descending). Default: desc'
+    name         : 'direction',
+    required     : false,
+    defaultValue : 'desc',
+    type         : 'enum',
+    location     : 'query',
+    description  : 'The direction of the sort.',
+    enumValues   : [
+        'asc',
+        'desc'
+    ]
 };
 
 module.exports = {

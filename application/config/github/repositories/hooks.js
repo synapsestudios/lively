@@ -69,7 +69,7 @@ module.exports = {
                 {
                     name        : 'config',
                     required    : true,
-                    type        : 'hash',
+                    type        : 'hash with variable keys',
                     location    : 'body',
                     description : 'Key/value pairs to provide settings for this hook. These settings vary between the services and are defined in the github-services repository. Booleans are stored internally as “1” for true, and “0” for false. Any JSON true/false values will be converted automatically.'
                 },

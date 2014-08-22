@@ -89,7 +89,7 @@ module.exports = {
                 {
                     name        : 'files',
                     required    : true,
-                    type        : 'hash',
+                    type        : 'hash with variable keys',
                     location    : 'body',
                     description : 'Files that make up this gist.' // @todo add hash support
                 },
@@ -128,7 +128,7 @@ module.exports = {
                 {
                     name        : 'files',
                     required    : false,
-                    type        : 'hash',
+                    type        : 'hash with variable keys',
                     location    : 'body',
                     description : 'Files that make up this gist.' // @todo add hash support
                 },

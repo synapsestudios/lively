@@ -8,6 +8,7 @@ var Params      = require('./params-list');
 var ApiCallInfo = require('./api-call-info');
 var Checkbox    = require('./input/checkbox');
 var Resumable   = require('../../../bower_components/resumablejs/resumable');
+var ParamHelper = require('../../util/param-helper');
 
 var LOADED  = 'loaded',
     LOADING = 'loading';
@@ -37,9 +38,10 @@ module.exports = React.createClass({
     getInitialState : function()
     {
         return {
-            status   : false,
-            error    : false,
-            response : null,
+            requestBody       : ParamHelper.getDefaultValuesForParams(this.props.params),
+            status            : false,
+            error             : false,
+            response          : null,
             methodPanelHidden : true
         };
     },
@@ -66,7 +68,7 @@ module.exports = React.createClass({
 
     onSubmit : function()
     {
-        var params = this.refs.params.getValues(),
+        var params = this.state.requestBody,
             method = this.props.method,
             uri    = this.props.uri;
 
@@ -210,6 +212,13 @@ module.exports = React.createClass({
         return hasUpload ? null : <a ref='tryItButton' className='button' onClick={this.onSubmit}>Try it</a>;
     },
 
+    handleUpdatedRequestBody : function(newRequestBody)
+    {
+        this.setState({
+            requestBody : newRequestBody
+        });
+    },
+
     render : function()
     {
         var apiCallInfo;
@@ -257,7 +266,13 @@ module.exports = React.createClass({
                 </div>
                 <div className={methodPanelClasses}>
                     <div className='panel__synopsis' dangerouslySetInnerHTML={{__html: this.props.synopsis}} />
-                    <Params params={this.props.params} resumableUploadCallback={this.initResumableUpload} ref='params' />
+                    <Params
+                        params                  = {this.props.params}
+                        requestBody             = {this.state.requestBody}
+                        resumableUploadCallback = {this.initResumableUpload}
+                        updateValues            = {this.handleUpdatedRequestBody}
+                        ref                     = 'params'
+                    />
                     <div className='switch__container'>
                         <p className='checkbox-label'>Include OAuth Token?</p>
                         <Checkbox defaultChecked={this.props.oauth} ref='sendToken' name={this.props.name}/>

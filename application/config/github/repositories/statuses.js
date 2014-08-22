@@ -68,7 +68,7 @@ module.exports = {
                     defaultValue : 'default',
                     type         : 'string',
                     location     : 'body',
-                    description  : 'A string label to differentiate this status from the status of other systems. Default: "default"'
+                    description  : 'A string label to differentiate this status from the status of other systems.'
                 }
             ]
         },

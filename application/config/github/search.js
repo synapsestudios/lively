@@ -22,7 +22,7 @@ var paramOrder = {
     defaultValue : 'desc',
     type         : 'enum',
     location     : 'uri',
-    description  : 'The sort order if sort parameter is provided. One of asc or desc. Default: desc',
+    description  : 'The sort order if sort parameter is provided. One of asc or desc.',
     enumValues   : [
         'asc',
         'desc'

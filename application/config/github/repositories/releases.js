@@ -69,9 +69,10 @@ module.exports = {
                 {
                     name         : 'target_commitish',
                     required     : false,
+                    defaultValue : 'the repository’s default branch (usually master).',
                     type         : 'string',
                     location     : 'body',
-                    description  : 'Specifies the commitish value that determines where the Git tag is created from. Can be any branch or commit SHA. Unused if the Git tag already exists. Default: the repository’s default branch (usually master).'
+                    description  : 'Specifies the commitish value that determines where the Git tag is created from. Can be any branch or commit SHA. Unused if the Git tag already exists.'
                 },
                 {
                     name         : 'name',
@@ -93,7 +94,7 @@ module.exports = {
                     defaultValue : false,
                     type         : 'boolean',
                     location     : 'body',
-                    description  : 'true to create a draft (unpublished) release, false to create a published one. Default: false'
+                    description  : 'true to create a draft (unpublished) release, false to create a published one.'
                 },
                 {
                     name         : 'prerelease',
@@ -101,7 +102,7 @@ module.exports = {
                     defaultValue : false,
                     type         : 'boolean',
                     location     : 'body',
-                    description  : 'true to identify the release as a prerelease. false to identify the release as a full release. Default: false'
+                    description  : 'true to identify the release as a prerelease. false to identify the release as a full release.'
                 }
             ]
         },
@@ -125,9 +126,10 @@ module.exports = {
                 {
                     name         : 'target_commitish',
                     required     : false,
+                    defaultValue : 'the repository’s default branch (usually master).',
                     type         : 'string',
                     location     : 'body',
-                    description  : 'Specifies the commitish value that determines where the Git tag is created from. Can be any branch or commit SHA. Unused if the Git tag already exists. Default: the repository’s default branch (usually master).'
+                    description  : 'Specifies the commitish value that determines where the Git tag is created from. Can be any branch or commit SHA. Unused if the Git tag already exists.'
                 },
                 {
                     name         : 'name',
@@ -149,7 +151,7 @@ module.exports = {
                     defaultValue : false,
                     type         : 'boolean',
                     location     : 'body',
-                    description  : 'true to create a draft (unpublished) release, false to create a published one. Default: false'
+                    description  : 'true to create a draft (unpublished) release, false to create a published one.'
                 },
                 {
                     name         : 'prerelease',
@@ -157,7 +159,7 @@ module.exports = {
                     defaultValue : false,
                     type         : 'boolean',
                     location     : 'body',
-                    description  : 'true to identify the release as a prerelease. false to identify the release as a full release. Default: false'
+                    description  : 'true to identify the release as a prerelease. false to identify the release as a full release.'
                 }
             ]
         },

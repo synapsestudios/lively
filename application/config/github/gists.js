@@ -26,7 +26,7 @@ var paramId = {
 
 module.exports = {
     name     : 'Gists',
-    synopsis : 'You can read public gists and create them for anonymous users without a token; however, to read or write gists on a user’s behalf the **gist** OAuth scope is required.', 
+    synopsis : 'You can read public gists and create them for anonymous users without a token; however, to read or write gists on a user’s behalf the **gist** OAuth scope is required.',
     methods : [
         {
             name     : 'List gists',
@@ -106,7 +106,7 @@ module.exports = {
                     defaultValue : false,
                     type         : 'boolean',
                     location     : 'body',
-                    description  : 'Indicates whether the gist is public. Default: `false`'
+                    description  : 'Indicates whether the gist is public.'
                 }
             ]
         },

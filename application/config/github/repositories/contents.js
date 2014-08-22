@@ -37,11 +37,12 @@ module.exports = {
                 paramOwner,
                 paramRepo,
                 {
-                    name        : 'ref',
-                    required    : false,
-                    type        : 'string',
-                    location    : 'uri',
-                    description : 'The name of the commit/branch/tag. Default: the repository’s default branch (usually master)'
+                    name         : 'ref',
+                    required     : false,
+                    defaultValue : 'the repository’s default branch (usually master)',
+                    type         : 'string',
+                    location     : 'uri',
+                    description  : 'The name of the commit/branch/tag.'
                 }
             ]
         },
@@ -56,11 +57,12 @@ module.exports = {
                 paramRepo,
                 paramPath,
                 {
-                    name        : 'ref',
-                    required    : false,
-                    type        : 'string',
-                    location    : 'uri',
-                    description : 'The name of the commit/branch/tag. Default: the repository’s default branch (usually master)'
+                    name         : 'ref',
+                    required     : false,
+                    defaultValue : 'the repository’s default branch (usually master)',
+                    type         : 'string',
+                    location     : 'uri',
+                    description  : 'The name of the commit/branch/tag.'
                 }
             ]
         },
@@ -89,11 +91,12 @@ module.exports = {
                     description : 'The new file content, Base64 encoded.'
                 },
                 {
-                    name        : 'branch',
-                    required    : false,
-                    type        : 'string',
-                    location    : 'body',
-                    description : 'The branch name. Default: the repository’s default branch (usually master)'
+                    name         : 'branch',
+                    required     : false,
+                    defaultValue : 'the repository’s default branch (usually master)',
+                    type         : 'string',
+                    location     : 'body',
+                    description  : 'The branch name.'
                 }
             ]
         },
@@ -129,11 +132,12 @@ module.exports = {
                     description : 'The blob SHA of the file being replaced.'
                 },
                 {
-                    name        : 'branch',
-                    required    : false,
-                    type        : 'string',
-                    location    : 'body',
-                    description : 'The branch name. Default: the repository’s default branch (usually master)'
+                    name         : 'branch',
+                    required     : false,
+                    defaultValue : 'the repository’s default branch (usually master)',
+                    type         : 'string',
+                    location     : 'body',
+                    description  : 'The branch name.'
                 }
             ]
         },
@@ -162,11 +166,12 @@ module.exports = {
                     description : 'The blob SHA of the file being replaced.'
                 },
                 {
-                    name        : 'branch',
-                    required    : false,
-                    type        : 'string',
-                    location    : 'body',
-                    description : 'The branch name. Default: the repository’s default branch (usually master)'
+                    name         : 'branch',
+                    required     : false,
+                    defaultValue : 'the repository’s default branch (usually master)',
+                    type         : 'string',
+                    location     : 'body',
+                    description  : 'The branch name.'
                 }
             ]
         },
@@ -185,7 +190,7 @@ module.exports = {
                     defaultValue : 'tarball',
                     type         : 'enum',
                     location     : 'uri',
-                    description  : 'Can be either tarball or zipball. Default: tarball',
+                    description  : 'Can be either tarball or zipball.',
                     enumValues   : [
                         'tarball',
                         'zipball'
@@ -194,9 +199,10 @@ module.exports = {
                 {
                     name         : 'ref',
                     required     : true,
+                    defaultValue : 'the repository’s default branch (usually master)',
                     type         : 'string',
                     location     : 'uri',
-                    description  : 'A valid Git reference. Default: the repository’s default branch (usually master)'
+                    description  : 'A valid Git reference.'
                 }
             ]
         }

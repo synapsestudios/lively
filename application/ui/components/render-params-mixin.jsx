@@ -28,8 +28,6 @@ module.exports = {
     {
         var defaultValue, description, innerHtml;
 
-        marked.setOptions({ sanitize: true });
-
         if (_.isBoolean(param.defaultValue)) {
             defaultValue = (param.defaultValue) ? 'true' : 'false';
         } else {

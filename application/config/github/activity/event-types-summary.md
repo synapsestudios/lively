@@ -1,9 +1,9 @@
 Each event has a similar JSON schema, but a unique `payload` object that is
 determined by its event type.
 
-Event names are used by [repository webhooks](https://api.github.com/v3/repos/hooks/) to specify
+Event names are used by repository webhooks to specify
 which events the webhook should receive. The included payloads below are from webhook deliveries but
-match events returned by the [Events API](https://api.github.com/v3/activity/events/) (except where noted).
+match events returned by the Events API (except where noted).
 
 
 Note that some of these events may not be rendered in timelines.
@@ -11,7 +11,7 @@ They're only created for various internal and repository hooks.
 
 ## CommitCommentEvent
 
-Triggered when a [commit comment](https://api.github.com/v3/repos/comments/#list-commit-comments-for-a-repository) is created.
+Triggered when a commit comment is created.
 
 ### Event name
 
@@ -21,7 +21,7 @@ Triggered when a [commit comment](https://api.github.com/v3/repos/comments/#list
 
 Key | Type | Description
 ----|------|-------------
-`comment`|`object` | The [comment](https://api.github.com/v3/repos/comments/#list-commit-comments-for-a-repository) itself.
+`comment`|`object` | The comment itself.
 
 ## CreateEvent
 
@@ -44,7 +44,7 @@ Key | Type | Description
 
 ## DeleteEvent
 
-Represents a [deleted branch or tag](https://api.github.com/v3/git/refs/#delete-a-reference).
+Represents a deleted branch or tag.
 
 ### Event name
 
@@ -59,7 +59,7 @@ Key | Type | Description
 
 ## DeploymentEvent
 
-Represents a [deployment](https://api.github.com/v3/repos/deployments/#list-deployments).
+Represents a deployment.
 
 Events of this type are not visible in timelines, they are only used to trigger hooks.
 
@@ -80,7 +80,7 @@ Key | Type | Description
 
 ## DeploymentStatusEvent
 
-Represents a [deployment status](https://api.github.com/v3/repos/deployments/#list-deployment-statuses).
+Represents a deployment status.
 
 Events of this type are not visible in timelines, they are only used to trigger hooks.
 
@@ -99,7 +99,7 @@ Key | Type | Description
 
 ## DownloadEvent
 
-Triggered when a new [download](https://api.github.com/v3/repos/downloads/) is created.
+Triggered when a new download is created.
 
 Events of this type are **no longer created**, but it's possible that they exist in timelines of some users.
 
@@ -111,12 +111,12 @@ Events of this type are **no longer created**, but it's possible that they exist
 
 Key | Type | Description
 ----|------|-------------
-`download`|`object` | The [download](https://api.github.com/v3/repos/downloads/) that was just created.
+`download`|`object` | The download that was just created.
 
 
 ## FollowEvent
 
-Triggered when a user [follows another user](https://api.github.com/v3/users/followers/#follow-a-user).
+Triggered when a user follows another user.
 
 Events of this type are **no longer created**, but it's possible that they exist in timelines of some users.
 
@@ -128,12 +128,12 @@ Events of this type are **no longer created**, but it's possible that they exist
 
 Key | Type | Description
 ----|------|-------------
-`target`|`object` | The [user](https://api.github.com/v3/users) that was just followed.
+`target`|`object` | The user that was just followed.
 
 
 ## ForkEvent
 
-Triggered when a user [forks a repository](https://api.github.com/v3/repos/forks/#create-a-fork).
+Triggered when a user forks a repository.
 
 ### Event name
 
@@ -143,7 +143,7 @@ Triggered when a user [forks a repository](https://api.github.com/v3/repos/forks
 
 Key | Type | Description
 ----|------|-------------
-`forkee`|`object` | The created [repository](https://api.github.com/v3/repos/).
+`forkee`|`object` | The created repository.
 
 ## ForkApplyEvent
 
@@ -166,7 +166,7 @@ Key | Type | Description
 
 ## GistEvent
 
-Triggered when a [Gist](https://api.github.com/v3/gists/) is created or updated.
+Triggered when a Gist is created or updated.
 
 Events of this type are **no longer created**, but it's possible that they exist in timelines of some users.
 
@@ -179,7 +179,7 @@ Events of this type are **no longer created**, but it's possible that they exist
 Key | Type | Description
 ----|------|-------------
 `action`|`string` | The action that was performed. Can be "create" or "update"
-`gist`|`object` | The [gist](https://api.github.com/v3/gists/) itself.
+`gist`|`object` | The gist itself.
 
 
 ## GollumEvent
@@ -203,7 +203,7 @@ Key | Type | Description
 
 ## IssueCommentEvent
 
-Triggered when an [issue comment](https://api.github.com/v3/issues/comments/) is created.
+Triggered when an issue comment is created.
 
 ### Event name
 
@@ -214,12 +214,12 @@ Triggered when an [issue comment](https://api.github.com/v3/issues/comments/) is
 Key | Type | Description
 ----|------|-------------
 `action`|`string` | The action that was performed on the comment. Currently, can only be "created".
-`issue`|`object` | The [issue](https://api.github.com/v3/issues/) the comment belongs to.
-`comment`|`object` | The [comment](https://api.github.com/v3/issues/comments/) itself.
+`issue`|`object` | The issue the comment belongs to.
+`comment`|`object` | The comment itself.
 
 ## IssuesEvent
 
-Triggered when an [issue](https://api.github.com/v3/issues) is created, closed or reopened.
+Triggered when an issue is created, closed or reopened.
 
 ### Event name
 
@@ -230,11 +230,11 @@ Triggered when an [issue](https://api.github.com/v3/issues) is created, closed o
 Key | Type | Description
 ----|------|-------------
 `action`|`string` | The action that was performed. Can be one of "opened", "closed", or "reopened".
-`issue`|`object` | The [issue](https://api.github.com/v3/issues) itself.
+`issue`|`object` | The issue itself.
 
 ## MemberEvent
 
-Triggered when a user is [added as a collaborator](https://api.github.com/v3/repos/collaborators/#add-collaborator) to a repository.
+Triggered when a user is added as a collaborator to a repository.
 
 ### Event name
 
@@ -244,7 +244,7 @@ Triggered when a user is [added as a collaborator](https://api.github.com/v3/rep
 
 Key | Type | Description
 ----|------|-------------
-`member`|`object` | The [user](https://api.github.com/v3/users/) that was added.
+`member`|`object` | The user that was added.
 `action`|`string` | The action that was performed. Currently, can only be "added".
 
 ## PageBuildEvent
@@ -267,7 +267,7 @@ Key | Type | Description
 
 ## PublicEvent
 
-Triggered when a private repository is [open sourced](https://api.github.com/v3/repos/#edit).  Without a doubt: the best GitHub event.
+Triggered when a private repository is open sourced.  Without a doubt: the best GitHub event.
 
 ### Event name
 
@@ -277,7 +277,7 @@ Triggered when a private repository is [open sourced](https://api.github.com/v3/
 
 ## PullRequestEvent
 
-Triggered when a [pull request](https://api.github.com/v3/pulls) is created, closed, reopened or synchronized.
+Triggered when a pull request is created, closed, reopened or synchronized.
 
 ### Event name
 
@@ -289,11 +289,11 @@ Key | Type | Description
 ----|------|-------------
 `action`|`string` | The action that was performed. Can be one of "opened", "closed", "synchronize", or "reopened".
 `number`|`integer` | The pull request number.
-`pull_request`|`object` | The [pull request](https://api.github.com/v3/pulls) itself.
+`pull_request`|`object` | The pull request itself.
 
 ## PullRequestReviewCommentEvent
 
-Triggered when a [comment is created on a portion of the unified diff](https://api.github.com/v3/pulls/comments) of a pull request.
+Triggered when a comment is created on a portion of the unified diff of a pull request.
 
 ### Event name
 
@@ -304,8 +304,8 @@ Triggered when a [comment is created on a portion of the unified diff](https://a
 Key | Type | Description
 ----|------|-------------
 `action`|`string` | The action that was performed on the comment. Currently, can only be "created".
-`pull_request`|`object` | The [pull request](https://api.github.com/v3/pulls/) the comment belongs to.
-`comment`|`object` | The [comment](https://api.github.com/v3/pulls/comments) itself.
+`pull_request`|`object` | The pull request the comment belongs to.
+`comment`|`object` | The comment itself.
 
 ## PushEvent
 
@@ -335,7 +335,7 @@ Key | Type | Description
 
 ## ReleaseEvent
 
-Triggered when a [release](https://api.github.com/v3/repos/releases/#get-a-single-release) is published.
+Triggered when a release is published.
 
 ### Event name
 
@@ -346,7 +346,7 @@ Triggered when a [release](https://api.github.com/v3/repos/releases/#get-a-singl
 Key | Type | Description
 ----|------|-------------
 `action`|`string` | The action that was performed. Currently, can only be "published".
-`release`|`object` | The [release](https://api.github.com/v3/repos/releases/#get-a-single-release) itself.
+`release`|`object` | The release itself.
 
 ## StatusEvent
 
@@ -370,9 +370,9 @@ Key | Type | Description
 
 ## TeamAddEvent
 
-Triggered when a [user is added to a team](https://api.github.com/v3/orgs/teams/#add-team-member) or when a [repository is added to a team](https://api.github.com/v3/orgs/teams/#add-team-repo).
+Triggered when a user is added to a team or when a repository is added to a team.
 
-Note: this event is created in [users' organization timelines](https://api.github.com/v3/activity/events/#list-events-for-an-organization).
+Note: this event is created in users' organization timelines.
 
 ### Event name
 
@@ -382,17 +382,17 @@ Note: this event is created in [users' organization timelines](https://api.githu
 
 Key | Type | Description
 ----|------|-------------
-`team`|`object` | The [team](https://api.github.com/v3/orgs/teams/) that was modified.  Note: older events may not include this in the payload.
-`user`|`object` | The [user](https://api.github.com/v3/users/) that was added to this team.
-`repository`|`object` | The [repository](https://api.github.com/v3/repos/) that was added to this team.
+`team`|`object` | The team that was modified.  Note: older events may not include this in the payload.
+`user`|`object` | The user that was added to this team.
+`repository`|`object` | The repository that was added to this team.
 
 ## WatchEvent
 
-The WatchEvent is related to [starring a repository](https://api.github.com/v3/activity/starring/#star-a-repository), not [watching](https://api.github.com/v3/activity/watching/).
-See [this API blog post](https://api.github.com/changes/2012-9-5-watcher-api/) for an explanation.
+The WatchEvent is related to starring a repository, not watching.
+See this API blog post for an explanation.
 
-The event’s actor is the [user](https://api.github.com/v3/users/) who starred a repository, and the
-event’s repository is the [repository](https://api.github.com/v3/repos/) that was starred.
+The event’s actor is the user who starred a repository, and the
+event’s repository is the repository that was starred.
 
 ### Event name
 

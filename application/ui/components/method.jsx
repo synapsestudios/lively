@@ -37,9 +37,10 @@ module.exports = React.createClass({
     getInitialState : function()
     {
         return {
-            status   : false,
-            error    : false,
-            response : null,
+            status            : false,
+            error             : false,
+            request           : null,
+            response          : null,
             methodPanelHidden : true
         };
     },
@@ -73,6 +74,8 @@ module.exports = React.createClass({
         var headerParams = {},
             bodyParams   = {},
             queryParams  = {};
+
+        this.clearResponse();
 
         _.each(params, _.bind(function(value, name)
         {
@@ -128,6 +131,16 @@ module.exports = React.createClass({
         this.setState({
             status  : LOADING,
             request : requestInfo
+        });
+    },
+
+    clearResponse : function()
+    {
+        this.setState({
+            status            : false,
+            error             : false,
+            request           : null,
+            response          : null
         });
     },
 
@@ -197,7 +210,7 @@ module.exports = React.createClass({
         return uri;
     },
 
-    getTryItButton: function()
+    renderTryItButton: function()
     {
         var hasUpload = false;
 
@@ -216,11 +229,12 @@ module.exports = React.createClass({
 
         if (this.state.status === LOADED || this.state.status === LOADING)
         {
-            apiCallInfo = (
-                <ApiCallInfo status={this.state.status}
-                             request={this.state.request}
-                             response={this.state.response} />
-            );
+            apiCallInfo = <ApiCallInfo
+                status    = {this.state.status}
+                request   = {this.state.request}
+                response  = {this.state.response}
+                clear     = {this.clearResponse}
+            />;
         }
 
         var panelHeaderClasses = cx({
@@ -234,8 +248,8 @@ module.exports = React.createClass({
         });
 
         var methodPanelClasses = cx({
-            'method-panel'          : true,
-            'method-panel--hidden'  : this.state.methodPanelHidden
+            'method-panel'         : true,
+            'method-panel--hidden' : this.state.methodPanelHidden
         });
 
         var naviconButtonClasses = cx({
@@ -262,7 +276,7 @@ module.exports = React.createClass({
                         <p className='checkbox-label'>Include OAuth Token?</p>
                         <Checkbox defaultChecked={this.props.oauth} ref='sendToken' name={this.props.name}/>
                     </div>
-                    {this.getTryItButton()}
+                    {this.renderTryItButton()}
                     {apiCallInfo}
                 </div>
             </div>

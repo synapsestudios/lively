@@ -203,7 +203,7 @@ Key | Type | Description
 
 ## IssueCommentEvent
 
-Triggered when an [issue comment](/issues-comments) is created.
+Triggered when an [issue comment](/github/issues-comments) is created.
 
 ### Event name
 
@@ -215,7 +215,7 @@ Key | Type | Description
 ----|------|-------------
 `action`|`string` | The action that was performed on the comment. Currently, can only be "created".
 `issue`|`object` | The [issue](/github/issues) the comment belongs to.
-`comment`|`object` | The [comment](/issues-comments) itself.
+`comment`|`object` | The [comment](/github/issues-comments) itself.
 
 ## IssuesEvent
 

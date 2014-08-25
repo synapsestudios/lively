@@ -11,7 +11,8 @@ var Resumable   = require('../../../bower_components/resumablejs/resumable');
 var ParamHelper = require('../../util/param-helper');
 
 var LOADED  = 'loaded',
-    LOADING = 'loading';
+    LOADING = 'loading',
+    ERROR   = 'error';
 
 module.exports = React.createClass({
 
@@ -75,6 +76,17 @@ module.exports = React.createClass({
         var headerParams = {},
             bodyParams   = {},
             queryParams  = {};
+
+        var buttonNode = this.refs.tryItButton.getDOMNode();
+
+        if (this.refs.sendToken.getValue() === true && this.props.oauthStore.accessToken === null) {
+            this.setState({
+                status  : ERROR,
+                error : "No access token provided."
+            });
+            window.scrollTo(0, window.scrollY + buttonNode.getBoundingClientRect().bottom);
+            return;
+        }
 
         _.each(params, _.bind(function(value, name)
         {
@@ -212,6 +224,13 @@ module.exports = React.createClass({
         return hasUpload ? null : <a ref='tryItButton' className='button' onClick={this.onSubmit}>Try it</a>;
     },
 
+    getErrorMessage: function()
+    {
+        if (this.state.status === 'error') {
+            return <div>{this.state.error}</div>
+        }
+    },
+
     handleUpdatedRequestBody : function(newRequestBody)
     {
         this.setState({
@@ -278,6 +297,7 @@ module.exports = React.createClass({
                         <Checkbox defaultChecked={this.props.oauth} ref='sendToken' name={this.props.name}/>
                     </div>
                     {this.getTryItButton()}
+                    {this.getErrorMessage()}
                     {apiCallInfo}
                 </div>
             </div>

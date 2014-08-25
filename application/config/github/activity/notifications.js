@@ -32,7 +32,7 @@ var paramAll = {
     type         : 'boolean',
     defaultValue : false,
     location     : 'uri',
-    description  : 'If true, show notifications marked as read. Default: false'
+    description  : 'If true, show notifications marked as read.'
 };
 
 var paramParticipating = {
@@ -41,7 +41,7 @@ var paramParticipating = {
     type         : 'boolean',
     defaultValue : false,
     location     : 'uri',
-    description  : 'If true, only shows notifications in which the user is directly participating or mentioned. Default: false'
+    description  : 'If true, only shows notifications in which the user is directly participating or mentioned.'
 };
 
 var paramSince = {
@@ -50,7 +50,7 @@ var paramSince = {
     type         : 'string',
     defaultValue : date.toISOString(),
     location     : 'uri',
-    description  : 'Filters out any notifications updated before the given time. This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ. Default: Time.now'
+    description  : 'Filters out any notifications updated before the given time. This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.'
 };
 
 var paramLastReadAt = {
@@ -59,7 +59,7 @@ var paramLastReadAt = {
     type         : 'string',
     defaultValue : date.toISOString(),
     location     : 'uri',
-    description  : 'Describes the last point that notifications were checked. Anything updated since this time will not be updated. This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ. Default: Time.now'
+    description  : 'Describes the last point that notifications were checked. Anything updated since this time will not be updated. This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.'
 };
 
 module.exports = {

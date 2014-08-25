@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 'use strict';
 
+var _           = require('underscore');
 var React       = require('react');
 var marked      = require('marked');
 var ParamHelper = require('../../util/param-helper');
@@ -25,9 +26,16 @@ module.exports = {
 
     renderDescriptionColumn : function(param)
     {
-        var innerHtml, description;
+        var defaultValue, description, innerHtml;
 
-        description = (param.required ? '**Required**. ' : '') + param.description;
+        if (_.isBoolean(param.defaultValue)) {
+            defaultValue = (param.defaultValue) ? 'true' : 'false';
+        } else {
+            defaultValue = param.defaultValue;
+        }
+
+        description = (param.required ? '**Required**. ' : '') + param.description
+            + (defaultValue ? ' **Default:** ' + defaultValue : '');
 
         innerHtml = {
             __html: marked(description)

@@ -38,7 +38,7 @@ var paramSort = {
     defaultValue : 'created',
     type         : 'enum',
     location     : 'query',
-    description  : 'Can be either `created` or `updated`. Default: `created`',
+    description  : 'Can be either `created` or `updated`.',
     enumValues   : [
         'created',
         'updated'

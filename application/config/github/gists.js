@@ -106,7 +106,7 @@ module.exports = {
                     defaultValue : false,
                     type         : 'boolean',
                     location     : 'body',
-                    description  : 'Indicates whether the gist is public. Default: `false`'
+                    description  : 'Indicates whether the gist is public.'
                 }
             ]
         },

@@ -106,6 +106,10 @@ module.exports = React.createClass({
 
             var paramData = _.findWhere(this.props.params, { name : name });
 
+            if (paramData.type === 'integer') {
+                value = parseInt(value, 10);
+            }
+
             if (paramData.location === 'header') {
                 headerParams[name] = value;
             } else if (paramData.location === 'query' || method === 'GET') {

@@ -36,6 +36,10 @@ module.exports = React.createClass({
                 value = (value === 'true');
             }
 
+            if (type === 'integer') {
+                value = parseInt(value, 10);
+            }
+
             values = NestedPropertyHandler.set(values, path, value);
 
             component.props.updateValues(values);

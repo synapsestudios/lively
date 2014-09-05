@@ -135,19 +135,27 @@ module.exports = React.createClass({
         }
     },
 
-    render : function() {
-
-        var oAuthLinkClasses = cx({
+    buildOAuthButton : function()
+    {
+         var oAuthLinkClasses = cx({
             'o-auth'        : true,
             'fa'            : true,
             'fa-lock'       : this.state.hasOAuth,
             'fa-unlock-alt' : ! this.state.hasOAuth
         });
 
+        if (_.isUndefined(this.props.stores.oauth.tokenParam)) {
+            return null;
+        } else {
+            return (<span className='o-auth__tooltip'><span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}></span></span>);
+        }
+    },
 
+    render : function()
+    {
         return (
             <div className='main-nav__wrapper'>
-                <h3 className='main-nav__header'>API Resources<span className='o-auth__tooltip'><span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}></span></span></h3>
+                <h3 className='main-nav__header'>API Resources{this.buildOAuthButton()}</h3>
                 <div className='main-nav'>
                     {this.buildNavList()}
                 </div>

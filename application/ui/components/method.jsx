@@ -4,14 +4,15 @@
 var _           = require('underscore');
 var React       = require('react');
 var cx          = require('react/lib/cx');
-var marked      = require('marked');
 var Params      = require('./params-list');
 var ApiCallInfo = require('./api-call-info');
 var Checkbox    = require('./input/checkbox');
 var Resumable   = require('../../../bower_components/resumablejs/resumable');
+var ParamHelper = require('../../util/param-helper');
 
 var LOADED  = 'loaded',
-    LOADING = 'loading';
+    LOADING = 'loading',
+    ERROR   = 'error';
 
 module.exports = React.createClass({
 
@@ -38,9 +39,10 @@ module.exports = React.createClass({
     getInitialState : function()
     {
         return {
-            status   : false,
-            error    : false,
-            response : null,
+            requestBody       : ParamHelper.getDefaultValuesForParams(this.props.params),
+            status            : false,
+            error             : false,
+            response          : null,
             methodPanelHidden : true
         };
     },
@@ -53,24 +55,39 @@ module.exports = React.createClass({
         this.props.toggleMethodPanel();
     },
 
-    apiCallback : function(err, resp)
+    handleApiResponse : function(err, resp)
     {
+        var buttonNode = this.refs.tryItButton.getDOMNode();
+
         this.setState({
             status   : LOADED,
             response : resp,
             error    : err
         });
+
+        window.scrollTo(0, window.scrollY + buttonNode.getBoundingClientRect().bottom);
     },
 
     onSubmit : function()
     {
-        var params = this.refs.params.getValues(),
+        var params = this.state.requestBody,
             method = this.props.method,
             uri    = this.props.uri;
 
         var headerParams = {},
             bodyParams   = {},
             queryParams  = {};
+
+        var buttonNode = this.refs.tryItButton.getDOMNode();
+
+        if (this.refs.sendToken.getValue() === true && this.props.oauthStore.accessToken === null) {
+            this.setState({
+                status  : ERROR,
+                error : "No access token provided."
+            });
+            window.scrollTo(0, window.scrollY + buttonNode.getBoundingClientRect().bottom);
+            return;
+        }
 
         _.each(params, _.bind(function(value, name)
         {
@@ -112,14 +129,14 @@ module.exports = React.createClass({
                 method,
                 uri,
                 params,
-                _.bind(this.apiCallback, this)
+                _.bind(this.handleApiResponse, this)
             );
         } else {
             requestInfo = this.props.oauthStore.request(
                 method,
                 uri,
                 params,
-                _.bind(this.apiCallback, this)
+                _.bind(this.handleApiResponse, this)
             );
         }
 
@@ -157,7 +174,7 @@ module.exports = React.createClass({
                 uri     : this.opts.target
             };
 
-            component.apiCallback(null, {
+            component.handleApiResponse(null, {
                 status  : this.statusCode || '200',
                 headers : {},
                 data    : _.last(file.chunks).message()
@@ -170,7 +187,7 @@ module.exports = React.createClass({
                 uri     : this.opts.target
             };
 
-            component.apiCallback(null, {
+            component.handleApiResponse(null, {
                 status  : this.statusCode || '???',
                 headers : {},
                 data    : message || 'Unknown Error'
@@ -205,7 +222,21 @@ module.exports = React.createClass({
             }
         });
 
-        return hasUpload ? null : <a className='button' onClick={this.onSubmit}>Try it</a>;
+        return hasUpload ? null : <a ref='tryItButton' className='button' onClick={this.onSubmit}>Try it</a>;
+    },
+
+    getErrorMessage: function()
+    {
+        if (this.state.status === 'error') {
+            return <div>{this.state.error}</div>
+        }
+    },
+
+    handleUpdatedRequestBody : function(newRequestBody)
+    {
+        this.setState({
+            requestBody : newRequestBody
+        });
     },
 
     render : function()
@@ -254,13 +285,20 @@ module.exports = React.createClass({
                     </span>
                 </div>
                 <div className={methodPanelClasses}>
-                    <div className='panel__synopsis' dangerouslySetInnerHTML={{__html: marked(this.props.synopsis)}} />
-                    <Params params={this.props.params} resumableUploadCallback={this.initResumableUpload} ref='params' />
+                    <div className='panel__synopsis' dangerouslySetInnerHTML={{__html: this.props.synopsis}} />
+                    <Params
+                        params                  = {this.props.params}
+                        requestBody             = {this.state.requestBody}
+                        resumableUploadCallback = {this.initResumableUpload}
+                        updateValues            = {this.handleUpdatedRequestBody}
+                        ref                     = 'params'
+                    />
                     <div className='switch__container'>
                         <p className='checkbox-label'>Include OAuth Token?</p>
                         <Checkbox defaultChecked={this.props.oauth} ref='sendToken' name={this.props.name}/>
                     </div>
                     {this.getTryItButton()}
+                    {this.getErrorMessage()}
                     {apiCallInfo}
                 </div>
             </div>

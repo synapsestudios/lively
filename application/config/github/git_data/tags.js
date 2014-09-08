@@ -82,7 +82,30 @@ module.exports = {
                     required    : false,
                     type        : 'hash',
                     location    : 'body',
-                    description : 'A hash with information about the individual creating the tag.' // @todo support hashes
+                    description : 'A hash with information about the individual creating the tag.',
+                    params      : [
+                        {
+                            name        : 'name',
+                            required    : true,
+                            type        : 'string',
+                            location    : 'body',
+                            description : 'The name of the author of the tag'
+                        },
+                        {
+                            name        : 'email',
+                            required    : true,
+                            type        : 'string',
+                            location    : 'body',
+                            description : 'The email of the author of the tag'
+                        },
+                        {
+                            name        : 'date',
+                            required    : true,
+                            type        : 'string',
+                            location    : 'body',
+                            description : 'When this object was tagged. This is a timestamp in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.'
+                        }
+                    ]
                 }
             ]
         }

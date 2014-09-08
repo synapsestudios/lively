@@ -49,7 +49,7 @@ var paramParents = {
 };
 
 module.exports = {
-    name     : 'Commits',
+    name     : 'Git Data Commits',
     methods : [
         {
             name     : 'Get a Commit',
@@ -74,7 +74,67 @@ module.exports = {
                 paramRepo,
                 paramMessage,
                 paramTree,
-                paramParents // @TODO optional committer and author parameters are excluded for now
+                paramParents,
+                {
+                    name         : 'author',
+                    required     : false,
+                    type         : 'hash',
+                    location     : 'body',
+                    description  : 'If the author section is omitted, it will be filled in with the authenticated user\'s information and the current date.',
+                    params       : [
+                        {
+                            name        : 'name',
+                            type        : 'string',
+                            required    : false,
+                            location    : 'body',
+                            description : 'The name of the author (or commiter) of the commit'
+                        },
+                        {
+                            name        : 'email',
+                            type        : 'string',
+                            required    : false,
+                            location    : 'body',
+                            description : 'The email of the author (or commiter) of the commit'
+                        },
+                        {
+                            name        : 'date',
+                            type        : 'string',
+                            required    : false,
+                            location    : 'body',
+                            description : 'Indicates when this commit was authored (or committed). This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.'
+                        }
+                    ]
+                },
+                {
+                    name         : 'committer',
+                    required     : false,
+                    type         : 'hash',
+                    location     : 'body',
+                    description  : 'The committer section is optional and will be filled with the author data if omitted.',
+                    params       : [
+                        {
+                            name        : 'name',
+                            type        : 'string',
+                            required    : false,
+                            location    : 'body',
+                            description : 'The name of the author (or commiter) of the commit'
+                        },
+                        {
+                            name        : 'email',
+                            type        : 'string',
+                            required    : false,
+                            location    : 'body',
+                            description : 'The email of the author (or commiter) of the commit'
+                        },
+                        {
+                            name        : 'date',
+                            type        : 'string',
+                            required    : false,
+                            location    : 'body',
+                            description : 'Indicates when this commit was authored (or committed). This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.'
+                        }
+                    ]
+                }
             ]
         }
     ]

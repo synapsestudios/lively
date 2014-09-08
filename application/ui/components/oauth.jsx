@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 'use strict';
 
+var _          = require('underscore');
 var React      = require('react');
 var cx         = require('react/lib/cx');
 var TextInput  = require('./input/text');
@@ -28,9 +29,9 @@ module.exports = React.createClass({
     handleClick : function()
     {
         this.props.onOAuthStart({
-            clientId     : this.refs.clientId.getValue(),
-            clientSecret : this.refs.clientSecret.getValue(),
-            scope        : this.refs.scope.getValue()
+            clientId     : this.state.clientId,
+            clientSecret : this.state.clientSecret,
+            scope        : this.state.scope
         });
     },
 
@@ -45,7 +46,22 @@ module.exports = React.createClass({
 
     getInitialState : function()
     {
-        return this.getStateFromStores();
+        var initialState = this.getStateFromStores();
+
+        initialState.clientId     = null;
+        initialState.clientSecret = null;
+        initialState.scope        = null;
+
+        return initialState;
+    },
+
+    handleUpdate : function(stateProperty, value)
+    {
+        var state = this.state;
+
+        state[stateProperty] = value;
+
+        this.setState(state);
     },
 
     toggleOAuthPanel : function()
@@ -77,15 +93,30 @@ module.exports = React.createClass({
                     <div className='oauth-panel__form'>
                         <div className='small-4 columns'>
                             <label className='panel-form__label' htmlFor='clientId'>Client ID</label>
-                            <TextInput className='form__input panel-form__input' name='clientId' ref='clientId' />
+                            <TextInput
+                                className = 'form__input panel-form__input'
+                                name      = 'clientId'
+                                value     = {this.state.clientId}
+                                onChange  = {_.partial(this.handleUpdate, 'clientId')}
+                            />
                         </div>
                         <div className='small-4 columns'>
                             <label className='panel-form__label' htmlFor='clientSecret'>Client Secret</label>
-                            <TextInput className='form__input panel-form__input' name='clientSecret' ref='clientSecret' />
+                            <TextInput
+                                className = 'form__input panel-form__input'
+                                name      = 'clientSecret'
+                                value     = {this.state.clientSecret}
+                                onChange  = {_.partial(this.handleUpdate, 'clientSecret')}
+                            />
                         </div>
                         <div className='small-4 columns'>
                             <label className='panel-form__label' htmlFor='scope'>Scope</label>
-                            <TextInput className='form__input panel-form__input' name='scope' ref='scope' />
+                            <TextInput
+                                className = 'form__input panel-form__input'
+                                name      = 'scope'
+                                value     = {this.state.scope}
+                                onChange  = {_.partial(this.handleUpdate, 'scope')}
+                            />
                         </div>
                         <div className='small-12 columns'>
                             <a className='button right' onClick={this.handleClick}>Connect</a>

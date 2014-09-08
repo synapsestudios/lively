@@ -1,69 +1,257 @@
 /** @jsx React.DOM */
 'use strict';
 
-var React      = require('react');
-var Param      = require('./param');
-var ArrayParam = require('./array-param');
+var _                     = require('underscore');
+var React                 = require('react');
+var NestedPropertyHandler = require('../../util/nested-property-handler');
+var RenderParamsMixin     = require('./render-params-mixin');
+var ParamHelper           = require('../../util/param-helper');
+var Select                = require('./input/select');
+var Text                  = require('./input/text');
+var ResumableUpload       = require('./input/resumable-upload');
+var NestedPropertyHandler = require('../../util/nested-property-handler');
 
 module.exports = React.createClass({
 
     displayName : 'ParameterList',
 
     propTypes : {
-        params : React.PropTypes.array.isRequired
+        params       : React.PropTypes.array.isRequired,
+        requestBody  : React.PropTypes.object,
+        updateValues : React.PropTypes.func.isRequired
     },
 
-    getParamComponent : function(param)
+    mixins : [
+        RenderParamsMixin
+    ],
+
+    getChangeHandler : function(path, type)
     {
-        if (param.type.substring(0, 5) === 'array') {
-            return this.getArrayParamComponent(param);
+        var values    = this.props.requestBody,
+            component = this;
+
+        return function(value)
+        {
+            if (type === 'boolean') {
+                value = (value === 'true');
+            }
+
+            if (type === 'integer') {
+                value = parseInt(value, 10);
+            }
+
+            values = NestedPropertyHandler.set(values, path, value);
+
+            component.props.updateValues(values);
+        };
+    },
+
+    handleAddField : function(path, param)
+    {
+        var values = this.props.requestBody,
+            array;
+
+        array = NestedPropertyHandler.get(values, path) || [];
+
+        array.push(
+            ParamHelper.getDefaultValueForArrayParamElement(param)
+        );
+
+        values = NestedPropertyHandler.set(values, path, array);
+
+        this.props.updateValues(values);
+    },
+
+    renderTopLevelParam : function(param)
+    {
+        return this.renderParam(param, []);
+    },
+
+    renderParam : function(param, path)
+    {
+        var renderedMarkup;
+
+        // Record the "path" of this param in the request body object
+        path = this.appendPath(path, param.name);
+
+        renderedMarkup = (
+            <tr key='param'>
+                <td><code>{param.name}</code></td>
+                <td>{this.renderParamInputOrInputs(param, path)}</td>
+                <td>{this.renderInputTypeDescription(param.type)}</td>
+                {this.renderDescriptionColumn(param)}
+            </tr>
+        );
+
+        if (param.type === 'hash' || param.type === 'array[hash]') {
+            renderedMarkup = this.appendHashMarkupToParamMarkup(renderedMarkup, param, path);
         }
 
-        return <Param ref={param.name}
-                      key={param.name}
-                      name={param.name}
-                      required={param.required}
-                      type={param.type}
-                      description={param.description}
-                      defaultValue={param.defaultValue}
-                      enumValues={param.enumValues}
-                      resumableUploadCallback={this.props.resumableUploadCallback} />;
+        return (
+            <tbody key={param.name}>
+                {renderedMarkup}
+            </tbody>
+        );
     },
 
-    getArrayParamComponent : function(param)
+    renderParamInputOrInputs : function(param, path)
     {
-        var arrayTypeMatches = param.type.match(/\[(.*?)\]/),
-            arrayType;
+        if (param.type === 'hash') {
+            return null;
+        }
 
-        if (arrayTypeMatches === null) {
-            arrayType = 'string';
-        } else {
-            arrayType = arrayTypeMatches[0].substring(
-                1,
-                arrayTypeMatches[0].length - 1
+        if (ParamHelper.isArrayParam(param.type)) {
+            return this.renderArrayParamInputs(
+                ParamHelper.getArrayType(param.type),
+                param,
+                path
             );
         }
 
-        return <ArrayParam ref={param.name}
-                  key={param.name}
-                  name={param.name}
-                  required={param.required}
-                  type={arrayType}
-                  description={param.description}
-                  defaultValue={param.defaultValue}
-                  enumValues={param.enumValues} />;
+        return this.renderParamInput(param.type, param, path, param.name);
     },
 
-    getValues : function()
+    appendHashMarkupToParamMarkup : function(renderedMarkup, param, path)
     {
-        var self   = this,
-            values = {};
+        renderedMarkup = [renderedMarkup];
 
-        this.props.params.forEach(function(param) {
-            values[param.name] = self.refs[param.name].getValue();
+        if (param.type === 'hash') {
+            renderedMarkup.push(
+                this.renderHashParams(param.params, path)
+            );
+        }
+
+        if (param.type === 'array[hash]') {
+            renderedMarkup = renderedMarkup.concat(
+                this.renderHashArrayParams(param.params, path)
+            );
+        }
+
+        return renderedMarkup;
+    },
+
+    renderHashParams : function(params, path, showRemovalButton)
+    {
+        var component      = this,
+            renderedParams = [],
+            removalButton  = null,
+            key;
+
+        params.forEach(function(childParam) {
+            renderedParams.push(
+                component.renderParam(childParam, path)
+            );
         });
 
-        return values;
+        key = 'hashParams' + (_.last(path));
+
+        if (showRemovalButton === true) {
+            removalButton = this.renderRemoveArrayElementButton(path);
+        }
+
+        return (
+            <tr key={key}>
+                <td colSpan={4}>
+                    <table>
+                        {removalButton}
+                        {renderedParams}
+                    </table>
+                </td>
+            </tr>
+        );
+    },
+
+    renderHashArrayParams : function(params, path)
+    {
+        var values         = NestedPropertyHandler.get(this.props.requestBody, path) || [],
+            renderedHashes = [],
+            component      = this,
+            newPath;
+
+        values.forEach(function(hash, index) {
+            newPath = path.slice();
+            newPath.push(index);
+
+            renderedHashes.push(
+                component.renderHashParams(params, newPath, true)
+            );
+        });
+
+        return renderedHashes;
+    },
+
+    renderArrayParamInputs : function(type, param, path)
+    {
+        var component = this,
+            values    = NestedPropertyHandler.get(this.props.requestBody, path) || [],
+            inputs    = [],
+            addHandler;
+
+        addHandler = _.partial(this.handleAddField, path, param);
+
+        inputs.push(
+            <a className='button field-button--add' onClick={addHandler}>{'+ Add Field'}</a>
+        );
+
+        if (type === 'hash') {
+            return inputs;
+        }
+
+        values.forEach(function(value, index) {
+            var newPath = component.appendPath(path, index);
+
+            inputs.push(
+                component.renderRemoveArrayElementButton(newPath)
+            );
+
+            inputs.push(
+                component.renderParamInput(type, param, newPath, param.name + index)
+            );
+        });
+
+        return inputs;
+    },
+
+    renderParamInput : function(type, options, path, key)
+    {
+        var changeHandler = this.getChangeHandler(path, type),
+            value         = NestedPropertyHandler.get(this.props.requestBody, path);
+
+        if (type === 'enum') {
+            if (! options.enumValues.length) {
+                console.warn('Missing enumValues for param: ' + options.name);
+            }
+
+            return <Select value={value} key={key} options={options.enumValues} onChange={changeHandler} />;
+        } else if (type === 'boolean') {
+            return <Select value={value} key={key} options={['true', 'false']} onChange={changeHandler} />;
+        } else if (type === 'resumable-upload') {
+            return <ResumableUpload key={key} target={options.uri} resumableUploadCallback={options.resumableUploadCallback} />;
+        } else if (type === 'hash') {
+            return null;
+        } else {
+            return <Text key={key} value={value} onChange={changeHandler} />;
+        }
+    },
+
+    renderRemoveArrayElementButton : function(path)
+    {
+        var component = this,
+            callback;
+
+        callback = function() {
+            var values = component.props.requestBody;
+
+            values = NestedPropertyHandler.remove(values, path);
+
+            component.props.updateValues(values);
+        };
+
+        return (
+            <a className='button field-button--remove' onClick={callback}>
+                –
+            </a>
+        );
     },
 
     render : function()
@@ -80,7 +268,7 @@ module.exports = React.createClass({
                     <th>Type</th>
                     <th>Description</th>
                 </tr>
-                {this.props.params.map(this.getParamComponent)}
+                 {this.props.params.map(this.renderTopLevelParam)}
             </table>
         );
     }

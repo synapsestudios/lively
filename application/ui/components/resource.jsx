@@ -11,8 +11,8 @@ module.exports = React.createClass({
     displayName : 'Resource',
 
     propTypes : {
-        name    : React.PropTypes.string.isRequired,
-        methods : React.PropTypes.array.isRequired,
+        name     : React.PropTypes.string.isRequired,
+        methods  : React.PropTypes.array.isRequired,
         synopsis : React.PropTypes.string
     },
 
@@ -23,7 +23,7 @@ module.exports = React.createClass({
      */
     getInitialState : function()
     {
-        var expanded = this.props.methods.map(function(){
+        var expanded = this.props.methods.map(function() {
             return false;
         });
 
@@ -48,12 +48,12 @@ module.exports = React.createClass({
     toggleDisplayMethod : function(id)
     {
         var expanded = this.state.expanded;
-        expanded[id] = !expanded[id];
+        expanded[id] = ! expanded[id];
 
-        var allExpanded = !_.contains(expanded, false);
+        var allExpanded = ! _.contains(expanded, false);
 
         this.setState({
-            expanded : expanded,
+            expanded    : expanded,
             allExpanded : allExpanded
         });
     },
@@ -69,7 +69,7 @@ module.exports = React.createClass({
                oauth             = {method.oauth}
                params            = {method.params}
                oauthStore        = {this.props.oauthStore}
-               methodPanelHidden = {!this.state.expanded[id]}
+               methodPanelHidden = {! this.state.expanded[id]}
                toggleMethodPanel = {_.partial(this.toggleDisplayMethod, id)}
             />
         );
@@ -78,18 +78,18 @@ module.exports = React.createClass({
     /**
      * Click handler for the expand/collapse button on method pages
      */
-    handleExpandCollapseClick : function(){
-        var expanded = this.state.expanded;
+    handleExpandCollapseClick : function() {
+        var expanded    = this.state.expanded;
         var allExpanded = this.state.allExpanded;
 
-        expanded = expanded.map(function(){
-            return !allExpanded;
+        expanded = expanded.map(function() {
+            return ! allExpanded;
         });
-        allExpanded = !allExpanded;
+        allExpanded = ! allExpanded;
 
         this.setState({
-            expanded: expanded,
-            allExpanded: allExpanded
+            expanded    : expanded,
+            allExpanded : allExpanded
         });
     },
 

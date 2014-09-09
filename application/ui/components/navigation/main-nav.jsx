@@ -89,7 +89,14 @@ module.exports = React.createClass({
 
     navItemFromResource : function(resource, index)
     {
-        var navLinkClasses = cx({
+        var params, navLinkClasses;
+
+        params = {
+            apiSlug      : this.props.slug,
+            resourceSlug : this.slugify(resource.name)
+        };
+
+        navLinkClasses = cx({
             'main-nav__link'         : true
         });
 
@@ -97,8 +104,7 @@ module.exports = React.createClass({
             <li className='main-nav__item' key={'resource-' + index}>
                 <Link
                     to              = 'api-resource'
-                    apiSlug         = {this.props.slug}
-                    resourceSlug    = {this.slugify(resource.name)}
+                    params          = {params}
                     className       = {navLinkClasses}
                     activeClassName = 'main-nav__link--active'>
                     {resource.name}
@@ -115,14 +121,13 @@ module.exports = React.createClass({
     buildNestedNavList : function()
     {
         return _.flatten(_.map(this.props.config.resources, function(subResources, categoryName) {
-            var items = _.map(subResources, this.navItemFromResource, this);
-            var output=(
+            var items  = _.map(subResources, this.navItemFromResource, this);
+
+            return (
                 <GroupHeader categoryName={categoryName} onClick={this.onClick}>
                     {items}
                 </GroupHeader>
             );
-
-            return output;
         }, this));
     },
 

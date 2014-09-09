@@ -11,10 +11,11 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var backButton,
-            apiLogo;
+        var backButton, apiLogo, linkParams, apiSummaryClasses;
 
-        var apiSummaryClasses = cx({
+        linkParams = {apiSlug : this.props.slug};
+
+        apiSummaryClasses = cx({
             'header__api-link'            : true,
             'header__api-link--no-margin' : this.props.showBackButton
         });
@@ -33,7 +34,7 @@ module.exports = React.createClass({
             <div>
                 <header className='header'>
                     {backButton}
-                    <Link to='api' apiSlug={this.props.slug} className={apiSummaryClasses}>{apiLogo}{this.props.name}</Link>
+                    <Link to='api' params={linkParams} className={apiSummaryClasses}>{apiLogo}{this.props.name}</Link>
                     <span className='header__branding'>
                         <img src="../images/logos/livelydocs-logomark.png" alt="" />
                         <span className='powered-by'>powered by</span>

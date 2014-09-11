@@ -9,10 +9,13 @@ var dispatcher   = require('synapse-common/lib/dispatcher');
 var Router  = require('react-router');
 var Route   = Router.Route;
 var Routes  = Router.Routes;
+var DefaultRoute = Router.DefaultRoute;
 
-var SiteLayout   = require('./ui/layouts/site');
+var App          = require('./ui/pages/app');
+var Api         = require('./ui/pages/api');
 var ApiList      = require('./ui/pages/api-list');
-var ApiPage      = require('./ui/pages/api');
+var ApiSummary      = require('./ui/pages/api-summary');
+var ApiResource   = require('./ui/pages/api-resource');
 
 var Application = function(config) {
     this.dispatcher = dispatcher;
@@ -23,11 +26,15 @@ Application.prototype.start = function() {
     React.initializeTouchEvents(true);
 
     var router = (
-        <Routes handler={SiteLayout} location='history'>
-            <Route name='api-list'           path='/'                         handler={ApiList} config={this.config} />
-            <Route name='api-oauth-callback' path='/oauth2/callback/:apiSlug' handler={ApiPage} config={this.config} />
-            <Route name='api'                path='/:apiSlug'                 handler={ApiPage} config={this.config} />
-            <Route name='api-resource'       path='/:apiSlug/:resourceSlug'   handler={ApiPage} config={this.config} />
+        <Routes location='history'>
+            <Route name='app' path='/' handler={App} config={this.config}>
+                <Route name='api' path=':apiSlug' handler={Api} config={this.config}>
+                    <Route name='api-resource' path=':resourceSlug' handler={ApiResource} config={this.config} />
+                    <DefaultRoute handler={ApiSummary} config={this.config} />
+                </Route>
+                <Route name='api-oauth-callback' path='oauth2/callback/:apiSlug' handler={ApiSummary} config={this.config} />
+                <DefaultRoute handler={ApiList} config={this.config} />
+            </Route>
         </Routes>
     );
 

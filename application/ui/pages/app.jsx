@@ -10,28 +10,41 @@ var Link  = require('react-router').Link;
 module.exports = React.createClass({
     displayName : 'App',
 
-    render: function() {
-        var backButton, apiLogo, linkParams, apiSummaryClasses;
+    getInitialState : function()
+    {
+        return {
+            apiName            : null,
+            apiLogo            : null
+        };
+    },
 
-        linkParams = {apiSlug : this.props.slug};
-
-        apiSummaryClasses = cx({
-            'header__api-link'            : true,
-            'header__api-link--no-margin' : this.props.showBackButton
+    updateHeader: function(apiName, apiLogo, apiSlug) {
+        this.setState({
+            apiName            : apiName,
+            apiLogo            : apiLogo,
+            apiSlug            : apiSlug
         });
+    },
 
-        if (this.props.logo) {
-            apiLogo = (
-                <img className='header__api-logo' src={this.props.logo} alt={this.props.name} />
-            );
+    render: function() {
+        var logo, backButton, linkParams, heading;
+
+        if (this.state.apiName) {
+            linkParams = {apiSlug : this.state.apiSlug};
+
+            if (this.state.apiLogo) {
+                logo = (<img className='header__api-logo' src={this.state.apiLogo} alt={this.state.apiName} />);
+            }
+
+            backButton = (<Link to='api-list' className='header__back-button'>&#xf104;</Link>);
+            heading = (<Link to='api' params={linkParams} className='header__api-link header__api-link--no-margin'>{logo}{this.state.apiName}</Link>);
         }
 
         return (
             <div>
                 <header className='header'>
-                    <Link to='api-list' className='header__back-button'>&#xf104;</Link>
-                    {/*<Link to='api-page' params={linkParams} className={apiSummaryClasses}>{apiLogo}{this.props.name}</Link>*/}
-                    <Link to='api-list' className={apiSummaryClasses}>{apiLogo}@TODO</Link>
+                    {backButton}
+                    {heading}
                     <span className='header__branding'>
                         <img src="../images/logos/livelydocs-logomark.png" alt="" />
                         <span className='powered-by'>powered by</span>
@@ -39,7 +52,7 @@ module.exports = React.createClass({
                     </span>
                 </header>
 
-                <this.props.activeRouteHandler/>
+                <this.props.activeRouteHandler updateHeader={this.updateHeader} />
             </div>
         );
     }

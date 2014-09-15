@@ -54,6 +54,8 @@ module.exports = React.createClass({
     {
         var title = [this.config.name, 'Lively Docs'];
         window.document.title = title.join(' | ');
+
+        this.props.updateHeader(this.config.name, this.config.logo, this.props.params.apiSlug);
     },
 
     handleOAuthStart : function(options)

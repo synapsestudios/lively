@@ -5,8 +5,6 @@ var _          = require('underscore');
 var React      = require('react');
 var dispatcher = require('synapse-common/lib/dispatcher');
 
-var SummaryPage       = require('./summary');
-
 module.exports = React.createClass({
 
     displayName : 'ApiSummary',

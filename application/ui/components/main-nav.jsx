@@ -41,7 +41,6 @@ var GroupHeader = React.createClass({
         return (
             <div className={classes}>
                 <div className='main-nav__group-header' onClick={this.toggleNavCollapse}>
-
                     <span key={'c-'+this.slugify(this.props.categoryName)}
                         className='main-nav__group-title'
                         onClick={this.toggleNavCollapse}>

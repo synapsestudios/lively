@@ -5,11 +5,9 @@
 var _                 = require('underscore');
 var React             = require('react');
 var OAuthStore        = require('../../store/oauth2');
-var SiteHeader        = require('../layouts/header');
 var OAuthConnectPanel = require('../components/oauth');
-var MainNav           = require('../components/navigation/main-nav');
-var ResourcePage      = require('./resource');
-var SummaryPage       = require('./summary');
+var MainNav           = require('../components/main-nav');
+var ResourcePage      = require('../components/resource');
 var store             = require('store');
 var qs                = require('querystring');
 var url               = require('url');
@@ -54,21 +52,7 @@ module.exports = React.createClass({
 
     componentDidMount : function()
     {
-        var title = [this.config.name, 'Lively Docs'],
-            resource;
-
-        if (this.config.resources) {
-            if (_.isArray(this.config.resources)) {
-                resource = _.find(this.config.resources, this.findResource, this);
-            } else {
-                resource = _.find(this.getFlatResources(this.config.resources), this.findResource, this);
-            }
-
-            if (resource) {
-                title.unshift(resource.name);
-            }
-        }
-
+        var title = [this.config.name, 'Lively Docs'];
         window.document.title = title.join(' | ');
     },
 
@@ -104,62 +88,22 @@ module.exports = React.createClass({
         window.location = redirectUrl;
     },
 
-    slugify : function(text)
-    {
-        return text.toLowerCase()
-            .replace(/ /g, '-')
-            .replace(/[^\w-]+/g, '');
-    },
-
-    findResource : function(resource)
-    {
-        if (this.slugify(resource.name) === this.props.params.resourceSlug) {
-            return true;
-        }
-    },
-
-    getFlatResources : function(categories)
-    {
-        var resources = [];
-
-        _.each(categories, function(category) {
-            resources = resources.concat(category);
-        });
-
-        return resources;
-    },
-
     render : function()
     {
-        var nav, resource, resourcePage,
-            showBackButton = (_.size(this.props.config.apis) !== 1),
+        var showBackButton = (_.size(this.props.config.apis) !== 1),
             stores         = { oauth : this.oauthStore };
-
-        if (_.isArray(this.config.resources)) {
-            resource = _.find(this.config.resources, this.findResource, this);
-        } else {
-            resource = _.find(this.getFlatResources(this.config.resources), this.findResource, this);
-        }
-
-        nav = <MainNav
-            config={this.config}
-            active={resource ? this.slugify(resource.name) : null}
-            logo={this.config.logo}
-            name={this.config.name}
-            stores={{oauth : this.oauthStore}}
-            slug={this.props.params.apiSlug} />;
-
-        if (resource) {
-            resourcePage = <ResourcePage config={resource}
-                stores={{oauth : this.oauthStore}} />;
-        } else {
-            resourcePage = <SummaryPage summaryHtml={this.config.summary} />;
-        }
 
         return (
             <div>
-                {nav}
-                <this.props.activeRouteHandler config={this.props.config.apis[this.props.params.apiSlug]} />
+                <MainNav
+                    config={this.config}
+                    logo={this.config.logo}
+                    name={this.config.name}
+                    stores={{oauth : this.oauthStore}}
+                    slug={this.props.params.apiSlug} />
+                <this.props.activeRouteHandler
+                    config={this.props.config.apis[this.props.params.apiSlug]}
+                    stores={{oauth : this.oauthStore}} />
             </div>
         );
     }

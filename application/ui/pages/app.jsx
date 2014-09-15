@@ -20,12 +20,6 @@ module.exports = React.createClass({
             'header__api-link--no-margin' : this.props.showBackButton
         });
 
-        /*
-        if (this.props.showBackButton) {
-            backButton = <Link to='api-list' className='header__back-button'>&#xf104;</Link>;
-        }
-        */
-
         if (this.props.logo) {
             apiLogo = (
                 <img className='header__api-logo' src={this.props.logo} alt={this.props.name} />
@@ -35,8 +29,9 @@ module.exports = React.createClass({
         return (
             <div>
                 <header className='header'>
-                    {backButton}
+                    <Link to='api-list' className='header__back-button'>&#xf104;</Link>
                     {/*<Link to='api-page' params={linkParams} className={apiSummaryClasses}>{apiLogo}{this.props.name}</Link>*/}
+                    <Link to='api-list' className={apiSummaryClasses}>{apiLogo}@TODO</Link>
                     <span className='header__branding'>
                         <img src="../images/logos/livelydocs-logomark.png" alt="" />
                         <span className='powered-by'>powered by</span>

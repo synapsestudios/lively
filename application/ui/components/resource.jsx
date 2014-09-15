@@ -3,14 +3,15 @@
 
 var React  = require('react');
 var Method = require('./method');
+var _      = require('underscore');
 
 module.exports = React.createClass({
 
     displayName : 'Resource',
 
     propTypes : {
-        name    : React.PropTypes.string.isRequired,
-        methods : React.PropTypes.array.isRequired,
+        name     : React.PropTypes.string.isRequired,
+        methods  : React.PropTypes.array.isRequired,
         synopsis : React.PropTypes.string
     },
 
@@ -39,6 +40,7 @@ module.exports = React.createClass({
     render : function()
     {
         var synopsis;
+        var resource;
 
         if (this.props.synopsis) {
             synopsis = (
@@ -52,7 +54,7 @@ module.exports = React.createClass({
                     <h1>{this.props.name}</h1>
                     {synopsis}
                 </div>
-                {this.props.methods.map(this.getMethodComponent)}
+                {_.map(this.props.methods, this.getMethodComponent)}
             </div>
         );
     }

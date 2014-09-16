@@ -4,8 +4,8 @@
 var _          = require('underscore');
 var React      = require('react');
 var dispatcher = require('synapse-common/lib/dispatcher');
-var cx    = require('react/lib/cx');
-var Link  = require('react-router').Link;
+var cx         = require('react/lib/cx');
+var Link       = require('react-router').Link;
 
 module.exports = React.createClass({
     displayName : 'App',
@@ -13,16 +13,16 @@ module.exports = React.createClass({
     getInitialState : function()
     {
         return {
-            apiName            : null,
-            apiLogo            : null
+            apiName : null,
+            apiLogo : null
         };
     },
 
     updateHeader: function(apiName, apiLogo, apiSlug) {
         this.setState({
-            apiName            : apiName,
-            apiLogo            : apiLogo,
-            apiSlug            : apiSlug
+            apiName : apiName,
+            apiLogo : apiLogo,
+            apiSlug : apiSlug
         });
     },
 
@@ -36,8 +36,13 @@ module.exports = React.createClass({
                 logo = (<img className='header__api-logo' src={this.state.apiLogo} alt={this.state.apiName} />);
             }
 
-            backButton = (<Link to='api-list' className='header__back-button'>&#xf104;</Link>);
-            heading = (<Link to='api' params={linkParams} className='header__api-link header__api-link--no-margin'>{logo}{this.state.apiName}</Link>);
+            if (_.size(this.props.config.apis) === 1) {
+                heading = (<Link to='api' params={linkParams} className='header__api-link header__api-link'>{logo}{this.state.apiName}</Link>);
+            }
+            else {
+                backButton = (<Link to='api-list' className='header__back-button'>&#xf104;</Link>);
+                heading    = (<Link to='api' params={linkParams} className='header__api-link header__api-link--no-margin'>{logo}{this.state.apiName}</Link>);
+            }
         }
 
         return (

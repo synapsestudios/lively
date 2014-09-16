@@ -4,8 +4,7 @@
 var _          = require('underscore');
 var React      = require('react');
 var dispatcher = require('synapse-common/lib/dispatcher');
-
-var Resource     = require('../components/resource');
+var Resource   = require('../components/resource');
 
 module.exports = React.createClass({
 
@@ -64,9 +63,9 @@ module.exports = React.createClass({
         return (
             <div className='panel__wrapper'>
                 <Resource name={this.resource.name}
-                      synopsis={this.resource.synopsis}
-                      methods={this.resource.methods}
-                      oauthStore={this.props.stores.oauth} />
+                    synopsis={this.resource.synopsis}
+                    methods={this.resource.methods}
+                    oauthStore={this.props.stores.oauth} />
             </div>
         );
     }

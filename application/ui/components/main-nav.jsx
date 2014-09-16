@@ -95,16 +95,12 @@ module.exports = React.createClass({
             resourceSlug : this.slugify(resource.name)
         };
 
-        navLinkClasses = cx({
-            'main-nav__link'         : true
-        });
-
         return (
             <li className='main-nav__item' key={'resource-' + index}>
                 <Link
                     to              = 'api-resource'
                     params          = {params}
-                    className       = {navLinkClasses}
+                    className       = 'main-nav__link'
                     activeClassName = 'main-nav__link--active'>
                     {resource.name}
                 </Link>

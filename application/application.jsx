@@ -5,17 +5,16 @@ var React        = require('react');
 window.React     = React; // react-router requires this
 
 var dispatcher   = require('synapse-common/lib/dispatcher');
-
-var Router  = require('react-router');
-var Route   = Router.Route;
-var Routes  = Router.Routes;
+var Router       = require('react-router');
+var Route        = Router.Route;
+var Routes       = Router.Routes;
 var DefaultRoute = Router.DefaultRoute;
 
 var App          = require('./ui/pages/app');
-var Api         = require('./ui/pages/api');
 var ApiList      = require('./ui/pages/api-list');
-var ApiSummary      = require('./ui/pages/api-summary');
-var ApiResource   = require('./ui/pages/api-resource');
+var Api          = require('./ui/pages/api');
+var ApiSummary   = require('./ui/pages/api-summary');
+var ApiResource  = require('./ui/pages/api-resource');
 
 var Application = function(config) {
     this.dispatcher = dispatcher;

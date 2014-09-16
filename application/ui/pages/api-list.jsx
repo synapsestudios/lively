@@ -12,13 +12,11 @@ module.exports = React.createClass({
 
     componentWillMount : function()
     {
-        /*
         if (_.size(this.props.config.apis) === 1) {
-            dispatcher.emit('router:redirect', 'api-resource', {
+            dispatcher.emit('router:redirect', 'api-summary', {
                 apiSlug : _.keys(this.props.config.apis)[0]
             });
         }
-        */
     },
 
     componentDidMount : function()

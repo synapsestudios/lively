@@ -11,6 +11,8 @@ module.exports = React.createClass({
 
     render : function()
     {
+        var title = [this.props.config.name, 'Lively Docs'];
+        window.document.title = title.join(' | ');
         return (
             <div className='panel__wrapper'>
                 <div className='panel'>

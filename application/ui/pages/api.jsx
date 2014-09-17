@@ -9,7 +9,7 @@ var OAuthStore        = require('../../store/oauth2');
 var OAuthConnectPanel = require('../components/oauth');
 var MainNav           = require('../components/main-nav');
 var ResourcePage      = require('../components/resource');
-var NotFound          = require('./404');
+var NotFoundPage      = require('./404');
 var store             = require('store');
 var qs                = require('querystring');
 var url               = require('url');
@@ -100,7 +100,7 @@ module.exports = React.createClass({
     render : function()
     {
         if (_.isUndefined(this.config)) {
-            return (<NotFound />);
+            return (<NotFoundPage />);
         }
         else {
             return (

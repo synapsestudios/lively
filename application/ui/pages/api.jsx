@@ -4,10 +4,12 @@
 
 var _                 = require('underscore');
 var React             = require('react');
+var dispatcher        = require('synapse-common/lib/dispatcher');
 var OAuthStore        = require('../../store/oauth2');
 var OAuthConnectPanel = require('../components/oauth');
 var MainNav           = require('../components/main-nav');
 var ResourcePage      = require('../components/resource');
+var NotFound          = require('./404');
 var store             = require('store');
 var qs                = require('querystring');
 var url               = require('url');
@@ -25,6 +27,9 @@ module.exports = React.createClass({
         var options = store.get(this.props.params.apiSlug + '-client');
 
         this.config     = this.props.config.apis[this.props.params.apiSlug];
+        if (_.isUndefined(this.config)) {
+            return;
+        }
         this.oauthStore = new OAuthStore(this.props.params.apiSlug);
 
         if (this.props.query && this.props.query.access_token && options) {
@@ -51,6 +56,11 @@ module.exports = React.createClass({
 
     componentDidMount : function()
     {
+        if (_.isUndefined(this.config)) {
+            this.props.updateHeader();
+            return;
+        }
+
         var title = [this.config.name, 'Lively Docs'];
         window.document.title = title.join(' | ');
 
@@ -89,25 +99,30 @@ module.exports = React.createClass({
 
     render : function()
     {
-        return (
-            <div>
-                <OAuthConnectPanel
-                    stores={{oauth : this.oauthStore}}
-                    onOAuthStart={this.handleOAuthStart}
-                />
-                <MainNav
-                    config={this.config}
-                    logo={this.config.logo}
-                    name={this.config.name}
-                    stores={{oauth : this.oauthStore}}
-                    slug={this.props.params.apiSlug}
-                />
-                <this.props.activeRouteHandler
-                    config={this.props.config.apis[this.props.params.apiSlug]}
-                    stores={{oauth : this.oauthStore}}
-                />
-            </div>
-        );
+        if (_.isUndefined(this.config)) {
+            return <NotFound />
+        }
+        else {
+            return (
+                <div>
+                    <OAuthConnectPanel
+                        stores={{oauth : this.oauthStore}}
+                        onOAuthStart={this.handleOAuthStart}
+                    />
+                    <MainNav
+                        config={this.config}
+                        logo={this.config.logo}
+                        name={this.config.name}
+                        stores={{oauth : this.oauthStore}}
+                        slug={this.props.params.apiSlug}
+                    />
+                    <this.props.activeRouteHandler
+                        config={this.props.config.apis[this.props.params.apiSlug]}
+                        stores={{oauth : this.oauthStore}}
+                    />
+                </div>
+            );
+        }
     }
 
 });

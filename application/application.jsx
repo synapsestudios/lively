@@ -4,17 +4,18 @@
 var React        = require('react');
 window.React     = React; // react-router requires this
 
-var dispatcher   = require('synapse-common/lib/dispatcher');
-var Router       = require('react-router');
-var Route        = Router.Route;
-var Routes       = Router.Routes;
-var DefaultRoute = Router.DefaultRoute;
-
-var App          = require('./ui/pages/app');
-var ApiList      = require('./ui/pages/api-list');
-var Api          = require('./ui/pages/api');
-var ApiSummary   = require('./ui/pages/api-summary');
-var ApiResource  = require('./ui/pages/api-resource');
+var dispatcher    = require('synapse-common/lib/dispatcher');
+var Router        = require('react-router');
+var Route         = Router.Route;
+var Routes        = Router.Routes;
+var DefaultRoute  = Router.DefaultRoute;
+var NotFoundRoute = Router.NotFoundRoute;
+var NotFound      = require('./ui/pages/404');
+var App           = require('./ui/pages/app');
+var ApiList       = require('./ui/pages/api-list');
+var Api           = require('./ui/pages/api');
+var ApiSummary    = require('./ui/pages/api-summary');
+var ApiResource   = require('./ui/pages/api-resource');
 
 var Application = function(config) {
     this.dispatcher = dispatcher;
@@ -33,6 +34,7 @@ Application.prototype.start = function() {
                 </Route>
                 <Route name='api-oauth-callback' path='oauth2/callback/:apiSlug' handler={ApiSummary} config={this.config} />
                 <DefaultRoute name="api-list" handler={ApiList} config={this.config} />
+                <NotFoundRoute name="not-found" handler={NotFound}/>
             </Route>
         </Routes>
     );

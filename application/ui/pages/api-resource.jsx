@@ -41,7 +41,7 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var title, resource;
+        var title, resource, resourceComponent;
 
         title = [this.props.config.name, 'Lively Docs'];
 
@@ -55,6 +55,20 @@ module.exports = React.createClass({
             if (resource) {
                 title.unshift(resource.name);
                 this.resource = resource;
+                resourceComponent = (
+                    <Resource name={this.resource.name}
+                        synopsis={this.resource.synopsis}
+                        methods={this.resource.methods}
+                        oauthStore={this.props.stores.oauth}
+                    />
+                );
+            }
+            else {
+                resourceComponent = (
+                    <div className='panel'>
+                        <h1>404 Not Found</h1>
+                    </div>
+                );
             }
         }
 
@@ -62,11 +76,7 @@ module.exports = React.createClass({
 
         return (
             <div className='panel__wrapper'>
-                <Resource name={this.resource.name}
-                    synopsis={this.resource.synopsis}
-                    methods={this.resource.methods}
-                    oauthStore={this.props.stores.oauth}
-                />
+                {resourceComponent}
             </div>
         );
     }

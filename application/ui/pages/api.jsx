@@ -100,7 +100,7 @@ module.exports = React.createClass({
     render : function()
     {
         if (_.isUndefined(this.config)) {
-            return <NotFound />
+            return (<NotFound />);
         }
         else {
             return (

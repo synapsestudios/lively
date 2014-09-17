@@ -43,8 +43,7 @@ module.exports = React.createClass({
 
             if (_.size(this.props.config.apis) === 1) {
                 heading = (<Link to='api' params={linkParams} className='header__api-link header__api-link'>{logo}{this.state.apiName}</Link>);
-            }
-            else {
+            } else {
                 backButton = (<Link to='api-list' className='header__back-button'>&#xf104;</Link>);
                 heading    = (<Link to='api' params={linkParams} className='header__api-link header__api-link--no-margin'>{logo}{this.state.apiName}</Link>);
             }

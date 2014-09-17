@@ -55,11 +55,10 @@ module.exports = React.createClass({
         if (resource) {
             title.unshift(resource.name);
             window.document.title = title.join(' | ');
-            this.resource = resource;
             resourceComponent = (
-                <Resource name={this.resource.name}
-                    synopsis={this.resource.synopsis}
-                    methods={this.resource.methods}
+                <Resource name={resource.name}
+                    synopsis={resource.synopsis}
+                    methods={resource.methods}
                     oauthStore={this.props.stores.oauth}
                 />
             );

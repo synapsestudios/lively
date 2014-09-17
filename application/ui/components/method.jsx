@@ -47,11 +47,12 @@ module.exports = React.createClass({
         };
     },
 
+    /**
+     * Uses a callback set in props to ask the parent component to toggle between expanded and collapsed
+     */
     toggleMethodPanel : function()
     {
-        this.setState({
-            methodPanelHidden : ! this.state.methodPanelHidden
-        });
+        this.props.toggleMethodPanel();
     },
 
     handleApiResponse : function(err, resp)
@@ -263,12 +264,12 @@ module.exports = React.createClass({
 
         var methodPanelClasses = cx({
             'method-panel'          : true,
-            'method-panel--hidden'  : this.state.methodPanelHidden
+            'method-panel--hidden'  : this.props.methodPanelHidden
         });
 
         var naviconButtonClasses = cx({
             'navicon-button' : true,
-            'open'           : ! this.state.methodPanelHidden
+            'open'           : ! this.props.methodPanelHidden
         });
 
         return (

@@ -144,10 +144,14 @@ module.exports = React.createClass({
             'fa-unlock-alt' : ! this.state.hasOAuth
         });
 
-
         return (
             <div className='main-nav__wrapper'>
-                <h3 className='main-nav__header'>API Resources<span className='o-auth__tooltip'><span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}></span></span></h3>
+                <h3 className='main-nav__header'>
+                    API Resources
+                    <span className='o-auth__tooltip'>
+                        <span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}></span>
+                    </span>
+                </h3>
                 <div className='main-nav'>
                     {this.buildNavList()}
                 </div>

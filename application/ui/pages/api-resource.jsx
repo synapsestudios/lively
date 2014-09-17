@@ -65,7 +65,8 @@ module.exports = React.createClass({
                 <Resource name={this.resource.name}
                     synopsis={this.resource.synopsis}
                     methods={this.resource.methods}
-                    oauthStore={this.props.stores.oauth} />
+                    oauthStore={this.props.stores.oauth}
+                />
             </div>
         );
     }

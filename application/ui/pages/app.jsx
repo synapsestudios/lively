@@ -10,11 +10,16 @@ var Link       = require('react-router').Link;
 module.exports = React.createClass({
     displayName : 'App',
 
+    propTypes : {
+        config : React.PropTypes.object.isRequired
+    },
+
     getInitialState : function()
     {
         return {
             apiName : null,
-            apiLogo : null
+            apiLogo : null,
+            apiSlug : null
         };
     },
 

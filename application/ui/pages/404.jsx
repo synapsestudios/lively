@@ -9,7 +9,11 @@ module.exports = React.createClass({
 
     render : function() {
         return (
-            <h1>404 Not Found</h1>
+            <div className='panel__wrapper panel__wrapper--full-width'>
+                <div className='panel'>
+                    <h1>404 Not Found</h1>
+                </div>
+            </div>
         );
     }
 });

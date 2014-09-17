@@ -13,7 +13,7 @@ module.exports = React.createClass({
     componentWillMount : function()
     {
         if (_.size(this.props.config.apis) === 1) {
-            dispatcher.emit('router:redirect', 'api', {
+            dispatcher.emit('router:redirect', 'api-summary', {
                 apiSlug : _.keys(this.props.config.apis)[0]
             });
         }
@@ -22,6 +22,7 @@ module.exports = React.createClass({
     componentDidMount : function()
     {
         window.document.title = 'Lively Docs';
+        this.props.updateHeader();
     },
 
     render : function()
@@ -45,15 +46,10 @@ module.exports = React.createClass({
         });
 
         return (
-            <div>
-                <header className='header'>
-                    <span className='header__branding'><img src="images/logos/livelydocs-logomark.png" alt="" /><span>{'Lively'}</span></span>
-                </header>
-                <div className='panel__wrapper panel__wrapper--full-width'>
-                    <div className='panel'>
-                        <h1>API List</h1>
-                        {links}
-                    </div>
+            <div className='panel__wrapper panel__wrapper--full-width'>
+                <div className='panel'>
+                    <h1>API List</h1>
+                    {links}
                 </div>
             </div>
         );

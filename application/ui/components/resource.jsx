@@ -96,6 +96,7 @@ module.exports = React.createClass({
     render : function()
     {
         var synopsis;
+        var resource;
 
         if (this.props.synopsis) {
             synopsis = (
@@ -110,7 +111,7 @@ module.exports = React.createClass({
                     <button onClick={this.handleExpandCollapseClick}>{(this.state.allExpanded) ? ('Collapse') : ('Expand')}</button>
                     {synopsis}
                 </div>
-                {this.props.methods.map(this.getMethodComponent)}
+                {_.map(this.props.methods, this.getMethodComponent)}
             </div>
         );
     }

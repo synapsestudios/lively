@@ -41,7 +41,6 @@ var GroupHeader = React.createClass({
         return (
             <div className={classes}>
                 <div className='main-nav__group-header' onClick={this.toggleNavCollapse}>
-
                     <span key={'c-'+this.slugify(this.props.categoryName)}
                         className='main-nav__group-title'
                         onClick={this.toggleNavCollapse}>
@@ -89,17 +88,19 @@ module.exports = React.createClass({
 
     navItemFromResource : function(resource, index)
     {
-        var navLinkClasses = cx({
-            'main-nav__link'         : true
-        });
+        var params, navLinkClasses;
+
+        params = {
+            apiSlug      : this.props.slug,
+            resourceSlug : this.slugify(resource.name)
+        };
 
         return (
             <li className='main-nav__item' key={'resource-' + index}>
                 <Link
                     to              = 'api-resource'
-                    apiSlug         = {this.props.slug}
-                    resourceSlug    = {this.slugify(resource.name)}
-                    className       = {navLinkClasses}
+                    params          = {params}
+                    className       = 'main-nav__link'
                     activeClassName = 'main-nav__link--active'>
                     {resource.name}
                 </Link>
@@ -115,14 +116,13 @@ module.exports = React.createClass({
     buildNestedNavList : function()
     {
         return _.flatten(_.map(this.props.config.resources, function(subResources, categoryName) {
-            var items = _.map(subResources, this.navItemFromResource, this);
-            var output=(
+            var items  = _.map(subResources, this.navItemFromResource, this);
+
+            return (
                 <GroupHeader categoryName={categoryName} onClick={this.onClick}>
                     {items}
                 </GroupHeader>
             );
-
-            return output;
         }, this));
     },
 
@@ -144,10 +144,14 @@ module.exports = React.createClass({
             'fa-unlock-alt' : ! this.state.hasOAuth
         });
 
-
         return (
             <div className='main-nav__wrapper'>
-                <h3 className='main-nav__header'>API Resources<span className='o-auth__tooltip'><span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}></span></span></h3>
+                <h3 className='main-nav__header'>
+                    API Resources
+                    <span className='o-auth__tooltip'>
+                        <span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}></span>
+                    </span>
+                </h3>
                 <div className='main-nav'>
                     {this.buildNavList()}
                 </div>

@@ -3,7 +3,6 @@
 
 var React  = require('react');
 var Method = require('./method');
-var marked = require('marked');
 var _      = require('underscore');
 
 module.exports = React.createClass({
@@ -96,7 +95,6 @@ module.exports = React.createClass({
     render : function()
     {
         var synopsis;
-        var resource;
 
         if (this.props.synopsis) {
             synopsis = (
@@ -108,7 +106,7 @@ module.exports = React.createClass({
             <div className='panel'>
                 <div className='panel__synopsis'>
                     <h1>{this.props.name}</h1>
-                    <button onClick={this.handleExpandCollapseClick}>{(this.state.allExpanded) ? ('Collapse') : ('Expand')}</button>
+                    <button className='button__toggle' onClick={this.handleExpandCollapseClick}>{(this.state.allExpanded) ? ('Collapse All') : ('Expand All')}</button>
                     {synopsis}
                 </div>
                 {_.map(this.props.methods, this.getMethodComponent)}

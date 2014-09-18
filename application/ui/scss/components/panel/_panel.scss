@@ -38,16 +38,6 @@
         padding          : rem-calc(20 20 30);
         overflow-x       : hidden;
         overflow-y       : scroll;
-
-        .panel__summary {
-            padding      : 0;
-
-            p {
-                margin   : 0;
-            }
-
-        }
-
     }
 
     &.oauth-panel {
@@ -72,9 +62,29 @@
 
     }
 
-    .panel__summary,
     .panel__synopsis {
-        padding          : rem-calc(0 20);
+        padding    : rem-calc(0 20 20);
+        min-height : rem-calc(81);
+
+        h1 {
+            float : left;
+            margin : 0;
+        }
+
+        .button__toggle {
+            float         : right;
+            margin        : 5px 0;
+            height        : 50px;
+            width         : 100px;
+            padding       : 0;
+            text-align    : center;
+            border-radius : 2px;
+        }
+
+        div {
+            clear : both;
+        }
+
     }
 
     .panel__header {
@@ -171,12 +181,13 @@
 }
 
 .method-panel {
-    max-height           : 3000px;
+    max-height : 3000px;
+    margin-top : 20px;
     @include transition(all 500ms ease-in-out);
 
     &.method-panel--hidden {
-        max-height       : 0px;
-        overflow         : hidden;
+        max-height : 0px;
+        overflow   : hidden;
         @include transition(all 500ms cubic-bezier(.05, .71, .12, .98));
     }
 

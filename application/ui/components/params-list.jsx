@@ -152,7 +152,7 @@ module.exports = React.createClass({
         return (
             <tr key={key}>
                 <td colSpan={4}>
-                    <table>
+                    <table className='table__hash'>
                         {removalButton}
                         {renderedParams}
                     </table>

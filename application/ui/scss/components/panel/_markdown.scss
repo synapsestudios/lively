@@ -1,5 +1,11 @@
 .panel__synopsis {
-    padding              : rem-calc(20);
+    padding : rem-calc(20);
+    opacity : 1;
+    @include transition(opacity 200ms ease-in-out 300ms);
+
+    .method-panel--hidden & {
+        opacity : 0;
+    }
 
     h2,
     h3 {

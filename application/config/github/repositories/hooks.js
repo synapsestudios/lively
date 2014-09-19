@@ -76,8 +76,8 @@ module.exports = {
                 {
                     name         : 'events',
                     required     : false,
-                    defaultValue : '["push"]',
-                    type         : 'array',
+                    defaultValue : ["push"],
+                    type         : 'array[string]',
                     location     : 'body',
                     description  : 'Determines what events the hook is triggered for.'
                 },

@@ -191,4 +191,10 @@
         @include transition(all 500ms cubic-bezier(.05, .71, .12, .98));
     }
 
+    .panel__synopsis {
+        min-height : 0;
+        padding    : rem-calc(0 0 20);
+        @include transition(all 500ms ease-in-out);
+    }
+
 }

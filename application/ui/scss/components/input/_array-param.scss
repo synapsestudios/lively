@@ -1,11 +1,9 @@
-.field-button--remove {
-    display              : inline;
-    height               : rem-calc(30);
-    width                : rem-calc(30);
-    padding              : rem-calc(5 10);
-    border               : 0;
+.field-button--add {
+    display   : block;
+    max-width : rem-calc(200);
+    margin    : rem-calc(3 0);
+    border    : 0;
     @include user-select(none);
-
 
 
     &:hover {
@@ -15,11 +13,16 @@
 
 }
 
-.field-button--add {
-    margin-top           : 0;
-    border               : 0;
+.field-button--remove {
+    display   : inline;
+    float     : left;
+    height    : rem-calc(30);
+    width     : rem-calc(30);
+    min-width : rem-calc(30);
+    margin    : rem-calc(3 0 8);
+    padding   : rem-calc(5 10);
+    border    : 0;
     @include user-select(none);
-
 
     &:hover {
         background-color : rgba($black, .1);
@@ -29,22 +32,22 @@
 }
 
 .array-input {
-    width                : calc(100% - 35px);
-    margin-left          : rem-calc(5);
-    margin-bottom        : rem-calc(10);
-    margin-right         : 0;
+    width         : calc(100% - 35px);
+    margin-left   : rem-calc(5);
+    margin-bottom : rem-calc(10);
+    margin-right  : 0;
     @include user-select(none);
 }
 
 .array-title {
-    vertical-align       : top;
-    padding-top          : rem-calc(23);
+    vertical-align : top;
+    padding-top    : rem-calc(23);
 
     p {
-        margin-top       : 0;
+        margin-top : 0;
     }
 }
 
 .array-td {
-    padding-top          : rem-calc(23);
+    padding-top : rem-calc(23);
 }

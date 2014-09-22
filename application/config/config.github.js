@@ -25,9 +25,9 @@ module.exports = {
     'resources' : [
         require('./github/activity'),
         require('./github/gists'),
-        //require('./github/git_data'),
+        require('./github/git_data'),
         require('./github/issues'),
-        //require('./github/miscellaneous'),
+        require('./github/miscellaneous'),
         require('./github/organizations'),
         require('./github/pull_requests'),
         require('./github/repositories'),

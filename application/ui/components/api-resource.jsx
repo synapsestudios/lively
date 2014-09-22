@@ -68,13 +68,14 @@ module.exports = React.createClass({
             });
 
             if (! _.isUndefined(resource) ) {
+                title.unshift(resource.name);
+                window.document.title = title.join(' | ');
                 resources = resource.resources;
             }
         }
 
         if (resource) {
-            title.unshift(resource.name);
-            window.document.title = title.join(' | ');
+
             resourceComponent = (
                 <Resource name={resource.name}
                     synopsis={resource.synopsis}

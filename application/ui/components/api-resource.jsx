@@ -41,15 +41,35 @@ module.exports = React.createClass({
 
     renderResourceComponent : function()
     {
-        var resource, resourceComponent, title;
+        var component, splat, resources, resource, resourceComponent, title;
 
         title = [this.props.config.name, 'Lively Docs'];
         window.document.title = title.join(' | ');
 
-        if (_.isArray(this.props.config.resources)) {
-            resource = _.find(this.props.config.resources, this.findResource, this);
-        } else {
-            resource = _.find(this.getFlatResources(this.props.config.resources), this.findResource, this);
+        component = this;
+        splat = this.props.params.splat.split('/');
+        resources = this.props.config.resources;
+
+        for (var i = 0; i < splat.length; i++) {
+            resource = _.find(resources, function(resource) {
+                var slug;
+
+                if (_.isUndefined(resource.slug)) {
+                    slug = component.slugify(resource.name);
+                } else {
+                    slug = resource.slug;
+                }
+
+                if (slug == splat[i]) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+
+            if (! _.isUndefined(resource) ) {
+                resources = resource.resources;
+            }
         }
 
         if (resource) {

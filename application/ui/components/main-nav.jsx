@@ -18,13 +18,6 @@ var GroupHeader = React.createClass({
         };
     },
 
-    slugify : function(text)
-    {
-        return text.toLowerCase()
-            .replace(/ /g, '-')
-            .replace(/[^\w-]+/g, '');
-    },
-
     toggleNavCollapse : function() {
         this.setState({
             collapse : ! this.state.collapse
@@ -38,18 +31,25 @@ var GroupHeader = React.createClass({
             'main-nav__group--collapse' : this.state.collapse
         });
 
+        var params = {
+            apiSlug      : this.props.apiSlug,
+            splat        : this.props.categorySlug
+        };
+
         return (
             <div className={classes}>
-                <div className='main-nav__group-header' onClick={this.toggleNavCollapse}>
-                    <span key={'c-'+this.slugify(this.props.categoryName)}
-                        className='main-nav__group-title'
-                        onClick={this.toggleNavCollapse}>
-                        {this.props.categoryName}
+                <div className='main-nav__group-header'>
+                    <span className='main-nav__group-title'>
+                        <Link
+                            to              = 'api-resource'
+                            params          = {params}
+                            className       = 'main-nav__link'
+                            activeClassName = 'main-nav__link--active'>
+                            {this.props.categoryName}
+                        </Link>
                     </span>
                 </div>
-                <ul>
-                    {this.props.children}
-                </ul>
+                {this.props.children}
             </div>
         );
     }
@@ -86,17 +86,23 @@ module.exports = React.createClass({
             .replace(/[^\w-]+/g, '');
     },
 
-    navItemFromResource : function(resource, index)
+    navItemFromResource : function(resource, index, currentPath)
     {
-        var params, navLinkClasses;
+        var params, navLinkClasses, slug;
+
+        if (_.isUndefined(resource.slug)) {
+            slug = this.slugify(resource.name);
+        } else {
+            slug = resource.slug;
+        }
 
         params = {
             apiSlug      : this.props.slug,
-            resourceSlug : this.slugify(resource.name)
+            splat        : currentPath + '/' + slug
         };
 
         return (
-            <li className='main-nav__item' key={'resource-' + index}>
+            <li className='main-nav__item' key={'resource-' + currentPath.replace('/', '-') + '-' + index}>
                 <Link
                     to              = 'api-resource'
                     params          = {params}
@@ -108,31 +114,62 @@ module.exports = React.createClass({
         );
     },
 
-    buildFlatNavList : function()
+    buildNavList : function(resources, currentPath)
     {
-        return _.map(this.props.config.resources, this.navItemFromResource, this);
+        if (! resources) {
+            return;
+        }
+
+        var items = [];
+        var component = this;
+
+        _.each(resources, function(resource, index) {
+            var childList, slug;
+
+            if (_.isUndefined(resource.slug)) {
+                slug = component.slugify(resource.name);
+            } else {
+                slug = resource.slug;
+            }
+
+            items.push(component.navItemFromResource(resource, index, currentPath));
+
+            childList = component.buildNavList(resource.resources, currentPath+'/'+slug);
+
+            if (childList) {
+                items.push((<li key={'resource-list-' + currentPath.replace('/', '-') + '-' + index}>{childList}</li>));
+            }
+        });
+
+        return (<ul>{items}</ul>);
     },
 
-    buildNestedNavList : function()
+    buildCategories : function(resources)
     {
-        return _.flatten(_.map(this.props.config.resources, function(subResources, categoryName) {
-            var items  = _.map(subResources, this.navItemFromResource, this);
+        if (! resources) {
+            return;
+        }
 
-            return (
-                <GroupHeader categoryName={categoryName} onClick={this.onClick}>
-                    {items}
+        var items = [];
+        var component = this;
+
+        _.each(resources, function(resource) {
+            var slug;
+            if (_.isUndefined(resource.slug)) {
+                slug = component.slugify(resource.name);
+            } else {
+                slug = resource.slug;
+            }
+            var subnav = component.buildNavList(resource.resources, slug);
+
+            items.push(
+                <GroupHeader categoryName={resource.name} categorySlug={slug} apiSlug={component.props.slug} key={'c-'+slug}>
+                    {subnav}
                 </GroupHeader>
             );
-        }, this));
-    },
+        });
 
-    buildNavList : function()
-    {
-        if (_.isArray(this.props.config.resources)) {
-            return this.buildFlatNavList();
-        } else {
-            return this.buildNestedNavList();
-        }
+        return items;
     },
 
     render : function() {
@@ -147,13 +184,13 @@ module.exports = React.createClass({
         return (
             <div className='main-nav__wrapper'>
                 <h3 className='main-nav__header'>
-                    API Resources
+                    Documentation
                     <span className='o-auth__tooltip'>
                         <span className={oAuthLinkClasses} onClick={this.toggleOAuthPanel}></span>
                     </span>
                 </h3>
                 <div className='main-nav'>
-                    {this.buildNavList()}
+                    {this.buildCategories(this.props.config.resources)}
                 </div>
             </div>
         );

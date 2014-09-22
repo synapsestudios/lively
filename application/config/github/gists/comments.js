@@ -17,7 +17,7 @@ var paramId = {
 };
 
 module.exports = {
-    name     : 'Gist Comments',
+    name     : 'Comments',
     methods : [
         {
             name     : 'List comments on a gist',

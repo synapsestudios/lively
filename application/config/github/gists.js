@@ -218,5 +218,8 @@ module.exports = {
                 paramId
             ]
         }
+    ],
+    resources : [
+        require('./gists/comments')
     ]
 };

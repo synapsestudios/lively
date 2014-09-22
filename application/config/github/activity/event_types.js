@@ -6,6 +6,7 @@ var eventTypesSummary = fs.readFileSync(__dirname + '/event-types-summary.md').t
 
 module.exports = {
     name     : 'Event Types & Payloads',
+    slug     : 'event-types',
     synopsis : marked(eventTypesSummary),
-    methods : []
+    methods  : []
 };

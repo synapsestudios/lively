@@ -532,5 +532,19 @@ module.exports = {
                 paramRepo
             ]
         }
+    ],
+    resources : [
+        require('./repositories/collaborators'),
+        require('./repositories/comments'),
+        require('./repositories/commits'),
+        require('./repositories/contents'),
+        require('./repositories/deploy_keys'),
+        require('./repositories/forks'),
+        require('./repositories/hooks'),
+        require('./repositories/merging'),
+        require('./repositories/pages'),
+        require('./repositories/releases'),
+        require('./repositories/statistics'),
+        require('./repositories/statuses'),
     ]
 };

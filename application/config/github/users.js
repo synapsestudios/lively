@@ -101,5 +101,10 @@ module.exports = {
                 }
             ]
         }
+    ],
+    resources : [
+        require('./users/emails'),
+        require('./users/followers'),
+        require('./users/public_keys')
     ]
 };

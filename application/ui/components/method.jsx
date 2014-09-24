@@ -54,7 +54,6 @@ module.exports = React.createClass({
     {
         this.props.toggleMethodPanel();
         if(this.props.methodPanelHidden) {
-            console.log(this.refs)
             window.scrollTo(0, window.scrollY + this.refs.methodPanel.getDOMNode().getBoundingClientRect().top);
         }
     },

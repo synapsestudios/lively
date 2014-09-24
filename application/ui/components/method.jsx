@@ -53,6 +53,10 @@ module.exports = React.createClass({
     toggleMethodPanel : function()
     {
         this.props.toggleMethodPanel();
+        if(this.props.methodPanelHidden) {
+            console.log(this.refs)
+            window.scrollTo(0, window.scrollY + this.refs.methodPanel.getDOMNode().getBoundingClientRect().top);
+        }
     },
 
     handleApiResponse : function(err, resp)
@@ -273,7 +277,7 @@ module.exports = React.createClass({
         });
 
         return (
-            <div className='panel-section'>
+            <div className='panel-section' ref='methodPanel'>
                 <div className={panelHeaderClasses} onClick={this.toggleMethodPanel}>
                     <h2>
                         <span>{this.props.method}</span>

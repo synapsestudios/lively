@@ -32,8 +32,8 @@ var GroupHeader = React.createClass({
         });
 
         var params = {
-            apiSlug      : this.props.apiSlug,
-            splat        : this.props.categorySlug
+            apiSlug : this.props.apiSlug,
+            splat   : this.props.categorySlug
         };
 
         return (
@@ -124,12 +124,11 @@ module.exports = React.createClass({
         var component = this;
 
         _.each(resources, function(resource, index) {
-            var childList, slug;
+            var childList;
+            var slug = resource.slug;
 
-            if (_.isUndefined(resource.slug)) {
+            if (_.isUndefined(slug)) {
                 slug = component.slugify(resource.name);
-            } else {
-                slug = resource.slug;
             }
 
             items.push(component.navItemFromResource(resource, index, currentPath));
@@ -150,15 +149,13 @@ module.exports = React.createClass({
             return;
         }
 
-        var items = [];
+        var items     = [];
         var component = this;
 
         _.each(resources, function(resource) {
-            var slug;
-            if (_.isUndefined(resource.slug)) {
+            var slug = resource.slug;
+            if (_.isUndefined(slug)) {
                 slug = component.slugify(resource.name);
-            } else {
-                slug = resource.slug;
             }
             var subnav = component.buildNavList(resource.resources, slug);
 

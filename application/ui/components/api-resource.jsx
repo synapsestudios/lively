@@ -21,50 +21,22 @@ module.exports = React.createClass({
             .replace(/[^\w-]+/g, '');
     },
 
-    findResource : function(resource)
+    getResourceConfigFromSplat : function(splat, resources)
     {
-        if (this.slugify(resource.name) === this.props.params.resourceSlug) {
-            return true;
-        }
-    },
-
-    getFlatResources : function(categories)
-    {
-        var resources = [];
-
-        _.each(categories, function(category) {
-            resources = resources.concat(category);
-        });
-
-        return resources;
-    },
-
-    renderResourceComponent : function()
-    {
-        var component, splat, resources, resource, resourceComponent, title;
-
-        title = [this.props.config.name, 'Lively Docs'];
+        var resource;
+        var component = this;
+        var title     = [this.props.config.name, 'Lively Docs'];
         window.document.title = title.join(' | ');
-
-        component = this;
-        splat = this.props.params.splat.split('/');
-        resources = this.props.config.resources;
 
         for (var i = 0; i < splat.length; i++) {
             resource = _.find(resources, function(resource) {
-                var slug;
+                var slug = resource.slug;
 
-                if (_.isUndefined(resource.slug)) {
+                if (_.isUndefined(slug)) {
                     slug = component.slugify(resource.name);
-                } else {
-                    slug = resource.slug;
                 }
 
-                if (slug == splat[i]) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return slug === splat[i];
             });
 
             if (! _.isUndefined(resource) ) {
@@ -74,8 +46,18 @@ module.exports = React.createClass({
             }
         }
 
-        if (resource) {
+        return resource;
+    },
 
+    renderResourceComponent : function()
+    {
+        var component, splat, resource, resourceComponent;
+
+        component = this;
+        splat     = this.props.params.splat.split('/');
+        resource  = this.getResourceConfigFromSplat(splat, this.props.config.resources);
+
+        if (resource) {
             resourceComponent = (
                 <Resource name={resource.name}
                     synopsis={resource.synopsis}

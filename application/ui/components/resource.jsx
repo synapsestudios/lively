@@ -92,6 +92,16 @@ module.exports = React.createClass({
         });
     },
 
+    renderExpandCollapseButton : function() {
+        if (this.props.methods.length > 1) {
+            return (
+                <button className='button__toggle' onClick={this.handleExpandCollapseClick}>
+                    {(this.state.allExpanded) ? ('Collapse All') : ('Expand All')}
+                </button>
+            );
+        }
+    },
+
     render : function()
     {
         var synopsis;
@@ -106,7 +116,7 @@ module.exports = React.createClass({
             <div className='panel'>
                 <div className='panel__synopsis'>
                     <h1>{this.props.name}</h1>
-                    <button className='button__toggle' onClick={this.handleExpandCollapseClick}>{(this.state.allExpanded) ? ('Collapse All') : ('Expand All')}</button>
+                    {this.renderExpandCollapseButton()}
                     {synopsis}
                 </div>
                 {_.map(this.props.methods, this.getMethodComponent)}

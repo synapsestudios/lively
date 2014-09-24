@@ -19,7 +19,7 @@ module.exports = {
 
         return [
             isArray ? 'Array of ' : null,
-            <code>{type}</code>,
+            <code key='param-array-type'>{type}</code>,
             isArray ? ' elements' : null
         ];
     },

@@ -190,7 +190,7 @@ module.exports = React.createClass({
         addHandler = _.partial(this.handleAddField, path, param);
 
         inputs.push(
-            <a className='button field-button--add' onClick={addHandler}>{'+ Add Field'}</a>
+            <a className='button field-button--add' key='field-button-add' onClick={addHandler}>{'+ Add Field'}</a>
         );
 
         if (type === 'hash') {
@@ -248,7 +248,7 @@ module.exports = React.createClass({
         };
 
         return (
-            <a className='button field-button--remove' onClick={callback}>
+            <a className='button field-button--remove' key='field-button-remove' onClick={callback}>
                 –
             </a>
         );

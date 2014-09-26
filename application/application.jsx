@@ -32,7 +32,7 @@ Application.prototype.start = function() {
         <Routes location='history'>
             <Route name='app' path='/' handler={App} config={this.config}>
                 <Route name='api' path=':apiSlug' handler={ApiPage} config={this.config}>
-                    <Route name='api-resource' path=':resourceSlug' handler={ApiResource} config={this.config} />
+                    <Route name='api-resource' path='*' handler={ApiResource} config={this.config} />
                     <DefaultRoute name='api-summary' handler={ApiSummary} config={this.config} />
                 </Route>
                 <Route name='api-oauth-callback' path='oauth2/callback/:apiSlug' handler={ApiSummary} config={this.config} />

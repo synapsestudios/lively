@@ -55,7 +55,7 @@ module.exports = React.createClass({
                     {backButton}
                     {heading}
                     <span className='header__branding'>
-                        <img src="../images/logos/livelydocs-logomark.png" alt="" />
+                        <img src="/images/logos/livelydocs-logomark.png" alt="" />
                         <span className='powered-by'>powered by</span>
                         <span className='logo-type'>Lively</span>
                     </span>

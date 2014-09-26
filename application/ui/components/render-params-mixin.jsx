@@ -18,9 +18,9 @@ module.exports = {
         var isArray = ParamHelper.isArrayParam(type);
 
         return [
-            isArray ? 'Array of ' : null,
-            <code>{type}</code>,
-            isArray ? ' elements' : null
+            <span key='param-array-of'>{isArray ? 'Array of ' : null}</span>,
+            <code key='param-array-type'>{type}</code>,
+            <span key='param-array-elements'>{isArray ? ' elements' : null}</span>
         ];
     },
 

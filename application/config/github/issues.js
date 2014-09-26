@@ -320,5 +320,12 @@ module.exports = {
                 }
             ]
         }
+    ],
+    resources : [
+        require('./issues/assignees'),
+        require('./issues/comments'),
+        require('./issues/events'),
+        require('./issues/labels'),
+        require('./issues/milestones')
     ]
 };

@@ -277,5 +277,8 @@ module.exports = {
                 }
             ]
         }
+    ],
+    resources : [
+        require('./pull_requests/review_comments')
     ]
 };

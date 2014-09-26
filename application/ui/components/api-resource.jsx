@@ -5,6 +5,7 @@ var _          = require('underscore');
 var React      = require('react');
 var dispatcher = require('synapse-common/lib/dispatcher');
 var Resource   = require('./resource');
+var slugifier  = require('../../util/slug-helper').getSlugFromResource;
 
 module.exports = React.createClass({
 
@@ -14,47 +15,39 @@ module.exports = React.createClass({
         config : React.PropTypes.object.isRequired
     },
 
-    slugify : function(text)
+    getResourceConfigFromSplat : function(splat, resources)
     {
-        return text.toLowerCase()
-            .replace(/ /g, '-')
-            .replace(/[^\w-]+/g, '');
-    },
+        var resource;
+        var component = this;
+        var title     = [this.props.config.name, 'Lively Docs'];
 
-    findResource : function(resource)
-    {
-        if (this.slugify(resource.name) === this.props.params.resourceSlug) {
-            return true;
+        for (var i = 0; i < splat.length; i++) {
+            resource = _.find(resources, function(resource) {
+                return slugifier(resource) === splat[i];
+            });
+
+            if (_.isUndefined(resource) ) {
+                return;
+            }
+
+            title.unshift(resource.name);
+            resources = resource.resources;
         }
-    },
 
-    getFlatResources : function(categories)
-    {
-        var resources = [];
-
-        _.each(categories, function(category) {
-            resources = resources.concat(category);
-        });
-
-        return resources;
+        resource.title = title.join(' | ');
+        return resource;
     },
 
     renderResourceComponent : function()
     {
-        var resource, resourceComponent, title;
+        var component, splat, resource, resourceComponent;
 
-        title = [this.props.config.name, 'Lively Docs'];
-        window.document.title = title.join(' | ');
-
-        if (_.isArray(this.props.config.resources)) {
-            resource = _.find(this.props.config.resources, this.findResource, this);
-        } else {
-            resource = _.find(this.getFlatResources(this.props.config.resources), this.findResource, this);
-        }
+        component = this;
+        splat     = this.props.params.splat.split('/');
+        resource  = this.getResourceConfigFromSplat(splat, this.props.config.resources);
 
         if (resource) {
-            title.unshift(resource.name);
-            window.document.title = title.join(' | ');
+            window.document.title = resource.title;
             resourceComponent = (
                 <Resource name={resource.name}
                     synopsis={resource.synopsis}

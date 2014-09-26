@@ -49,7 +49,7 @@ var paramParents = {
 };
 
 module.exports = {
-    name     : 'Git Data Commits',
+    name     : 'Commits',
     methods : [
         {
             name     : 'Get a Commit',

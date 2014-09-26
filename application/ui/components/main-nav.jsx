@@ -116,7 +116,7 @@ module.exports = React.createClass({
 
             items.push(component.navItemFromResource(resource, index, currentPath));
 
-            childList = component.buildNavList(resource.resources, currentPath + '/'+slug);
+            childList = component.buildNavList(resource.resources, currentPath + '/' + slug);
 
             if (childList) {
                 items.push(<li key={'resource-list-' + currentPath.replace('/', '-') + '-' + index}>{childList}</li>);

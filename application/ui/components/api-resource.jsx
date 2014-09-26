@@ -46,7 +46,7 @@ module.exports = React.createClass({
             resources = resource.resources;
         }
 
-        resource.title = title;
+        resource.title = title.join(' | ');
         return resource;
     },
 
@@ -59,7 +59,7 @@ module.exports = React.createClass({
         resource  = this.getResourceConfigFromSplat(splat, this.props.config.resources);
 
         if (resource) {
-            window.document.title = resource.title.join(' | ');
+            window.document.title = resource.title;
             resourceComponent = (
                 <Resource name={resource.name}
                     synopsis={resource.synopsis}

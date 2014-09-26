@@ -5,6 +5,7 @@ var _          = require('underscore');
 var React      = require('react');
 var dispatcher = require('synapse-common/lib/dispatcher');
 var Resource   = require('./resource');
+var slugifier  = require('../../util/slug-helper').getSlugFromResource;
 
 module.exports = React.createClass({
 
@@ -12,13 +13,6 @@ module.exports = React.createClass({
 
     propTypes : {
         config : React.PropTypes.object.isRequired
-    },
-
-    slugify : function(text)
-    {
-        return text.toLowerCase()
-            .replace(/ /g, '-')
-            .replace(/[^\w-]+/g, '');
     },
 
     getResourceConfigFromSplat : function(splat, resources)
@@ -29,13 +23,7 @@ module.exports = React.createClass({
 
         for (var i = 0; i < splat.length; i++) {
             resource = _.find(resources, function(resource) {
-                var slug = resource.slug;
-
-                if (_.isUndefined(slug)) {
-                    slug = component.slugify(resource.name);
-                }
-
-                return slug === splat[i];
+                return slugifier(resource) === splat[i];
             });
 
             if (_.isUndefined(resource) ) {

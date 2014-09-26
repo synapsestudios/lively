@@ -5,6 +5,7 @@ var _          = require('underscore');
 var React      = require('react');
 var cx         = require('react/lib/cx');
 var StoreWatch = require('synapse-common/ui/mixins/store-watch');
+var slugifier  = require('../../util/slug-helper').getSlugFromResource;
 var Link       = require('react-router').Link;
 var dispatcher = require('synapse-common/lib/dispatcher');
 
@@ -78,27 +79,13 @@ module.exports = React.createClass({
         dispatcher.emit('toggleOauthPanel');
     },
 
-
-    getSlugFromResource : function(resource)
-    {
-        var slug = resource.slug;
-
-        if (_.isUndefined(slug)) {
-            slug = resource.name.toLowerCase()
-                .replace(/ /g, '-')
-                .replace(/[^\w-]+/g, '');
-        }
-
-        return slug;
-    },
-
     navItemFromResource : function(resource, index, currentPath)
     {
         var params, navLinkClasses;
 
         params = {
             apiSlug : this.props.slug,
-            splat   : currentPath + '/' + this.getSlugFromResource(resource)
+            splat   : currentPath + '/' + slugifier(resource)
         };
 
         return (
@@ -125,11 +112,11 @@ module.exports = React.createClass({
 
         _.each(resources, function(resource, index) {
             var childList;
-            var slug = component.getSlugFromResource(resource);
+            var slug = slugifier(resource);
 
             items.push(component.navItemFromResource(resource, index, currentPath));
 
-            childList = component.buildNavList(resource.resources, currentPath+'/'+slug);
+            childList = component.buildNavList(resource.resources, currentPath + '/'+slug);
 
             if (childList) {
                 items.push(<li key={'resource-list-' + currentPath.replace('/', '-') + '-' + index}>{childList}</li>);
@@ -149,7 +136,7 @@ module.exports = React.createClass({
         var component = this;
 
         _.each(resources, function(resource) {
-            var slug = component.getSlugFromResource(resource);
+            var slug = slugifier(resource);
             var subnav = component.buildNavList(resource.resources, slug);
 
             items.push(

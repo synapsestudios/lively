@@ -79,26 +79,26 @@ module.exports = React.createClass({
     },
 
 
-    slugify : function(text)
+    getSlugFromResource : function(resource)
     {
-        return text.toLowerCase()
-            .replace(/ /g, '-')
-            .replace(/[^\w-]+/g, '');
+        var slug = resource.slug;
+
+        if (_.isUndefined(slug)) {
+            slug = resource.name.toLowerCase()
+                .replace(/ /g, '-')
+                .replace(/[^\w-]+/g, '');
+        }
+
+        return slug;
     },
 
     navItemFromResource : function(resource, index, currentPath)
     {
-        var params, navLinkClasses, slug;
-
-        if (_.isUndefined(resource.slug)) {
-            slug = this.slugify(resource.name);
-        } else {
-            slug = resource.slug;
-        }
+        var params, navLinkClasses;
 
         params = {
-            apiSlug      : this.props.slug,
-            splat        : currentPath + '/' + slug
+            apiSlug : this.props.slug,
+            splat   : currentPath + '/' + this.getSlugFromResource(resource)
         };
 
         return (
@@ -125,11 +125,7 @@ module.exports = React.createClass({
 
         _.each(resources, function(resource, index) {
             var childList;
-            var slug = resource.slug;
-
-            if (_.isUndefined(slug)) {
-                slug = component.slugify(resource.name);
-            }
+            var slug = component.getSlugFromResource(resource);
 
             items.push(component.navItemFromResource(resource, index, currentPath));
 
@@ -153,10 +149,7 @@ module.exports = React.createClass({
         var component = this;
 
         _.each(resources, function(resource) {
-            var slug = resource.slug;
-            if (_.isUndefined(slug)) {
-                slug = component.slugify(resource.name);
-            }
+            var slug = component.getSlugFromResource(resource);
             var subnav = component.buildNavList(resource.resources, slug);
 
             items.push(

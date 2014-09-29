@@ -33,11 +33,11 @@ The `lively` configuration block defines the app's behavior.
 
 #### apis
 
-The `apis` configuration block tells Lively where to find configuration files for the APIs you want to use with it. It requires a unique key and an API configuration object for each API, which is defined below. The recommended structure for these is to create folders in `application/config` for each API and use `require()` to include them.
+The `apis` configuration block tells Lively where to find configuration files for the APIs you want to use with it. The recommended structure for these is to create folders in `application/config` for each API and use `require()` to include them (see example above).
 
 ### API Configuration
 
-Lively can handle multiple APIs in one installation. Each API has a configuration that tells Lively how to make requests and what methods are available. An example of implementing an API configuration for GitHub is provided at `application/config/config.github.js`.
+Each API has a configuration that tells Lively how to make requests and what methods are available. An example of implementing an API configuration for GitHub is provided at `application/config/config.github.js`.
 
 ```
 {

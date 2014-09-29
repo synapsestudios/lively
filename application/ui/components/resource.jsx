@@ -32,6 +32,23 @@ module.exports = React.createClass({
         };
     },
 
+    /**
+     * Rebuilds state when new props are received
+     *
+     * @param  {Object} nextProps The incoming props
+     */
+    componentWillReceiveProps : function(nextProps)
+    {
+        var expanded = nextProps.methods.map(function() {
+            return false;
+        });
+
+        this.setState({
+            expanded    : expanded,
+            allExpanded : false
+        });
+    },
+
     getDefaultProps : function()
     {
         return {

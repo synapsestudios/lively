@@ -28,7 +28,7 @@ module.exports = (
     <Routes location='history'>
         <Route name='app' path='/' handler={App} config={config}>
             <Route name='api' path=':apiSlug' handler={ApiPage} config={config}>
-                <Route name='api-resource' path='*' handler={ApiResource} config={config} />
+                <Route name='api-resource' path='*' handler={ApiResource} config={config} flux={flux} />
                 <DefaultRoute name='api-summary' handler={ApiSummary} config={config} />
             </Route>
             <Route name='api-oauth-callback' path='oauth2/callback/:apiSlug' handler={ApiSummary} config={config} />

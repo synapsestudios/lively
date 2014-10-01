@@ -1,8 +1,9 @@
 /* global window */
 'use strict';
 
-var React  = require('react');
-var routes = require('./routes');
+var React    = require('react');
+window.React = React; // React Dev Tools requires this
+var routes   = require('./routes');
 
 React.initializeTouchEvents(true);
 

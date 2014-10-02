@@ -1,18 +1,19 @@
 /** @jsx React.DOM */
 'use strict';
 
-var _          = require('underscore');
-var React      = require('react');
-var cx         = require('react/lib/cx');
-var TextInput  = require('./input/text');
-var StoreWatch = require('synapse-common/ui/mixins/store-watch');
-var Events     = require('synapse-common/ui/mixins/events');
-var util       = require('util');
+var _              = require('underscore');
+var React          = require('react');
+var Fluxxor        = require("fluxxor");
+var FluxChildMixin = Fluxxor.FluxChildMixin(React);
+var cx             = require('react/lib/cx');
+var TextInput      = require('./input/text');
+var Events         = require('synapse-common/ui/mixins/events');
+var util           = require('util');
 
 module.exports = React.createClass({
 
     displayName : 'OAuthPanel',
-    mixins : [ StoreWatch, Events ],
+    mixins : [ Events, FluxChildMixin ],
     propTypes : {
         onOAuthStart : React.PropTypes.func.isRequired
     },
@@ -38,8 +39,8 @@ module.exports = React.createClass({
     getStateFromStores : function()
     {
         return {
-            hasOAuth         : (this.props.stores.oauth.accessToken !== null),
-            oauthData        : (this.props.stores.oauth),
+            hasOAuth         : (this.getFlux().stores.oauth2.accessToken !== null),
+            oauthData        : (this.getFlux().stores.oauth2),
             oAuthPanelHidden : true
         };
     },

@@ -1,13 +1,15 @@
 /** @jsx React.DOM */
 'use strict';
 
-var _          = require('underscore');
-var React      = require('react');
-var cx         = require('react/lib/cx');
-var StoreWatch = require('synapse-common/ui/mixins/store-watch');
-var slugifier  = require('../../util/slug-helper').getSlugFromResource;
-var Link       = require('react-router').Link;
-var dispatcher = require('synapse-common/lib/dispatcher');
+var _              = require('underscore');
+var React          = require('react');
+var Fluxxor        = require("fluxxor");
+var FluxChildMixin = Fluxxor.FluxChildMixin(React);
+var cx             = require('react/lib/cx');
+var StoreWatch     = require('synapse-common/ui/mixins/store-watch');
+var slugifier      = require('../../util/slug-helper').getSlugFromResource;
+var Link           = require('react-router').Link;
+var dispatcher     = require('synapse-common/lib/dispatcher');
 
 var GroupHeader = React.createClass({
     displayName : 'GroupHeader',
@@ -60,12 +62,13 @@ var GroupHeader = React.createClass({
 module.exports = React.createClass({
 
     displayName : 'MainNav',
-    mixins      : [ StoreWatch ],
+
+    mixins      : [ FluxChildMixin ],
 
     getStateFromStores : function()
     {
         return {
-            hasOAuth : (this.props.stores.oauth.accessToken !== null)
+            hasOAuth : (this.getFlux().stores.oauth2.accessToken !== null)
         };
     },
 

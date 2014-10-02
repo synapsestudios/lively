@@ -1,36 +1,33 @@
 /* global console */
 'use strict';
 
-var _            = require('underscore');
-var Extendable   = require('synapse-common/lib/extendable');
-var EventEmitter = require('events').EventEmitter;
-var store        = require('store');
-var http         = require('http');
-var https        = require('https');
-var url          = require('url');
+var _         = require('underscore');
+var store     = require('store');
+var http      = require('http');
+var https     = require('https');
+var url       = require('url');
+var constants = require('../constants');
+var actions   = require('../actions');
+var Fluxxor   = require('fluxxor');
 
-var Store = function() {};
-_.extend(Store.prototype, EventEmitter.prototype);
+module.exports = Fluxxor.createStore({
 
-Store.extend = Extendable.extend;
-
-module.exports = Store.extend({
-
-    namespace : null,
-
-    clientId     : null,
-    clientSecret : null,
-    hostname     : null,
-    port         : 80,
-    secure       : false,
-    tokenParam   : 'Bearer',
-    accessToken  : null,
-    tokenType    : null,
-    rawData      : null,
-
-    constructor : function(namespace)
+    initialize : function(options)
     {
-        this.namespace = namespace + '-';
+        this.namespace    = null;
+        this.clientId     = null;
+        this.clientSecret = null;
+        this.hostname     = null;
+        this.port         = 80;
+        this.secure       = false;
+        this.tokenParam   = 'Bearer';
+        this.accessToken  = null;
+        this.tokenType    = null;
+        this.rawData      = null;
+        this.loaded       = false;
+        this.error        = false;
+
+        this.namespace = options.namespace + '-';
         if (store.get(this.namespace + 'oauth')) {
             this.unserializeFromLocalStorage();
         }
@@ -38,143 +35,59 @@ module.exports = Store.extend({
         this.on('change', function() {
             this.serializeToLocalStorage();
         });
+
+        this.bindActions(
+            constants.OAUTH2_REQUEST, 'onRequest',
+            constants.OAUTH2_REQUEST_SUCCESS, 'onRequestSuccess',
+            constants.OAUTH2_REQUEST_FAILURE, 'onRequestFailure',
+            constants.OAUTH2_SET_OPTIONS, 'onSetOptions',
+            constants.OAUTH2_SET_TOKEN, 'onSetToken'
+        );
     },
 
-    setOptions : function(options)
+    onRequest : function()
     {
-        this.clientId     = options.clientId;
-        this.clientSecret = options.clientSecret;
-        this.hostname     = options.api.hostname;
-        this.port         = options.api.port || 80;
-        this.secure       = options.api.secure;
-        this.tokenParam   = options.oauth2.tokenParam;
+        this.loaded  = false;
+        this.rawData = null;
+        this.error   = false;
+
         this.emit('change');
     },
 
-    setToken : function(data)
+    onRequestSuccess : function(data)
+    {
+        this.loaded  = true;
+        this.rawData = data;
+
+        this.emit('change');
+    },
+
+    onRequestFailure : function()
+    {
+        this.error = true;
+
+        this.emit('change');
+    },
+
+    onSetOptions : function(data)
+    {
+        this.clientId     = data.clientId;
+        this.clientSecret = data.clientSecret;
+        this.hostname     = data.api.hostname;
+        this.port         = data.api.port;
+        this.secure       = data.api.secure;
+        this.tokenParam   = data.oauth2.tokenParam;
+
+        this.emit('change');
+    },
+
+    onSetToken : function(data)
     {
         this.accessToken = data.accessToken;
         this.tokenType   = data.tokenType;
         this.rawData     = data.rawData;
+
         this.emit('change');
-    },
-
-    _request : function(options, data, cb)
-    {
-        if (! _.isFunction(cb)) {
-            throw 'callback must be a function';
-        }
-
-        var httpLib = (this.secure === true) ? https : http;
-
-        var req = httpLib.request(options, function (res) {
-            var resText = '';
-
-            res.on('data', function(chunk) {
-                resText += chunk;
-
-                // Check for too much data from flood attack or faulty client
-                if (resText.length > 1e6) {
-                    resText = '';
-                    res.writeHead(413, {'Content-Type': 'text/plain'}).end();
-                    req.connection.destroy();
-                }
-            });
-
-            res.on('end', function() {
-                var json;
-                try {
-                    json = JSON.parse(resText);
-                } catch (e) {
-                    json = {};
-                }
-
-                cb(false, {
-                    data    : json,
-                    headers : req.xhr.getAllResponseHeaders(),
-                    status  : res.statusCode
-                });
-            });
-        });
-
-        req.on('error', function(e) {
-            console.log(e);
-            cb(e);
-        });
-
-        if (data) {
-            req.write(JSON.stringify(data));
-        }
-
-        req.end();
-
-        return {
-            uri     : req.uri,
-            data    : data,
-            headers : options.headers
-        };
-    },
-
-    oauthRequest : function(method, path, data, cb)
-    {
-        if (! this.accessToken) {
-            // Next tick because async callbacks should always be async
-            _.defer(function() {
-                cb('Missing access token for OAuth request');
-            });
-
-            return;
-        }
-
-        data.header = _.extend(data.header, {
-            Authorization : this.getAuthorizationHeader()
-        });
-
-        return this.request(method, path, data, cb);
-    },
-
-    /**
-     * Get the value of the Authorization header
-     *
-     * @return
-     */
-    getAuthorizationHeader: function()
-    {
-        return this.tokenParam + ' ' + (this.accessToken);
-    },
-
-    request : function(method, path, data, cb)
-    {
-        var headers = _.extend({
-            'Accept'       : 'application/json',
-            'Content-Type' : 'application/json'
-        }, data.header);
-
-        // @todo update where we send data.body to request() to make it always a string
-        // then we can remove the JSON.stringify from here and just do data.body.length
-        if (data && data.body) {
-            headers['Content-Length'] = JSON.stringify(data.body).length;
-        }
-
-        var urlParts = url.parse(path, true);
-        var query    = _.extend({}, urlParts.query, data.query);
-
-        var fixedPath = url.format({
-            pathname : urlParts.pathname,
-            query    : query,
-            hash     : urlParts.hash
-        });
-
-        var options = {
-            hostname        : this.hostname,
-            port            : this.port,
-            method          : method,
-            path            : fixedPath,
-            withCredentials : false,
-            headers         : headers
-        };
-
-        return this._request(options, data.body, cb);
     },
 
     serializeToLocalStorage : function()

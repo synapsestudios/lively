@@ -4,13 +4,11 @@
 var _          = require('underscore');
 var React      = require('react');
 var Fluxxor    = require("fluxxor");
-var FluxMixin  = Fluxxor.FluxMixin(React);
 var dispatcher = require('synapse-common/lib/dispatcher');
 var Resource   = require('./resource');
 var slugifier  = require('../../util/slug-helper').getSlugFromResource;
 
 module.exports = React.createClass({
-    mixins: [FluxMixin],
 
     displayName : 'ApiResource',
 
@@ -71,7 +69,6 @@ module.exports = React.createClass({
 
     render : function()
     {
-        console.log(this.getFlux());
         return (
             <div className='panel__wrapper'>
                 {this.renderResourceComponent()}

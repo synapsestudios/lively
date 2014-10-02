@@ -3,5 +3,5 @@
 var Oauth2Store = require('./store/oauth2');
 
 module.exports = {
-    Oauth2Store : new Oauth2Store(),
+    oauth2 : new Oauth2Store(),
 };

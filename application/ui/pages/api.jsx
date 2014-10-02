@@ -4,6 +4,8 @@
 
 var _                 = require('underscore');
 var React             = require('react');
+var Fluxxor           = require("fluxxor");
+var FluxMixin         = Fluxxor.FluxMixin(React);
 var dispatcher        = require('synapse-common/lib/dispatcher');
 var OAuthStore        = require('../../store/oauth2');
 var OAuthConnectPanel = require('../components/oauth');
@@ -15,6 +17,7 @@ var qs                = require('querystring');
 var url               = require('url');
 
 module.exports = React.createClass({
+    mixins: [FluxMixin],
 
     displayName : 'ApiPage',
 
@@ -26,28 +29,28 @@ module.exports = React.createClass({
     {
         var options = store.get(this.props.params.apiSlug + '-client');
 
-        this.config     = this.props.config.apis[this.props.params.apiSlug];
+        this.config = this.props.config.apis[this.props.params.apiSlug];
         if (_.isUndefined(this.config)) {
             return;
         }
-        this.oauthStore = new OAuthStore(this.props.params.apiSlug);
+        this.getFlux().stores.oauth2 = new OAuthStore({namespace: this.props.params.apiSlug});
 
         if (this.props.query && this.props.query.access_token && options) {
 
-            this.oauthStore.setOptions({
+            this.getFlux().actions.oauth2.setOptions({
                 clientId     : options.clientId,
                 clientSecret : options.clientSecret,
                 api          : this.config.api,
                 oauth2       : this.config.oauth2
             });
 
-            this.oauthStore.setToken({
+            this.getFlux().actions.oauth2.setToken({
                 accessToken : this.props.query.access_token,
                 tokenType   : this.props.query.token_type,
                 rawData     : this.props.query
             });
         } else {
-            this.oauthStore.setOptions({
+            this.getFlux().actions.oauth2.setOptions({
                 api          : this.config.api,
                 oauth2       : this.config.oauth2
             });

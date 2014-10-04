@@ -1,4 +1,5 @@
 'use strict';
+/* global console */
 
 var http  = require('http');
 var https = require('https');

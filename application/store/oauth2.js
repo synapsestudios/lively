@@ -1,4 +1,3 @@
-/* global console */
 'use strict';
 
 var _         = require('underscore');
@@ -20,10 +19,10 @@ module.exports = Fluxxor.createStore({
         }
 
         this.namespace   = null;
-        this.hostname   = options.api.hostname;
-        this.port       = options.api.port;
-        this.secure     = options.api.secure;
-        this.tokenParam = options.oauth2.tokenParam;
+        this.hostname    = options.api.hostname;
+        this.port        = options.api.port;
+        this.secure      = options.api.secure;
+        this.tokenParam  = options.oauth2.tokenParam;
         this.accessToken = null;
         this.tokenType   = null;
         this.tokenData   = null;

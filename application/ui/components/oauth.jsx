@@ -9,14 +9,15 @@ var cx             = require('react/lib/cx');
 var TextInput      = require('./input/text');
 var Events         = require('synapse-common/ui/mixins/events');
 var util           = require('util');
+var store          = require('store');
+var qs             = require('querystring');
+var url            = require('url');
 
 module.exports = React.createClass({
 
     displayName : 'OAuthPanel',
+
     mixins : [ Events, FluxChildMixin ],
-    propTypes : {
-        onOAuthStart : React.PropTypes.func.isRequired
-    },
 
     componentWillMount : function()
     {
@@ -29,11 +30,38 @@ module.exports = React.createClass({
 
     handleClick : function()
     {
-        this.props.onOAuthStart({
+        var options = {
             clientId     : this.state.clientId,
             clientSecret : this.state.clientSecret,
             scope        : this.state.scope
+        }
+
+        store.set(this.props.slug + '-client', options);
+
+        var redirectQs = qs.stringify({
+            'client_id'     : options.clientId,
+            'client_secret' : options.clientSecret,
+            'api'           : this.props.slug
         });
+
+        var redirectHost = this.props.config.lively.hostname + ':' + this.props.config.lively.port;
+
+        var redirectUrl = url.format({
+            protocol : this.props.config.apis[this.props.slug].oauth2.secure ? 'https' : 'http',
+            hostname : this.props.config.apis[this.props.slug].oauth2.hostname,
+            port     : this.props.config.apis[this.props.slug].oauth2.port,
+            pathname : this.props.config.apis[this.props.slug].oauth2.authorizeUrl,
+            query    : {
+                'client_id'     : options.clientId,
+                'client_secret' : options.clientSecret,
+                'response_type' : 'code',
+                'redirect_uri'  : 'http://' + redirectHost + '/oauth2-redirect?' + redirectQs,
+                'scope'         : options.scope,
+                'state'         : Math.random()
+            }
+        });
+
+        window.location = redirectUrl;
     },
 
     getStateFromStores : function()

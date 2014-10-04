@@ -9,7 +9,6 @@ var cx             = require('react/lib/cx');
 var TextInput      = require('./input/text');
 var Events         = require('synapse-common/ui/mixins/events');
 var util           = require('util');
-var store          = require('store');
 var qs             = require('querystring');
 var url            = require('url');
 
@@ -28,6 +27,10 @@ module.exports = React.createClass({
         }.bind(this));
     },
 
+    /**
+     * Forward browser to the OAuth2 server in the API config, which will redirect the user back
+     * with an authorization code for it to use to request the access token
+     */
     handleClick : function()
     {
         var options = {

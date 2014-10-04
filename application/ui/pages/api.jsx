@@ -12,7 +12,6 @@ var OAuthConnectPanel = require('../components/oauth');
 var MainNav           = require('../components/main-nav');
 var ResourcePage      = require('../components/resource');
 var NotFoundPage      = require('./404');
-var store             = require('store');
 
 module.exports = React.createClass({
     mixins : [FluxMixin],

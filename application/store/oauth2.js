@@ -9,6 +9,7 @@ var url       = require('url');
 var constants = require('../constants');
 var actions   = require('../actions');
 var Fluxxor   = require('fluxxor');
+var store     = require('store');
 
 module.exports = Fluxxor.createStore({
 

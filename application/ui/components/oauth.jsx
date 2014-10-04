@@ -36,8 +36,6 @@ module.exports = React.createClass({
             scope        : this.state.scope
         }
 
-        store.set(this.props.slug + '-client', options);
-
         var redirectQs = qs.stringify({
             'client_id'     : options.clientId,
             'client_secret' : options.clientSecret,

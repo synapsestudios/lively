@@ -25,19 +25,15 @@ module.exports = React.createClass({
 
     componentWillMount : function()
     {
-        var options = store.get(this.props.params.apiSlug + '-client');
-
         this.config = this.props.config.apis[this.props.params.apiSlug];
         if (_.isUndefined(this.config)) {
             return;
         }
         this.getFlux().stores.oauth2 = new OAuthStore({namespace: this.props.params.apiSlug});
 
-        if (this.props.query && this.props.query.access_token && options) {
+        if (this.props.query && this.props.query.access_token) {
 
             this.getFlux().actions.oauth2.setOptions({
-                clientId     : options.clientId,
-                clientSecret : options.clientSecret,
                 api          : this.config.api,
                 oauth2       : this.config.oauth2
             });

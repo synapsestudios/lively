@@ -118,5 +118,10 @@ module.exports = Fluxxor.createStore({
         this.accessToken  = data.accessToken;
         this.tokenType    = data.tokenType;
         this.rawData      = data.rawData;
-    }
+    },
+
+    getAuthorizationHeader : function()
+    {
+        return this.tokenParam + ' ' + (this.accessToken);
+    },
 });

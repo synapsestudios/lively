@@ -12,6 +12,7 @@ var Link           = require('react-router').Link;
 var dispatcher     = require('synapse-common/lib/dispatcher');
 
 var GroupHeader = React.createClass({
+
     displayName : 'GroupHeader',
 
     getInitialState : function()

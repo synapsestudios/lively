@@ -14,11 +14,15 @@ module.exports = Fluxxor.createStore({
 
     initialize : function(options)
     {
+        if (_.isUndefined(options.api) || _.isUndefined(options.namespace) || _.isUndefined(options.oauth2)) {
+            return;
+        }
+
         this.namespace   = null;
-        this.hostname    = null;
-        this.port        = 80;
-        this.secure      = false;
-        this.tokenParam  = 'Bearer';
+        this.hostname   = options.api.hostname;
+        this.port       = options.api.port;
+        this.secure     = options.api.secure;
+        this.tokenParam = options.oauth2.tokenParam;
         this.accessToken = null;
         this.tokenType   = null;
         this.tokenData   = null;
@@ -38,7 +42,6 @@ module.exports = Fluxxor.createStore({
             constants.OAUTH2_REQUEST, 'onRequest',
             constants.OAUTH2_REQUEST_SUCCESS, 'onRequestSuccess',
             constants.OAUTH2_REQUEST_FAILURE, 'onRequestFailure',
-            constants.OAUTH2_SET_OPTIONS, 'onSetOptions',
             constants.OAUTH2_SET_CLIENT_OPTIONS, 'onSetClientOptions',
             constants.OAUTH2_SET_TOKEN, 'onSetToken'
         );
@@ -62,16 +65,6 @@ module.exports = Fluxxor.createStore({
     onRequestFailure : function()
     {
         this.error = true;
-
-        this.emit('change');
-    },
-
-    onSetOptions : function(data)
-    {
-        this.hostname   = data.api.hostname;
-        this.port       = data.api.port;
-        this.secure     = data.api.secure;
-        this.tokenParam = data.oauth2.tokenParam;
 
         this.emit('change');
     },

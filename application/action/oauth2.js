@@ -5,11 +5,6 @@ var client = require('../client');
 
 module.exports = {
 
-    setOptions : function(data)
-    {
-        this.dispatch(constants.OAUTH2_SET_OPTIONS, data);
-    },
-
     setToken : function(data)
     {
         this.dispatch(constants.OAUTH2_SET_TOKEN, data);

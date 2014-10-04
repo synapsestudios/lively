@@ -29,24 +29,17 @@ module.exports = React.createClass({
         if (_.isUndefined(this.apiConfig)) {
             return;
         }
-        this.getFlux().stores.oauth2 = new OAuthStore({namespace: this.props.params.apiSlug});
+        this.getFlux().stores.oauth2 = new OAuthStore({
+            namespace : this.props.params.apiSlug,
+            api       : this.apiConfig.api,
+            oauth2    : this.apiConfig.oauth2
+        });
 
         if (this.props.query && this.props.query.access_token) {
-
-            this.getFlux().actions.oauth2.setOptions({
-                api    : this.apiConfig.api,
-                oauth2 : this.apiConfig.oauth2
-            });
-
             this.getFlux().actions.oauth2.setToken({
                 accessToken : this.props.query.access_token,
                 tokenType   : this.props.query.token_type,
                 tokenData   : this.props.query
-            });
-        } else {
-            this.getFlux().actions.oauth2.setOptions({
-                api    : this.apiConfig.api,
-                oauth2 : this.apiConfig.oauth2
             });
         }
     },

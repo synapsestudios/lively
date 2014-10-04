@@ -84,7 +84,6 @@ module.exports = React.createClass({
                uri               = {method.uri}
                oauth             = {method.oauth}
                params            = {method.params}
-               oauthStore        = {this.props.oauthStore}
                methodPanelHidden = {! this.state.expanded[id]}
                toggleMethodPanel = {_.partial(this.toggleDisplayMethod, id)}
             />

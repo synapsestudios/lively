@@ -171,7 +171,7 @@ module.exports = React.createClass({
                     </span>
                 </h3>
                 <div className='main-nav'>
-                    {this.buildCategories(this.props.config.resources)}
+                    {this.buildCategories(this.props.apiConfig.resources)}
                 </div>
             </div>
         );

@@ -43,6 +43,9 @@ module.exports = function(req, res) {
                     hostname = config.lively.hostname,
                     port     = config.lively.port;
 
+                json.client_id     = query.client_id;
+                json.client_secret = query.client_secret;
+
                 res.writeHead(302, {
                     Location : 'http://' + hostname + ':' + port + '/'+query.api + '?' + qs.stringify(json)
                 });

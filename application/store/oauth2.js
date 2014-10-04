@@ -14,18 +14,16 @@ module.exports = Fluxxor.createStore({
 
     initialize : function(options)
     {
-        this.namespace    = null;
-        this.clientId     = null;
-        this.clientSecret = null;
-        this.hostname     = null;
-        this.port         = 80;
-        this.secure       = false;
-        this.tokenParam   = 'Bearer';
-        this.accessToken  = null;
-        this.tokenType    = null;
-        this.rawData      = null;
-        this.loaded       = false;
-        this.error        = false;
+        this.namespace   = null;
+        this.hostname    = null;
+        this.port        = 80;
+        this.secure      = false;
+        this.tokenParam  = 'Bearer';
+        this.accessToken = null;
+        this.tokenType   = null;
+        this.tokenData   = null;
+        this.loaded      = false;
+        this.error       = false;
 
         this.namespace = options.namespace + '-';
         if (store.get(this.namespace + 'oauth')) {
@@ -41,23 +39,22 @@ module.exports = Fluxxor.createStore({
             constants.OAUTH2_REQUEST_SUCCESS, 'onRequestSuccess',
             constants.OAUTH2_REQUEST_FAILURE, 'onRequestFailure',
             constants.OAUTH2_SET_OPTIONS, 'onSetOptions',
+            constants.OAUTH2_SET_CLIENT_OPTIONS, 'onSetClientOptions',
             constants.OAUTH2_SET_TOKEN, 'onSetToken'
         );
     },
 
     onRequest : function()
     {
-        this.loaded  = false;
-        this.rawData = null;
-        this.error   = false;
+        this.loaded = false;
+        this.error  = false;
 
         this.emit('change');
     },
 
     onRequestSuccess : function(data)
     {
-        this.loaded  = true;
-        this.rawData = data;
+        this.loaded = true;
 
         this.emit('change');
     },
@@ -71,12 +68,10 @@ module.exports = Fluxxor.createStore({
 
     onSetOptions : function(data)
     {
-        this.clientId     = data.clientId;
-        this.clientSecret = data.clientSecret;
-        this.hostname     = data.api.hostname;
-        this.port         = data.api.port;
-        this.secure       = data.api.secure;
-        this.tokenParam   = data.oauth2.tokenParam;
+        this.hostname   = data.api.hostname;
+        this.port       = data.api.port;
+        this.secure     = data.api.secure;
+        this.tokenParam = data.oauth2.tokenParam;
 
         this.emit('change');
     },
@@ -85,7 +80,7 @@ module.exports = Fluxxor.createStore({
     {
         this.accessToken = data.accessToken;
         this.tokenType   = data.tokenType;
-        this.rawData     = data.rawData;
+        this.tokenData   = data.tokenData;
 
         this.emit('change');
     },
@@ -93,15 +88,13 @@ module.exports = Fluxxor.createStore({
     serializeToLocalStorage : function()
     {
         store.set(this.namespace + 'oauth', {
-            clientId     : this.clientId,
-            clientSecret : this.clientSecret,
             hostname     : this.hostname,
             port         : this.port,
             secure       : this.secure,
             tokenParam   : this.tokenParam,
             accessToken  : this.accessToken,
             tokenType    : this.tokenType,
-            rawData      : this.rawData
+            tokenData    : this.tokenData
         });
     },
 
@@ -109,15 +102,13 @@ module.exports = Fluxxor.createStore({
     {
         var data = store.get(this.namespace + 'oauth');
 
-        this.clientId     = data.clientId;
-        this.clientSecret = data.clientSecret;
-        this.hostname     = data.hostname;
-        this.port         = data.port;
-        this.secure       = data.secure;
-        this.tokenParam   = data.tokenParam;
-        this.accessToken  = data.accessToken;
-        this.tokenType    = data.tokenType;
-        this.rawData      = data.rawData;
+        this.hostname    = data.hostname;
+        this.port        = data.port;
+        this.secure      = data.secure;
+        this.tokenParam  = data.tokenParam;
+        this.accessToken = data.accessToken;
+        this.tokenType   = data.tokenType;
+        this.tokenData   = data.tokenData;
     },
 
     getAuthorizationHeader : function()

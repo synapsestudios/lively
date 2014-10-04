@@ -15,7 +15,7 @@ var NotFoundPage      = require('./404');
 var store             = require('store');
 
 module.exports = React.createClass({
-    mixins: [FluxMixin],
+    mixins : [FluxMixin],
 
     displayName : 'ApiPage',
 
@@ -25,8 +25,8 @@ module.exports = React.createClass({
 
     componentWillMount : function()
     {
-        this.config = this.props.config.apis[this.props.params.apiSlug];
-        if (_.isUndefined(this.config)) {
+        this.apiConfig = this.props.config.apis[this.props.params.apiSlug];
+        if (_.isUndefined(this.apiConfig)) {
             return;
         }
         this.getFlux().stores.oauth2 = new OAuthStore({namespace: this.props.params.apiSlug});
@@ -34,56 +34,53 @@ module.exports = React.createClass({
         if (this.props.query && this.props.query.access_token) {
 
             this.getFlux().actions.oauth2.setOptions({
-                api          : this.config.api,
-                oauth2       : this.config.oauth2
+                api    : this.apiConfig.api,
+                oauth2 : this.apiConfig.oauth2
             });
 
             this.getFlux().actions.oauth2.setToken({
                 accessToken : this.props.query.access_token,
                 tokenType   : this.props.query.token_type,
-                rawData     : this.props.query
+                tokenData   : this.props.query
             });
         } else {
             this.getFlux().actions.oauth2.setOptions({
-                api          : this.config.api,
-                oauth2       : this.config.oauth2
+                api    : this.apiConfig.api,
+                oauth2 : this.apiConfig.oauth2
             });
         }
     },
 
     componentDidMount : function()
     {
-        if (_.isUndefined(this.config)) {
+        if (_.isUndefined(this.apiConfig)) {
             this.props.updateHeader();
             return;
         }
 
-        var title = [this.config.name, 'Lively Docs'];
+        var title = [this.apiConfig.name, 'Lively Docs'];
         window.document.title = title.join(' | ');
 
-        this.props.updateHeader(this.config.name, this.config.logo, this.props.params.apiSlug);
+        this.props.updateHeader(this.apiConfig.name, this.apiConfig.logo, this.props.params.apiSlug);
     },
 
     render : function()
     {
-        if (_.isUndefined(this.config)) {
+        if (_.isUndefined(this.apiConfig)) {
             return (<NotFoundPage />);
         }
         else {
             return (
                 <div>
-                    <OAuthConnectPanel config={this.props.config} slug={this.props.params.apiSlug} />
-                    <MainNav
-                        config={this.config}
-                        logo={this.config.logo}
-                        name={this.config.name}
-                        stores={{oauth : this.oauthStore}}
+                    <OAuthConnectPanel
+                        config={this.props.config}
                         slug={this.props.params.apiSlug}
                     />
-                    <this.props.activeRouteHandler
-                        config={this.props.config.apis[this.props.params.apiSlug]}
-                        stores={{oauth : this.oauthStore}}
+                    <MainNav
+                        apiConfig={this.apiConfig}
+                        slug={this.props.params.apiSlug}
                     />
+                    <this.props.activeRouteHandler apiConfig={this.apiConfig} />
                 </div>
             );
         }

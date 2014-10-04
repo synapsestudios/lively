@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 'use strict';
 
 var Dispatcher    = require('synapse-common/lib/dispatcher');
@@ -25,14 +24,14 @@ Dispatcher.on('router:redirect', function(route, params) {
 });
 
 module.exports = (
-    <Routes location='history'>
-        <Route name='app' path='/' handler={App} config={config}>
-            <Route name='api' path=':apiSlug' handler={ApiPage} config={config} flux={flux}>
-                <Route name='api-resource' path='*' handler={ApiResource} config={config} />
-                <DefaultRoute name='api-summary' handler={ApiSummary} config={config} />
-            </Route>
-            <DefaultRoute name="api-list" handler={ApiListPage} config={config} />
-            <NotFoundRoute name="not-found" handler={NotFoundPage}/>
-        </Route>
-    </Routes>
+    Routes({location: "history"},
+        Route({name: "app", path: "/", handler: App, config: config},
+            Route({name: "api", path: ":apiSlug", handler: ApiPage, config: config, flux: flux},
+                Route({name: "api-resource", path: "*", handler: ApiResource, config: config}),
+                DefaultRoute({name: "api-summary", handler: ApiSummary, config: config})
+            ),
+            DefaultRoute({name: "api-list", handler: ApiListPage, config: config}),
+            NotFoundRoute({name: "not-found", handler: NotFoundPage})
+        )
+    )
 );

@@ -11,12 +11,12 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var title = [this.props.config.name, 'Lively Docs'];
+        var title = [this.props.apiConfig.name, 'Lively Docs'];
         window.document.title = title.join(' | ');
         return (
             <div className='panel__wrapper'>
                 <div className='panel'>
-                    <div className='panel__synopsis' dangerouslySetInnerHTML={{__html : this.props.config.summary}} />
+                    <div className='panel__synopsis' dangerouslySetInnerHTML={{__html : this.props.apiConfig.summary}} />
                 </div>
             </div>
         );

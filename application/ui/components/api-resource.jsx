@@ -13,14 +13,14 @@ module.exports = React.createClass({
     displayName : 'ApiResource',
 
     propTypes : {
-        config : React.PropTypes.object.isRequired
+        apiConfig : React.PropTypes.object.isRequired
     },
 
     getResourceConfigFromSplat : function(splat, resources)
     {
         var resource;
         var component = this;
-        var title     = [this.props.config.name, 'Lively Docs'];
+        var title     = [this.props.apiConfig.name, 'Lively Docs'];
 
         for (var i = 0; i < splat.length; i++) {
             resource = _.find(resources, function(resource) {
@@ -45,7 +45,7 @@ module.exports = React.createClass({
 
         component = this;
         splat     = this.props.params.splat.split('/');
-        resource  = this.getResourceConfigFromSplat(splat, this.props.config.resources);
+        resource  = this.getResourceConfigFromSplat(splat, this.props.apiConfig.resources);
 
         if (resource) {
             window.document.title = resource.title;
@@ -53,7 +53,6 @@ module.exports = React.createClass({
                 <Resource name={resource.name}
                     synopsis={resource.synopsis}
                     methods={resource.methods}
-                    oauthStore={this.props.stores.oauth}
                 />
             );
         } else {

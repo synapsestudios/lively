@@ -75,9 +75,15 @@ module.exports = React.createClass({
     {
         var initialState = this.getStateFromStores();
 
-        initialState.clientId     = null;
-        initialState.clientSecret = null;
-        initialState.scope        = null;
+        if (initialState.oauthData.tokenData === null) {
+            initialState.clientId     = null;
+            initialState.clientSecret = null;
+            initialState.scope        = null;
+        } else {
+            initialState.clientId     = initialState.oauthData.tokenData.client_id;
+            initialState.clientSecret = initialState.oauthData.tokenData.client_secret;
+            initialState.scope        = initialState.oauthData.tokenData.scope;
+        }
 
         return initialState;
     },
@@ -153,7 +159,7 @@ module.exports = React.createClass({
                             <pre>Access token: {this.state.oauthData.accessToken}</pre>
                         </div>
                         <div className='small-6 columns'>
-                            <pre>Token data: {util.inspect(this.state.oauthData.rawData)}</pre>
+                            <pre>Token data: {util.inspect(this.state.oauthData.tokenData)}</pre>
                         </div>
                     </div>
                 </div>

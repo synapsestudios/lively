@@ -31,7 +31,6 @@ module.exports = (
                 <Route name='api-resource' path='*' handler={ApiResource} config={config} />
                 <DefaultRoute name='api-summary' handler={ApiSummary} config={config} />
             </Route>
-            <Route name='api-oauth-callback' path='oauth2/callback/:apiSlug' handler={ApiSummary} config={config} />
             <DefaultRoute name="api-list" handler={ApiListPage} config={config} />
             <NotFoundRoute name="not-found" handler={NotFoundPage}/>
         </Route>

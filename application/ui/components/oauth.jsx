@@ -62,18 +62,13 @@ module.exports = React.createClass({
         window.location = redirectUrl;
     },
 
-    getStateFromStores : function()
+    getInitialState : function()
     {
-        return {
+        var initialState = {
             hasOAuth         : (this.getFlux().stores.oauth2.accessToken !== null),
             oauthData        : (this.getFlux().stores.oauth2),
             oAuthPanelHidden : true
         };
-    },
-
-    getInitialState : function()
-    {
-        var initialState = this.getStateFromStores();
 
         if (initialState.oauthData.tokenData === null) {
             initialState.clientId     = null;

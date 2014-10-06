@@ -1,6 +1,5 @@
 'use strict';
 
-var Dispatcher    = require('synapse-common/lib/dispatcher');
 var Router        = require('react-router');
 
 var Route         = Router.Route;
@@ -18,10 +17,6 @@ var ApiResource   = require('./ui/components/api-resource');
 
 var flux          = require('./flux');
 var config        = require('./config');
-
-Dispatcher.on('router:redirect', function(route, params) {
-    Router.transitionTo(route, params || {});
-});
 
 module.exports = (
     Routes({location: "history"},

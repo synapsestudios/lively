@@ -4,7 +4,7 @@
 
 var _                 = require('underscore');
 var React             = require('react');
-var Fluxxor           = require("fluxxor");
+var Fluxxor           = require('fluxxor');
 var FluxMixin         = Fluxxor.FluxMixin(React);
 var dispatcher        = require('synapse-common/lib/dispatcher');
 var OAuthStore        = require('../../store/oauth2');

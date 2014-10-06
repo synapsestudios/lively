@@ -4,7 +4,7 @@
 
 var _          = require('underscore');
 var React      = require('react');
-var Fluxxor    = require("fluxxor");
+var Fluxxor    = require('fluxxor');
 var dispatcher = require('synapse-common/lib/dispatcher');
 var Resource   = require('./resource');
 var slugifier  = require('../../util/slug-helper').getSlugFromResource;

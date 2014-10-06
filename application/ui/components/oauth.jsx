@@ -4,7 +4,7 @@
 
 var _              = require('underscore');
 var React          = require('react');
-var Fluxxor        = require("fluxxor");
+var Fluxxor        = require('fluxxor');
 var FluxChildMixin = Fluxxor.FluxChildMixin(React);
 var cx             = require('react/lib/cx');
 var TextInput      = require('./input/text');

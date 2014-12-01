@@ -6,13 +6,13 @@ var _                 = require('underscore');
 var React             = require('react');
 var Fluxxor           = require('fluxxor');
 var FluxMixin         = Fluxxor.FluxMixin(React);
-var OAuthStore        = require('../../store/oauth2');
+var StoreWatchMixin   = Fluxxor.StoreWatchMixin;
 var OAuthConnectPanel = require('../components/oauth');
 var MainNav           = require('../components/main-nav');
 var NotFoundPage      = require('./404');
 
 module.exports = React.createClass({
-    mixins : [FluxMixin],
+    mixins : [FluxMixin, StoreWatchMixin('OAuthStore')],
 
     displayName : 'ApiPage',
 
@@ -22,27 +22,29 @@ module.exports = React.createClass({
 
     componentWillMount : function()
     {
-        this.apiConfig = this.props.config.apis[this.props.params.apiSlug];
-        if (_.isUndefined(this.apiConfig)) {
-            return;
-        }
-        this.getFlux().stores.oauth2 = new OAuthStore({
-            namespace : this.props.params.apiSlug,
-            api       : this.apiConfig.api,
-            oauth2    : this.apiConfig.oauth2
-        });
+        // this.getFlux().actions.oauth.setApi(this.props.params.apiSlug);
+
+        // if (this.props.query && this.props.query.access_token) {
+        //     this.getFlux().actions.oauth.setToken({
+        //         accessToken : this.props.query.access_token,
+        //         tokenType   : this.props.query.token_type,
+        //         tokenData   : this.props.query
+        //     });
+        // }
+    },
+
+    componentDidMount : function()
+    {
+        this.getFlux().actions.oauth.setApi(this.props.params.apiSlug);
 
         if (this.props.query && this.props.query.access_token) {
-            this.getFlux().actions.oauth2.setToken({
+            this.getFlux().actions.oauth.setToken({
                 accessToken : this.props.query.access_token,
                 tokenType   : this.props.query.token_type,
                 tokenData   : this.props.query
             });
         }
-    },
 
-    componentDidMount : function()
-    {
         if (_.isUndefined(this.apiConfig)) {
             this.props.updateHeader();
             return;
@@ -54,23 +56,32 @@ module.exports = React.createClass({
         this.props.updateHeader(this.apiConfig.name, this.apiConfig.logo, this.props.params.apiSlug);
     },
 
+    getStateFromFlux : function()
+    {
+        return {
+            oauthStoreState : this.getFlux().store('OAuthStore').getState()
+        };
+    },
+
     render : function()
     {
-        if (_.isUndefined(this.apiConfig)) {
+        var apiConfig = this.state.oauthStoreState.api;
+
+        if (_.isUndefined(apiConfig)) {
             return (<NotFoundPage />);
         }
         else {
             return (
                 <div>
                     <OAuthConnectPanel
-                        config={this.props.config}
-                        slug={this.props.params.apiSlug}
+                        apiConfig = {apiConfig}
+                        slug      = {this.props.params.apiSlug}
                     />
                     <MainNav
-                        apiConfig={this.apiConfig}
-                        slug={this.props.params.apiSlug}
+                        apiConfig = {apiConfig}
+                        slug      = {this.props.params.apiSlug}
                     />
-                    <this.props.activeRouteHandler apiConfig={this.apiConfig} />
+                    <this.props.activeRouteHandler apiConfig={apiConfig} />
                 </div>
             );
         }

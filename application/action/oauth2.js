@@ -1,9 +1,15 @@
 'use strict';
 
+var _         = require('underscore');
 var constants = require('../constants');
-var client = require('../client');
+var url       = require('url');
 
 module.exports = {
+
+    setApi : function(apiSlug)
+    {
+        this.dispatch(constants.SET_API, apiSlug);
+    },
 
     setToken : function(data)
     {
@@ -60,6 +66,6 @@ module.exports = {
         };
 
         return this._request(options, data.body, cb);
-    },
+    }
 
 };

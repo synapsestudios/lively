@@ -6,11 +6,9 @@ var _                 = require('underscore');
 var React             = require('react');
 var Fluxxor           = require('fluxxor');
 var FluxMixin         = Fluxxor.FluxMixin(React);
-var dispatcher        = require('synapse-common/lib/dispatcher');
 var OAuthStore        = require('../../store/oauth2');
 var OAuthConnectPanel = require('../components/oauth');
 var MainNav           = require('../components/main-nav');
-var ResourcePage      = require('../components/resource');
 var NotFoundPage      = require('./404');
 
 module.exports = React.createClass({

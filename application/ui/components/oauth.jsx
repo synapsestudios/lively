@@ -38,7 +38,7 @@ module.exports = React.createClass({
             clientId     : this.state.clientId,
             clientSecret : this.state.clientSecret,
             scope        : this.state.scope
-        }
+        };
 
         var redirectQs = qs.stringify({
             'client_id'     : options.clientId,
@@ -46,7 +46,10 @@ module.exports = React.createClass({
             'api'           : this.props.slug
         });
 
-        var redirectHost = this.props.config.lively.hostname + ':' + this.props.config.lively.port;
+        var redirectHost = (
+            this.props.config.lively.hostname + ':' +
+            this.props.config.lively.port
+        );
 
         var redirectUrl = url.format({
             protocol : this.props.config.apis[this.props.slug].oauth2.secure ? 'https' : 'http',
@@ -74,7 +77,7 @@ module.exports = React.createClass({
             oAuthPanelHidden : true
         };
 
-        if (initialState.oauthData.tokenData === null) {
+        if (! initialState.oauthData.tokenData) {
             initialState.clientId     = null;
             initialState.clientSecret = null;
             initialState.scope        = null;

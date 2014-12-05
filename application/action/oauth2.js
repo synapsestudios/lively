@@ -1,65 +1,56 @@
 'use strict';
 
 var constants = require('../constants');
-var client = require('../client');
+var Client    = require('../client');
 
 module.exports = {
+
+    setApi : function(apiSlug)
+    {
+        this.dispatch(constants.SET_API, apiSlug);
+    },
 
     setToken : function(data)
     {
         this.dispatch(constants.OAUTH2_SET_TOKEN, data);
     },
 
-    oauth2Request : function(method, path, data, cb)
+    oauthRequest : function(apiName, accessToken, method, path, data)
     {
-        if (! this.accessToken) {
-            // Next tick because async callbacks should always be async
-            _.defer(function() {
-                cb('Missing access token for OAuth request');
+        var client, flux = this;
+
+        if (! accessToken) {
+            return this.dispatch(constants.OAUTH_REQUEST_FAILURE);
+        }
+
+        client = new Client(apiName);
+
+        flux.dispatch(constants.OAUTH_REQUEST);
+
+        client.authRequest(accessToken, method, path, data)
+            .then(function() {
+                flux.dispatch(constants.OAUTH_REQUEST_SUCCESS);
+            })
+            .fail(function() {
+                flux.dispatch(constants.OAUTH_REQUEST_FAILURE);
             });
-
-            return;
-        }
-
-        data.header = _.extend(data.header, {
-            Authorization : this.getAuthorizationHeader()
-        });
-
-        return this.request(method, path, data, cb);
     },
 
-    request : function(method, path, data, cb)
+    request : function(apiName, method, path, data)
     {
-        var headers = _.extend({
-            'Accept'       : 'application/json',
-            'Content-Type' : 'application/json'
-        }, data.header);
+        var client, flux = this;
 
-        // @todo update where we send data.body to request() to make it always a string
-        // then we can remove the JSON.stringify from here and just do data.body.length
-        if (data && data.body) {
-            headers['Content-Length'] = JSON.stringify(data.body).length;
-        }
+        client = new Client(apiName);
 
-        var urlParts = url.parse(path, true);
-        var query    = _.extend({}, urlParts.query, data.query);
+        flux.dispatch(constants.OAUTH_REQUEST);
 
-        var fixedPath = url.format({
-            pathname : urlParts.pathname,
-            query    : query,
-            hash     : urlParts.hash
-        });
-
-        var options = {
-            hostname        : this.hostname,
-            port            : this.port,
-            method          : method,
-            path            : fixedPath,
-            withCredentials : false,
-            headers         : headers
-        };
-
-        return this._request(options, data.body, cb);
-    },
+        client.request(method, path, data)
+            .then(function() {
+                flux.dispatch(constants.OAUTH_REQUEST_SUCCESS);
+            })
+            .fail(function() {
+                flux.dispatch(constants.OAUTH_REQUEST_FAILURE);
+            });
+    }
 
 };

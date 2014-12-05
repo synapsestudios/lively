@@ -1,64 +1,54 @@
 'use strict';
-/* global console */
 
-var http  = require('http');
-var https = require('https');
-var url   = require('url');
+var HttpGateway = require('synapse-common/http/gateway');
+var config      = require('./config');
+var _           = require('underscore');
 
-module.exports = {
-    _request : function(options, data, cb)
+module.exports = HttpGateway.extend({
+
+    constructor : function(namespace)
     {
-        if (! _.isFunction(cb)) {
-            throw 'callback must be a function';
-        }
-
-        var httpLib = (this.secure === true) ? https : http;
-
-        var req = httpLib.request(options, function (res) {
-            var resText = '';
-
-            res.on('data', function(chunk) {
-                resText += chunk;
-
-                // Check for too much data from flood attack or faulty client
-                if (resText.length > 1e6) {
-                    resText = '';
-                    res.writeHead(413, {'Content-Type': 'text/plain'}).end();
-                    req.connection.destroy();
-                }
-            });
-
-            res.on('end', function() {
-                var json;
-                try {
-                    json = JSON.parse(resText);
-                } catch (e) {
-                    json = {};
-                }
-
-                cb(false, {
-                    data    : json,
-                    headers : req.xhr.getAllResponseHeaders(),
-                    status  : res.statusCode
-                });
-            });
-        });
-
-        req.on('error', function(e) {
-            console.log(e);
-            cb(e);
-        });
-
-        if (data) {
-            req.write(JSON.stringify(data));
-        }
-
-        req.end();
-
-        return {
-            uri     : req.uri,
-            data    : data,
-            headers : options.headers
-        };
+        this.config = config.apis[namespace].api;
     },
-};
+
+    request : function(method, path, data)
+    {
+        this.accessToken = false;
+
+        return this.apiRequest(
+            method,
+            path,
+            // One of these should be empty, so just combine them
+            _.extend({}, data.query, data.body),
+            data.headers
+        );
+    },
+
+    authRequest : function(accessToken, method, path, data)
+    {
+        this.accessToken = accessToken;
+
+        return this.apiRequest(
+            method,
+            path,
+            // One of these should be empty, so just combine them
+            _.extend({}, data.query, data.body),
+            data.headers
+        );
+    },
+
+    _getRequestOptions : function(method, path)
+    {
+        var options, config;
+
+        options = HttpGateway.prototype._getRequestOptions.call(this, method, path);
+
+        config = this.getConfig();
+
+        if (this.accessToken) {
+            options.headers.Authorization = config.tokenParam + ' ' + this.accessToken;
+        }
+
+        return options;
+    }
+});

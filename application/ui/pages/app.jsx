@@ -1,11 +1,9 @@
 /** @jsx React.DOM */
 'use strict';
 
-var _          = require('underscore');
-var React      = require('react');
-var dispatcher = require('synapse-common/lib/dispatcher');
-var cx         = require('react/lib/cx');
-var Link       = require('react-router').Link;
+var _     = require('underscore');
+var React = require('react');
+var Link  = require('react-router').Link;
 
 module.exports = React.createClass({
     displayName : 'App',

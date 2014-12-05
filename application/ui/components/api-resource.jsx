@@ -4,8 +4,6 @@
 
 var _          = require('underscore');
 var React      = require('react');
-var Fluxxor    = require('fluxxor');
-var dispatcher = require('synapse-common/lib/dispatcher');
 var Resource   = require('./resource');
 var slugifier  = require('../../util/slug-helper').getSlugFromResource;
 
@@ -14,19 +12,23 @@ module.exports = React.createClass({
     displayName : 'ApiResource',
 
     propTypes : {
-        apiConfig : React.PropTypes.object.isRequired
+        apiConfig       : React.PropTypes.object.isRequired,
+        oauthStoreState : React.PropTypes.object.isRequired
     },
 
     getResourceConfigFromSplat : function(splat, resources)
     {
-        var resource;
-        var component = this;
-        var title     = [this.props.apiConfig.name, 'Lively Docs'];
+        var resource, title, findCallback;
 
-        for (var i = 0; i < splat.length; i++) {
-            resource = _.find(resources, function(resource) {
-                return slugifier(resource) === splat[i];
-            });
+        title = [this.props.apiConfig.name, 'Lively Docs'];
+
+        // Avoid defining a function in a loop
+        findCallback = function(resource) {
+            return slugifier(resource) === splat[i];
+        };
+
+        for (var i = 0; i < splat.length; i += 1) {
+            resource = _.find(resources, findCallback);
 
             if (_.isUndefined(resource) ) {
                 return;
@@ -52,14 +54,15 @@ module.exports = React.createClass({
             window.document.title = resource.title;
             resourceComponent = (
                 <Resource name={resource.name}
-                    synopsis={resource.synopsis}
-                    methods={resource.methods}
+                    synopsis        = {resource.synopsis}
+                    methods         = {resource.methods}
+                    oauthStoreState = {this.props.oauthStoreState}
                 />
             );
         } else {
             resourceComponent = (
                 <div className='panel'>
-                    <h1>404 Not Found</h1>
+                    <h1>404 Not Found!?</h1>
                 </div>
             );
         }

@@ -5,6 +5,7 @@
 var _           = require('underscore');
 var React       = require('react');
 var cx          = require('react/lib/cx');
+var FluxMixin   = require('fluxxor').FluxMixin(React);
 var Params      = require('./params-list');
 var ApiCallInfo = require('./api-call-info');
 var Checkbox    = require('./input/checkbox');
@@ -19,13 +20,16 @@ module.exports = React.createClass({
 
     displayName : 'Method',
 
+    mixins : [FluxMixin],
+
     propTypes : {
-        name     : React.PropTypes.string.isRequired,
-        synopsis : React.PropTypes.string,
-        method   : React.PropTypes.oneOf(['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'PATCH']),
-        uri      : React.PropTypes.string.isRequired,
-        oauth    : React.PropTypes.bool,
-        params   : React.PropTypes.array
+        name            : React.PropTypes.string.isRequired,
+        synopsis        : React.PropTypes.string,
+        method          : React.PropTypes.oneOf(['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'PATCH']),
+        uri             : React.PropTypes.string.isRequired,
+        oauth           : React.PropTypes.bool,
+        params          : React.PropTypes.array,
+        oauthStoreState : React.PropTypes.object.isRequired
     },
 
     getDefaultProps : function()
@@ -131,27 +135,27 @@ module.exports = React.createClass({
             body   : bodyParams
         };
 
-        var requestInfo;
         if (this.refs.sendToken.getValue() === true) {
-            requestInfo = this.props.oauthStore.oauthRequest(
+            this.getFlux().actions.oauth.oauthRequest(
+                this.props.oauthStoreState.namespace,
+                this.props.oauthStoreState.accessToken,
                 method,
                 uri,
-                params,
-                _.bind(this.handleApiResponse, this)
+                params
             );
         } else {
-            requestInfo = this.props.oauthStore.request(
+            this.getFlux().actions.oauth.request(
+                this.props.oauthStoreState.namespace,
                 method,
                 uri,
-                params,
-                _.bind(this.handleApiResponse, this)
+                params
             );
         }
 
-        this.setState({
-            status  : LOADING,
-            request : requestInfo
-        });
+        // this.setState({
+        //     status  : LOADING,
+        //     request : requestInfo
+        // });
     },
 
     initResumableUpload: function(buttonDOMNode)
@@ -236,7 +240,7 @@ module.exports = React.createClass({
     getErrorMessage: function()
     {
         if (this.state.status === 'error') {
-            return <div>{this.state.error}</div>
+            return <div>{this.state.error}</div>;
         }
     },
 

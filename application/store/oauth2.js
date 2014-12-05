@@ -1,111 +1,109 @@
 'use strict';
 
-var _         = require('underscore');
-var store     = require('store');
-var http      = require('http');
-var https     = require('https');
-var url       = require('url');
-var constants = require('../constants');
-var actions   = require('../actions');
-var Fluxxor   = require('fluxxor');
-var store     = require('store');
+var _            = require('underscore');
+var localStorage = require('store');
+var constants    = require('../constants');
+var Fluxxor      = require('fluxxor');
+var config       = require('../config');
 
 module.exports = Fluxxor.createStore({
 
     initialize : function(options)
     {
-        if (_.isUndefined(options.api) || _.isUndefined(options.namespace) || _.isUndefined(options.oauth2)) {
-            return;
-        }
+        this.state = {
+            loaded : false,
+            error  : false
+        };
 
-        this.namespace   = null;
-        this.hostname    = options.api.hostname;
-        this.port        = options.api.port;
-        this.secure      = options.api.secure;
-        this.tokenParam  = options.oauth2.tokenParam;
-        this.accessToken = null;
-        this.tokenType   = null;
-        this.tokenData   = null;
-        this.loaded      = false;
-        this.error       = false;
+        this.bindActions(
+            constants.SET_API, 'setApi',
+            constants.SET_TOKEN, 'setToken',
+            constants.OAUTH_REQUEST, 'onRequest',
+            constants.OAUTH_REQUEST_SUCCESS, 'onRequestSuccess',
+            constants.OAUTH_REQUEST_FAILURE, 'onRequestFailure',
+            constants.OAUTH_SET_CLIENT_OPTIONS, 'onSetClientOptions',
+            constants.OAUTH_SET_TOKEN, 'onSetToken'
+        );
+    },
 
-        this.namespace = options.namespace + '-';
-        if (store.get(this.namespace + 'oauth')) {
+    getState: function()
+    {
+        return _.extend({}, this.state);
+    },
+
+    setApi : function(apiSlug)
+    {
+        var apiConfig = config.apis[apiSlug];
+
+        this.state.namespace = apiSlug;
+        this.state.api       = apiConfig.api;
+        this.state.oauth2    = apiConfig.oauth2;
+
+        if (localStorage.get(this.namespace + 'oauth')) {
             this.unserializeFromLocalStorage();
         }
 
-        this.on('change', function() {
-            this.serializeToLocalStorage();
-        });
+        this.emit('change');
+    },
 
-        this.bindActions(
-            constants.OAUTH2_REQUEST, 'onRequest',
-            constants.OAUTH2_REQUEST_SUCCESS, 'onRequestSuccess',
-            constants.OAUTH2_REQUEST_FAILURE, 'onRequestFailure',
-            constants.OAUTH2_SET_CLIENT_OPTIONS, 'onSetClientOptions',
-            constants.OAUTH2_SET_TOKEN, 'onSetToken'
-        );
+    setToken : function(tokenData)
+    {
+        this.state.accessToken = tokenData.accessToken;
+        this.state.tokenType   = tokenData.tokenType;
+        this.state.tokenData   = tokenData.tokenData;
+
+        this.serializeToLocalStorage();
+
+        this.emit('change');
     },
 
     onRequest : function()
     {
-        this.loaded = false;
-        this.error  = false;
+        this.state.loaded = false;
+        this.state.error  = false;
 
         this.emit('change');
     },
 
     onRequestSuccess : function(data)
     {
-        this.loaded = true;
+        this.state.loaded = true;
 
         this.emit('change');
     },
 
     onRequestFailure : function()
     {
-        this.error = true;
+        this.state.error = true;
 
         this.emit('change');
     },
 
     onSetToken : function(data)
     {
-        this.accessToken = data.accessToken;
-        this.tokenType   = data.tokenType;
-        this.tokenData   = data.tokenData;
-
-        this.emit('change');
+        this.setToken(data);
     },
 
     serializeToLocalStorage : function()
     {
-        store.set(this.namespace + 'oauth', {
-            hostname     : this.hostname,
-            port         : this.port,
-            secure       : this.secure,
-            tokenParam   : this.tokenParam,
-            accessToken  : this.accessToken,
-            tokenType    : this.tokenType,
-            tokenData    : this.tokenData
+        localStorage.set(this.namespace + 'oauth', {
+            accessToken  : this.state.accessToken,
+            tokenType    : this.state.tokenType,
+            tokenData    : this.state.tokenData
         });
     },
 
     unserializeFromLocalStorage : function()
     {
-        var data = store.get(this.namespace + 'oauth');
+        var data = localStorage.get(this.namespace + 'oauth');
 
-        this.hostname    = data.hostname;
-        this.port        = data.port;
-        this.secure      = data.secure;
-        this.tokenParam  = data.tokenParam;
-        this.accessToken = data.accessToken;
-        this.tokenType   = data.tokenType;
-        this.tokenData   = data.tokenData;
+        this.state.accessToken = data.accessToken;
+        this.state.tokenType   = data.tokenType;
+        this.state.tokenData   = data.tokenData;
     },
 
     getAuthorizationHeader : function()
     {
         return this.tokenParam + ' ' + (this.accessToken);
-    },
+    }
 });

@@ -18,10 +18,6 @@ module.exports = React.createClass({
 
     displayName : 'ApiPage',
 
-    propTypes : {
-        config : React.PropTypes.object.isRequired
-    },
-
     componentDidMount : function()
     {
         this.getFlux().actions.oauth.setApi(this.props.params.apiSlug);
@@ -54,7 +50,7 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var apiConfig = config.apis[this.state.oauthStoreState.namespace];
+        var apiConfig = config.apis[this.props.params.apiSlug];
 
         if (_.isUndefined(apiConfig)) {
             return (<NotFoundPage />);

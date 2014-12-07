@@ -1,16 +1,13 @@
 /** @jsx React.DOM */
 'use strict';
 
-var _     = require('underscore');
-var React = require('react');
-var Link  = require('react-router').Link;
+var _      = require('underscore');
+var React  = require('react');
+var Link   = require('react-router').Link;
+var config = require('../../config');
 
 module.exports = React.createClass({
     displayName : 'App',
-
-    propTypes : {
-        config : React.PropTypes.object.isRequired
-    },
 
     getInitialState : function()
     {
@@ -39,7 +36,7 @@ module.exports = React.createClass({
                 logo = (<img className='header__api-logo' src={this.state.apiLogo} alt={this.state.apiName} />);
             }
 
-            if (_.size(this.props.config.apis) === 1) {
+            if (_.size(config.apis) === 1) {
                 heading = (<Link to='api' params={linkParams} className='header__api-link header__api-link'>{logo}{this.state.apiName}</Link>);
             } else {
                 backButton = (<Link to='api-list' className='header__back-button'>&#xf104;</Link>);

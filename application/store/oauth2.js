@@ -4,25 +4,17 @@ var _            = require('underscore');
 var localStorage = require('store');
 var constants    = require('../constants');
 var Fluxxor      = require('fluxxor');
-var config       = require('../config');
 
 module.exports = Fluxxor.createStore({
 
     initialize : function(options)
     {
-        this.state = {
-            loaded : false,
-            error  : false
-        };
+        this.state = {};
 
         this.bindActions(
-            constants.SET_API, 'setApi',
-            constants.SET_TOKEN, 'setToken',
-            constants.OAUTH_REQUEST, 'onRequest',
-            constants.OAUTH_REQUEST_SUCCESS, 'onRequestSuccess',
-            constants.OAUTH_REQUEST_FAILURE, 'onRequestFailure',
-            constants.OAUTH_SET_CLIENT_OPTIONS, 'onSetClientOptions',
-            constants.OAUTH_SET_TOKEN, 'onSetToken'
+            constants.SET_API, 'onSetApi',
+            constants.SET_TOKEN, 'onSetToken',
+            constants.OAUTH_SET_CLIENT_OPTIONS, 'onSetClientOptions'
         );
     },
 
@@ -31,22 +23,16 @@ module.exports = Fluxxor.createStore({
         return _.extend({}, this.state);
     },
 
-    setApi : function(apiSlug)
+    onSetApi : function(apiSlug)
     {
-        var apiConfig = config.apis[apiSlug];
-
-        this.state.namespace = apiSlug;
-        this.state.api       = apiConfig.api;
-        this.state.oauth2    = apiConfig.oauth2;
-
-        if (localStorage.get(this.namespace + 'oauth')) {
+        if (localStorage.get(apiSlug + 'oauth')) {
             this.unserializeFromLocalStorage();
         }
 
         this.emit('change');
     },
 
-    setToken : function(tokenData)
+    onSetToken : function(tokenData)
     {
         this.state.accessToken = tokenData.accessToken;
         this.state.tokenType   = tokenData.tokenType;
@@ -57,31 +43,12 @@ module.exports = Fluxxor.createStore({
         this.emit('change');
     },
 
-    onRequest : function()
+    onSetClientOptions : function(options)
     {
-        this.state.loaded = false;
-        this.state.error  = false;
+        this.clientId     = options.clientId;
+        this.clientSecret = options.clientSecret;
 
         this.emit('change');
-    },
-
-    onRequestSuccess : function(data)
-    {
-        this.state.loaded = true;
-
-        this.emit('change');
-    },
-
-    onRequestFailure : function()
-    {
-        this.state.error = true;
-
-        this.emit('change');
-    },
-
-    onSetToken : function(data)
-    {
-        this.setToken(data);
     },
 
     serializeToLocalStorage : function()

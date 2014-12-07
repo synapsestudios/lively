@@ -12,8 +12,7 @@ module.exports = React.createClass({
     displayName : 'ApiResource',
 
     propTypes : {
-        apiConfig       : React.PropTypes.object.isRequired,
-        oauthStoreState : React.PropTypes.object.isRequired
+        apiConfig : React.PropTypes.object.isRequired
     },
 
     getResourceConfigFromSplat : function(splat, resources)
@@ -53,16 +52,16 @@ module.exports = React.createClass({
         if (resource) {
             window.document.title = resource.title;
             resourceComponent = (
-                <Resource name={resource.name}
-                    synopsis        = {resource.synopsis}
-                    methods         = {resource.methods}
-                    oauthStoreState = {this.props.oauthStoreState}
+                <Resource
+                    name     = {resource.name}
+                    synopsis = {resource.synopsis}
+                    methods  = {resource.methods}
                 />
             );
         } else {
             resourceComponent = (
                 <div className='panel'>
-                    <h1>404 Not Found!?</h1>
+                    <h1>404 Not Found</h1>
                 </div>
             );
         }

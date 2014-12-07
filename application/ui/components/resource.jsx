@@ -10,10 +10,9 @@ module.exports = React.createClass({
     displayName : 'Resource',
 
     propTypes : {
-        name            : React.PropTypes.string.isRequired,
-        methods         : React.PropTypes.array.isRequired,
-        synopsis        : React.PropTypes.string,
-        oauthStoreState : React.PropTypes.object.isRequired
+        name     : React.PropTypes.string.isRequired,
+        methods  : React.PropTypes.array.isRequired,
+        synopsis : React.PropTypes.string
     },
 
     /**
@@ -85,7 +84,6 @@ module.exports = React.createClass({
                uri               = {method.uri}
                oauth             = {method.oauth}
                params            = {method.params}
-               oauthStoreState   = {this.props.oauthStoreState}
                methodPanelHidden = {! this.state.expanded[id]}
                toggleMethodPanel = {_.partial(this.toggleDisplayMethod, id)}
             />

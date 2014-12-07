@@ -77,23 +77,9 @@ module.exports = React.createClass({
 
     getInitialState : function()
     {
-        var initialState = {
-            // hasOAuth         : this.props.oauthStoreState.accessToken !== null,
-            // oauthData        : this.props.oauthStoreState,
+        return {
             oAuthPanelHidden : true
         };
-
-        // if (! initialState.oauthData.tokenData) {
-        //     initialState.clientId     = null;
-        //     initialState.clientSecret = null;
-        //     initialState.scope        = null;
-        // } else {
-        //     initialState.clientId     = this.props.oauthStoreState.tokenData.client_id;
-        //     initialState.clientSecret = this.props.oauthStoreState.tokenData.client_secret;
-        //     initialState.scope        = this.props.oauthStoreState.tokenData.scope;
-        // }
-
-        return initialState;
     },
 
     handleUpdate : function(stateProperty, value)

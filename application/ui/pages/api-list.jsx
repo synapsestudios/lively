@@ -2,10 +2,10 @@
 /* global window */
 'use strict';
 
-var _          = require('underscore');
-var React      = require('react');
-var dispatcher = require('synapse-common/lib/dispatcher');
-var config     = require('../../config');
+var _      = require('underscore');
+var React  = require('react');
+var config = require('../../config');
+var Router = require('react-router');
 
 module.exports = React.createClass({
 
@@ -14,9 +14,7 @@ module.exports = React.createClass({
     componentWillMount : function()
     {
         if (_.size(config.apis) === 1) {
-            dispatcher.emit('router:redirect', 'api-summary', {
-                apiSlug : _.keys(config.apis)[0]
-            });
+            Router.transitionTo('api-summary', {apiSlug : _.keys(config.apis)[0]});
         }
     },
 

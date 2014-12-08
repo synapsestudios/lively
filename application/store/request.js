@@ -37,7 +37,7 @@ module.exports = Fluxxor.createStore({
 
     onRequest : function(requestInfo)
     {
-        this.state.request = requestInfo.requestInfo;
+        this.state.request            = requestInfo.requestInfo;
         this.state.request.endpointId = requestInfo.endpointId;
 
         this.emit('change');

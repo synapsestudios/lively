@@ -115,7 +115,7 @@ module.exports = React.createClass({
 
         var buttonNode = this.refs.tryItButton.getDOMNode();
 
-        if (this.refs.sendToken.getValue() === true && this.state.accessToken === null) {
+        if (this.refs.sendToken.getValue() === true && ! this.state.accessToken) {
             this.setState({
                 status : ERROR,
                 error  : "No access token provided."
@@ -259,7 +259,7 @@ module.exports = React.createClass({
 
     getErrorMessage: function()
     {
-        if (this.state.error === 'error') {
+        if (this.state.status === ERROR) {
             return <div>{this.state.error}</div>;
         }
     },

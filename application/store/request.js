@@ -55,10 +55,5 @@ module.exports = Fluxxor.createStore({
         this.state.response = false;
 
         this.emit('change');
-    },
-
-    getAuthorizationHeader : function()
-    {
-        return this.tokenParam + ' ' + (this.accessToken);
     }
 });

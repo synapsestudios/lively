@@ -12,6 +12,7 @@ module.exports = HttpGateway.extend({
     constructor : function(namespace)
     {
         this.config = config.apis[namespace].api;
+        this.oauthConfig = config.apis[namespace].oauth2;
     },
 
     request : function(method, path, queryParams, bodyParams, headers)
@@ -80,7 +81,7 @@ module.exports = HttpGateway.extend({
 
         this.setLastRequestInfo(method, path, queryParams, bodyParams, headers);
 
-        if (queryParams) {
+        if (queryParams && ! _(queryParams).isEmpty()) {
             path = path + '?' + this._toQuery(queryParams);
         }
 
@@ -121,7 +122,7 @@ module.exports = HttpGateway.extend({
                 reject(e);
             });
 
-            if (bodyParams) {
+            if (bodyParams && ! _(bodyParams).isEmpty()) {
                 if (_.isObject(bodyParams)) {
                     bodyParams = JSON.stringify(bodyParams);
                 }
@@ -142,7 +143,7 @@ module.exports = HttpGateway.extend({
         config = this.getConfig();
 
         if (this.accessToken) {
-            options.headers.Authorization = config.tokenParam + ' ' + this.accessToken;
+            options.headers.Authorization = this.oauthConfig.tokenParam + ' ' + this.accessToken;
         }
 
         return options;

@@ -25,6 +25,8 @@ module.exports = Fluxxor.createStore({
 
     onSetApi : function(apiSlug)
     {
+        this.state.namespace = apiSlug;
+
         if (localStorage.get(apiSlug + 'oauth')) {
             this.unserializeFromLocalStorage();
         }
@@ -53,7 +55,7 @@ module.exports = Fluxxor.createStore({
 
     serializeToLocalStorage : function()
     {
-        localStorage.set(this.namespace + 'oauth', {
+        localStorage.set(this.state.namespace + 'oauth', {
             accessToken  : this.state.accessToken,
             tokenType    : this.state.tokenType,
             tokenData    : this.state.tokenData

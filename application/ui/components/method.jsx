@@ -52,12 +52,18 @@ module.exports = React.createClass({
 
     getStateFromFlux : function()
     {
-        var requestStoreState;
+        var requestStoreState, isRequestForThisEndpoint;
 
         requestStoreState = this.getFlux().store('RequestStore').getState();
 
+        isRequestForThisEndpoint = (
+            requestStoreState.request && (
+                requestStoreState.request.endpointId === this.getEndpointIdentifier(requestStoreState.namespace)
+            )
+        );
+
         // Don't update request and response data if the change is for a different endpoint
-        if (requestStoreState.request && (requestStoreState.request.endpointId !== this.getEndpointIdentifier(requestStoreState.namespace))) {
+        if (! isRequestForThisEndpoint) {
             return _(requestStoreState).omit(['request', 'response']);
         }
 
@@ -107,7 +113,8 @@ module.exports = React.createClass({
     {
         var params = this.state.requestBody,
             method = this.props.method,
-            uri    = this.props.uri;
+            uri    = this.props.uri,
+            accessToken = this.getFlux().store('OAuthStore').getState().accessToken;
 
         var headerParams = {},
             bodyParams   = {},
@@ -115,7 +122,7 @@ module.exports = React.createClass({
 
         var buttonNode = this.refs.tryItButton.getDOMNode();
 
-        if (this.refs.sendToken.getValue() === true && ! this.state.accessToken) {
+        if (this.refs.sendToken.getValue() === true && ! accessToken) {
             this.setState({
                 status : ERROR,
                 error  : "No access token provided."
@@ -156,7 +163,7 @@ module.exports = React.createClass({
             this.getFlux().actions.request.oauthRequest(
                 this.state.namespace,
                 this.getEndpointIdentifier(),
-                this.state.accessToken,
+                accessToken,
                 method,
                 uri,
                 queryParams,

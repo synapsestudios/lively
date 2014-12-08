@@ -15,6 +15,16 @@ module.exports = HttpGateway.extend({
         this.oauthConfig = config.apis[namespace].oauth2;
     },
 
+    /**
+     * Make a request without authentication
+     *
+     * @param  {String} method      HTTP method
+     * @param  {String} path        Endpoint path
+     * @param  {Object} queryParams
+     * @param  {Object} bodyParams
+     * @param  {Object} headers
+     * @return promise
+     */
     request : function(method, path, queryParams, bodyParams, headers)
     {
         this.accessToken = false;
@@ -28,6 +38,16 @@ module.exports = HttpGateway.extend({
         );
     },
 
+    /**
+     * Make a request with authentication
+     *
+     * @param  {String} method      HTTP method
+     * @param  {String} path        Endpoint path
+     * @param  {Object} queryParams [description]
+     * @param  {Object} bodyParams  [description]
+     * @param  {Object} headers     [description]
+     * @return promise
+     */
     authRequest : function(accessToken, method, path, queryParams, bodyParams, headers)
     {
         this.accessToken = accessToken;
@@ -41,6 +61,15 @@ module.exports = HttpGateway.extend({
         );
     },
 
+    /**
+     * Set the info returned by getLastRequestInfo
+     *
+     * @param  {String} method      HTTP method
+     * @param  {String} path        Endpoint path
+     * @param  {Object} queryParams [description]
+     * @param  {Object} bodyParams  [description]
+     * @param  {Object} headers     [description]
+     */
     setLastRequestInfo : function(method, path, queryParams, bodyParams, headers)
     {
         var uri, config, data;
@@ -60,6 +89,11 @@ module.exports = HttpGateway.extend({
         };
     },
 
+    /**
+     * Get info about the most recent request
+     *
+     * @return {Object}
+     */
     getLastRequestInfo : function()
     {
         return this.lastRequestInfo;

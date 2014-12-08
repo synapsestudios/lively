@@ -11,7 +11,7 @@ module.exports = {
 
     setToken : function(data)
     {
-        this.dispatch(constants.OAUTH2_SET_TOKEN, data);
+        this.dispatch(constants.SET_TOKEN, data);
     },
 
     setOptions : function(options)

@@ -41,9 +41,9 @@ module.exports = React.createClass({
     handleClick : function()
     {
         var options = {
-            clientId     : this.props.oauthStoreState.clientId,
-            clientSecret : this.props.oauthStoreState.clientSecret,
-            scope        : this.props.oauthStoreState.tokenData.scope
+            clientId     : this.state.clientId,
+            clientSecret : this.state.clientSecret,
+            scope        : this.state.scope
         };
 
         var redirectQs = qs.stringify({

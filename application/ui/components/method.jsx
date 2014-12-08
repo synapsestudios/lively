@@ -56,8 +56,9 @@ module.exports = React.createClass({
 
         requestStoreState = this.getFlux().store('RequestStore').getState();
 
+
         // Don't update store state if change event was for a different endpoint
-        if (requestStoreState.request && (requestStoreState.request.path !== this.props.uri || requestStoreState.request.method !== this.props.method)) {
+        if (requestStoreState.request && (requestStoreState.request.endpointId !== this.getEndpointIdentifier())) {
             return this.state;
         }
 
@@ -69,6 +70,11 @@ module.exports = React.createClass({
             },
             requestStoreState
         );
+    },
+
+    getEndpointIdentifier : function()
+    {
+        return this.state.namespace + this.props.name;
     },
 
     /**
@@ -149,6 +155,7 @@ module.exports = React.createClass({
         if (this.refs.sendToken.getValue() === true) {
             this.getFlux().actions.request.oauthRequest(
                 this.state.namespace,
+                this.getEndpointIdentifier(),
                 this.state.accessToken,
                 method,
                 uri,
@@ -159,6 +166,7 @@ module.exports = React.createClass({
         } else {
             this.getFlux().actions.request.request(
                 this.state.namespace,
+                this.getEndpointIdentifier(),
                 method,
                 uri,
                 queryParams,

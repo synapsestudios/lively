@@ -5,7 +5,7 @@ var Client    = require('../client');
 
 module.exports = {
 
-    oauthRequest : function(apiName, accessToken, method, path, queryParams, bodyParams, headers)
+    oauthRequest : function(apiName, endpointId, accessToken, method, path, queryParams, bodyParams, headers)
     {
         var client, flux = this;
 
@@ -23,10 +23,13 @@ module.exports = {
                 flux.dispatch(constants.REQUEST_FAILURE);
             });
 
-        flux.dispatch(constants.REQUEST, client.getLastRequestInfo());
+        flux.dispatch(constants.REQUEST, {
+            requestInfo : client.getLastRequestInfo(),
+            endpointId  : endpointId
+        });
     },
 
-    request : function(apiName, method, path, queryParams, bodyParams, headers)
+    request : function(apiName, endpointId, method, path, queryParams, bodyParams, headers)
     {
         var client, flux = this;
 
@@ -40,7 +43,10 @@ module.exports = {
                 flux.dispatch(constants.REQUEST_FAILURE);
             });
 
-        flux.dispatch(constants.REQUEST, client.getLastRequestInfo());
+        flux.dispatch(constants.REQUEST, {
+            requestInfo : client.getLastRequestInfo(),
+            endpointId  : endpointId
+        });
     }
 
 };

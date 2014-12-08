@@ -56,10 +56,9 @@ module.exports = React.createClass({
 
         requestStoreState = this.getFlux().store('RequestStore').getState();
 
-
-        // Don't update store state if change event was for a different endpoint
-        if (requestStoreState.request && (requestStoreState.request.endpointId !== this.getEndpointIdentifier())) {
-            return this.state;
+        // Don't update request and response data if the change is for a different endpoint
+        if (requestStoreState.request && (requestStoreState.request.endpointId !== this.getEndpointIdentifier(requestStoreState.namespace))) {
+            return _(requestStoreState).omit(['request', 'response']);
         }
 
         this.scrollToOutput();
@@ -72,9 +71,10 @@ module.exports = React.createClass({
         );
     },
 
-    getEndpointIdentifier : function()
+    getEndpointIdentifier : function(namespace)
     {
-        return this.state.namespace + this.props.name;
+        // namespace is optional. Pass in if the state hasn't been saved yet.
+        return (namespace || this.state.namespace) + this.props.name;
     },
 
     /**

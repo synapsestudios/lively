@@ -1,14 +1,15 @@
 /** @jsx React.DOM */
 'use strict';
 
-var _          = require('underscore');
-var React      = require('react');
-var Fluxxor    = require('fluxxor');
-var FluxMixin  = Fluxxor.FluxMixin(React);
-var cx         = require('react/lib/cx');
-var slugifier  = require('../../util/slug-helper').getSlugFromResource;
-var Link       = require('react-router').Link;
-var dispatcher = require('synapse-common/lib/dispatcher');
+var _               = require('underscore');
+var React           = require('react');
+var Fluxxor         = require('fluxxor');
+var FluxMixin       = Fluxxor.FluxMixin(React);
+var StoreWatchMixin = Fluxxor.StoreWatchMixin;
+var cx              = require('react/lib/cx');
+var slugifier       = require('../../util/slug-helper').getSlugFromResource;
+var Link            = require('react-router').Link;
+var dispatcher      = require('synapse-common/lib/dispatcher');
 
 var GroupHeader = React.createClass({
 
@@ -63,23 +64,22 @@ module.exports = React.createClass({
 
     displayName : 'MainNav',
 
-    mixins      : [ FluxMixin ],
+    mixins      : [FluxMixin, StoreWatchMixin('OAuthStore')],
 
     propTypes : {
         oauthStoreState : React.PropTypes.object.isRequired,
         apiConfig       : React.PropTypes.object.isRequired
     },
 
-    getStateFromStores : function()
+    getStateFromFlux : function()
     {
-        return {
-            hasOAuth : (this.props.oauthStoreState.accessToken)
-        };
-    },
+        var oauthStore;
 
-    getInitialState : function()
-    {
-        return this.getStateFromStores();
+        oauthStore = this.getFlux().store('OAuthStore');
+
+        return {
+            hasOAuth : (oauthStore.getState().accessToken)
+        };
     },
 
     toggleOAuthPanel : function()

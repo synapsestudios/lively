@@ -73,7 +73,7 @@ module.exports = React.createClass({
     getStateFromStores : function()
     {
         return {
-            hasOAuth : (this.props.oauthStoreState.accessToken !== null)
+            hasOAuth : (this.props.oauthStoreState.accessToken)
         };
     },
 

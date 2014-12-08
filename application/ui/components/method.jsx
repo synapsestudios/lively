@@ -207,29 +207,35 @@ module.exports = React.createClass({
         });
 
         resumable.on('fileSuccess', function(file, message) {
-            component.state.request = {
-                headers : this.opts.headers,
-                uri     : this.opts.target
-            };
-
-            component.scrollToOutput(null, {
-                status  : this.statusCode || '200',
-                headers : {},
-                data    : _.last(file.chunks).message()
+            component.setState({
+                request : {
+                    headers : this.opts.headers,
+                    uri     : this.opts.target
+                },
+                response : {
+                    status  : this.statusCode || '200',
+                    headers : {},
+                    data    : _.last(file.chunks).message()
+                }
             });
+
+            component.scrollToOutput();
         });
 
         resumable.on('error', function(message, file) {
-            component.state.request = {
-                headers : this.opts.headers,
-                uri     : this.opts.target
-            };
-
-            component.scrollToOutput(null, {
-                status  : this.statusCode || '???',
-                headers : {},
-                data    : message || 'Unknown Error'
+            this.setState({
+                request : {
+                    headers : this.opts.headers,
+                    uri     : this.opts.target
+                },
+                response : {
+                    status  : this.statusCode || '???',
+                    headers : {},
+                    data    : message || 'Unknown Error'
+                }
             });
+
+            component.scrollToOutput();
         });
     },
 

@@ -77,9 +77,13 @@ module.exports = HttpGateway.extend({
      */
     apiRequest : function(method, path, queryParams, bodyParams, headers)
     {
-        var gateway = this;
+        var options, gateway = this;
 
-        this.setLastRequestInfo(method, path, queryParams, bodyParams, headers);
+        options = this._getRequestOptions(method, path);
+
+        _.extend(options.headers, headers);
+
+        this.setLastRequestInfo(method, path, queryParams, bodyParams, options.headers);
 
         if (queryParams && ! _(queryParams).isEmpty()) {
             path = path + '?' + this._toQuery(queryParams);
@@ -90,10 +94,6 @@ module.exports = HttpGateway.extend({
         }
 
         return Q.Promise(_.bind(function(resolve, reject) {
-            var options = this._getRequestOptions(method, path);
-
-            _.extend(options.headers, headers);
-
             var req = (gateway.getConfig().secure ? https : http).request(options, function(response) {
                 var responseText = '';
 

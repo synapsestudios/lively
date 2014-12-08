@@ -78,7 +78,7 @@ module.exports = React.createClass({
         oauthStore = this.getFlux().store('OAuthStore');
 
         return {
-            hasOAuth : (oauthStore.getState().accessToken)
+            hasOAuth : !! oauthStore.getState().accessToken
         };
     },
 

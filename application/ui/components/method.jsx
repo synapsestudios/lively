@@ -45,7 +45,6 @@ module.exports = React.createClass({
     {
         return {
             requestBody       : ParamHelper.getDefaultValuesForParams(this.props.params),
-            response          : null,
             methodPanelHidden : true
         };
     },

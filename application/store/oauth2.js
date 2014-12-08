@@ -64,15 +64,10 @@ module.exports = Fluxxor.createStore({
 
     unserializeFromLocalStorage : function()
     {
-        var data = localStorage.get(this.namespace + 'oauth');
+        var data = localStorage.get(this.state.namespace + 'oauth');
 
         this.state.accessToken = data.accessToken;
         this.state.tokenType   = data.tokenType;
         this.state.tokenData   = data.tokenData;
-    },
-
-    getAuthorizationHeader : function()
-    {
-        return this.tokenParam + ' ' + (this.accessToken);
     }
 });

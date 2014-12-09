@@ -117,15 +117,15 @@ module.exports = HttpGateway.extend({
 
         _.extend(options.headers, headers);
 
-        this.setLastRequestInfo(method, path, queryParams, bodyParams, options.headers);
-
         if (queryParams && ! _(queryParams).isEmpty()) {
-            path = path + '?' + this._toQuery(queryParams);
+            options.path = path + '?' + this._toQuery(queryParams);
         }
 
         if (_.isUndefined(headers)) {
             headers = {};
         }
+
+        this.setLastRequestInfo(method, path, queryParams, bodyParams, options.headers);
 
         return Q.Promise(_.bind(function(resolve, reject) {
             var req = (gateway.getConfig().secure ? https : http).request(options, function(response) {

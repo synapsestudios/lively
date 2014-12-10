@@ -1,14 +1,17 @@
 /** @jsx React.DOM */
+/* global window */
 'use strict';
 
-var _           = require('underscore');
-var React       = require('react');
-var cx          = require('react/lib/cx');
-var Params      = require('./params-list');
-var ApiCallInfo = require('./api-call-info');
-var Checkbox    = require('./input/checkbox');
-var Resumable   = require('../../../bower_components/resumablejs/resumable');
-var ParamHelper = require('../../util/param-helper');
+var _               = require('underscore');
+var React           = require('react');
+var cx              = require('react/lib/cx');
+var FluxMixin       = require('fluxxor').FluxMixin(React);
+var StoreWatchMixin = require('fluxxor').StoreWatchMixin;
+var Params          = require('./params-list');
+var ApiCallInfo     = require('./api-call-info');
+var Checkbox        = require('./input/checkbox');
+var Resumable       = require('../../../bower_components/resumablejs/resumable');
+var ParamHelper     = require('../../util/param-helper');
 
 var LOADED  = 'loaded',
     LOADING = 'loading',
@@ -17,6 +20,8 @@ var LOADED  = 'loaded',
 module.exports = React.createClass({
 
     displayName : 'Method',
+
+    mixins : [FluxMixin, StoreWatchMixin('RequestStore')],
 
     propTypes : {
         name     : React.PropTypes.string.isRequired,
@@ -40,11 +45,41 @@ module.exports = React.createClass({
     {
         return {
             requestBody       : ParamHelper.getDefaultValuesForParams(this.props.params),
-            status            : false,
-            error             : false,
-            response          : null,
             methodPanelHidden : true
         };
+    },
+
+    getStateFromFlux : function()
+    {
+        var requestStoreState, isRequestForThisEndpoint;
+
+        requestStoreState = this.getFlux().store('RequestStore').getState();
+
+        isRequestForThisEndpoint = (
+            requestStoreState.request && (
+                requestStoreState.request.endpointId === this.getEndpointIdentifier(requestStoreState.namespace)
+            )
+        );
+
+        // Don't update request and response data if the change is for a different endpoint
+        if (! isRequestForThisEndpoint) {
+            return _(requestStoreState).omit(['request', 'response']);
+        }
+
+        this.scrollToOutput();
+
+        return _.extend(
+            {
+                status : requestStoreState.response ? LOADED : LOADING
+            },
+            requestStoreState
+        );
+    },
+
+    getEndpointIdentifier : function(namespace)
+    {
+        // namespace is optional. Pass in if the state hasn't been saved yet.
+        return (namespace || this.state.namespace) + this.props.name;
     },
 
     /**
@@ -62,24 +97,23 @@ module.exports = React.createClass({
         }
     },
 
-    handleApiResponse : function(err, resp)
+    scrollToOutput : function()
     {
-        var buttonNode = this.refs.tryItButton.getDOMNode();
+        var buttonNode;
 
-        this.setState({
-            status   : LOADED,
-            response : resp,
-            error    : err
-        });
+        if (this.isMounted()) {
+            buttonNode = this.refs.tryItButton.getDOMNode();
 
-        window.scrollTo(0, window.scrollY + buttonNode.getBoundingClientRect().bottom);
+            window.scrollTo(0, window.scrollY + buttonNode.getBoundingClientRect().bottom);
+        }
     },
 
     onSubmit : function()
     {
         var params = this.state.requestBody,
             method = this.props.method,
-            uri    = this.props.uri;
+            uri    = this.props.uri,
+            accessToken = this.getFlux().store('OAuthStore').getState().accessToken;
 
         var headerParams = {},
             bodyParams   = {},
@@ -87,10 +121,10 @@ module.exports = React.createClass({
 
         var buttonNode = this.refs.tryItButton.getDOMNode();
 
-        if (this.refs.sendToken.getValue() === true && this.props.oauthStore.accessToken === null) {
+        if (this.refs.sendToken.getValue() === true && ! accessToken) {
             this.setState({
-                status  : ERROR,
-                error : "No access token provided."
+                status : ERROR,
+                error  : "No access token provided."
             });
             window.scrollTo(0, window.scrollY + buttonNode.getBoundingClientRect().bottom);
             return;
@@ -124,33 +158,30 @@ module.exports = React.createClass({
 
         }, this));
 
-        params = {
-            header : headerParams,
-            query  : queryParams,
-            body   : bodyParams
-        };
-
-        var requestInfo;
         if (this.refs.sendToken.getValue() === true) {
-            requestInfo = this.props.oauthStore.oauthRequest(
+            this.getFlux().actions.request.oauthRequest(
+                this.state.namespace,
+                this.getEndpointIdentifier(),
+                accessToken,
                 method,
                 uri,
-                params,
-                _.bind(this.handleApiResponse, this)
+                queryParams,
+                bodyParams,
+                headerParams
             );
         } else {
-            requestInfo = this.props.oauthStore.request(
+            this.getFlux().actions.request.request(
+                this.state.namespace,
+                this.getEndpointIdentifier(),
                 method,
                 uri,
-                params,
-                _.bind(this.handleApiResponse, this)
+                queryParams,
+                bodyParams,
+                headerParams
             );
         }
 
-        this.setState({
-            status  : LOADING,
-            request : requestInfo
-        });
+        this.setState({status : LOADING});
     },
 
     initResumableUpload: function(buttonDOMNode)
@@ -176,29 +207,35 @@ module.exports = React.createClass({
         });
 
         resumable.on('fileSuccess', function(file, message) {
-            component.state.request = {
-                headers : this.opts.headers,
-                uri     : this.opts.target
-            };
-
-            component.handleApiResponse(null, {
-                status  : this.statusCode || '200',
-                headers : {},
-                data    : _.last(file.chunks).message()
+            component.setState({
+                request : {
+                    headers : this.opts.headers,
+                    uri     : this.opts.target
+                },
+                response : {
+                    status  : this.statusCode || '200',
+                    headers : {},
+                    data    : _.last(file.chunks).message()
+                }
             });
+
+            component.scrollToOutput();
         });
 
         resumable.on('error', function(message, file) {
-            component.state.request = {
-                headers : this.opts.headers,
-                uri     : this.opts.target
-            };
-
-            component.handleApiResponse(null, {
-                status  : this.statusCode || '???',
-                headers : {},
-                data    : message || 'Unknown Error'
+            this.setState({
+                request : {
+                    headers : this.opts.headers,
+                    uri     : this.opts.target
+                },
+                response : {
+                    status  : this.statusCode || '???',
+                    headers : {},
+                    data    : message || 'Unknown Error'
+                }
             });
+
+            component.scrollToOutput();
         });
     },
 
@@ -234,8 +271,8 @@ module.exports = React.createClass({
 
     getErrorMessage: function()
     {
-        if (this.state.status === 'error') {
-            return <div>{this.state.error}</div>
+        if (this.state.status === ERROR) {
+            return <div>{this.state.error}</div>;
         }
     },
 
@@ -250,7 +287,7 @@ module.exports = React.createClass({
     {
         var apiCallInfo;
 
-        if (this.state.status === LOADED || this.state.status === LOADING)
+        if (this.state.status === LOADED)
         {
             apiCallInfo = (
                 <ApiCallInfo status={this.state.status}

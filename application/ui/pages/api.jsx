@@ -4,121 +4,73 @@
 
 var _                 = require('underscore');
 var React             = require('react');
-var dispatcher        = require('synapse-common/lib/dispatcher');
-var OAuthStore        = require('../../store/oauth2');
+var Fluxxor           = require('fluxxor');
+var FluxMixin         = Fluxxor.FluxMixin(React);
+var StoreWatchMixin   = Fluxxor.StoreWatchMixin;
 var OAuthConnectPanel = require('../components/oauth');
 var MainNav           = require('../components/main-nav');
-var ResourcePage      = require('../components/resource');
 var NotFoundPage      = require('./404');
-var store             = require('store');
-var qs                = require('querystring');
-var url               = require('url');
+var config            = require('../../config');
 
 module.exports = React.createClass({
 
+    mixins : [FluxMixin, StoreWatchMixin('OAuthStore')],
+
     displayName : 'ApiPage',
-
-    propTypes : {
-        config : React.PropTypes.object.isRequired
-    },
-
-    componentWillMount : function()
-    {
-        var options = store.get(this.props.params.apiSlug + '-client');
-
-        this.config     = this.props.config.apis[this.props.params.apiSlug];
-        if (_.isUndefined(this.config)) {
-            return;
-        }
-        this.oauthStore = new OAuthStore(this.props.params.apiSlug);
-
-        if (this.props.query && this.props.query.access_token && options) {
-
-            this.oauthStore.setOptions({
-                clientId     : options.clientId,
-                clientSecret : options.clientSecret,
-                api          : this.config.api,
-                oauth2       : this.config.oauth2
-            });
-
-            this.oauthStore.setToken({
-                accessToken : this.props.query.access_token,
-                tokenType   : this.props.query.token_type,
-                rawData     : this.props.query
-            });
-        } else {
-            this.oauthStore.setOptions({
-                api          : this.config.api,
-                oauth2       : this.config.oauth2
-            });
-        }
-    },
 
     componentDidMount : function()
     {
-        if (_.isUndefined(this.config)) {
+        this.getFlux().actions.oauth.setApi(this.props.params.apiSlug);
+
+        if (this.props.query && this.props.query.access_token) {
+            this.getFlux().actions.oauth.setToken({
+                accessToken : this.props.query.access_token,
+                tokenType   : this.props.query.token_type,
+                tokenData   : this.props.query
+            });
+        }
+
+        if (_.isUndefined(this.apiConfig)) {
             this.props.updateHeader();
             return;
         }
 
-        var title = [this.config.name, 'Lively Docs'];
+        var title = [this.apiConfig.name, 'Lively Docs'];
         window.document.title = title.join(' | ');
 
-        this.props.updateHeader(this.config.name, this.config.logo, this.props.params.apiSlug);
+        this.props.updateHeader(this.apiConfig.name, this.apiConfig.logo, this.props.params.apiSlug);
     },
 
-    handleOAuthStart : function(options)
+    getStateFromFlux : function()
     {
-        store.set(this.props.params.apiSlug + '-client', options);
-
-        var redirectQs = qs.stringify({
-            'client_id'     : options.clientId,
-            'client_secret' : options.clientSecret,
-            'api'           : this.props.params.apiSlug
-        });
-
-        var redirectHost = this.props.config.lively.hostname + ':' + this.props.config.lively.port;
-
-        var redirectUrl = url.format({
-            protocol : this.config.oauth2.secure ? 'https' : 'http',
-            hostname : this.config.oauth2.hostname,
-            port     : this.config.oauth2.port,
-            pathname : this.config.oauth2.authorizeUrl,
-            query    : {
-                'client_id'     : options.clientId,
-                'client_secret' : options.clientSecret,
-                'response_type' : 'code',
-                'redirect_uri'  : 'http://' + redirectHost + '/oauth2-redirect?' + redirectQs,
-                'scope'         : options.scope,
-                'state'         : Math.random()
-            }
-        });
-
-        window.location = redirectUrl;
+        return {
+            oauthStoreState : this.getFlux().store('OAuthStore').getState()
+        };
     },
 
     render : function()
     {
-        if (_.isUndefined(this.config)) {
+        var apiConfig = config.apis[this.props.params.apiSlug];
+
+        if (_.isUndefined(apiConfig)) {
             return (<NotFoundPage />);
         }
         else {
             return (
                 <div>
                     <OAuthConnectPanel
-                        stores={{oauth : this.oauthStore}}
-                        onOAuthStart={this.handleOAuthStart}
+                        apiConfig       = {apiConfig}
+                        oauthStoreState = {this.state.oauthStoreState}
+                        slug            = {this.props.params.apiSlug}
                     />
                     <MainNav
-                        config={this.config}
-                        logo={this.config.logo}
-                        name={this.config.name}
-                        stores={{oauth : this.oauthStore}}
-                        slug={this.props.params.apiSlug}
+                        apiConfig       = {apiConfig}
+                        oauthStoreState = {this.state.oauthStoreState}
+                        slug            = {this.props.params.apiSlug}
                     />
                     <this.props.activeRouteHandler
-                        config={this.props.config.apis[this.props.params.apiSlug]}
-                        stores={{oauth : this.oauthStore}}
+                        apiConfig       = {apiConfig}
+                        oauthStoreState = {this.state.oauthStoreState}
                     />
                 </div>
             );

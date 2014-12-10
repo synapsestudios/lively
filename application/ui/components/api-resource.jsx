@@ -1,9 +1,9 @@
 /** @jsx React.DOM */
+/* global window */
 'use strict';
 
 var _          = require('underscore');
 var React      = require('react');
-var dispatcher = require('synapse-common/lib/dispatcher');
 var Resource   = require('./resource');
 var slugifier  = require('../../util/slug-helper').getSlugFromResource;
 
@@ -12,19 +12,22 @@ module.exports = React.createClass({
     displayName : 'ApiResource',
 
     propTypes : {
-        config : React.PropTypes.object.isRequired
+        apiConfig : React.PropTypes.object.isRequired
     },
 
     getResourceConfigFromSplat : function(splat, resources)
     {
-        var resource;
-        var component = this;
-        var title     = [this.props.config.name, 'Lively Docs'];
+        var resource, title, findCallback;
 
-        for (var i = 0; i < splat.length; i++) {
-            resource = _.find(resources, function(resource) {
-                return slugifier(resource) === splat[i];
-            });
+        title = [this.props.apiConfig.name, 'Lively Docs'];
+
+        // Avoid defining a function in a loop
+        findCallback = function(resource) {
+            return slugifier(resource) === splat[i];
+        };
+
+        for (var i = 0; i < splat.length; i += 1) {
+            resource = _.find(resources, findCallback);
 
             if (_.isUndefined(resource) ) {
                 return;
@@ -44,15 +47,15 @@ module.exports = React.createClass({
 
         component = this;
         splat     = this.props.params.splat.split('/');
-        resource  = this.getResourceConfigFromSplat(splat, this.props.config.resources);
+        resource  = this.getResourceConfigFromSplat(splat, this.props.apiConfig.resources);
 
         if (resource) {
             window.document.title = resource.title;
             resourceComponent = (
-                <Resource name={resource.name}
-                    synopsis={resource.synopsis}
-                    methods={resource.methods}
-                    oauthStore={this.props.stores.oauth}
+                <Resource
+                    name     = {resource.name}
+                    synopsis = {resource.synopsis}
+                    methods  = {resource.methods}
                 />
             );
         } else {

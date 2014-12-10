@@ -1,4 +1,5 @@
 /* jshint node: true */
+/* global console */
 'use strict';
 
 var http   = require('http');

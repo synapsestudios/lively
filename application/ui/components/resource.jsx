@@ -84,7 +84,6 @@ module.exports = React.createClass({
                uri               = {method.uri}
                oauth             = {method.oauth}
                params            = {method.params}
-               oauthStore        = {this.props.oauthStore}
                methodPanelHidden = {! this.state.expanded[id]}
                toggleMethodPanel = {_.partial(this.toggleDisplayMethod, id)}
             />
@@ -94,7 +93,8 @@ module.exports = React.createClass({
     /**
      * Click handler for the expand/collapse button on method pages
      */
-    handleExpandCollapseClick : function() {
+    handleExpandCollapseClick : function()
+    {
         var expanded    = this.state.expanded;
         var allExpanded = this.state.allExpanded;
 
@@ -109,7 +109,8 @@ module.exports = React.createClass({
         });
     },
 
-    renderExpandCollapseButton : function() {
+    renderExpandCollapseButton : function()
+    {
         if (this.props.methods.length > 1) {
             return (
                 <button className='button__toggle' onClick={this.handleExpandCollapseClick}>

@@ -1,4 +1,5 @@
 /** @jsx React.DOM */
+/* global console */
 'use strict';
 
 var _                     = require('underscore');

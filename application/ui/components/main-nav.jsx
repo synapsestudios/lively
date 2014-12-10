@@ -1,15 +1,18 @@
 /** @jsx React.DOM */
 'use strict';
 
-var _          = require('underscore');
-var React      = require('react');
-var cx         = require('react/lib/cx');
-var StoreWatch = require('synapse-common/ui/mixins/store-watch');
-var slugifier  = require('../../util/slug-helper').getSlugFromResource;
-var Link       = require('react-router').Link;
-var dispatcher = require('synapse-common/lib/dispatcher');
+var _               = require('underscore');
+var React           = require('react');
+var Fluxxor         = require('fluxxor');
+var FluxMixin       = Fluxxor.FluxMixin(React);
+var StoreWatchMixin = Fluxxor.StoreWatchMixin;
+var cx              = require('react/lib/cx');
+var slugifier       = require('../../util/slug-helper').getSlugFromResource;
+var Link            = require('react-router').Link;
+var dispatcher      = require('synapse-common/lib/dispatcher');
 
 var GroupHeader = React.createClass({
+
     displayName : 'GroupHeader',
 
     getInitialState : function()
@@ -60,18 +63,23 @@ var GroupHeader = React.createClass({
 module.exports = React.createClass({
 
     displayName : 'MainNav',
-    mixins      : [ StoreWatch ],
 
-    getStateFromStores : function()
-    {
-        return {
-            hasOAuth : (this.props.stores.oauth.accessToken !== null)
-        };
+    mixins      : [FluxMixin, StoreWatchMixin('OAuthStore')],
+
+    propTypes : {
+        oauthStoreState : React.PropTypes.object.isRequired,
+        apiConfig       : React.PropTypes.object.isRequired
     },
 
-    getInitialState : function()
+    getStateFromFlux : function()
     {
-        return this.getStateFromStores();
+        var oauthStore;
+
+        oauthStore = this.getFlux().store('OAuthStore');
+
+        return {
+            hasOAuth : !! oauthStore.getState().accessToken
+        };
     },
 
     toggleOAuthPanel : function()
@@ -81,7 +89,7 @@ module.exports = React.createClass({
 
     navItemFromResource : function(resource, index, currentPath)
     {
-        var params, navLinkClasses;
+        var params;
 
         params = {
             apiSlug : this.props.slug,
@@ -140,7 +148,12 @@ module.exports = React.createClass({
             var subnav = component.buildNavList(resource.resources, slug);
 
             items.push(
-                <GroupHeader categoryName={resource.name} categorySlug={slug} apiSlug={component.props.slug} key={'c-'+slug}>
+                <GroupHeader
+                    categoryName    = {resource.name}
+                    categorySlug    = {slug}
+                    apiSlug         = {component.props.slug}
+                    key             = {'c-'+slug}
+                >
                     {subnav}
                 </GroupHeader>
             );
@@ -149,9 +162,11 @@ module.exports = React.createClass({
         return items;
     },
 
-    render : function() {
+    render : function()
+    {
+        var oAuthLinkClasses;
 
-        var oAuthLinkClasses = cx({
+        oAuthLinkClasses = cx({
             'o-auth'        : true,
             'fa'            : true,
             'fa-lock'       : this.state.hasOAuth,
@@ -167,7 +182,7 @@ module.exports = React.createClass({
                     </span>
                 </h3>
                 <div className='main-nav'>
-                    {this.buildCategories(this.props.config.resources)}
+                    {this.buildCategories(this.props.apiConfig.resources)}
                 </div>
             </div>
         );

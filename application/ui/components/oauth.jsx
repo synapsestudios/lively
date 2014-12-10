@@ -1,20 +1,28 @@
 /** @jsx React.DOM */
+/* global window */
 'use strict';
 
-var _          = require('underscore');
-var React      = require('react');
-var cx         = require('react/lib/cx');
-var TextInput  = require('./input/text');
-var StoreWatch = require('synapse-common/ui/mixins/store-watch');
-var Events     = require('synapse-common/ui/mixins/events');
-var util       = require('util');
+var _              = require('underscore');
+var React          = require('react');
+var Fluxxor        = require('fluxxor');
+var FluxChildMixin = Fluxxor.FluxMixin(React);
+var cx             = require('react/lib/cx');
+var TextInput      = require('./input/text');
+var Events         = require('synapse-common/ui/mixins/events');
+var util           = require('util');
+var qs             = require('querystring');
+var url            = require('url');
+var config         = require('../../config');
 
 module.exports = React.createClass({
 
     displayName : 'OAuthPanel',
-    mixins : [ StoreWatch, Events ],
+
+    mixins : [ Events, FluxChildMixin ],
+
     propTypes : {
-        onOAuthStart : React.PropTypes.func.isRequired
+        oauthStoreState : React.PropTypes.object.isRequired,
+        apiConfig       : React.PropTypes.object.isRequired
     },
 
     componentWillMount : function()
@@ -26,33 +34,52 @@ module.exports = React.createClass({
         }.bind(this));
     },
 
+    /**
+     * Forward browser to the OAuth2 server in the API config, which will redirect the user back
+     * with an authorization code for it to use to request the access token
+     */
     handleClick : function()
     {
-        this.props.onOAuthStart({
+        var options = {
             clientId     : this.state.clientId,
             clientSecret : this.state.clientSecret,
             scope        : this.state.scope
-        });
-    },
-
-    getStateFromStores : function()
-    {
-        return {
-            hasOAuth         : (this.props.stores.oauth.accessToken !== null),
-            oauthData        : (this.props.stores.oauth),
-            oAuthPanelHidden : true
         };
+
+        var redirectQs = qs.stringify({
+            'client_id'     : options.clientId,
+            'client_secret' : options.clientSecret,
+            'api'           : this.props.slug
+        });
+
+        var redirectHost = (
+            config.lively.hostname + ':' +
+            config.lively.port
+        );
+
+        var redirectUrl = url.format({
+            protocol : this.props.apiConfig.oauth2.secure ? 'https' : 'http',
+            hostname : this.props.apiConfig.oauth2.hostname,
+            port     : this.props.apiConfig.oauth2.port,
+            pathname : this.props.apiConfig.oauth2.authorizeUrl,
+            query    : {
+                'client_id'     : options.clientId,
+                'client_secret' : options.clientSecret,
+                'response_type' : 'code',
+                'redirect_uri'  : 'http://' + redirectHost + '/oauth2-redirect?' + redirectQs,
+                'scope'         : options.scope,
+                'state'         : Math.random()
+            }
+        });
+
+        window.location = redirectUrl;
     },
 
     getInitialState : function()
     {
-        var initialState = this.getStateFromStores();
-
-        initialState.clientId     = null;
-        initialState.clientSecret = null;
-        initialState.scope        = null;
-
-        return initialState;
+        return {
+            oAuthPanelHidden : true
+        };
     },
 
     handleUpdate : function(stateProperty, value)
@@ -96,7 +123,7 @@ module.exports = React.createClass({
                             <TextInput
                                 className = 'form__input panel-form__input'
                                 name      = 'clientId'
-                                value     = {this.state.clientId}
+                                value     = {this.props.oauthStoreState.clientId}
                                 onChange  = {_.partial(this.handleUpdate, 'clientId')}
                             />
                         </div>
@@ -105,7 +132,7 @@ module.exports = React.createClass({
                             <TextInput
                                 className = 'form__input panel-form__input'
                                 name      = 'clientSecret'
-                                value     = {this.state.clientSecret}
+                                value     = {this.props.oauthStoreState.clientSecret}
                                 onChange  = {_.partial(this.handleUpdate, 'clientSecret')}
                             />
                         </div>
@@ -123,10 +150,10 @@ module.exports = React.createClass({
                         </div>
                         <hr />
                         <div className='small-6 columns'>
-                            <pre>Access token: {this.state.oauthData.accessToken}</pre>
+                            <pre>Access token: {this.props.oauthStoreState.accessToken}</pre>
                         </div>
                         <div className='small-6 columns'>
-                            <pre>Token data: {util.inspect(this.state.oauthData.rawData)}</pre>
+                            <pre>Token data: {util.inspect(this.props.oauthStoreState.tokenData)}</pre>
                         </div>
                     </div>
                 </div>

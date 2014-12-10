@@ -9,6 +9,7 @@ var _ = require('underscore');
 module.exports = {
     /**
      * Takes a resource object from an API configuration and returns the slug for that resource
+     *
      * @param  {Object} resource A resource object
      * @return {string}          A string representing the slug for the provided resource
      */

@@ -2,9 +2,10 @@
 /* global window */
 'use strict';
 
-var _          = require('underscore');
-var React      = require('react');
-var dispatcher = require('synapse-common/lib/dispatcher');
+var _      = require('underscore');
+var React  = require('react');
+var config = require('../../config');
+var Router = require('react-router');
 
 module.exports = React.createClass({
 
@@ -12,10 +13,8 @@ module.exports = React.createClass({
 
     componentWillMount : function()
     {
-        if (_.size(this.props.config.apis) === 1) {
-            dispatcher.emit('router:redirect', 'api-summary', {
-                apiSlug : _.keys(this.props.config.apis)[0]
-            });
+        if (_.size(config.apis) === 1) {
+            Router.transitionTo('api-summary', {apiSlug : _.keys(config.apis)[0]});
         }
     },
 
@@ -27,20 +26,20 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var links = _.map(this.props.config.apis, function(config, slug) {
+        var links = _.map(config.apis, function(api, slug) {
 
             var apiLogo;
 
-            if (config.logo) {
+            if (api.logo) {
                 apiLogo = (
-                    <img className="panel__link-logo" src={config.logo} alt={config.name} />
+                    <img className="panel__link-logo" src={api.logo} alt={api.name} />
                 );
             }
 
             return (
                 <a className='panel__link' href={'/' + slug} key={slug}>
                     {apiLogo}
-                    {config.name}
+                    {api.name}
                 </a>
             );
         });

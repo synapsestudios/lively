@@ -76,6 +76,10 @@ module.exports = HttpGateway.extend({
 
         config = this.getConfig();
 
+        if (queryParams && ! _(queryParams).isEmpty()) {
+            path = path + '?' + this._toQuery(queryParams);
+        }
+
         uri = (config.secure ? 'https' : 'http') + '://' + config.hostname + path;
 
         data = _.extend({}, queryParams, bodyParams);

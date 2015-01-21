@@ -160,7 +160,7 @@ An API is made up of multiple resources. Each resource has a list of methods tha
 
 - **name**: A `string` containing the key or name of this parameter that will be sent in the request body or injected into the URI.
 - **required**: A `bool` (`true` or `false`) which flags this parameter as required.
-- **type**: A `string` containing one of: `string`, `integer`, `boolean`, `resumable-upload`, `hash`, `array[hash]`, `array[string]`
+- **type**: A `string` containing one of: `string`, `integer`, `boolean`, `resumable-upload`, `hash`, `array[hash]`, `array[string]`, or `enum`. If `enum`, specify `enumValues` property on param containing an array of strings to display as options to the user.
 - **location**: A `string` containing one of `header`, `body`, `uri` or `query`. If the param is named in the method's URI, Lively will ignore the stated location. *Default:* `body` unless param is named in URI, then `uri`.
 - **defaultValue**: A `string`, `bool`, or `array` depending on what `type` is set. The default value to display in the param.
 - **description**: A `string` containing a short description of the parameter.

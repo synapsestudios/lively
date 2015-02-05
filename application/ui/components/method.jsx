@@ -147,7 +147,7 @@ module.exports = React.createClass({
                 return;
             }
 
-            value = (values && values[name]) ?
+            value = (values && _(values).has(name)) ?
                 values[name] :
                 ParamHelper.getDefaultValueForParam(param);
 

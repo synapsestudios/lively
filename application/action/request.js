@@ -47,6 +47,11 @@ module.exports = {
             requestInfo : client.getLastRequestInfo(),
             endpointId  : endpointId
         });
+    },
+
+    setRequestBody : function(body)
+    {
+        this.dispatch(constants.SET_REQUEST_BODY, body);
     }
 
 };

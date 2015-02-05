@@ -15,7 +15,8 @@ module.exports = Fluxxor.createStore({
             constants.SET_API, 'onSetApi',
             constants.REQUEST, 'onRequest',
             constants.REQUEST_SUCCESS, 'onRequestSuccess',
-            constants.REQUEST_FAILURE, 'onRequestFailure'
+            constants.REQUEST_FAILURE, 'onRequestFailure',
+            constants.SET_REQUEST_BODY, 'onSetRequestBody'
         );
     },
 
@@ -55,5 +56,13 @@ module.exports = Fluxxor.createStore({
         this.state.response = false;
 
         this.emit('change');
+    },
+
+    onSetRequestBody : function(requestBody)
+    {
+        this.state.requestBody = requestBody;
+
+        this.emit('change');
     }
+
 });

@@ -4,6 +4,8 @@
 
 var _                     = require('underscore');
 var React                 = require('react');
+var FluxMixin             = require('fluxxor').FluxMixin(React);
+var StoreWatchMixin       = require('fluxxor').StoreWatchMixin;
 var NestedPropertyHandler = require('../../util/nested-property-handler');
 var RenderParamsMixin     = require('./render-params-mixin');
 var ParamHelper           = require('../../util/param-helper');
@@ -18,17 +20,27 @@ module.exports = React.createClass({
 
     propTypes : {
         params       : React.PropTypes.array.isRequired,
-        requestBody  : React.PropTypes.object,
-        updateValues : React.PropTypes.func.isRequired
+        requestBody  : React.PropTypes.object
     },
 
     mixins : [
-        RenderParamsMixin
+        RenderParamsMixin,
+        FluxMixin,
+        StoreWatchMixin('RequestStore')
     ],
+
+    getStateFromFlux : function()
+    {
+        var store = this.getFlux().store('RequestStore');
+
+        return {
+            requestBody : store.getState().requestBody
+        };
+    },
 
     getChangeHandler : function(path, type)
     {
-        var values    = this.props.requestBody,
+        var values    = _.extend({}, this.state.requestBody),
             component = this;
 
         return function(value)
@@ -43,13 +55,13 @@ module.exports = React.createClass({
 
             values = NestedPropertyHandler.set(values, path, value);
 
-            component.props.updateValues(values);
+            component.getFlux().actions.request.setRequestBody(values);
         };
     },
 
     handleAddField : function(path, param)
     {
-        var values = this.props.requestBody,
+        var values = _.extend({}, this.state.requestBody),
             array;
 
         array = NestedPropertyHandler.get(values, path) || [];
@@ -60,7 +72,7 @@ module.exports = React.createClass({
 
         values = NestedPropertyHandler.set(values, path, array);
 
-        this.props.updateValues(values);
+        this.getFlux().actions.request.setRequestBody(values);
     },
 
     renderTopLevelParam : function(param)
@@ -164,9 +176,10 @@ module.exports = React.createClass({
 
     renderHashArrayParams : function(params, path)
     {
-        var values         = NestedPropertyHandler.get(this.props.requestBody, path) || [],
-            renderedHashes = [],
-            component      = this,
+        var requestBodyCopy = _.extend({}, this.state.requestBody),
+            values          = NestedPropertyHandler.get(requestBodyCopy, path) || [],
+            renderedHashes  = [],
+            component       = this,
             newPath;
 
         values.forEach(function(hash, index) {
@@ -183,9 +196,10 @@ module.exports = React.createClass({
 
     renderArrayParamInputs : function(type, param, path)
     {
-        var component = this,
-            values    = NestedPropertyHandler.get(this.props.requestBody, path) || [],
-            inputs    = [],
+        var component       = this,
+            requestBodyCopy = _.extend({}, this.state.requestBody),
+            values          = NestedPropertyHandler.get(requestBodyCopy, path) || [],
+            inputs          = [],
             addHandler;
 
         addHandler = _.partial(this.handleAddField, path, param);
@@ -215,8 +229,9 @@ module.exports = React.createClass({
 
     renderParamInput : function(type, options, path, key)
     {
-        var changeHandler = this.getChangeHandler(path, type),
-            value         = NestedPropertyHandler.get(this.props.requestBody, path);
+        var changeHandler   = this.getChangeHandler(path, type),
+            requestBodyCopy = _.extend({}, this.state.requestBody),
+            value           = NestedPropertyHandler.get(requestBodyCopy, path);
 
         if (type === 'enum') {
             if (! options.enumValues.length) {
@@ -241,11 +256,11 @@ module.exports = React.createClass({
             callback;
 
         callback = function() {
-            var values = component.props.requestBody;
+            var values = _.extend({}, component.state.requestBody);
 
             values = NestedPropertyHandler.remove(values, path);
 
-            component.props.updateValues(values);
+            component.getFlux().actions.request.setRequestBody(values);
         };
 
         return (

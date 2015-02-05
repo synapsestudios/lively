@@ -11,7 +11,6 @@ var Params          = require('./params-list');
 var ApiCallInfo     = require('./api-call-info');
 var Checkbox        = require('./input/checkbox');
 var Resumable       = require('../../../bower_components/resumablejs/resumable');
-var ParamHelper     = require('../../util/param-helper');
 
 var LOADED  = 'loaded',
     LOADING = 'loading',
@@ -44,7 +43,6 @@ module.exports = React.createClass({
     getInitialState : function()
     {
         return {
-            requestBody       : ParamHelper.getDefaultValuesForParams(this.props.params),
             methodPanelHidden : true
         };
     },
@@ -275,13 +273,6 @@ module.exports = React.createClass({
         }
     },
 
-    handleUpdatedRequestBody : function(newRequestBody)
-    {
-        this.setState({
-            requestBody : newRequestBody
-        });
-    },
-
     render : function()
     {
         var apiCallInfo;
@@ -331,9 +322,7 @@ module.exports = React.createClass({
                     <div className='panel__synopsis' dangerouslySetInnerHTML={{__html: this.props.synopsis}} />
                     <Params
                         params                  = {this.props.params}
-                        requestBody             = {this.state.requestBody}
                         resumableUploadCallback = {this.initResumableUpload}
-                        updateValues            = {this.handleUpdatedRequestBody}
                         ref                     = 'params'
                     />
                     <div className='switch__container'>

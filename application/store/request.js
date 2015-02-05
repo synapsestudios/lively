@@ -9,14 +9,19 @@ module.exports = Fluxxor.createStore({
 
     initialize : function(options)
     {
-        this.state = {};
+        this.state = {
+            excludedFields : {},
+            values         : {}
+        };
 
         this.bindActions(
             constants.SET_API, 'onSetApi',
             constants.REQUEST, 'onRequest',
             constants.REQUEST_SUCCESS, 'onRequestSuccess',
             constants.REQUEST_FAILURE, 'onRequestFailure',
-            constants.SET_REQUEST_BODY, 'onSetRequestBody'
+            constants.SET_REQUEST_VALUES, 'onSetRequestValues',
+            constants.REQUEST_ADD_TO_EXCLUDED_FIELDS, 'onAddToExcludedFields',
+            constants.REQUEST_REMOVE_FROM_EXCLUDED_FIELDS, 'onRemoveFromExcludedFields'
         );
     },
 
@@ -38,8 +43,8 @@ module.exports = Fluxxor.createStore({
 
     onRequest : function(requestInfo)
     {
-        this.state.request            = requestInfo.requestInfo;
-        this.state.request.endpointId = requestInfo.endpointId;
+        this.state.requestInfo            = requestInfo.requestInfo;
+        this.state.requestInfo.endpointId = requestInfo.endpointId;
 
         this.emit('change');
     },
@@ -47,6 +52,7 @@ module.exports = Fluxxor.createStore({
     onRequestSuccess : function(response)
     {
         this.state.response = response;
+        this.state.responseTimestamp = Date.now();
 
         this.emit('change');
     },
@@ -58,9 +64,50 @@ module.exports = Fluxxor.createStore({
         this.emit('change');
     },
 
-    onSetRequestBody : function(requestBody)
+    onSetRequestValues : function(payload)
     {
-        this.state.requestBody = requestBody;
+        var endpointName, values;
+
+        endpointName = payload.endpointName;
+        values       = payload.values;
+
+        if (! this.state.values[endpointName]) {
+            this.state.values[endpointName] = {};
+        }
+
+        this.state.values[endpointName] = values;
+
+        this.emit('change');
+    },
+
+    onAddToExcludedFields : function(payload)
+    {
+        var endpointName, field;
+
+        endpointName = payload.endpointName;
+        field        = payload.field;
+
+        if (! this.state.excludedFields[endpointName]) {
+            this.state.excludedFields[endpointName] = [];
+        }
+
+        this.state.excludedFields[endpointName].push(field);
+
+        this.emit('change');
+    },
+
+    onRemoveFromExcludedFields : function(payload)
+    {
+        var endpointName, field;
+
+        endpointName = payload.endpointName;
+        field        = payload.field;
+
+        if (! this.state.excludedFields[endpointName]) {
+            this.state.excludedFields[endpointName] = [];
+        }
+
+        this.state.excludedFields[endpointName] = _(this.state.excludedFields[endpointName]).without(field);
 
         this.emit('change');
     }

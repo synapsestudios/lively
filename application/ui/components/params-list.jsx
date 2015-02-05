@@ -19,8 +19,8 @@ module.exports = React.createClass({
     displayName : 'ParameterList',
 
     propTypes : {
-        params       : React.PropTypes.array.isRequired,
-        requestBody  : React.PropTypes.object
+        methodName : React.PropTypes.string, // used to namespace request and excluded field list
+        params     : React.PropTypes.array.isRequired
     },
 
     mixins : [
@@ -31,16 +31,17 @@ module.exports = React.createClass({
 
     getStateFromFlux : function()
     {
-        var store = this.getFlux().store('RequestStore');
+        var requestState = this.getFlux().store('RequestStore').getState();
 
         return {
-            requestBody : store.getState().requestBody
+            requestValues  : requestState.values[this.props.methodName],
+            excludedFields : requestState.excludedFields[this.props.methodName]
         };
     },
 
     getChangeHandler : function(path, type)
     {
-        var values    = _.extend({}, this.state.requestBody),
+        var values    = _.extend({}, this.state.requestValues),
             component = this;
 
         return function(value)
@@ -55,13 +56,13 @@ module.exports = React.createClass({
 
             values = NestedPropertyHandler.set(values, path, value);
 
-            component.getFlux().actions.request.setRequestBody(values);
+            component.getFlux().actions.request.setRequestValues(component.props.methodName, values);
         };
     },
 
     handleAddField : function(path, param)
     {
-        var values = _.extend({}, this.state.requestBody),
+        var values = _.extend({}, this.state.requestValues),
             array;
 
         array = NestedPropertyHandler.get(values, path) || [];
@@ -72,7 +73,7 @@ module.exports = React.createClass({
 
         values = NestedPropertyHandler.set(values, path, array);
 
-        this.getFlux().actions.request.setRequestBody(values);
+        this.getFlux().actions.request.setRequestValues(this.props.methodName, values);
     },
 
     renderTopLevelParam : function(param)
@@ -80,16 +81,50 @@ module.exports = React.createClass({
         return this.renderParam(param, []);
     },
 
+    includeChanged : function(event)
+    {
+        var values, path, requestActions;
+
+        values = _.extend({}, this.props.requestValues);
+
+        path = event.currentTarget.dataset.path;
+
+        requestActions = this.getFlux().actions.request;
+
+        if (event.currentTarget.checked) {
+            requestActions.removeFromExcludedFields(this.props.methodName, path);
+        } else {
+            requestActions.addToExcludedFields(this.props.methodName, path);
+        }
+    },
+
     renderParam : function(param, path)
     {
-        var renderedMarkup;
+        var renderedMarkup, checkboxComponent;
 
         // Record the "path" of this param in the request body object
         path = this.appendPath(path, param.name);
 
+        if (path.length === 1) {
+            checkboxComponent = (
+                <td>
+                    <input
+                        type      = "checkbox"
+                        name      = {'include-' + param.name}
+                        data-path = {path[0]}
+                        onChange  = {this.includeChanged}
+                        checked   = {! _(this.state.excludedFields).contains(path[0])}
+                    />
+                </td>
+            );
+        } else {
+            checkboxComponent = null;
+        }
+
         renderedMarkup = (
             <tr key='param'>
                 <td><code>{param.name}</code></td>
+                {checkboxComponent}
                 <td>{this.renderParamInputOrInputs(param, path)}</td>
                 <td>{this.renderInputTypeDescription(param.type)}</td>
                 {this.renderDescriptionColumn(param)}
@@ -176,7 +211,7 @@ module.exports = React.createClass({
 
     renderHashArrayParams : function(params, path)
     {
-        var requestBodyCopy = _.extend({}, this.state.requestBody),
+        var requestBodyCopy = _.extend({}, this.state.requestValues),
             values          = NestedPropertyHandler.get(requestBodyCopy, path) || [],
             renderedHashes  = [],
             component       = this,
@@ -197,7 +232,7 @@ module.exports = React.createClass({
     renderArrayParamInputs : function(type, param, path)
     {
         var component       = this,
-            requestBodyCopy = _.extend({}, this.state.requestBody),
+            requestBodyCopy = _.extend({}, this.state.requestValues),
             values          = NestedPropertyHandler.get(requestBodyCopy, path) || [],
             inputs          = [],
             addHandler;
@@ -230,7 +265,7 @@ module.exports = React.createClass({
     renderParamInput : function(type, options, path, key)
     {
         var changeHandler   = this.getChangeHandler(path, type),
-            requestBodyCopy = _.extend({}, this.state.requestBody),
+            requestBodyCopy = _.extend({}, this.state.requestValues),
             value           = NestedPropertyHandler.get(requestBodyCopy, path);
 
         if (type === 'enum') {
@@ -256,11 +291,11 @@ module.exports = React.createClass({
             callback;
 
         callback = function() {
-            var values = _.extend({}, component.state.requestBody);
+            var values = _.extend({}, component.state.requestValues);
 
             values = NestedPropertyHandler.remove(values, path);
 
-            component.getFlux().actions.request.setRequestBody(values);
+            component.getFlux().actions.request.setRequestValues(component.props.methodName, values);
         };
 
         return (
@@ -280,6 +315,7 @@ module.exports = React.createClass({
             <table>
                 <tr>
                     <th>Parameter</th>
+                    <th>Include</th>
                     <th>Value</th>
                     <th>Type</th>
                     <th>Description</th>

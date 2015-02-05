@@ -43,7 +43,7 @@ module.exports = {
         } else if (param.type === 'boolean') {
             return true;
         } else if (param.type === 'enum') {
-            return _.first(param.enumValues)
+            return _.first(param.enumValues);
         } else if (param.type === 'hash') {
             if (! _.isArray(param.params)) {
                 var message = 'Hash type parameter with no sub-parameters defined: ';

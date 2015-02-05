@@ -132,9 +132,8 @@ module.exports = React.createClass({
 
         _.each(params, _.bind(function(value, name)
         {
-            if (value === '' || _(value).isNaN() || value === null) {
-                // skip empty params
-                return;
+            if (_(value).isNaN() || value === null) {
+                value = '';
             }
 
             var regex = new RegExp(':' + name);

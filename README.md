@@ -72,7 +72,7 @@ Each API has a configuration that tells Lively how to make requests and what met
 - **summary**: A `string` containing the summary that will be displayed by default when you click on an API
 - **api**: An `Object` containing connection details for API calls (see below)
 - **oauth2**: An `Object` containing the connection and authentication  information for OAuth2 APIs (see below)
-- **resources**: An array of `Object` containing a unique key and an resource configuration object for each resource. Resources can be nested arbitrarily deep, see the resource configuration section for more details. The recommended structure is to create folders for each top level resource inside your API configuration folder.
+- **resources**: An array of `Object` containing a resource configuration object for each resource. Resources can be nested arbitrarily deep, see the resource configuration section for more details. The recommended structure is to create folders for each top level resource inside your API configuration folder.
 
 #### api
 
@@ -160,7 +160,7 @@ An API is made up of multiple resources. Each resource has a list of methods tha
 
 - **name**: A `string` containing the key or name of this parameter that will be sent in the request body or injected into the URI.
 - **required**: A `bool` (`true` or `false`) which flags this parameter as required.
-- **type**: A `string` containing one of: `string`, `integer`, `boolean`, `resumable-upload`, `hash`, `array[hash]`, `array[string]`, or `enum`. If `enum`, specify `enumValues` property on param containing an array of strings to display as options to the user.
+- **type**: A `string` containing one of: `string`, `integer`, `boolean`, `resumable-upload`, `hash`, `array[hash]`, `array[string]`, `array[boolean]`, `array[integer]`, or `enum`. If `enum`, specify `enumValues` property on param containing an array of strings to display as options to the user.
 - **location**: A `string` containing one of `header`, `body`, `uri` or `query`. If the param is named in the method's URI, Lively will ignore the stated location. *Default:* `body` unless param is named in URI, then `uri`.
 - **defaultValue**: A `string`, `bool`, or `array` depending on what `type` is set. The default value to display in the param.
 - **description**: A `string` containing a short description of the parameter.

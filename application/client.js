@@ -1,4 +1,4 @@
-/* globals File, FileReader */
+/* globals File, FileReader, Uint8Array, Buffer */
 'use strict';
 
 var HttpGateway = require('synapse-common/http/gateway');
@@ -171,11 +171,10 @@ module.exports = HttpGateway.extend({
                 if (bodyParams instanceof File) {
                     reader = new FileReader();
                     reader.onloadend = function () {
-                        req.write(gateway.getBodyPrefixForFileUpload(bodyParams, boundaryKey));
-                        req.write(reader.result, 'binary');
-                        req.end('\r\n--' + boundaryKey + '--\r\n');
+                        req.write(gateway.getUploadPayload(bodyParams, reader.result, boundaryKey));
+                        req.end();
                     };
-                    reader.readAsBinaryString(bodyParams);
+                    reader.readAsArrayBuffer(bodyParams);
                 } else if (_.isObject(bodyParams)) {
                     bodyParams = JSON.stringify(bodyParams);
                     req.write(bodyParams);
@@ -188,6 +187,46 @@ module.exports = HttpGateway.extend({
                 req.end();
             }
         }, this));
+    },
+
+    /**
+     * Get a Uint8Array that can be passed to request.write() to upload a file
+     *
+     * @param  {File} file                   File object
+     * @param  {ArrayBuffer} fileArrayBuffer
+     * @param  {String} boundaryKey
+     * @return {Uint8Array}
+     */
+    getUploadPayload : function(file, fileArrayBuffer, boundaryKey)
+    {
+        var prefix, suffix, dataString, payloadString, payloadTypedArray;
+
+        prefix        = this.getBodyPrefixForFileUpload(file, boundaryKey);
+        suffix        = '\r\n--' + boundaryKey + '--\r\n';
+        dataString    = this.convertArrayBufferToString(fileArrayBuffer);
+        payloadString = prefix + dataString + suffix;
+
+        payloadTypedArray = new Uint8Array(payloadString.length);
+        for (var i = 0; i < payloadString.length; i += 1) {
+            payloadTypedArray[i] = payloadString.charCodeAt(i);
+        }
+
+        return payloadTypedArray;
+    },
+
+    /**
+     * Convert an ArrayBuffer to a binary string
+     *
+     * @param  {ArrayBuffer} arrayBuffer
+     * @return {String}
+     */
+    convertArrayBufferToString : function(arrayBuffer)
+    {
+        var buffer;
+
+        buffer = new Buffer(new Uint8Array(arrayBuffer));
+
+        return buffer.toString('binary');
     },
 
     getBodyPrefixForFileUpload : function(file, boundaryKey)

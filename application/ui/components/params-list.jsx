@@ -33,6 +33,10 @@ module.exports = React.createClass({
 
         return function(value)
         {
+            if (type === 'file') {
+                value = value.currentTarget.files.item(0);
+            }
+
             if (type === 'boolean') {
                 value = (value === 'true');
             }
@@ -228,6 +232,8 @@ module.exports = React.createClass({
             return <Select value={value} key={key} options={['true', 'false']} onChange={changeHandler} />;
         } else if (type === 'resumable-upload') {
             return <ResumableUpload key={key} target={options.uri} resumableUploadCallback={options.resumableUploadCallback} />;
+        } else if (type === 'file') {
+            return <input type='file' key={key} onChange={changeHandler}/>;
         } else if (type === 'hash') {
             return null;
         } else {

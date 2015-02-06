@@ -83,9 +83,7 @@ module.exports = React.createClass({
 
     includeChanged : function(event)
     {
-        var values, path, requestActions;
-
-        values = _.extend({}, this.props.requestValues);
+        var path, requestActions;
 
         path = event.currentTarget.dataset.path;
 

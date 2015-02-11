@@ -34,8 +34,8 @@ module.exports = React.createClass({
         var requestState = this.getFlux().store('RequestStore').getState();
 
         return {
-            requestValues  : requestState.values[this.props.methodName],
-            excludedFields : requestState.excludedFields[this.props.methodName]
+            requestValues  : (requestState.endpoint[this.props.methodName] || {}).values,
+            excludedFields : (requestState.endpoint[this.props.methodName] || {}).excludedFields
         };
     },
 

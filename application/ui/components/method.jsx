@@ -50,42 +50,48 @@ module.exports = React.createClass({
 
     getStateFromFlux : function()
     {
-        var requestStoreState, isRequestForThisEndpoint;
+        var requestStoreState, isRequestForThisEndpoint, newState, responseChanged, endpointData;
+
+        newState = _.extend({}, this.state);
 
         requestStoreState = this.getFlux().store('RequestStore').getState();
 
+        newState.namespace = requestStoreState.namespace;
+
         isRequestForThisEndpoint = (
             requestStoreState.requestInfo && (
-                requestStoreState.requestInfo.endpointId === this.getEndpointIdentifier(requestStoreState.namespace)
+                requestStoreState.endpointName === this.props.name
             )
         );
 
-        // Don't update request and response data if the change is for a different endpoint
-        if (! isRequestForThisEndpoint) {
-            return _(requestStoreState).omit(['requestInfo', 'response']);
+        if (requestStoreState.requestInfo && ! isRequestForThisEndpoint) {
+            return newState;
         }
 
-        // If response changed, scroll to output
-        if (! _(this.state.responseTimestamp).isEqual(requestStoreState.responseTimestamp)) {
+        endpointData = requestStoreState.endpoint[this.props.name];
+
+        if (! endpointData) {
+            return newState;
+        }
+
+        newState = {
+            status            : endpointData.response ? LOADED : LOADING,
+            values            : endpointData.values,
+            excludedFields    : endpointData.excludedFields,
+            namespace         : requestStoreState.namespace
+        };
+
+        responseChanged = (this.state && this.state.responseTimestamp !== endpointData.responseTimestamp);
+
+        // Don't update request and response data if the change is for a different endpoint
+        if (responseChanged) {
+            newState.response          = endpointData.response;
+            newState.responseTimestamp = endpointData.responseTimestamp;
+            newState.requestInfo       = requestStoreState.requestInfo;
             this.scrollToOutput();
         }
 
-        return _.extend(
-            {
-                status            : requestStoreState.response ? LOADED : LOADING,
-                values            : requestStoreState.values[this.props.name],
-                excludedFields    : requestStoreState.excludedFields[this.props.name],
-                requestInfo       : requestStoreState.requestInfo,
-                response          : requestStoreState.response,
-                responseTimestamp : requestStoreState.responseTimestamp
-            }
-        );
-    },
-
-    getEndpointIdentifier : function(namespace)
-    {
-        // namespace is optional. Pass in if the state hasn't been saved yet.
-        return (namespace || this.state.namespace) + this.props.name;
+        return newState;
     },
 
     /**
@@ -179,7 +185,7 @@ module.exports = React.createClass({
         if (this.refs.sendToken.getValue() === true) {
             this.getFlux().actions.request.oauthRequest(
                 this.state.namespace,
-                this.getEndpointIdentifier(),
+                this.props.name,
                 accessToken,
                 method,
                 uri,
@@ -190,7 +196,7 @@ module.exports = React.createClass({
         } else {
             this.getFlux().actions.request.request(
                 this.state.namespace,
-                this.getEndpointIdentifier(),
+                this.props.name,
                 method,
                 uri,
                 queryParams,

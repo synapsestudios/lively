@@ -1,5 +1,5 @@
 /** @jsx React.DOM */
-/* global window */
+/* global window, FileReader */
 'use strict';
 
 var _               = require('underscore');
@@ -166,7 +166,9 @@ module.exports = React.createClass({
 
             var paramData = _.findWhere(this.props.params, { name : name });
 
-            if (paramData.location === 'header') {
+            if (paramData.type === 'file') {
+                bodyParams = value;
+            } else if (paramData.location === 'header') {
                 headerParams[name] = value;
             } else if (paramData.location === 'query' || method === 'GET') {
                 queryParams[name] = value;

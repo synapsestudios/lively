@@ -1,3 +1,4 @@
+/* globals File, FileReader, Uint8Array, Buffer */
 'use strict';
 
 var HttpGateway = require('synapse-common/http/gateway');
@@ -115,7 +116,7 @@ module.exports = HttpGateway.extend({
      */
     apiRequest : function(method, path, queryParams, bodyParams, headers)
     {
-        var options, gateway = this;
+        var options, reader, boundaryKey, gateway = this;
 
         options = this._getRequestOptions(method, path);
 
@@ -130,6 +131,12 @@ module.exports = HttpGateway.extend({
         }
 
         this.setLastRequestInfo(method, path, queryParams, bodyParams, options.headers);
+
+        if (bodyParams instanceof File) {
+            boundaryKey = Math.random().toString(16);
+            options.headers['Content-Type'] = 'multipart/form-data; boundary=' + boundaryKey;
+            options.headers['Content-Length'] = bodyParams.size;
+        }
 
         return Q.Promise(_.bind(function(resolve, reject) {
             var req = (gateway.getConfig().secure ? https : http).request(options, function(response) {
@@ -161,15 +168,74 @@ module.exports = HttpGateway.extend({
             });
 
             if (bodyParams && ! _(bodyParams).isEmpty()) {
-                if (_.isObject(bodyParams)) {
+                if (bodyParams instanceof File) {
+                    reader = new FileReader();
+                    reader.onloadend = function () {
+                        req.write(gateway.getUploadPayload(bodyParams, reader.result, boundaryKey));
+                        req.end();
+                    };
+                    reader.readAsArrayBuffer(bodyParams);
+                } else if (_.isObject(bodyParams)) {
                     bodyParams = JSON.stringify(bodyParams);
+                    req.write(bodyParams);
+                    req.end();
+                } else {
+                    req.write(bodyParams);
+                    req.end();
                 }
-
-                req.write(bodyParams);
+            } else {
+                req.end();
             }
-
-            req.end();
         }, this));
+    },
+
+    /**
+     * Get a Uint8Array that can be passed to request.write() to upload a file
+     *
+     * @param  {File} file                   File object
+     * @param  {ArrayBuffer} fileArrayBuffer
+     * @param  {String} boundaryKey
+     * @return {Uint8Array}
+     */
+    getUploadPayload : function(file, fileArrayBuffer, boundaryKey)
+    {
+        var prefix, suffix, dataString, payloadString, payloadTypedArray;
+
+        prefix        = this.getBodyPrefixForFileUpload(file, boundaryKey);
+        suffix        = '\r\n--' + boundaryKey + '--\r\n';
+        dataString    = this.convertArrayBufferToString(fileArrayBuffer);
+        payloadString = prefix + dataString + suffix;
+
+        payloadTypedArray = new Uint8Array(payloadString.length);
+        for (var i = 0; i < payloadString.length; i += 1) {
+            payloadTypedArray[i] = payloadString.charCodeAt(i);
+        }
+
+        return payloadTypedArray;
+    },
+
+    /**
+     * Convert an ArrayBuffer to a binary string
+     *
+     * @param  {ArrayBuffer} arrayBuffer
+     * @return {String}
+     */
+    convertArrayBufferToString : function(arrayBuffer)
+    {
+        var buffer;
+
+        buffer = new Buffer(new Uint8Array(arrayBuffer));
+
+        return buffer.toString('binary');
+    },
+
+    getBodyPrefixForFileUpload : function(file, boundaryKey)
+    {
+        return (
+            '--' + boundaryKey + '\r\n' +
+            'Content-Disposition: form-data; name="file"; filename="' + file.name + '"\r\n' +
+            'Content-Type: application/octet-stream\r\n\r\n'
+        );
     },
 
     _getRequestOptions : function(method, path)

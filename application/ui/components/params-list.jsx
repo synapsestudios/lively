@@ -39,6 +39,14 @@ module.exports = React.createClass({
         };
     },
 
+    componentWillMount : function()
+    {
+        this.getFlux().actions.request.setRequestValues(
+            this.props.methodName,
+            ParamHelper.getDefaultValuesForParams(this.props.params)
+        );
+    },
+
     getChangeHandler : function(path, type)
     {
         var values    = _.extend({}, this.state.requestValues),

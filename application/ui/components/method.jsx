@@ -78,16 +78,15 @@ module.exports = React.createClass({
             status            : endpointData.response ? LOADED : LOADING,
             values            : endpointData.values,
             excludedFields    : endpointData.excludedFields,
+            response          : endpointData.response,
+            responseTimestamp : endpointData.responseTimestamp,
+            requestInfo       : requestStoreState.requestInfo,
             namespace         : requestStoreState.namespace
         };
 
         responseChanged = (this.state && this.state.responseTimestamp !== endpointData.responseTimestamp);
 
-        // Don't update request and response data if the change is for a different endpoint
         if (responseChanged) {
-            newState.response          = endpointData.response;
-            newState.responseTimestamp = endpointData.responseTimestamp;
-            newState.requestInfo       = requestStoreState.requestInfo;
             this.scrollToOutput();
         }
 

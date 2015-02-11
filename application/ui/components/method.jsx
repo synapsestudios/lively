@@ -44,7 +44,6 @@ module.exports = React.createClass({
     getInitialState : function()
     {
         return {
-            requestBody       : ParamHelper.getDefaultValuesForParams(this.props.params),
             methodPanelHidden : true
         };
     },
@@ -56,23 +55,30 @@ module.exports = React.createClass({
         requestStoreState = this.getFlux().store('RequestStore').getState();
 
         isRequestForThisEndpoint = (
-            requestStoreState.request && (
-                requestStoreState.request.endpointId === this.getEndpointIdentifier(requestStoreState.namespace)
+            requestStoreState.requestInfo && (
+                requestStoreState.requestInfo.endpointId === this.getEndpointIdentifier(requestStoreState.namespace)
             )
         );
 
         // Don't update request and response data if the change is for a different endpoint
         if (! isRequestForThisEndpoint) {
-            return _(requestStoreState).omit(['request', 'response']);
+            return _(requestStoreState).omit(['requestInfo', 'response']);
         }
 
-        this.scrollToOutput();
+        // If response changed, scroll to output
+        if (! _(this.state.responseTimestamp).isEqual(requestStoreState.responseTimestamp)) {
+            this.scrollToOutput();
+        }
 
         return _.extend(
             {
-                status : requestStoreState.response ? LOADED : LOADING
-            },
-            requestStoreState
+                status            : requestStoreState.response ? LOADED : LOADING,
+                values            : requestStoreState.values[this.props.name],
+                excludedFields    : requestStoreState.excludedFields[this.props.name],
+                requestInfo       : requestStoreState.requestInfo,
+                response          : requestStoreState.response,
+                responseTimestamp : requestStoreState.responseTimestamp
+            }
         );
     },
 
@@ -110,7 +116,7 @@ module.exports = React.createClass({
 
     onSubmit : function()
     {
-        var params = this.state.requestBody,
+        var values = this.state.values,
             method = this.props.method,
             uri    = this.props.uri,
             accessToken = this.getFlux().store('OAuthStore').getState().accessToken;
@@ -130,11 +136,23 @@ module.exports = React.createClass({
             return;
         }
 
-        _.each(params, _.bind(function(value, name)
+        _.each(this.props.params, _.bind(function(param)
         {
-            if (value === '' || _(value).isNaN() || value === null) {
-                // skip empty params
+            var name, value;
+
+            name = param.name;
+
+            // Skip excluded fields
+            if (_(this.state.excludedFields).contains(name)) {
                 return;
+            }
+
+            value = (values && _(values).has(name)) ?
+                values[name] :
+                ParamHelper.getDefaultValueForParam(param);
+
+            if (_(value).isNaN() || value === null) {
+                value = '';
             }
 
             var regex = new RegExp(':' + name);
@@ -276,13 +294,6 @@ module.exports = React.createClass({
         }
     },
 
-    handleUpdatedRequestBody : function(newRequestBody)
-    {
-        this.setState({
-            requestBody : newRequestBody
-        });
-    },
-
     render : function()
     {
         var apiCallInfo;
@@ -291,7 +302,7 @@ module.exports = React.createClass({
         {
             apiCallInfo = (
                 <ApiCallInfo status={this.state.status}
-                             request={this.state.request}
+                             request={this.state.requestInfo}
                              response={this.state.response} />
             );
         }
@@ -331,10 +342,9 @@ module.exports = React.createClass({
                 <div className={methodPanelClasses}>
                     <div className='panel__synopsis' dangerouslySetInnerHTML={{__html: this.props.synopsis}} />
                     <Params
+                        methodName              = {this.props.name}
                         params                  = {this.props.params}
-                        requestBody             = {this.state.requestBody}
                         resumableUploadCallback = {this.initResumableUpload}
-                        updateValues            = {this.handleUpdatedRequestBody}
                         ref                     = 'params'
                     />
                     <div className='switch__container'>

@@ -8,7 +8,10 @@ module.exports = React.createClass({
     displayName : 'TextInput',
 
     propTypes : {
-        value    : React.PropTypes.string,
+        value    : React.PropTypes.oneOfType([
+            React.PropTypes.string,
+            React.PropTypes.number
+        ]),
         onChange : React.PropTypes.func
     },
 

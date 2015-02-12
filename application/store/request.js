@@ -42,7 +42,7 @@ module.exports = Fluxxor.createStore({
 
     onRequest : function(requestInfo)
     {
-        this.state.endpoint[requestInfo.endpointName] = this.getBlankEndpointDataObject();
+        this.state.endpoint[requestInfo.endpointName].response = null;
         this.state.requestInfo = requestInfo.requestInfo;
         this.state.endpointName = requestInfo.endpointName;
 

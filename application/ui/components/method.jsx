@@ -1,5 +1,5 @@
 /** @jsx React.DOM */
-/* global window, FileReader */
+/* global window */
 'use strict';
 
 var _               = require('underscore');
@@ -50,23 +50,13 @@ module.exports = React.createClass({
 
     getStateFromFlux : function()
     {
-        var requestStoreState, isRequestForThisEndpoint, newState, responseChanged, endpointData;
+        var requestStoreState, newState, responseChanged, endpointData;
 
         newState = _.extend({}, this.state);
 
         requestStoreState = this.getFlux().store('RequestStore').getState();
 
         newState.namespace = requestStoreState.namespace;
-
-        isRequestForThisEndpoint = (
-            requestStoreState.requestInfo && (
-                requestStoreState.endpointName === this.props.name
-            )
-        );
-
-        if (requestStoreState.requestInfo && ! isRequestForThisEndpoint) {
-            return newState;
-        }
 
         endpointData = requestStoreState.endpoint[this.props.name];
 

@@ -118,7 +118,7 @@ module.exports = HttpGateway.extend({
     {
         var options, reader, boundaryKey, gateway = this;
 
-        options = this._getRequestOptions(method, path);
+        options = this.getRequestOptions(method, path);
 
         _.extend(options.headers, headers);
 
@@ -238,11 +238,11 @@ module.exports = HttpGateway.extend({
         );
     },
 
-    _getRequestOptions : function(method, path)
+    getRequestOptions : function(method, path)
     {
         var options, config;
 
-        options = HttpGateway.prototype._getRequestOptions.call(this, method, path);
+        options = HttpGateway.prototype.getRequestOptions.call(this, method, path);
 
         config = this.getConfig();
 

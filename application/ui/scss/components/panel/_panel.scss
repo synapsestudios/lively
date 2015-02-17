@@ -180,12 +180,12 @@
 
 }
 
-.method-panel {
+.endpoint-panel {
     max-height : 3000px;
     margin-top : 20px;
     @include transition(all 500ms ease-in-out);
 
-    &.method-panel--hidden {
+    &.endpoint-panel--hidden {
         max-height : 0px;
         overflow   : hidden;
         @include transition(all 500ms cubic-bezier(.05, .71, .12, .98));

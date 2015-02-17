@@ -19,8 +19,8 @@ module.exports = React.createClass({
     displayName : 'ParameterList',
 
     propTypes : {
-        methodName : React.PropTypes.string, // used to namespace request and excluded field list
-        params     : React.PropTypes.array.isRequired
+        endpointName : React.PropTypes.string, // used to namespace request and excluded field list
+        params       : React.PropTypes.array.isRequired
     },
 
     mixins : [
@@ -34,15 +34,15 @@ module.exports = React.createClass({
         var requestState = this.getFlux().store('RequestStore').getState();
 
         return {
-            requestValues  : (requestState.endpoint[this.props.methodName] || {}).values,
-            excludedFields : (requestState.endpoint[this.props.methodName] || {}).excludedFields
+            requestValues  : (requestState.endpoint[this.props.endpointName] || {}).values,
+            excludedFields : (requestState.endpoint[this.props.endpointName] || {}).excludedFields
         };
     },
 
     componentWillMount : function()
     {
         this.getFlux().actions.request.setRequestValues(
-            this.props.methodName,
+            this.props.endpointName,
             ParamHelper.getDefaultValuesForParams(this.props.params)
         );
     },
@@ -68,7 +68,7 @@ module.exports = React.createClass({
 
             values = NestedPropertyHandler.set(values, path, value);
 
-            component.getFlux().actions.request.setRequestValues(component.props.methodName, values);
+            component.getFlux().actions.request.setRequestValues(component.props.endpointName, values);
         };
     },
 
@@ -85,7 +85,7 @@ module.exports = React.createClass({
 
         values = NestedPropertyHandler.set(values, path, array);
 
-        this.getFlux().actions.request.setRequestValues(this.props.methodName, values);
+        this.getFlux().actions.request.setRequestValues(this.props.endpointName, values);
     },
 
     renderTopLevelParam : function(param)
@@ -102,9 +102,9 @@ module.exports = React.createClass({
         requestActions = this.getFlux().actions.request;
 
         if (event.currentTarget.checked) {
-            requestActions.removeFromExcludedFields(this.props.methodName, path);
+            requestActions.removeFromExcludedFields(this.props.endpointName, path);
         } else {
-            requestActions.addToExcludedFields(this.props.methodName, path);
+            requestActions.addToExcludedFields(this.props.endpointName, path);
         }
     },
 
@@ -307,7 +307,7 @@ module.exports = React.createClass({
 
             values = NestedPropertyHandler.remove(values, path);
 
-            component.getFlux().actions.request.setRequestValues(component.props.methodName, values);
+            component.getFlux().actions.request.setRequestValues(component.props.endpointName, values);
         };
 
         return (

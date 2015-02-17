@@ -3,7 +3,7 @@
     opacity : 1;
     @include transition(opacity 200ms ease-in-out 300ms);
 
-    .method-panel--hidden & {
+    .endpoint-panel--hidden & {
         opacity : 0;
     }
 

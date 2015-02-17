@@ -19,7 +19,7 @@ var LOADED  = 'loaded',
 
 module.exports = React.createClass({
 
-    displayName : 'Method',
+    displayName : 'Endpoint',
 
     mixins : [FluxMixin, StoreWatchMixin('RequestStore')],
 
@@ -44,7 +44,7 @@ module.exports = React.createClass({
     getInitialState : function()
     {
         return {
-            methodPanelHidden : true
+            endpointPanelHidden : true
         };
     },
 
@@ -86,13 +86,13 @@ module.exports = React.createClass({
     /**
      * Uses a callback set in props to ask the parent component to toggle between expanded and collapsed
      */
-    toggleMethodPanel : function()
+    toggleEndpointPanel : function()
     {
-        this.props.toggleMethodPanel();
-        if (this.props.methodPanelHidden) {
-            var methodPanel    = this.refs.methodPanel.getDOMNode();
-            var methodPanelTop = methodPanel.getBoundingClientRect().top;
-            var scrollLocation = window.scrollY + methodPanelTop;
+        this.props.toggleEndpointPanel();
+        if (this.props.endpointPanelHidden) {
+            var endpointPanel    = this.refs.endpointPanel.getDOMNode();
+            var endpointPanelTop = endpointPanel.getBoundingClientRect().top;
+            var scrollLocation = window.scrollY + endpointPanelTop;
 
             window.scrollTo(0, scrollLocation);
         }
@@ -314,19 +314,19 @@ module.exports = React.createClass({
             'panel__header--delete' : this.props.method === 'DELETE'
         });
 
-        var methodPanelClasses = cx({
-            'method-panel'          : true,
-            'method-panel--hidden'  : this.props.methodPanelHidden
+        var endpointPanelClasses = cx({
+            'endpoint-panel'          : true,
+            'endpoint-panel--hidden'  : this.props.endpointPanelHidden
         });
 
         var naviconButtonClasses = cx({
             'navicon-button' : true,
-            'open'           : ! this.props.methodPanelHidden
+            'open'           : ! this.props.endpointPanelHidden
         });
 
         return (
-            <div className='panel-section' ref='methodPanel'>
-                <div className={panelHeaderClasses} onClick={this.toggleMethodPanel}>
+            <div className='panel-section' ref='endpointPanel'>
+                <div className={panelHeaderClasses} onClick={this.toggleEndpointPanel}>
                     <h2>
                         <span>{this.props.method}</span>
                         <span>{this.props.name}</span>
@@ -336,10 +336,10 @@ module.exports = React.createClass({
                         <div className='navicon'></div>
                     </span>
                 </div>
-                <div className={methodPanelClasses}>
+                <div className={endpointPanelClasses}>
                     <div className='panel__synopsis' dangerouslySetInnerHTML={{__html: this.props.synopsis}} />
                     <Params
-                        methodName              = {this.props.name}
+                        endpointName            = {this.props.name}
                         params                  = {this.props.params}
                         resumableUploadCallback = {this.initResumableUpload}
                         ref                     = 'params'

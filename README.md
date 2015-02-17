@@ -37,7 +37,7 @@ The `apis` configuration block tells Lively where to find configuration files fo
 
 ### API Configuration
 
-Each API has a configuration that tells Lively how to make requests and what methods are available. An example of implementing an API configuration for GitHub is provided at `application/config/config.github.js`.
+Each API has a configuration that tells Lively how to make requests and what endpoints are available. An example of implementing an API configuration for GitHub is provided at `application/config/config.github.js`.
 
 ```
 {
@@ -92,7 +92,7 @@ Each API has a configuration that tells Lively how to make requests and what met
 
 ### Resource Configuration
 
-An API is made up of multiple resources. Each resource has a list of methods that can be called on it. There are many example resources provided with the GitHub API configuration.
+An API is made up of multiple resources. Each resource has a list of endpoints that can be called on it. There are many example resources provided with the GitHub API configuration.
 
 ```
 {
@@ -112,7 +112,7 @@ An API is made up of multiple resources. Each resource has a list of methods tha
 
 - **name**: A `string` containing the display name of this resource
 - **slug**: A `string` containing the slug for this resource's URL. If this is left undefined, a slugified version of `name` will be used instead.
-- **synopsis**: A `string` containing the static text to be displayed on the resource page. This can be used for static pages (for example, a category description) or to display a short summary for methods. If this is left undefined, no synopsis will be displayed.
+- **synopsis**: A `string` containing the static text to be displayed on the resource page. This can be used for static pages (for example, a category description) or to display a short summary for endpoints. If this is left undefined, no synopsis will be displayed.
 - **endpoints**: An array of `Object` containing endpoint objects to display on the page. See below for more on defining endpoints. If no endpoints are given, no endpoints will be displayed.
 - **resources**: An array of `Object` containing additional resources which will nest below this one. Resources may be nested arbitrarily deep but the recommendation is to not go below a depth of 3.
 
@@ -121,7 +121,7 @@ An API is made up of multiple resources. Each resource has a list of methods tha
 ```
 {
     name     : 'List repository events',
-    synopsis : 'This method lists repository events',
+    synopsis : 'This endpoint lists repository events',
     method   : 'GET',
     uri      : '/repos/:owner/:repo/events',
     oauth    : false,
@@ -130,7 +130,7 @@ An API is made up of multiple resources. Each resource has a list of methods tha
             name        : 'owner',
             required    : true,
             type        : 'string',
-            location    : 'uri', // This tells Lively to match :owner in the method's URI
+            location    : 'uri', // This tells Lively to match :owner in the endpoint's URI
             description : 'The owner of the repo.'
         },
         {...}
@@ -161,6 +161,6 @@ An API is made up of multiple resources. Each resource has a list of methods tha
 - **name**: A `string` containing the key or name of this parameter that will be sent in the request body or injected into the URI.
 - **required**: A `bool` (`true` or `false`) which flags this parameter as required.
 - **type**: A `string` containing one of: `string`, `integer`, `boolean`, `resumable-upload`, `hash`, `array[hash]`, `array[string]`, `array[boolean]`, `array[integer]`, or `enum`. If `enum`, specify `enumValues` property on param containing an array of strings to display as options to the user.
-- **location**: A `string` containing one of `header`, `body`, `uri` or `query`. If the param is named in the method's URI, Lively will ignore the stated location. *Default:* `body` unless param is named in URI, then `uri`.
+- **location**: A `string` containing one of `header`, `body`, `uri` or `query`. If the param is named in the endpoint's URI, Lively will ignore the stated location. *Default:* `body` unless param is named in URI, then `uri`.
 - **defaultValue**: A `string`, `bool`, or `array` depending on what `type` is set. The default value to display in the param.
 - **description**: A `string` containing a short description of the parameter.

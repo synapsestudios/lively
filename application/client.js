@@ -78,7 +78,7 @@ module.exports = HttpGateway.extend({
         config = this.getConfig();
 
         if (queryParams && ! _(queryParams).isEmpty()) {
-            path = path + '?' + this._toQuery(queryParams);
+            path = path + '?' + this.toQuery(queryParams);
         }
 
         uri = (config.secure ? 'https' : 'http') + '://' + config.hostname + path;
@@ -123,7 +123,7 @@ module.exports = HttpGateway.extend({
         _.extend(options.headers, headers);
 
         if (queryParams && ! _(queryParams).isEmpty()) {
-            options.path = path + '?' + this._toQuery(queryParams);
+            options.path = path + '?' + this.toQuery(queryParams);
         }
 
         if (_.isUndefined(headers)) {

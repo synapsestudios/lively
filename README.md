@@ -99,7 +99,7 @@ An API is made up of multiple resources. Each resource has a list of methods tha
     name      : 'Activity',
     slug      : 'activity',
     synopsis  : 'This is a read-only API to the GitHub events.',
-    methods   : [
+    endpoints : [
         {...},
         {...}
     ],
@@ -113,10 +113,10 @@ An API is made up of multiple resources. Each resource has a list of methods tha
 - **name**: A `string` containing the display name of this resource
 - **slug**: A `string` containing the slug for this resource's URL. If this is left undefined, a slugified version of `name` will be used instead.
 - **synopsis**: A `string` containing the static text to be displayed on the resource page. This can be used for static pages (for example, a category description) or to display a short summary for methods. If this is left undefined, no synopsis will be displayed.
-- **methods**: An array of `Object` containing method objects to display on the page. See below for more on defining methods. If no methods are given, no methods will be displayed.
+- **endpoints**: An array of `Object` containing endpoint objects to display on the page. See below for more on defining endpoints. If no endpoints are given, no endpoints will be displayed.
 - **resources**: An array of `Object` containing additional resources which will nest below this one. Resources may be nested arbitrarily deep but the recommendation is to not go below a depth of 3.
 
-### Method Configuration
+### Endpoint Configuration
 
 ```
 {
@@ -138,12 +138,12 @@ An API is made up of multiple resources. Each resource has a list of methods tha
 }
 ```
 
-- **name**: A `string` containing the display name of this method
-- **synopsis**: A `string` containing the static text to be displayed in the method dropdown. If this is left undefined, no synopsis will be displayed.
+- **name**: A `string` containing the display name of this endpoint
+- **synopsis**: A `string` containing the static text to be displayed in the endpoint dropdown. If this is left undefined, no synopsis will be displayed.
 - **method**: A `string` containing the HTTP method to be used for the request.
 - **uri**: A `string` containing the path of the endpoint. Parts that are prefixed with `:` will be filled in by the `param` with the same name and its `location` set to `uri`. See below for more details on `params`.
 - **oauth**: A `bool` (`true` or `false`) which determines whether or not this request defaults to using oauth or unauthenticated.
-- **params**: An array of `Object` containing parameter objects which this method can accept. See below for details.
+- **params**: An array of `Object` containing parameter objects which this endpoint can accept. See below for details.
 
 ### Param Configuration
 

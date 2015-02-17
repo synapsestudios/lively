@@ -17,8 +17,8 @@ module.exports = HttpGateway.extend({
         this.config      = config.apis[namespace].api;
         this.oauthConfig = config.apis[namespace].oauth2;
 
-        authGateway    = new AuthGateway(this.oauthConfig);
-        this.handle401 = authGateway.handle401;
+        var authGateway = new AuthGateway(this.oauthConfig);
+        this.handle401  = authGateway.handle401;
 
         this.tokenStorageLocation = namespace + 'token';
     },
@@ -95,8 +95,7 @@ module.exports = HttpGateway.extend({
      *
      * @param  string  method       Request method
      * @param  string  path         Request path
-     * @param  object  queryParams  Query params (if any)
-     * @param  object  bodyParams   Body params (if any)
+     * @param  object  data         Body or query params (if any)
      * @param  object  headers      Additional headers (if any)
      * @return promise
      */
@@ -116,10 +115,10 @@ module.exports = HttpGateway.extend({
 
         this.setLastRequestInfo(method, path, data, options.headers);
 
-        if (bodyParams instanceof File) {
+        if (data instanceof File) {
             boundaryKey                       = Math.random().toString(16);
             options.headers['Content-Type']   = 'multipart/form-data; boundary=' + boundaryKey;
-            options.headers['Content-Length'] = bodyParams.size;
+            options.headers['Content-Length'] = data.size;
         }
 
         return Q.Promise(_.bind(function(resolve, reject) {
@@ -155,20 +154,20 @@ module.exports = HttpGateway.extend({
                 reject(e);
             });
 
-            if (bodyParams && ! _(bodyParams).isEmpty()) {
-                if (bodyParams instanceof File) {
+            if (data && ! _(data).isEmpty()) {
+                if (data instanceof File) {
                     reader = new FileReader();
                     reader.onloadend = function () {
-                        req.write(gateway.getUploadPayload(bodyParams, reader.result, boundaryKey));
+                        req.write(gateway.getUploadPayload(data, reader.result, boundaryKey));
                         req.end();
                     };
-                    reader.readAsArrayBuffer(bodyParams);
-                } else if (_.isObject(bodyParams)) {
-                    bodyParams = JSON.stringify(bodyParams);
-                    req.write(bodyParams);
+                    reader.readAsArrayBuffer(data);
+                } else if (_.isObject(data)) {
+                    data = JSON.stringify(data);
+                    req.write(data);
                     req.end();
                 } else {
-                    req.write(bodyParams);
+                    req.write(data);
                     req.end();
                 }
             } else {

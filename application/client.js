@@ -20,7 +20,7 @@ module.exports = HttpGateway.extend({
         var authGateway = new AuthGateway(this.oauthConfig);
         this.handle401  = authGateway.handle401;
 
-        this.tokenStorageLocation = namespace + 'token';
+        this.tokenStorageLocation = namespace + 'oauth';
     },
 
     /**
@@ -138,7 +138,7 @@ module.exports = HttpGateway.extend({
                         responseData = responseText;
                     }
 
-                    if (response.statusCode === 401 && access_token !== false) {
+                    if (response.statusCode === 401 && this.accessToken !== false && this.accessToken.refreshToken) {
                         gateway.handle401(resolve, reject, method, path, data, headers);
                     } else {
                         resolve({
@@ -251,7 +251,7 @@ module.exports = HttpGateway.extend({
         config = this.getConfig();
 
         if (this.accessToken !== false) {
-            options.headers.Authorization = this.oauthConfig.tokenParam + ' ' + this.accessToken;
+            options.headers.Authorization = this.oauthConfig.tokenParam + ' ' + this.accessToken.accessToken;
         }
 
         return options;

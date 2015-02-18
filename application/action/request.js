@@ -15,7 +15,7 @@ module.exports = {
 
         client = new Client(apiName);
 
-        client.authRequest(accessToken, method, path, data, headers)
+        client.authRequest(method, path, data, headers)
             .then(
                 function(response) {
                     flux.dispatch(constants.REQUEST_SUCCESS, {

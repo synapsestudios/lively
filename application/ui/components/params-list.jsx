@@ -66,7 +66,13 @@ module.exports = React.createClass({
             }
 
             if (type === 'integer') {
-                value = parseInt(value, 10);
+                // ensure we can allow negative numbers
+                if (value != '-') {
+                    value = parseInt(value, 10);
+                    if (isNaN(value)) {
+                        value = '';
+                    }
+                }
             }
 
             values = NestedPropertyHandler.set(values, path, value);

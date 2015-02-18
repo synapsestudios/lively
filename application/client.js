@@ -152,7 +152,14 @@ module.exports = HttpGateway.extend({
                     try {
                         responseData = JSON.parse(responseText);
                     } catch (e) {
-                        responseData = responseText;
+                        if (response.statusCode === 0) {
+                            response.statusCode = 405; // invalid method
+                            responseData = 'Either there was an error during the OPTIONS request' +
+                            ' or the request did not hit a valid API route.' +
+                            '  This may be caused by an invalid or or incorrectly formatted value in the URI.';
+                        } else {
+                            responseData = responseText;
+                        }
                     }
 
                     resolve({

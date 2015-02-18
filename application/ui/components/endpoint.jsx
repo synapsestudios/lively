@@ -12,6 +12,7 @@ var ApiCallInfo     = require('./api-call-info');
 var Checkbox        = require('./input/checkbox');
 var Resumable       = require('../../../bower_components/resumablejs/resumable');
 var ParamHelper     = require('../../util/param-helper');
+var UriHelperMixin  = require('../../util/uri-helper');
 
 var LOADED  = 'loaded',
     LOADING = 'loading',
@@ -21,7 +22,7 @@ module.exports = React.createClass({
 
     displayName : 'Endpoint',
 
-    mixins : [FluxMixin, StoreWatchMixin('RequestStore')],
+    mixins : [FluxMixin, StoreWatchMixin('RequestStore'), UriHelperMixin],
 
     propTypes : {
         name     : React.PropTypes.string.isRequired,
@@ -68,6 +69,7 @@ module.exports = React.createClass({
             status            : endpointData.response ? LOADED : LOADING,
             values            : endpointData.values,
             excludedFields    : endpointData.excludedFields,
+            nullFields        : endpointData.nullFields,
             response          : endpointData.response,
             responseTimestamp : endpointData.responseTimestamp,
             requestInfo       : requestStoreState.requestInfo,
@@ -150,12 +152,8 @@ module.exports = React.createClass({
                 value = '';
             }
 
-            var regex = new RegExp(':' + name);
-
-            // if the param is named in the query, then we will ignore the
-            // stated location (if any)
-            if (!! regex.test(uri)) {
-                uri = uri.replace(regex, encodeURIComponent(value));
+            if (this.isParameterNameInUri(name, uri)) {
+                uri = this.injectValueIntoUri(name, uri, value);
                 return;
             }
 
@@ -168,7 +166,11 @@ module.exports = React.createClass({
             } else if (paramData.location === 'query' || method === 'GET') {
                 queryParams[name] = value;
             } else {
-                bodyParams[name] = value;
+                if (_(this.state.nullFields).contains(name)) {
+                    bodyParams[name] = null;
+                } else {
+                    bodyParams[name] = value;
+                }
             }
 
         }, this));
@@ -343,6 +345,8 @@ module.exports = React.createClass({
                         params                  = {this.props.params}
                         resumableUploadCallback = {this.initResumableUpload}
                         ref                     = 'params'
+                        requestMethod           = {this.props.method}
+                        uri                     = {this.props.uri}
                     />
                     <div className='switch__container'>
                         <p className='checkbox-label'>Include OAuth Token?</p>

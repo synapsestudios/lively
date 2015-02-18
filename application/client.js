@@ -78,7 +78,7 @@ module.exports = HttpGateway.extend({
         config = this.getConfig();
 
         if (queryParams && ! _(queryParams).isEmpty()) {
-            path = path + '?' + this._toQuery(queryParams);
+            path = path + '?' + this.toQuery(queryParams);
         }
 
         uri = (config.secure ? 'https' : 'http') + '://' + config.hostname + path;
@@ -118,12 +118,12 @@ module.exports = HttpGateway.extend({
     {
         var options, reader, boundaryKey, gateway = this;
 
-        options = this._getRequestOptions(method, path);
+        options = this.getRequestOptions(method, path);
 
         _.extend(options.headers, headers);
 
         if (queryParams && ! _(queryParams).isEmpty()) {
-            options.path = path + '?' + this._toQuery(queryParams);
+            options.path = path + '?' + this.toQuery(queryParams);
         }
 
         if (_.isUndefined(headers)) {
@@ -238,11 +238,11 @@ module.exports = HttpGateway.extend({
         );
     },
 
-    _getRequestOptions : function(method, path)
+    getRequestOptions : function(method, path)
     {
         var options, config;
 
-        options = HttpGateway.prototype._getRequestOptions.call(this, method, path);
+        options = HttpGateway.prototype.getRequestOptions.call(this, method, path);
 
         config = this.getConfig();
 

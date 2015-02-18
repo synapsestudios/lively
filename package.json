@@ -42,9 +42,10 @@
     "react-router"                 : "0.7.0",
     "request"                      : "2.39.0",
     "store"                        : "1.3.16",
-    "synapse-common"               : "0.2.0",
+    "synapse-common"               : "1.0.0",
     "tiny-lr"                      : "0.0.9",
-    "underscore"                   : "1.6.0"
+    "underscore"                   : "1.6.0",
+    "q"                            : "1.1.2"
   },
   "jest" : {
     "scriptPreprocessor"         : "./preprocessor.js",

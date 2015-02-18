@@ -38,7 +38,7 @@ module.exports = React.createClass({
      * Forward browser to the OAuth2 server in the API config, which will redirect the user back
      * with an authorization code for it to use to request the access token
      */
-    handleClick : function()
+    handleConnectClick : function()
     {
         var options = {
             clientId     : this.state.clientId,
@@ -73,6 +73,11 @@ module.exports = React.createClass({
         });
 
         window.location = redirectUrl;
+    },
+
+    handleLogoutClick : function()
+    {
+        this.getFlux().actions.oauth.setToken({});
     },
 
     getInitialState : function()
@@ -146,7 +151,8 @@ module.exports = React.createClass({
                             />
                         </div>
                         <div className='small-12 columns'>
-                            <a className='button right' onClick={this.handleClick}>Connect</a>
+                            <a className='button right' onClick={this.handleLogoutClick}>Log Out</a>
+                            <a className='button right' onClick={this.handleConnectClick}>Connect</a>
                         </div>
                         <hr />
                         <div className='small-6 columns'>

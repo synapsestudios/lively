@@ -349,7 +349,7 @@ module.exports = React.createClass({
         };
 
         return (
-            <a className='button field-button--remove' key='field-button-remove' onClick={callback}>
+            <a className='button field-button--remove' key={'field-button-remove'+path[1]} onClick={callback}>
                 –
             </a>
         );

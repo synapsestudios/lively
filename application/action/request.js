@@ -81,6 +81,21 @@ module.exports = {
             endpointName : endpointName,
             field        : field
         });
-    }
+    },
 
+    addToNullFields : function(endpointName, field)
+    {
+        this.dispatch(constants.SET_NULL_VALUE, {
+            endpointName : endpointName,
+            field        : field
+        });
+    },
+
+    removeFromNullFields : function(endpointName, field)
+    {
+        this.dispatch(constants.UNSET_NULL_VALUE, {
+            endpointName : endpointName,
+            field        : field
+        });
+    }
 };

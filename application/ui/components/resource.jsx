@@ -1,28 +1,28 @@
 /** @jsx React.DOM */
 'use strict';
 
-var React  = require('react');
-var Method = require('./method');
-var _      = require('underscore');
+var React    = require('react');
+var Endpoint = require('./endpoint');
+var _        = require('underscore');
 
 module.exports = React.createClass({
 
     displayName : 'Resource',
 
     propTypes : {
-        name     : React.PropTypes.string.isRequired,
-        methods  : React.PropTypes.array.isRequired,
-        synopsis : React.PropTypes.string
+        name       : React.PropTypes.string.isRequired,
+        endpoints  : React.PropTypes.array.isRequired,
+        synopsis   : React.PropTypes.string
     },
 
     /**
-     * Sets initial state for keeping track of whether method components are expanded or collapsed
+     * Sets initial state for keeping track of whether endpoint components are expanded or collapsed
      *
      * @return {object}
      */
     getInitialState : function()
     {
-        var expanded = this.props.methods.map(function() {
+        var expanded = this.props.endpoints.map(function() {
             return false;
         });
 
@@ -39,7 +39,7 @@ module.exports = React.createClass({
      */
     componentWillReceiveProps : function(nextProps)
     {
-        var expanded = nextProps.methods.map(function() {
+        var expanded = nextProps.endpoints.map(function() {
             return false;
         });
 
@@ -57,11 +57,11 @@ module.exports = React.createClass({
     },
 
     /**
-     * given an array index toggleDisplayMethod will either expand or collapse the method component
+     * given an array index toggleDisplayEndpoint will either expand or collapse the endpoint component
      *
      * @param  {int} id
      */
-    toggleDisplayMethod : function(id)
+    toggleDisplayEndpoint : function(id)
     {
         var expanded = this.state.expanded;
         expanded[id] = ! expanded[id];
@@ -74,24 +74,24 @@ module.exports = React.createClass({
         });
     },
 
-    getMethodComponent : function(method, id)
+    getEndpointComponent : function(endpoint, id)
     {
         return (
-           <Method key           = {method.name}
-               name              = {method.name}
-               synopsis          = {method.synopsis}
-               method            = {method.method}
-               uri               = {method.uri}
-               oauth             = {method.oauth}
-               params            = {method.params}
-               methodPanelHidden = {! this.state.expanded[id]}
-               toggleMethodPanel = {_.partial(this.toggleDisplayMethod, id)}
+           <Endpoint key           = {endpoint.name}
+               name                = {endpoint.name}
+               synopsis            = {endpoint.synopsis}
+               method              = {endpoint.method}
+               uri                 = {endpoint.uri}
+               oauth               = {endpoint.oauth}
+               params              = {endpoint.params}
+               endpointPanelHidden = {! this.state.expanded[id]}
+               toggleEndpointPanel = {_.partial(this.toggleDisplayEndpoint, id)}
             />
         );
     },
 
     /**
-     * Click handler for the expand/collapse button on method pages
+     * Click handler for the expand/collapse button on endpoint pages
      */
     handleExpandCollapseClick : function()
     {
@@ -111,7 +111,7 @@ module.exports = React.createClass({
 
     renderExpandCollapseButton : function()
     {
-        if (this.props.methods.length > 1) {
+        if (this.props.endpoints.length > 1) {
             return (
                 <button className='button__toggle' onClick={this.handleExpandCollapseClick}>
                     {(this.state.allExpanded) ? ('Collapse All') : ('Expand All')}
@@ -137,7 +137,7 @@ module.exports = React.createClass({
                     {this.renderExpandCollapseButton()}
                     {synopsis}
                 </div>
-                {_.map(this.props.methods, this.getMethodComponent)}
+                {_.map(this.props.endpoints, this.getEndpointComponent)}
             </div>
         );
     }

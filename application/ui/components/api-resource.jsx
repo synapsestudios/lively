@@ -51,13 +51,15 @@ module.exports = React.createClass({
 
         if (resource) {
             window.document.title = resource.title;
+
             resourceComponent = (
                 <Resource
-                    name     = {resource.name}
-                    synopsis = {resource.synopsis}
-                    methods  = {resource.methods}
+                    name       = {resource.name}
+                    synopsis   = {resource.synopsis}
+                    endpoints  = {_.isUndefined(resource.endpoints) ? resource.methods : resource.endpoints}
                 />
             );
+
         } else {
             resourceComponent = (
                 <div className='panel'>

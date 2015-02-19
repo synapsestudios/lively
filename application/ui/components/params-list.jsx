@@ -42,7 +42,7 @@ module.exports = React.createClass({
         };
     },
 
-    componentWillMount : function()
+    componentDidMount : function()
     {
         this.getFlux().actions.request.setRequestValues(
             this.props.methodName,

@@ -42,7 +42,7 @@ module.exports = {
     remove : function(object, path)
     {
         if (path.length === 1) {
-            delete object[_.first(path)];
+            object.splice(_.first(path),1);
 
             return object;
         }

@@ -1,8 +1,10 @@
+'use strict';
 /* global window */
 
-'use strict';
+var React    = require('react');
+window.React = React; // React Dev Tools requires this
+var routes   = require('./routes');
 
-var Application = require('./application');
+React.initializeTouchEvents(true);
 
-window.app = new Application(require('./config'));
-window.app.start();
+React.renderComponent(routes, window.document.body);

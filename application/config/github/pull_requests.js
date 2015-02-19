@@ -22,7 +22,7 @@ var paramState = {
     defaultValue : 'open',
     type         : 'enum',
     location     : 'query',
-    description  : 'Either `open`, `closed`, or `all` to filter by state. Default: `open`',
+    description  : 'Either `open`, `closed`, or `all` to filter by state.',
     enumValues   : [
         'open',
         'closed',
@@ -52,7 +52,7 @@ var paramSort = {
     defaultValue : 'created',
     type         : 'enum',
     location     : 'query',
-    description  : 'What to sort results by. Can be either `created`, `updated`, `popularity` (comment count) or `long-running` (age, filtering by pulls updated in the last month). Default: `created`',
+    description  : 'What to sort results by. Can be either `created`, `updated`, `popularity` (comment count) or `long-running` (age, filtering by pulls updated in the last month).',
     enumValues   : [
         'created',
         'updated',
@@ -64,10 +64,10 @@ var paramSort = {
 var paramDirection = {
     name         : 'direction',
     required     : false,
-    defaultValue : 'desc',
+    defaultValue : '`desc` when sort is `created` or sort is not specified, otherwise `asc`.',
     type         : 'enum',
     location     : 'query',
-    description  : 'The direction of the sort. Can be either `asc` or `desc`. Default: `desc` when sort is `created` or sort is not specified, otherwise `asc`.',
+    description  : 'The direction of the sort. Can be either `asc` or `desc`.',
     enumValues   : [
         'desc',
         'asc'
@@ -84,7 +84,7 @@ var paramNumber = {
 
 module.exports = {
     name     : 'Pull Requests',
-    synopsis : 'The Pull Request API allows you to list, view, edit, create, and even merge pull requests. Comments on pull requests can be managed via the Issue Comments API.', 
+    synopsis : 'The Pull Request API allows you to list, view, edit, create, and even merge pull requests. Comments on pull requests can be managed via the Issue Comments API.',
     methods : [
         {
             name     : 'List pull requests',
@@ -277,5 +277,8 @@ module.exports = {
                 }
             ]
         }
+    ],
+    resources : [
+        require('./pull_requests/review_comments')
     ]
 };

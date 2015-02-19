@@ -102,5 +102,9 @@ module.exports = {
                 paramName
             ]
         }
+    ],
+    resources : [
+        require('./organizations/members'),
+        require('./organizations/teams')
     ]
 };

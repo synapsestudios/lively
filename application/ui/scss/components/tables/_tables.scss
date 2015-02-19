@@ -28,11 +28,37 @@ table {
             }
 
             input {
-                width                : 100%;
-                padding              : 8px;
+                width   : 100%;
+                padding : 8px;
             }
         }
 
     }
 
+}
+
+.table__hash {
+    float : right;
+    width : calc(100% - 40px);
+
+    td {
+        span {
+            white-space: nowrap;
+        }
+
+        p {
+            margin : 0;
+        }
+
+    }
+
+    .field-button--add {
+        margin    : rem-calc(3 0 5 40);
+    }
+
+    input {
+        float  : right;
+        width  : calc(100% - 40px);
+        margin : rem-calc(0 0 5);
+    }
 }

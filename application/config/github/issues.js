@@ -184,6 +184,20 @@ module.exports = {
                 paramMilestone,
                 paramState,
                 paramAssignee,
+                {
+                    name         : 'creator',
+                    required     : false,
+                    type         : 'string',
+                    location     : 'body',
+                    description  : 'The user that created the issue.'
+                },
+                {
+                    name         : 'mentioned',
+                    required     : false,
+                    type         : 'string',
+                    location     : 'body',
+                    description  : 'The user that\'s mentioned in the issue.'
+                },
                 paramLabels,
                 paramSort,
                 paramDirection,
@@ -306,5 +320,12 @@ module.exports = {
                 }
             ]
         }
+    ],
+    resources : [
+        require('./issues/assignees'),
+        require('./issues/comments'),
+        require('./issues/events'),
+        require('./issues/labels'),
+        require('./issues/milestones')
     ]
 };

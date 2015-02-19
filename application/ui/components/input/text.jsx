@@ -1,3 +1,4 @@
+/** @jsx React.DOM */
 'use strict';
 
 var React = require('react');
@@ -6,27 +7,23 @@ module.exports = React.createClass({
 
     displayName : 'TextInput',
 
-    getValue : function()
-    {
-        return this.refs.input.getDOMNode().value;
+    propTypes : {
+        value    : React.PropTypes.oneOfType([
+            React.PropTypes.string,
+            React.PropTypes.number
+        ]),
+        onChange : React.PropTypes.func
     },
 
     handleChange : function(event)
     {
-        var callback = this.props.handleChange,
-            toString = Object.prototype.toString;
-
-        if (toString.call(callback) !== '[object Function]') {
-            return;
-        }
-
-        this.props.handleChange(event, this);
+        this.props.onChange(event.target.value);
     },
 
     render : function()
     {
         return this.transferPropsTo(
-            <input onChange={this.handleChange} ref='input' />
+            <input value={this.props.value} onChange={this.handleChange} />
         );
     }
 });

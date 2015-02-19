@@ -1,209 +1,73 @@
-/* global console */
 'use strict';
 
 var _            = require('underscore');
-var Extendable   = require('synapse-common/lib/extendable');
-var EventEmitter = require('events').EventEmitter;
-var store        = require('store');
-var http         = require('http');
-var https        = require('https');
-var url          = require('url');
+var localStorage = require('store');
+var constants    = require('../constants');
+var Fluxxor      = require('fluxxor');
 
-var Store = function() {};
-_.extend(Store.prototype, EventEmitter.prototype);
+module.exports = Fluxxor.createStore({
 
-Store.extend = Extendable.extend;
-
-module.exports = Store.extend({
-
-    namespace : null,
-
-    clientId     : null,
-    clientSecret : null,
-    hostname     : null,
-    port         : 80,
-    secure       : false,
-    tokenParam   : 'Bearer',
-    accessToken  : null,
-    tokenType    : null,
-    rawData      : null,
-
-    constructor : function(namespace)
+    initialize : function(options)
     {
-        this.namespace = namespace + '-';
-        if (store.get(this.namespace + 'oauth')) {
+        this.state = {};
+
+        this.bindActions(
+            constants.SET_API, 'onSetApi',
+            constants.SET_TOKEN, 'onSetToken',
+            constants.OAUTH_SET_CLIENT_OPTIONS, 'onSetClientOptions'
+        );
+    },
+
+    getState: function()
+    {
+        return _.extend({}, this.state);
+    },
+
+    onSetApi : function(apiSlug)
+    {
+        this.state.namespace = apiSlug;
+
+        if (localStorage.get(apiSlug + 'oauth')) {
             this.unserializeFromLocalStorage();
         }
 
-        this.on('change', function() {
-            this.serializeToLocalStorage();
-        });
+        this.emit('change');
     },
 
-    setOptions : function(options)
+    onSetToken : function(tokenData)
+    {
+        this.state.accessToken = tokenData.accessToken;
+        this.state.tokenType   = tokenData.tokenType;
+        this.state.tokenData   = tokenData.tokenData;
+
+        this.serializeToLocalStorage();
+
+        this.emit('change');
+    },
+
+    onSetClientOptions : function(options)
     {
         this.clientId     = options.clientId;
         this.clientSecret = options.clientSecret;
-        this.hostname     = options.api.hostname;
-        this.port         = options.api.port || 80;
-        this.secure       = options.api.secure;
-        this.tokenParam   = options.oauth2.tokenParam;
+
         this.emit('change');
-    },
-
-    setToken : function(data)
-    {
-        this.accessToken = data.accessToken;
-        this.tokenType   = data.tokenType;
-        this.rawData     = data.rawData;
-        this.emit('change');
-    },
-
-    _request : function(options, data, cb)
-    {
-        if (! _.isFunction(cb)) {
-            throw 'callback must be a function';
-        }
-
-        var httpLib = (this.secure === true) ? https : http;
-
-        var req = httpLib.request(options, function (res) {
-            var resText = '';
-
-            res.on('data', function(chunk) {
-                resText += chunk;
-
-                // Check for too much data from flood attack or faulty client
-                if (resText.length > 1e6) {
-                    resText = '';
-                    res.writeHead(413, {'Content-Type': 'text/plain'}).end();
-                    req.connection.destroy();
-                }
-            });
-
-            res.on('end', function() {
-                var json;
-                try {
-                    json = JSON.parse(resText);
-                } catch (e) {
-                    json = {};
-                }
-
-                cb(false, {
-                    data    : json,
-                    headers : req.xhr.getAllResponseHeaders(),
-                    status  : res.statusCode
-                });
-            });
-        });
-
-        req.on('error', function(e) {
-            console.log(e);
-            cb(e);
-        });
-
-        if (data) {
-            req.write(JSON.stringify(data));
-        }
-
-        req.end();
-
-        return {
-            uri     : req.uri,
-            data    : data,
-            headers : options.headers
-        };
-    },
-
-    oauthRequest : function(method, path, data, cb)
-    {
-        if (! this.accessToken) {
-            // Next tick because async callbacks should always be async
-            _.defer(function() {
-                cb('Missing access token for OAuth request');
-            });
-
-            return;
-        }
-
-        data.header = _.extend(data.header, {
-            Authorization : this.getAuthorizationHeader()
-        });
-
-        return this.request(method, path, data, cb);
-    },
-
-    /**
-     * Get the value of the Authorization header
-     *
-     * @return
-     */
-    getAuthorizationHeader: function()
-    {
-        return this.tokenParam + ' ' + (this.accessToken);
-    },
-
-    request : function(method, path, data, cb)
-    {
-        var headers = _.extend({
-            'Accept'       : 'application/json',
-            'Content-Type' : 'application/json'
-        }, data.header);
-
-        // @todo update where we send data.body to request() to make it always a string
-        // then we can remove the JSON.stringify from here and just do data.body.length
-        if (data && data.body) {
-            headers['Content-Length'] = JSON.stringify(data.body).length;
-        }
-
-        var urlParts = url.parse(path, true);
-        var query    = _.extend({}, urlParts.query, data.query);
-
-        var fixedPath = url.format({
-            pathname : urlParts.pathname,
-            query    : query,
-            hash     : urlParts.hash
-        });
-
-        var options = {
-            hostname        : this.hostname,
-            port            : this.port,
-            method          : method,
-            path            : fixedPath,
-            withCredentials : false,
-            headers         : headers
-        };
-
-        return this._request(options, data.body, cb);
     },
 
     serializeToLocalStorage : function()
     {
-        store.set(this.namespace + 'oauth', {
-            clientId     : this.clientId,
-            clientSecret : this.clientSecret,
-            hostname     : this.hostname,
-            port         : this.port,
-            secure       : this.secure,
-            tokenParam   : this.tokenParam,
-            accessToken  : this.accessToken,
-            tokenType    : this.tokenType,
-            rawData      : this.rawData
+        localStorage.set(this.state.namespace + 'oauth', {
+            accessToken  : this.state.accessToken,
+            tokenType    : this.state.tokenType,
+            tokenData    : this.state.tokenData
         });
     },
 
     unserializeFromLocalStorage : function()
     {
-        var data = store.get(this.namespace + 'oauth');
+        var data = localStorage.get(this.state.namespace + 'oauth');
 
-        this.clientId     = data.clientId;
-        this.clientSecret = data.clientSecret;
-        this.hostname     = data.hostname;
-        this.port         = data.port;
-        this.secure       = data.secure;
-        this.tokenParam   = data.tokenParam;
-        this.accessToken  = data.accessToken;
-        this.tokenType    = data.tokenType;
-        this.rawData      = data.rawData;
+        this.state.accessToken = data.accessToken;
+        this.state.tokenType   = data.tokenType;
+        this.state.tokenData   = data.tokenData;
     }
 });

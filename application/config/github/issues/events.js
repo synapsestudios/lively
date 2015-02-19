@@ -49,6 +49,24 @@ module.exports = {
                 paramOwner,
                 paramRepo
             ]
+        },
+        {
+            name     : 'Get a single event',
+            synopsis : '',
+            method   : 'GET',
+            uri      : '/repos/:owner/:repo/issues/events/:id',
+            oauth    : true,
+            params   : [
+                paramOwner,
+                paramRepo,
+                {
+                    name        : 'id',
+                    required    : true,
+                    type        : 'integer',
+                    location    : 'uri',
+                    description : 'The event ID'
+                }
+            ]
         }
     ]
 };

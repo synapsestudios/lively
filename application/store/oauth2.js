@@ -36,9 +36,10 @@ module.exports = Fluxxor.createStore({
 
     onSetToken : function(tokenData)
     {
-        this.state.accessToken = tokenData.accessToken;
-        this.state.tokenType   = tokenData.tokenType;
-        this.state.tokenData   = tokenData.tokenData;
+        this.state.accessToken  = tokenData.accessToken;
+        this.state.refreshToken = tokenData.refreshToken;
+        this.state.tokenType    = tokenData.tokenType;
+        this.state.tokenData    = tokenData.tokenData;
 
         this.serializeToLocalStorage();
 
@@ -57,17 +58,19 @@ module.exports = Fluxxor.createStore({
     {
         localStorage.set(this.state.namespace + 'oauth', {
             accessToken  : this.state.accessToken,
+            refreshToken : this.state.refreshToken,
             tokenType    : this.state.tokenType,
-            tokenData    : this.state.tokenData
+            tokenData    : this.state.tokenData,
+
         });
     },
 
     unserializeFromLocalStorage : function()
     {
         var data = localStorage.get(this.state.namespace + 'oauth');
-
-        this.state.accessToken = data.accessToken;
-        this.state.tokenType   = data.tokenType;
-        this.state.tokenData   = data.tokenData;
+        this.state.accessToken  = data.accessToken;
+        this.state.refreshToken = data.refreshToken;
+        this.state.tokenType    = data.tokenType;
+        this.state.tokenData    = data.tokenData;
     }
 });

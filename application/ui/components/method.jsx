@@ -119,8 +119,7 @@ module.exports = React.createClass({
             accessToken = this.getFlux().store('OAuthStore').getState().accessToken;
 
         var headerParams = {},
-            bodyParams   = {},
-            queryParams  = {};
+            data         = {};
 
         var buttonNode = this.refs.tryItButton.getDOMNode();
 
@@ -160,16 +159,14 @@ module.exports = React.createClass({
             var paramData = _.findWhere(this.props.params, { name : name });
 
             if (paramData.type === 'file') {
-                bodyParams = value;
+                data = value;
             } else if (paramData.location === 'header') {
                 headerParams[name] = value;
-            } else if (paramData.location === 'query' || method === 'GET') {
-                queryParams[name] = value;
             } else {
                 if (_(this.state.nullFields).contains(name)) {
-                    bodyParams[name] = null;
+                    data[name] = null;
                 } else {
-                    bodyParams[name] = value;
+                    data[name] = value;
                 }
             }
 
@@ -182,8 +179,7 @@ module.exports = React.createClass({
                 accessToken,
                 method,
                 uri,
-                queryParams,
-                bodyParams,
+                data,
                 headerParams
             );
         } else {
@@ -192,8 +188,7 @@ module.exports = React.createClass({
                 this.props.name,
                 method,
                 uri,
-                queryParams,
-                bodyParams,
+                data,
                 headerParams
             );
         }

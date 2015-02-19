@@ -2,88 +2,74 @@
 'use strict';
 
 var HttpGateway = require('synapse-common/http/gateway');
+var AuthGateway = require('synapse-common/http/auth-gateway');
 var Q           = require('q');
 var http        = require('http');
 var https       = require('https');
 var config      = require('./config');
 var _           = require('underscore');
+var store       = require('store');
 
 module.exports = HttpGateway.extend({
 
     constructor : function(namespace)
     {
-        this.config = config.apis[namespace].api;
+        this.config      = config.apis[namespace].api;
         this.oauthConfig = config.apis[namespace].oauth2;
+
+        var authGateway = new AuthGateway(this.oauthConfig);
+        this.handle401  = authGateway.handle401;
+
+        this.tokenStorageLocation = namespace + 'oauth';
     },
 
     /**
      * Make a request without authentication
      *
-     * @param  {String} method      HTTP method
-     * @param  {String} path        Endpoint path
-     * @param  {Object} queryParams
-     * @param  {Object} bodyParams
-     * @param  {Object} headers
+     * @param  {String} method  HTTP method
+     * @param  {String} path    Endpoint path
+     * @param  {Object} data    The request data
+     * @param  {Object} headers The request headers
      * @return promise
      */
-    request : function(method, path, queryParams, bodyParams, headers)
+    request : function(method, path, data, headers)
     {
         this.accessToken = false;
 
-        return this.apiRequest(
-            method,
-            path,
-            queryParams,
-            bodyParams,
-            headers
-        );
+        return this.apiRequest(method, path, data, headers);
     },
 
     /**
      * Make a request with authentication
      *
-     * @param  {String} method      HTTP method
-     * @param  {String} path        Endpoint path
-     * @param  {Object} queryParams [description]
-     * @param  {Object} bodyParams  [description]
-     * @param  {Object} headers     [description]
+     * @param  {String} method  HTTP method
+     * @param  {String} path    Endpoint path
+     * @param  {Object} data    The request data
+     * @param  {Object} headers The request headers
      * @return promise
      */
-    authRequest : function(accessToken, method, path, queryParams, bodyParams, headers)
+    authRequest : function(method, path, data, headers)
     {
-        this.accessToken = accessToken;
+        this.accessToken = store.get(this.tokenStorageLocation);
 
-        return this.apiRequest(
-            method,
-            path,
-            queryParams,
-            bodyParams,
-            headers
-        );
+        return this.apiRequest(method, path, data, headers);
     },
 
     /**
      * Set the info returned by getLastRequestInfo
      *
-     * @param  {String} method      HTTP method
-     * @param  {String} path        Endpoint path
-     * @param  {Object} queryParams [description]
-     * @param  {Object} bodyParams  [description]
-     * @param  {Object} headers     [description]
+     * @param  {String} method  HTTP method
+     * @param  {String} path    Endpoint path
+     * @param  {Object} data    The request data
+     * @param  {Object} headers The request headers
      */
-    setLastRequestInfo : function(method, path, queryParams, bodyParams, headers)
+    setLastRequestInfo : function(method, path, data, headers)
     {
         var uri, config, data;
 
         config = this.getConfig();
-
-        if (queryParams && ! _(queryParams).isEmpty()) {
-            path = path + '?' + this.toQuery(queryParams);
-        }
-
-        uri = (config.secure ? 'https' : 'http') + '://' + config.hostname + path;
-
-        data = _.extend({}, queryParams, bodyParams);
+        path   = this.getPathWithParams(method, path, data);
+        uri    = (config.secure ? 'https' : 'http') + '://' + config.hostname + path;
 
         this.lastRequestInfo = {
             method  : method,
@@ -109,12 +95,11 @@ module.exports = HttpGateway.extend({
      *
      * @param  string  method       Request method
      * @param  string  path         Request path
-     * @param  object  queryParams  Query params (if any)
-     * @param  object  bodyParams   Body params (if any)
+     * @param  object  data         Body or query params (if any)
      * @param  object  headers      Additional headers (if any)
      * @return promise
      */
-    apiRequest : function(method, path, queryParams, bodyParams, headers)
+    apiRequest : function(method, path, data, headers)
     {
         var options, reader, boundaryKey, gateway = this;
 
@@ -122,20 +107,18 @@ module.exports = HttpGateway.extend({
 
         _.extend(options.headers, headers);
 
-        if (queryParams && ! _(queryParams).isEmpty()) {
-            options.path = path + '?' + this.toQuery(queryParams);
-        }
+        options.path = this.getPathWithParams(method, path, data);
 
         if (_.isUndefined(headers)) {
             headers = {};
         }
 
-        this.setLastRequestInfo(method, path, queryParams, bodyParams, options.headers);
+        this.setLastRequestInfo(method, path, data, options.headers);
 
-        if (bodyParams instanceof File) {
-            boundaryKey = Math.random().toString(16);
-            options.headers['Content-Type'] = 'multipart/form-data; boundary=' + boundaryKey;
-            options.headers['Content-Length'] = bodyParams.size;
+        if (data instanceof File) {
+            boundaryKey                       = Math.random().toString(16);
+            options.headers['Content-Type']   = 'multipart/form-data; boundary=' + boundaryKey;
+            options.headers['Content-Length'] = data.size;
         }
 
         return Q.Promise(_.bind(function(resolve, reject) {
@@ -155,11 +138,15 @@ module.exports = HttpGateway.extend({
                         responseData = responseText;
                     }
 
-                    resolve({
-                        data    : responseData,
-                        headers : req.xhr.getAllResponseHeaders(),
-                        status  : response.statusCode
-                    });
+                    if (response.statusCode === 401 && this.accessToken !== false && this.accessToken.refreshToken) {
+                        gateway.handle401(resolve, reject, method, path, data, headers);
+                    } else {
+                        resolve({
+                            data    : responseData,
+                            headers : req.xhr.getAllResponseHeaders(),
+                            status  : response.statusCode
+                        });
+                    }
                 });
             });
 
@@ -167,26 +154,43 @@ module.exports = HttpGateway.extend({
                 reject(e);
             });
 
-            if (bodyParams && ! _(bodyParams).isEmpty()) {
-                if (bodyParams instanceof File) {
+            if (data && ! _(data).isEmpty()) {
+                if (data instanceof File) {
                     reader = new FileReader();
                     reader.onloadend = function () {
-                        req.write(gateway.getUploadPayload(bodyParams, reader.result, boundaryKey));
+                        req.write(gateway.getUploadPayload(data, reader.result, boundaryKey));
                         req.end();
                     };
-                    reader.readAsArrayBuffer(bodyParams);
-                } else if (_.isObject(bodyParams)) {
-                    bodyParams = JSON.stringify(bodyParams);
-                    req.write(bodyParams);
+                    reader.readAsArrayBuffer(data);
+                } else if (_.isObject(data)) {
+                    data = JSON.stringify(data);
+                    req.write(data);
                     req.end();
                 } else {
-                    req.write(bodyParams);
+                    req.write(data);
                     req.end();
                 }
             } else {
                 req.end();
             }
         }, this));
+    },
+
+    /**
+     * Return the path, with GET parameters appended only if the method is GET
+     *
+     * @param  {String} method HTTP Method
+     * @param  {String} path   Request path
+     * @param  {Object} data   Request data
+     * @return {String}
+     */
+    getPathWithParams : function(method, path, data)
+    {
+        if (method.toUpperCase() === 'GET' && ! _(data).isEmpty()) {
+            path = path + '?' + this.toQuery(data);
+        }
+
+        return path;
     },
 
     /**
@@ -246,8 +250,8 @@ module.exports = HttpGateway.extend({
 
         config = this.getConfig();
 
-        if (this.accessToken) {
-            options.headers.Authorization = this.oauthConfig.tokenParam + ' ' + this.accessToken;
+        if (this.accessToken !== false) {
+            options.headers.Authorization = this.oauthConfig.tokenParam + ' ' + this.accessToken.accessToken;
         }
 
         return options;

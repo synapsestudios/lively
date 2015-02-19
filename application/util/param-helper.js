@@ -36,10 +36,16 @@ module.exports = {
 
     getDefaultValueForParam : function(param)
     {
+        // array[hash] defaults are provided by their sub-params
+        if (param.type == 'array[hash]' && param.hasOwnProperty('defaultValue')) {
+            delete param.defaultValue;
+        }
         if (param.hasOwnProperty('defaultValue')) {
             return param.defaultValue;
         } else if (this.isArrayParam(param.type)) {
             return [];
+        } else if (param.type === 'string') {
+            return '';
         } else if (param.type === 'boolean') {
             return _(param.defaultValue).isUndefined() ? true : param.defaultValue;
         } else if (param.type === 'enum') {

@@ -60,7 +60,6 @@ module.exports = React.createClass({
                 />
             );
 
-
         } else {
             resourceComponent = (
                 <div className='panel'>

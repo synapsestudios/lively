@@ -52,25 +52,14 @@ module.exports = React.createClass({
         if (resource) {
             window.document.title = resource.title;
 
-            // Allow the docs to use either methods or endpoints, but not both.
-            if (typeof(resource.endpoints) === 'undefined')
-            {
-                resourceComponent = (
+            resourceComponent = (
                 <Resource
                     name       = {resource.name}
                     synopsis   = {resource.synopsis}
-                    endpoints  = {resource.methods}
+                    endpoints  = {_.isUndefined(resource.endpoints) ? resource.methods : resource.endpoints}
                 />
-                );
-            } else {
-                resourceComponent = (
-                <Resource
-                    name       = {resource.name}
-                    synopsis   = {resource.synopsis}
-                    endpoints  = {resource.endpoints}
-                />
-                );
-            }
+            );
+
 
         } else {
             resourceComponent = (

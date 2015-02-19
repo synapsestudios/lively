@@ -44,6 +44,8 @@ module.exports = {
             return param.defaultValue;
         } else if (this.isArrayParam(param.type)) {
             return [];
+        } else if (param.type === 'string') {
+            return '';
         } else if (param.type === 'boolean') {
             return _(param.defaultValue).isUndefined() ? true : param.defaultValue;
         } else if (param.type === 'enum') {

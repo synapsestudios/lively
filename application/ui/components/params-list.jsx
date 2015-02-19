@@ -13,6 +13,7 @@ var Select                = require('./input/select');
 var Text                  = require('./input/text');
 var ResumableUpload       = require('./input/resumable-upload');
 var NestedPropertyHandler = require('../../util/nested-property-handler');
+var UriHelperMixin        = require('../../util/uri-helper');
 
 module.exports = React.createClass({
 
@@ -26,7 +27,8 @@ module.exports = React.createClass({
     mixins : [
         RenderParamsMixin,
         FluxMixin,
-        StoreWatchMixin('RequestStore')
+        StoreWatchMixin('RequestStore'),
+        UriHelperMixin
     ],
 
     getStateFromFlux : function()
@@ -35,11 +37,12 @@ module.exports = React.createClass({
 
         return {
             requestValues  : (requestState.endpoint[this.props.methodName] || {}).values,
-            excludedFields : (requestState.endpoint[this.props.methodName] || {}).excludedFields
+            excludedFields : (requestState.endpoint[this.props.methodName] || {}).excludedFields,
+            nullFields     : (requestState.endpoint[this.props.methodName] || {}).nullFields
         };
     },
 
-    componentWillMount : function()
+    componentDidMount : function()
     {
         this.getFlux().actions.request.setRequestValues(
             this.props.methodName,
@@ -63,7 +66,13 @@ module.exports = React.createClass({
             }
 
             if (type === 'integer') {
-                value = parseInt(value, 10);
+                // ensure we can allow negative numbers
+                if (value != '-') {
+                    value = parseInt(value, 10);
+                    if (isNaN(value)) {
+                        value = '';
+                    }
+                }
             }
 
             values = NestedPropertyHandler.set(values, path, value);
@@ -108,15 +117,30 @@ module.exports = React.createClass({
         }
     },
 
+    nullValueChanged : function(event)
+    {
+        var path, requestActions;
+
+        path = event.currentTarget.dataset.path;
+
+        requestActions = this.getFlux().actions.request;
+
+        if (event.currentTarget.checked) {
+            requestActions.addToNullFields(this.props.methodName, path);
+        } else {
+            requestActions.removeFromNullFields(this.props.methodName, path);
+        }
+    },
+
     renderParam : function(param, path)
     {
-        var renderedMarkup, checkboxComponent;
+        var renderedMarkup, includeCheckboxComponent, nullCheckboxComponent;
 
         // Record the "path" of this param in the request body object
         path = this.appendPath(path, param.name);
 
         if (path.length === 1) {
-            checkboxComponent = (
+            includeCheckboxComponent = (
                 <td>
                     <input
                         type      = "checkbox"
@@ -127,14 +151,34 @@ module.exports = React.createClass({
                     />
                 </td>
             );
+            if (
+                param.type != 'file'
+                && this.props.requestMethod != 'GET'
+                && !this.isParameterNameInUri(param.name, this.props.uri)
+            ) {
+                nullCheckboxComponent = (
+                    <td>
+                        <input
+                            type = "checkbox"
+                            name = {'null-' + param.name}
+                            data-path = {path[0]}
+                            onChange  = {this.nullValueChanged}
+                            checked   = {_(this.state.nullFields).contains(path[0])}
+                        />
+                    </td>
+                );
+            } else {
+                nullCheckboxComponent = (<td>N/A</td>);
+            }
         } else {
-            checkboxComponent = null;
+            includeCheckboxComponent = null;
         }
 
         renderedMarkup = (
             <tr key='param'>
                 <td><code>{param.name}</code></td>
-                {checkboxComponent}
+                {includeCheckboxComponent}
+                {nullCheckboxComponent}
                 <td>{this.renderParamInputOrInputs(param, path)}</td>
                 <td>{this.renderInputTypeDescription(param.type)}</td>
                 {this.renderDescriptionColumn(param)}
@@ -328,6 +372,7 @@ module.exports = React.createClass({
                 <tr>
                     <th>Parameter</th>
                     <th>Include</th>
+                    <th>NULL</th>
                     <th>Value</th>
                     <th>Type</th>
                     <th>Description</th>

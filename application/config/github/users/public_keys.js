@@ -17,8 +17,8 @@ var paramUsername = {
 };
 
 module.exports = {
-    name     : 'Public Keys',
-    methods : [
+    name      : 'Public Keys',
+    endpoints : [
         {
             name     : 'List public keys for a user',
             synopsis : 'Lists the verified public keys for a user. This is accessible by anyone.',

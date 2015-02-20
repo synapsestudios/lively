@@ -25,8 +25,8 @@ var paramId = {
 };
 
 module.exports = {
-    name     : 'Hooks',
-    methods : [
+    name      : 'Hooks',
+    endpoints : [
         {
             name     : 'List hooks',
             synopsis : '',
@@ -80,6 +80,56 @@ module.exports = {
                     type         : 'array[string]',
                     location     : 'body',
                     description  : 'Determines what events the hook is triggered for.'
+                },
+                {
+                    name        : 'active',
+                    required    : false,
+                    type        : 'boolean',
+                    location    : 'body',
+                    description : 'Determines whether the hook is actually triggered on pushes.'
+                }
+            ]
+        },
+        {
+            name     : 'Edit a hook',
+            synopsis : '',
+            method   : 'POST',
+            uri      : '/repos/:owner/:repo/hooks/:id',
+            oauth    : true,
+            params   : [
+                paramOwner,
+                paramRepo,
+                paramId,
+                {
+                    name        : 'config',
+                    required    : true,
+                    type        : 'hash with variable keys',
+                    location    : 'body',
+                    description : 'Key/value pairs to provide settings for this hook. These settings vary between the services and are defined in the github-services repository. Booleans are stored internally as “1” for true, and “0” for false. Any JSON true/false values will be converted automatically.'
+                },
+                {
+                    name         : 'events',
+                    required     : false,
+                    defaultValue : ['push'],
+                    type         : 'array[string]',
+                    location     : 'body',
+                    description  : 'Determines what events the hook is triggered for.'
+                },
+                {
+                    name         : 'add_events',
+                    required     : false,
+                    defaultValue : '',
+                    type         : 'array[string]',
+                    location     : 'body',
+                    description  : 'Determines a list of events to be added to the list of events that the Hook triggers for.'
+                },
+                {
+                    name         : 'remove_events',
+                    required     : false,
+                    defaultValue : '',
+                    type         : 'array[string]',
+                    location     : 'body',
+                    description  : 'Determines a list of events to be removed from the list of events that the Hook triggers for.'
                 },
                 {
                     name        : 'active',

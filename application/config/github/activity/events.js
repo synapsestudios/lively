@@ -33,9 +33,9 @@ var paramUsername = {
 };
 
 module.exports = {
-    name     : 'Events',
-    synopsis : 'This is a read-only API to the GitHub events. These events power the various activity streams on the site.',
-    methods : [
+    name      : 'Events',
+    synopsis  : 'This is a read-only API to the GitHub events. These events power the various activity streams on the site.',
+    endpoints : [
         {
             name     : 'List public events',
             synopsis : '',

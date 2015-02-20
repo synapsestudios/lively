@@ -33,8 +33,8 @@ var paramOrg = {
 };
 
 module.exports = {
-    name     : 'Repositories',
-    methods : [
+    name      : 'Repositories',
+    endpoints : [
         {
             name     : 'List your repositories',
             synopsis : 'List repositories for the authenticated user. Note that this does not include repositories owned by organizations which the user can access. You can list user organizations and list organization repositories separately.',
@@ -539,6 +539,7 @@ module.exports = {
         require('./repositories/commits'),
         require('./repositories/contents'),
         require('./repositories/deploy_keys'),
+        require('./repositories/deployments'),
         require('./repositories/forks'),
         require('./repositories/hooks'),
         require('./repositories/merging'),

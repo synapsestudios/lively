@@ -30,8 +30,8 @@ var paramUser = {
 };
 
 module.exports = {
-    name    : 'Members',
-    methods : [
+    name      : 'Members',
+    endpoints : [
         {
             name     : 'Members list',
             synopsis : 'List all users who are members of an organization. A member is a user that belongs to at least 1 team in the organization. If the authenticated user is also an owner of this organization then both concealed and public members will be returned. If the requester is not an owner of the organization the query will be redirected to the public members list.',
@@ -106,6 +106,49 @@ module.exports = {
             params   : [
                 paramOrg,
                 paramUser
+            ]
+        },
+        {
+            name     : 'List your organization memberships',
+            synopsis : '',
+            method   : 'GET',
+            uri      : '/user/memberships/orgs',
+            oauth    : true,
+            params   : [
+                {
+                    name         : 'state',
+                    required     : false,
+                    type         : 'string',
+                    location     : 'query',
+                    description  : 'Indicates the state of the memberships to return. Can be either active or pending. If not specified, both active and pending memberships are returned.'
+                }
+            ]
+        },
+        {
+            name     : 'Get your organization membership',
+            synopsis : '',
+            method   : 'GET',
+            uri      : '/user/memberships/orgs/:org',
+            oauth    : true,
+            params   : [
+                paramOrg
+            ]
+        },
+        {
+            name     : 'Edit your organization membership',
+            synopsis : '',
+            method   : 'PATCH',
+            uri      : '/user/memberships/orgs/:org',
+            oauth    : true,
+            params   : [
+                paramOrg,
+                {
+                    name         : 'state',
+                    required     : true,
+                    type         : 'string',
+                    location     : 'body',
+                    description  : 'The state that the membership should be in. Only "active" will be accepted.'
+                }
             ]
         }
     ]

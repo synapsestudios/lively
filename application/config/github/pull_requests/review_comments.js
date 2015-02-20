@@ -67,9 +67,9 @@ var paramSince = {
 };
 
 module.exports = {
-    name     : 'Review Comments',
-    synopsis : 'Pull Request Review Comments are comments on a portion of the unified diff. These are separate from Commit Comments (which are applied directly to a commit, outside of the Pull Request view), and Issue Comments (which do not reference a portion of the unified diff).',
-    methods : [
+    name      : 'Review Comments',
+    synopsis  : 'Pull Request Review Comments are comments on a portion of the unified diff. These are separate from Commit Comments (which are applied directly to a commit, outside of the Pull Request view), and Issue Comments (which do not reference a portion of the unified diff).',
+    endpoints : [
         {
             name     : 'List comments on a pull request',
             synopsis : '',

@@ -25,8 +25,8 @@ var paramAssignee = {
 };
 
 module.exports = {
-    name    : 'Assignees',
-    methods : [
+    name      : 'Assignees',
+    endpoints : [
         {
             name     : 'List assignees',
             synopsis : 'This call lists all the available assignees (owner + collaborators) to which issues may be assigned.',

@@ -107,6 +107,49 @@ module.exports = {
                 paramOrg,
                 paramUser
             ]
+        },
+        {
+            name     : 'List your organization memberships',
+            synopsis : '',
+            method   : 'GET',
+            uri      : '/user/memberships/orgs',
+            oauth    : true,
+            params   : [
+                {
+                    name         : 'state',
+                    required     : false,
+                    type         : 'string',
+                    location     : 'query',
+                    description  : 'Indicates the state of the memberships to return. Can be either active or pending. If not specified, both active and pending memberships are returned.'
+                }
+            ]
+        },
+        {
+            name     : 'Get your organization membership',
+            synopsis : '',
+            method   : 'GET',
+            uri      : '/user/memberships/orgs/:org',
+            oauth    : true,
+            params   : [
+                paramOrg
+            ]
+        },
+        {
+            name     : 'Edit your organization membership',
+            synopsis : '',
+            method   : 'PATCH',
+            uri      : '/user/memberships/orgs/:org',
+            oauth    : true,
+            params   : [
+                paramOrg,
+                {
+                    name         : 'state',
+                    required     : true,
+                    type         : 'string',
+                    location     : 'body',
+                    description  : 'The state that the membership should be in. Only "active" will be accepted.'
+                }
+            ]
         }
     ]
 };

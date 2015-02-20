@@ -24,6 +24,14 @@ var paramId = {
     description : 'The ID of the gist.'
 };
 
+var paramSHA = {
+    name        : 'sha',
+    required    : true,
+    type        : 'string',
+    location    : 'uri',
+    description : 'The SHA for the specific revision of the gist.'
+};
+
 module.exports = {
     name     : 'Gists',
     synopsis : 'You can read public gists and create them for anonymous users without a token; however, to read or write gists on a user’s behalf the **gist** OAuth scope is required.',
@@ -77,6 +85,17 @@ module.exports = {
             oauth    : false,
             params   : [
                 paramId
+            ]
+        },
+        {
+            name     : 'Get a specific revision of a gist',
+            synopsis : '',
+            method   : 'GET',
+            uri      : '/gists/:id/:sha',
+            oauth    : false,
+            params   : [
+                paramId,
+                paramSHA
             ]
         },
         {

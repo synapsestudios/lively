@@ -56,6 +56,14 @@ var paramName = {
     description  : 'The shorthand name of the company.'
 };
 
+var paramDescription = {
+    name         : 'description',
+    required     : false,
+    type         : 'string',
+    location     : 'body',
+    description  : 'The description of the company.'
+};
+
 module.exports = {
     name    : 'Organizations',
     methods : [
@@ -99,7 +107,8 @@ module.exports = {
                 paramCompany,
                 paramEmail,
                 paramLocation,
-                paramName
+                paramName,
+                paramDescription
             ]
         }
     ],

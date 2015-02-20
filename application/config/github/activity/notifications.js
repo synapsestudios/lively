@@ -109,7 +109,8 @@ module.exports = {
             oauth    : true,
             params   : [
                 paramOwner,
-                paramRepo
+                paramRepo,
+                paramLastReadAt
             ]
         },
         {

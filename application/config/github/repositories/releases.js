@@ -51,6 +51,35 @@ module.exports = {
             ]
         },
         {
+            name     : 'Get the latest release',
+            synopsis : 'View the latest published release for the repository.',
+            method   : 'GET',
+            uri      : '/repos/:owner/:repo/releases/latest',
+            oauth    : false,
+            params   : [
+                paramOwner,
+                paramRepo
+            ]
+        },
+        {
+            name     : 'Get a release by tag name',
+            synopsis : 'Get a release with the specified tag. Users must have push access to the repository to view draft releases.',
+            method   : 'GET',
+            uri      : '/repos/:owner/:repo/releases/tags/:tag',
+            oauth    : false,
+            params   : [
+                paramOwner,
+                paramRepo,
+                {
+                    name         : 'tag',
+                    required     : true,
+                    type         : 'string',
+                    location     : 'uri',
+                    description  : 'The name of the tag.'
+                },
+            ]
+        },
+        {
             name     : 'Create a release',
             synopsis : '',
             method   : 'POST',

@@ -539,6 +539,7 @@ module.exports = {
         require('./repositories/commits'),
         require('./repositories/contents'),
         require('./repositories/deploy_keys'),
+        require('./repositories/deployments'),
         require('./repositories/forks'),
         require('./repositories/hooks'),
         require('./repositories/merging'),

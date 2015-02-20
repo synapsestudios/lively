@@ -39,7 +39,7 @@ module.exports = {
                 {
                     name         : 'ref',
                     required     : false,
-                    defaultValue : 'the repository’s default branch (usually master)',
+                    defaultValue : 'master',
                     type         : 'string',
                     location     : 'uri',
                     description  : 'The name of the commit/branch/tag.'
@@ -59,7 +59,7 @@ module.exports = {
                 {
                     name         : 'ref',
                     required     : false,
-                    defaultValue : 'the repository’s default branch (usually master)',
+                    defaultValue : 'master',
                     type         : 'string',
                     location     : 'uri',
                     description  : 'The name of the commit/branch/tag.'
@@ -93,7 +93,7 @@ module.exports = {
                 {
                     name         : 'branch',
                     required     : false,
-                    defaultValue : 'the repository’s default branch (usually master)',
+                    defaultValue : 'master',
                     type         : 'string',
                     location     : 'body',
                     description  : 'The branch name.'
@@ -134,7 +134,7 @@ module.exports = {
                 {
                     name         : 'branch',
                     required     : false,
-                    defaultValue : 'the repository’s default branch (usually master)',
+                    defaultValue : 'master',
                     type         : 'string',
                     location     : 'body',
                     description  : 'The branch name.'
@@ -168,7 +168,7 @@ module.exports = {
                 {
                     name         : 'branch',
                     required     : false,
-                    defaultValue : 'the repository’s default branch (usually master)',
+                    defaultValue : 'master',
                     type         : 'string',
                     location     : 'body',
                     description  : 'The branch name.'
@@ -199,7 +199,7 @@ module.exports = {
                 {
                     name         : 'ref',
                     required     : true,
-                    defaultValue : 'the repository’s default branch (usually master)',
+                    defaultValue : 'master',
                     type         : 'string',
                     location     : 'uri',
                     description  : 'A valid Git reference.'

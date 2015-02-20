@@ -26,7 +26,7 @@ var paramId = {
 
 module.exports = {
     name     : 'Releases',
-    methods : [
+    endpoints : [
         {
             name     : 'List releases for a repository',
             synopsis : '',

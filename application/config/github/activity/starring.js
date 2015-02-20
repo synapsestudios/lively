@@ -52,7 +52,7 @@ var paramDirection = {
 
 module.exports = {
     name     : 'Starring',
-    methods : [
+    endpoints : [
         {
             name     : 'List Stargazers',
             synopsis : '',

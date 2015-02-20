@@ -18,7 +18,7 @@ var paramRepo = {
 
 module.exports = {
     name     : 'Statistics',
-    methods : [
+    endpoints : [
         {
             name     : 'Get contributors list with additions, deletions, and commit counts',
             synopsis : '',

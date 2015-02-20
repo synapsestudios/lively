@@ -2,7 +2,7 @@
 
 module.exports = {
     name     : 'Users',
-    methods : [
+    endpoints : [
         {
             name     : 'Get a single user',
             synopsis : '',

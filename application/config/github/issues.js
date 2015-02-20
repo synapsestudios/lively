@@ -125,7 +125,7 @@ var paramOrg = {
 
 module.exports = {
     name    : 'Issues',
-    methods : [
+    endpoints : [
         {
             name     : 'List issues (all)',
             synopsis : 'List all issues across all the authenticated user’s visible repositories including owned repositories, member repositories, and organization repositories.',

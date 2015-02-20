@@ -26,7 +26,7 @@ var paramPath = {
 
 module.exports = {
     name     : 'Contents',
-    methods : [
+    endpoints : [
         {
             name     : 'Get the README',
             synopsis : '',

@@ -65,7 +65,7 @@ var paramNumber = {
 
 module.exports = {
     name    : 'Milestones',
-    methods : [
+    endpoints : [
         {
             name     : 'List milestones for a repository',
             synopsis : '',

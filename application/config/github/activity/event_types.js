@@ -8,5 +8,5 @@ module.exports = {
     name     : 'Event Types & Payloads',
     slug     : 'event-types',
     synopsis : marked(eventTypesSummary),
-    methods  : []
+    endpoints  : []
 };

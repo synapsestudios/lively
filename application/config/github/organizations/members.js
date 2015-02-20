@@ -31,7 +31,7 @@ var paramUser = {
 
 module.exports = {
     name    : 'Members',
-    methods : [
+    endpoints : [
         {
             name     : 'Members list',
             synopsis : 'List all users who are members of an organization. A member is a user that belongs to at least 1 team in the organization. If the authenticated user is also an owner of this organization then both concealed and public members will be returned. If the requester is not an owner of the organization the query will be redirected to the public members list.',

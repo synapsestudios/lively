@@ -43,7 +43,7 @@ var paramEncoding = {
 module.exports = {
     name     : 'Blobs',
     synopsis : 'Since blobs can be any arbitrary binary data, the input and responses for the blob API takes an encoding parameter that can be either `utf-8` or `base64`. If your data cannot be losslessly sent as a UTF-8 string, you can base64 encode it.',
-    methods : [
+    endpoints : [
         {
             name     : 'Get a Blob',
             synopsis : 'This API supports blobs up to 100 megabytes in size.',

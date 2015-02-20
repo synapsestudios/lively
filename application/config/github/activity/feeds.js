@@ -6,7 +6,7 @@ var listFeedsSummary = fs.readFileSync(__dirname + '/list-feeds-summary.md').toS
 
 module.exports = {
     name     : 'Feeds',
-    methods : [
+    endpoints : [
         {
             name     : 'List feeds',
             synopsis : marked(listFeedsSummary),

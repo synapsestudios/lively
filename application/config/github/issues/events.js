@@ -26,7 +26,7 @@ var paramIssueNumber = {
 
 module.exports = {
     name    : 'Events',
-    methods : [
+    endpoints : [
         {
             name     : 'List events for an issue',
             synopsis : '',

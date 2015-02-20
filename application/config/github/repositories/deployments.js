@@ -18,7 +18,7 @@ var paramRepo = {
 
 module.exports = {
     name     : 'Deployments',
-    methods : [
+    endpoints : [
         {
             name     : 'List Deployments',
             synopsis : 'Simple filtering of deployments is available via query parameters.',

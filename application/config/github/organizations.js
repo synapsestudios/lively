@@ -66,7 +66,7 @@ var paramDescription = {
 
 module.exports = {
     name    : 'Organizations',
-    methods : [
+    endpoints : [
         {
             name     : 'List User Organizations (all)',
             synopsis : 'List all public organizations for an unauthenticated user. Lists private and public organizations for authenticated users.',

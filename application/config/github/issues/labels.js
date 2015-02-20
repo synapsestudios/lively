@@ -58,7 +58,7 @@ var paramMilestoneNumber = {
 
 module.exports = {
     name    : 'Labels',
-    methods : [
+    endpoints : [
         {
             name     : 'List all labels for this repository',
             synopsis : '',

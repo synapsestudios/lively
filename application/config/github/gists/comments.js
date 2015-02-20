@@ -18,7 +18,7 @@ var paramId = {
 
 module.exports = {
     name     : 'Comments',
-    methods : [
+    endpoints : [
         {
             name     : 'List comments on a gist',
             synopsis : '',

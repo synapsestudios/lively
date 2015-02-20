@@ -27,7 +27,7 @@ var paramSha = {
 module.exports = {
     name     : 'Tags',
     synopsis : 'This tags API only deals with tag objects - so only annotated tags, not lightweight tags.',
-    methods : [
+    endpoints : [
         {
             name     : 'Get a Tag',
             synopsis : '',

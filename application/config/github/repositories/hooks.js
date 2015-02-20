@@ -26,7 +26,7 @@ var paramId = {
 
 module.exports = {
     name     : 'Hooks',
-    methods : [
+    endpoints : [
         {
             name     : 'List hooks',
             synopsis : '',

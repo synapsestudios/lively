@@ -10,7 +10,7 @@ var paramUsername = {
 
 module.exports = {
     name     : 'Followers',
-    methods : [
+    endpoints : [
         {
             name     : 'List a user’s followers',
             synopsis : '',

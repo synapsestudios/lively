@@ -26,7 +26,7 @@ var paramUsername = {
 
 module.exports = {
     name     : 'Collaborators',
-    methods : [
+    endpoints : [
         {
             name     : 'List collaborators',
             synopsis : 'When authenticating as an organization owner of an organization-owned repository, all organization owners are included in the list of collaborators. Otherwise, only users with access to the repository are returned in the collaborators list.',

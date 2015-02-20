@@ -81,7 +81,7 @@ var paramRepo = {
 module.exports = {
     name     : 'Teams',
     synopsis : 'All actions against teams require at a minimum an authenticated user who is a member of the Owners team in the `:org` being managed. Additionally, OAuth users require the “read:org” scope.', 
-    methods : [
+    endpoints : [
         {
             name     : 'List teams',
             synopsis : '',

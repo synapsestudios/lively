@@ -64,7 +64,7 @@ var paramLastReadAt = {
 
 module.exports = {
     name     : 'Notifications',
-    methods : [
+    endpoints : [
         {
             name     : 'List your notifications',
             synopsis : 'List all notifications for the current user, grouped by repository.',

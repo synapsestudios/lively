@@ -34,7 +34,7 @@ var paramOrg = {
 
 module.exports = {
     name     : 'Repositories',
-    methods : [
+    endpoints : [
         {
             name     : 'List your repositories',
             synopsis : 'List repositories for the authenticated user. Note that this does not include repositories owned by organizations which the user can access. You can list user organizations and list organization repositories separately.',

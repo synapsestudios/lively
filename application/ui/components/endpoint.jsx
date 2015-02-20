@@ -13,6 +13,7 @@ var Checkbox        = require('./input/checkbox');
 var Resumable       = require('../../../bower_components/resumablejs/resumable');
 var ParamHelper     = require('../../util/param-helper');
 var UriHelperMixin  = require('../../util/uri-helper');
+var Button          = require('./button');
 
 var LOADED  = 'loaded',
     LOADING = 'loading',
@@ -283,7 +284,17 @@ module.exports = React.createClass({
             }
         });
 
-        return hasUpload ? null : <a ref='tryItButton' className='button' onClick={this.onSubmit}>Try it</a>;
+        if (hasUpload) {
+            return null;
+        }
+
+        return (
+            <Button
+                ref     = 'tryItButton'
+                onClick = {this.onSubmit} >
+                Try it
+            </Button>
+        );
     },
 
     getErrorMessage: function()

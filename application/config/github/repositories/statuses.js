@@ -17,8 +17,8 @@ var paramRepo = {
 };
 
 module.exports = {
-    name     : 'Statuses',
-    methods : [
+    name      : 'Statuses',
+    endpoints : [
         {
             name     : 'Create a Status',
             synopsis : '',

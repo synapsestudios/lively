@@ -30,8 +30,8 @@ var paramOrder = {
 };
 
 module.exports = {
-    name     : 'Search',
-    methods : [
+    name      : 'Search',
+    endpoints : [
         {
             name     : 'Search repositories',
             synopsis : 'Find repositories via various criteria. This method returns up to 100 results per page.',

@@ -17,8 +17,8 @@ var paramRepo = {
 };
 
 module.exports = {
-    name     : 'Forks',
-    methods : [
+    name      : 'Forks',
+    endpoints : [
         {
             name     : 'List forks',
             synopsis : '',

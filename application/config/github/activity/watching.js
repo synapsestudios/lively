@@ -25,8 +25,8 @@ var paramUsername = {
 };
 
 module.exports = {
-    name     : 'Watching',
-    methods : [
+    name      : 'Watching',
+    endpoints : [
         {
             name     : 'List Watchers',
             synopsis : '',

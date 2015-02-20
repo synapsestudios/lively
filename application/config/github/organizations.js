@@ -56,9 +56,17 @@ var paramName = {
     description  : 'The shorthand name of the company.'
 };
 
+var paramDescription = {
+    name         : 'description',
+    required     : false,
+    type         : 'string',
+    location     : 'body',
+    description  : 'The description of the company.'
+};
+
 module.exports = {
-    name    : 'Organizations',
-    methods : [
+    name      : 'Organizations',
+    endpoints : [
         {
             name     : 'List User Organizations (all)',
             synopsis : 'List all public organizations for an unauthenticated user. Lists private and public organizations for authenticated users.',
@@ -99,7 +107,8 @@ module.exports = {
                 paramCompany,
                 paramEmail,
                 paramLocation,
-                paramName
+                paramName,
+                paramDescription
             ]
         }
     ],

@@ -63,8 +63,8 @@ var paramLastReadAt = {
 };
 
 module.exports = {
-    name     : 'Notifications',
-    methods : [
+    name      : 'Notifications',
+    endpoints : [
         {
             name     : 'List your notifications',
             synopsis : 'List all notifications for the current user, grouped by repository.',
@@ -109,7 +109,8 @@ module.exports = {
             oauth    : true,
             params   : [
                 paramOwner,
-                paramRepo
+                paramRepo,
+                paramLastReadAt
             ]
         },
         {

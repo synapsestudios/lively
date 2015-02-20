@@ -9,9 +9,9 @@ var paramTemplate = {
 };
 
 module.exports = {
-    name     : 'Gitignore',
-    synopsis : 'When you create a new GitHub repository via the API, you can specify a .gitignore template to apply to the repository upon creation. The .gitignore Templates API lists and fetches templates from the GitHub .gitignore repository.',
-    methods : [
+    name      : 'Gitignore',
+    synopsis  : 'When you create a new GitHub repository via the API, you can specify a .gitignore template to apply to the repository upon creation. The .gitignore Templates API lists and fetches templates from the GitHub .gitignore repository.',
+    endpoints : [
         {
             name     : 'Listing available templates',
             synopsis : 'List all templates available to pass as an option when creating a repository.',

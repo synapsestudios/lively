@@ -7,8 +7,19 @@ module.exports = React.createClass({
 
     propTypes : {
         className : React.PropTypes.string,
+        disabled  : React.PropTypes.bool,
         ref       : React.PropTypes.string,
         onClick   : React.PropTypes.func
+    },
+
+    getDefaultProps : function()
+    {
+        return {
+            className : '',
+            disabled  : false,
+            ref       : undefined,
+            onClick   : function () {}
+        };
     },
 
     onClick : function(event)
@@ -22,7 +33,7 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var classes = this.props.className || '';
+        var classes = this.props.className;
 
         classes += ' button';
 

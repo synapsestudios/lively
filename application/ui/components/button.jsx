@@ -24,14 +24,10 @@ module.exports = React.createClass({
     {
         var classes = this.props.className || '';
 
-        if (classes.length > 0) {
-            classes += ' ';
-        }
-
-        classes += 'button';
+        classes += ' button';
 
         if (this.props.disabled === true) {
-            classes += 'disabled';
+            classes += ' button--disabled';
         }
 
         return (

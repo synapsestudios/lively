@@ -302,10 +302,10 @@ module.exports = React.createClass({
         {
             var latency = this.state.responseTimestamp > 0 ? (parseInt(this.state.responseTimestamp) - parseInt(this.state.requestTimestamp)) : 0;
             apiCallInfo = (
-                <ApiCallInfo status={this.state.status}
-                             request={this.state.requestInfo}
-                             response={this.state.response}
-                             latency={latency}
+                <ApiCallInfo status   = {this.state.status}
+                             request  = {this.state.requestInfo}
+                             response = {this.state.response}
+                             latency  = {latency}
                 />
             );
         }

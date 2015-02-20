@@ -63,11 +63,11 @@ module.exports = Fluxxor.createStore({
         response     = payload.response;
         endpointName = payload.endpointName;
 
-        endpoint = this.state.endpoint[endpointName];
-
-        if (! endpoint) {
-            endpoint = this.getBlankEndpointDataObject();
+        if (! this.state.endpoint[endpointName]) {
+            this.state.endpoint[endpointName] = this.getBlankEndpointDataObject();
         }
+
+        endpoint = this.state.endpoint[endpointName];
 
         endpoint.response = response;
         endpoint.loading  = false;

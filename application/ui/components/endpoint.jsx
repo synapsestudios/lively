@@ -274,7 +274,7 @@ module.exports = React.createClass({
 
     getTryItButton: function()
     {
-        var loading, hasUpload = false;
+        var hasUpload = false;
 
         _.each(this.props.params, function(value) {
             if (value.type === 'resumable-upload') {

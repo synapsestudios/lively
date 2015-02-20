@@ -16,10 +16,6 @@ module.exports = React.createClass({
     displayName : 'ApiCallInfo',
 
     propTypes : {
-        status    : React.PropTypes.oneOfType([
-            React.PropTypes.string,
-            React.PropTypes.number
-        ]),
         request   : React.PropTypes.object,
         response  : React.PropTypes.object
     },
@@ -76,7 +72,7 @@ module.exports = React.createClass({
 
         var responseData;
 
-        if (this.props.status === 'loaded' && this.props.response) {
+        if (this.props.response) {
             responseData = (
                 <div className='data__container'>
                     <h3 className='data__header'>Response Status</h3>

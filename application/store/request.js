@@ -44,7 +44,12 @@ module.exports = Fluxxor.createStore({
 
     onRequest : function(requestInfo)
     {
-        this.state.endpoint[requestInfo.endpointName].response = null;
+        var endpoint = this.state.endpoint[requestInfo.endpointName];
+
+        endpoint.response = null;
+        endpoint.loading  = true;
+        endpoint.loaded   = false;
+
         this.state.requestInfo = requestInfo.requestInfo;
         this.state.endpointName = requestInfo.endpointName;
 
@@ -53,24 +58,32 @@ module.exports = Fluxxor.createStore({
 
     onRequestSuccess : function(payload)
     {
-        var response, endpointName;
+        var response, endpoint, endpointName;
 
         response     = payload.response;
         endpointName = payload.endpointName;
 
-        if (! this.state.endpoint[endpointName]) {
-            this.state.endpoint[endpointName] = this.getBlankEndpointDataObject();
+        endpoint = this.state.endpoint[endpointName];
+
+        if (! endpoint) {
+            endpoint = this.getBlankEndpointDataObject();
         }
 
-        this.state.endpoint[endpointName].response = response;
-        this.state.endpoint[endpointName].responseTimestamp = Date.now();
+        endpoint.response = response;
+        endpoint.loading  = false;
+        endpoint.loaded   = true;
+        endpoint.responseTimestamp = Date.now();
 
         this.emit('change');
     },
 
     onRequestFailure : function(endpointName)
     {
-        this.state.endpoint[endpointName].response = false;
+        var endpoint = this.state.endpoint[endpointName];
+
+        endpoint.response = false;
+        endpoint.loading  = false;
+        endpoint.loaded   = true;
 
         this.emit('change');
     },

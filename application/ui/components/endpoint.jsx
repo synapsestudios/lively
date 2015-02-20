@@ -15,10 +15,6 @@ var ParamHelper     = require('../../util/param-helper');
 var UriHelperMixin  = require('../../util/uri-helper');
 var Button          = require('./button');
 
-var LOADED  = 'loaded',
-    LOADING = 'loading',
-    ERROR   = 'error';
-
 module.exports = React.createClass({
 
     displayName : 'Endpoint',
@@ -67,7 +63,8 @@ module.exports = React.createClass({
         }
 
         newState = {
-            status            : endpointData.response ? LOADED : LOADING,
+            loading           : endpointData.loading,
+            loaded            : endpointData.loaded,
             values            : endpointData.values,
             excludedFields    : endpointData.excludedFields,
             nullFields        : endpointData.nullFields,
@@ -127,8 +124,7 @@ module.exports = React.createClass({
 
         if (this.refs.sendToken.getValue() === true && ! accessToken) {
             this.setState({
-                status : ERROR,
-                error  : "No access token provided."
+                error : 'No access token provided.'
             });
             window.scrollTo(0, window.scrollY + buttonNode.getBoundingClientRect().bottom);
             return;
@@ -199,7 +195,9 @@ module.exports = React.createClass({
             );
         }
 
-        this.setState({status : LOADING});
+        this.setState({
+            error : null
+        });
     },
 
     initResumableUpload: function(buttonDOMNode)
@@ -276,7 +274,7 @@ module.exports = React.createClass({
 
     getTryItButton: function()
     {
-        var hasUpload = false;
+        var loading, hasUpload = false;
 
         _.each(this.props.params, function(value) {
             if (value.type === 'resumable-upload') {
@@ -290,16 +288,17 @@ module.exports = React.createClass({
 
         return (
             <Button
-                ref     = 'tryItButton'
-                onClick = {this.onSubmit} >
-                Try it
+                ref      = 'tryItButton'
+                onClick  = {this.onSubmit}
+                disabled = {!! this.state.loading} >
+                {this.state.loading ? 'Loading...' : 'Try it'}
             </Button>
         );
     },
 
     getErrorMessage: function()
     {
-        if (this.state.status === ERROR) {
+        if (!! this.state.error) {
             return <div>{this.state.error}</div>;
         }
     },
@@ -308,7 +307,7 @@ module.exports = React.createClass({
     {
         var apiCallInfo;
 
-        if (this.state.status === LOADED)
+        if (this.state.loaded)
         {
             apiCallInfo = (
                 <ApiCallInfo status={this.state.status}

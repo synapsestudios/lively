@@ -30,7 +30,7 @@ var paramContext = {
 };
 
 module.exports = {
-    name     : 'Markdown',
+    name      : 'Markdown',
     endpoints : [
         {
             name     : 'Render an arbitrary Markdown document',

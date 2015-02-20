@@ -30,7 +30,7 @@ var paramOrder = {
 };
 
 module.exports = {
-    name     : 'Search',
+    name      : 'Search',
     endpoints : [
         {
             name     : 'Search repositories',

@@ -4,7 +4,7 @@ module.exports = {
     name      : 'Activity',
     slug      : 'activity',
     synopsis  : 'This is a read-only API to the GitHub events.',
-    endpoints   : [],
+    endpoints : [],
     resources : [
         require('./activity/events'),
         require('./activity/feeds'),

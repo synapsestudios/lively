@@ -9,7 +9,7 @@ var paramEmails = {
 };
 
 module.exports = {
-    name     : 'Emails',
+    name      : 'Emails',
     endpoints : [
         {
             name     : 'List email addresses for a user',

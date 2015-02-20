@@ -51,7 +51,7 @@ var paramDirection = {
 };
 
 module.exports = {
-    name     : 'Starring',
+    name      : 'Starring',
     endpoints : [
         {
             name     : 'List Stargazers',

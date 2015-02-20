@@ -33,7 +33,7 @@ var paramId = {
 };
 
 module.exports = {
-    name     : 'Comments',
+    name      : 'Comments',
     endpoints : [
         {
             name     : 'List commit comments for a repository',

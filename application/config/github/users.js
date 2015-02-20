@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    name     : 'Users',
+    name      : 'Users',
     endpoints : [
         {
             name     : 'Get a single user',

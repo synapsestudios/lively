@@ -83,8 +83,8 @@ var paramNumber = {
 };
 
 module.exports = {
-    name     : 'Pull Requests',
-    synopsis : 'The Pull Request API allows you to list, view, edit, create, and even merge pull requests. Comments on pull requests can be managed via the Issue Comments API.',
+    name      : 'Pull Requests',
+    synopsis  : 'The Pull Request API allows you to list, view, edit, create, and even merge pull requests. Comments on pull requests can be managed via the Issue Comments API.',
     endpoints : [
         {
             name     : 'List pull requests',

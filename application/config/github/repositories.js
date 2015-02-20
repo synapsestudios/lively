@@ -33,7 +33,7 @@ var paramOrg = {
 };
 
 module.exports = {
-    name     : 'Repositories',
+    name      : 'Repositories',
     endpoints : [
         {
             name     : 'List your repositories',

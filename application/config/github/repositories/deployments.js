@@ -17,7 +17,7 @@ var paramRepo = {
 };
 
 module.exports = {
-    name     : 'Deployments',
+    name      : 'Deployments',
     endpoints : [
         {
             name     : 'List Deployments',

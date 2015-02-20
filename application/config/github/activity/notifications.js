@@ -63,7 +63,7 @@ var paramLastReadAt = {
 };
 
 module.exports = {
-    name     : 'Notifications',
+    name      : 'Notifications',
     endpoints : [
         {
             name     : 'List your notifications',

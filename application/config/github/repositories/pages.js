@@ -17,7 +17,7 @@ var paramRepo = {
 };
 
 module.exports = {
-    name     : 'Pages',
+    name      : 'Pages',
     endpoints : [
         {
             name     : 'Get information about a Pages site',

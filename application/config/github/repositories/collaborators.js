@@ -25,7 +25,7 @@ var paramUsername = {
 };
 
 module.exports = {
-    name     : 'Collaborators',
+    name      : 'Collaborators',
     endpoints : [
         {
             name     : 'List collaborators',

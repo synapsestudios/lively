@@ -26,7 +26,7 @@ var paramId = {
 
 
 module.exports = {
-    name     : 'Deploy Keys',
+    name      : 'Deploy Keys',
     endpoints : [
         {
             name     : 'List deploy keys',

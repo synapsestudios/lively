@@ -2,7 +2,7 @@
 
 module.exports = {
     name      : 'Git Data',
-    endpoints   : [],
+    endpoints : [],
     resources : [
         require('./git_data/blobs'),
         require('./git_data/commits'),

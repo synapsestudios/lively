@@ -25,7 +25,7 @@ var paramAssignee = {
 };
 
 module.exports = {
-    name    : 'Assignees',
+    name      : 'Assignees',
     endpoints : [
         {
             name     : 'List assignees',

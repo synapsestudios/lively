@@ -124,7 +124,7 @@ var paramOrg = {
 };
 
 module.exports = {
-    name    : 'Issues',
+    name      : 'Issues',
     endpoints : [
         {
             name     : 'List issues (all)',

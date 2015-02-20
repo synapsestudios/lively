@@ -65,7 +65,7 @@ var paramDescription = {
 };
 
 module.exports = {
-    name    : 'Organizations',
+    name      : 'Organizations',
     endpoints : [
         {
             name     : 'List User Organizations (all)',

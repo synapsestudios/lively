@@ -30,7 +30,7 @@ var paramUser = {
 };
 
 module.exports = {
-    name    : 'Members',
+    name      : 'Members',
     endpoints : [
         {
             name     : 'Members list',

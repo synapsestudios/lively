@@ -5,7 +5,7 @@ var marked           = require('marked');
 var listFeedsSummary = fs.readFileSync(__dirname + '/list-feeds-summary.md').toString();
 
 module.exports = {
-    name     : 'Feeds',
+    name      : 'Feeds',
     endpoints : [
         {
             name     : 'List feeds',

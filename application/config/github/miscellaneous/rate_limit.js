@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = {
-    name     : 'Rate Limit',
-    synopsis : 'The overview documentation describes the rate limit rules. You can check your current rate limit status at any time using the Rate Limit API described below.',
+    name      : 'Rate Limit',
+    synopsis  : 'The overview documentation describes the rate limit rules. You can check your current rate limit status at any time using the Rate Limit API described below.',
     endpoints : [
         {
             name     : 'Get your current rate limit status',

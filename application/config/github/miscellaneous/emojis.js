@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = {
-    name     : 'Emojis',
-    synopsis : 'Lists all the emojis available to use on GitHub.',
+    name      : 'Emojis',
+    synopsis  : 'Lists all the emojis available to use on GitHub.',
     endpoints : [
         {
             name     : 'Emojis',

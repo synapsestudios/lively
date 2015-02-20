@@ -160,11 +160,11 @@ module.exports = Fluxxor.createStore({
     getBlankEndpointDataObject : function()
     {
         return {
-            values         : [],
-            excludedFields : [],
-            nullFields     : [],
-            requestTimestamp: 0,
-            responseTimestamp: 0
+            values              : [],
+            excludedFields      : [],
+            nullFields          : [],
+            requestTimestamp    : 0,
+            responseTimestamp   : 0
         };
     }
 

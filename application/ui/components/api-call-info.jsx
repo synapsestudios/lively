@@ -1,11 +1,12 @@
 /** @jsx React.DOM */
 'use strict';
 
-var _        = require('underscore');
-var React    = require('react');
-var cx       = require('react/lib/cx');
-var marked   = require('marked');
-var renderer = new marked.Renderer();
+var _             = require('underscore');
+var React         = require('react');
+var cx            = require('react/lib/cx');
+var marked        = require('marked');
+var renderer      = new marked.Renderer();
+var highlightText = require('../../util/highlight-text');
 
 renderer.paragraph = function(text) {
     return text;
@@ -38,6 +39,14 @@ module.exports = React.createClass({
         } catch (e) {
             return text;
         }
+    },
+
+    /**
+     * Highlight the response body for easy copying
+     */
+    highlightBody : function()
+    {
+        highlightText(this.refs.responseBody.getDOMNode());
     },
 
     render : function()
@@ -85,8 +94,17 @@ module.exports = React.createClass({
                     <h3 className='data__header'>Response Headers</h3>
                     <pre><code className={successClasses}>{this.props.response.headers}</code></pre>
 
-                    <h3 className='data__header'>Response Body</h3>
-                    <pre><code className={successClasses}>{this.formatResponse(this.props.response.data)}</code></pre>
+                    <h3 className='data__header'>
+                        {'Response Body '}
+                        <a onClick={this.highlightBody}>
+                            <span className={'fa fa-clipboard'} />
+                        </a>
+                    </h3>
+                    <pre>
+                        <code className={successClasses} ref={'responseBody'}>
+                            {this.formatResponse(this.props.response.data)}
+                        </code>
+                    </pre>
                 </div>
             );
         }

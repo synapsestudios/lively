@@ -70,6 +70,7 @@ module.exports = React.createClass({
             nullFields        : endpointData.nullFields,
             response          : endpointData.response,
             responseTimestamp : endpointData.responseTimestamp,
+            requestTimestamp  : endpointData.requestTimestamp,
             requestInfo       : requestStoreState.requestInfo,
             namespace         : requestStoreState.namespace
         };
@@ -309,10 +310,13 @@ module.exports = React.createClass({
 
         if (this.state.loaded)
         {
+            var latency = this.state.responseTimestamp > 0 ? (parseInt(this.state.responseTimestamp) - parseInt(this.state.requestTimestamp)) : 0;
             apiCallInfo = (
-                <ApiCallInfo status={this.state.status}
-                             request={this.state.requestInfo}
-                             response={this.state.response} />
+                <ApiCallInfo status   = {this.state.status}
+                             request  = {this.state.requestInfo}
+                             response = {this.state.response}
+                             latency  = {latency}
+                />
             );
         }
 

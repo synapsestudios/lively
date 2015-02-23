@@ -52,6 +52,7 @@ module.exports = Fluxxor.createStore({
 
         this.state.requestInfo = requestInfo.requestInfo;
         this.state.endpointName = requestInfo.endpointName;
+        this.state.endpoint[requestInfo.endpointName].requestTimestamp = Date.now();
 
         this.emit('change');
     },
@@ -84,6 +85,7 @@ module.exports = Fluxxor.createStore({
         endpoint.response = false;
         endpoint.loading  = false;
         endpoint.loaded   = true;
+        endpoint.responseTimestamp = Date.now();
 
         this.emit('change');
     },
@@ -171,9 +173,11 @@ module.exports = Fluxxor.createStore({
     getBlankEndpointDataObject : function()
     {
         return {
-            values         : [],
-            excludedFields : [],
-            nullFields     : []
+            values              : [],
+            excludedFields      : [],
+            nullFields          : [],
+            requestTimestamp    : 0,
+            responseTimestamp   : 0
         };
     }
 

@@ -49,8 +49,8 @@ var paramParents = {
 };
 
 module.exports = {
-    name     : 'Commits',
-    methods : [
+    name      : 'Commits',
+    endpoints : [
         {
             name     : 'Get a Commit',
             synopsis : '',

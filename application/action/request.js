@@ -29,8 +29,8 @@ module.exports = {
             ).done();
 
         flux.dispatch(constants.REQUEST, {
-            requestInfo : client.getLastRequestInfo(),
-            endpointName  : endpointName
+            requestInfo  : client.getLastRequestInfo(),
+            endpointName : endpointName
         });
     },
 
@@ -54,8 +54,8 @@ module.exports = {
             ).done();
 
         flux.dispatch(constants.REQUEST, {
-            requestInfo : client.getLastRequestInfo(),
-            endpointName  : endpointName
+            requestInfo  : client.getLastRequestInfo(),
+            endpointName : endpointName
         });
     },
 

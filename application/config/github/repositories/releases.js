@@ -25,8 +25,8 @@ var paramId = {
 };
 
 module.exports = {
-    name     : 'Releases',
-    methods : [
+    name      : 'Releases',
+    endpoints : [
         {
             name     : 'List releases for a repository',
             synopsis : '',
@@ -48,6 +48,35 @@ module.exports = {
                 paramOwner,
                 paramRepo,
                 paramId
+            ]
+        },
+        {
+            name     : 'Get the latest release',
+            synopsis : 'View the latest published release for the repository.',
+            method   : 'GET',
+            uri      : '/repos/:owner/:repo/releases/latest',
+            oauth    : false,
+            params   : [
+                paramOwner,
+                paramRepo
+            ]
+        },
+        {
+            name     : 'Get a release by tag name',
+            synopsis : 'Get a release with the specified tag. Users must have push access to the repository to view draft releases.',
+            method   : 'GET',
+            uri      : '/repos/:owner/:repo/releases/tags/:tag',
+            oauth    : false,
+            params   : [
+                paramOwner,
+                paramRepo,
+                {
+                    name         : 'tag',
+                    required     : true,
+                    type         : 'string',
+                    location     : 'uri',
+                    description  : 'The name of the tag.'
+                },
             ]
         },
         {

@@ -75,8 +75,8 @@ var paramBody = {
 };
 
 module.exports = {
-    name    : 'Comments',
-    methods : [
+    name      : 'Comments',
+    endpoints : [
         {
             name     : 'List comments on an issue',
             synopsis : '',

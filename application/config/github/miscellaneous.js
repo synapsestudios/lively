@@ -2,7 +2,7 @@
 
 module.exports = {
     name      : 'Miscellaneous',
-    methods   : [],
+    endpoints : [],
     resources : [
         require('./miscellaneous/emojis'),
         require('./miscellaneous/gitignore'),

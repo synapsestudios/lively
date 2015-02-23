@@ -17,8 +17,8 @@ var paramRepo = {
 };
 
 module.exports = {
-    name     : 'Merging',
-    methods : [
+    name      : 'Merging',
+    endpoints : [
         {
             name     : 'Perform a Merge',
             synopsis : '',

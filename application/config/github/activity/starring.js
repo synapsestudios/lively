@@ -51,8 +51,8 @@ var paramDirection = {
 };
 
 module.exports = {
-    name     : 'Starring',
-    methods : [
+    name      : 'Starring',
+    endpoints : [
         {
             name     : 'List Stargazers',
             synopsis : '',
@@ -85,6 +85,26 @@ module.exports = {
             params   : [
                 paramSort,
                 paramDirection
+            ]
+        },
+        {
+            name     : 'List repositories being starred with star creation timestamps.',
+            synopsis : '',
+            method   : 'GET',
+            uri      : '/users/:username/starred',
+            oauth    : false,
+            params   : [
+                paramUsername,
+                paramSort,
+                paramDirection,
+                {
+                    name        : 'Accept',
+                    required    : false,
+                    description : 'Include this header with the given value to get star creation timestamps',
+                    location    : 'header',
+                    type        : 'enum',
+                    enumValues  : ['application/vnd.github.v3.star+json']
+                }
             ]
         },
         {

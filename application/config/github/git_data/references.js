@@ -25,8 +25,8 @@ var paramRef = {
 };
 
 module.exports = {
-    name     : 'References',
-    methods : [
+    name      : 'References',
+    endpoints : [
         {
             name     : 'Get a Reference',
             synopsis : '',

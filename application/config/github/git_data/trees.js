@@ -25,8 +25,8 @@ var paramSha = {
 };
 
 module.exports = {
-    name     : 'Trees',
-    methods : [
+    name      : 'Trees',
+    endpoints : [
         {
             name     : 'Get a Tree',
             synopsis : '',

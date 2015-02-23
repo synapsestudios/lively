@@ -79,12 +79,14 @@
 }
 
 .button--disabled {
-    background-color     : $themeLGray;
-    border-color         : $themeLGray;
-    cursor               : not-allowed !important;
+    background-color : $themeLLGray;
+    border-color     : lighten($themeLGray, 20%);
+    cursor           : not-allowed !important;
+    color            : lighten($themeMLGray, 30%);
 
     &:hover {
-        background-color     : $themeLGray;
+        background-color : $themeLLGray;
+        color            : lighten($themeMLGray, 30%);
     }
 
     &:focus {

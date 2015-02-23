@@ -109,6 +109,74 @@ module.exports = {
             ]
         },
         {
+            name     : 'Get organization membership',
+            synopsis : 'In order to get a user’s membership with an organization, the authenticated user must be an organization admin.',
+            method   : 'GET',
+            uri      : '/orgs/:org/memberships/:user',
+            oauth    : true,
+            params   : [
+                paramOrg,
+                paramUser,
+                {
+                    name        : 'Accept',
+                    required    : false,
+                    description : 'This endpoint is currently in a migration period allowing applications to opt in to the Organization Permissions API. To access this API method during the migration period, you must provide a custom media type in the Accept header.',
+                    location    : 'header',
+                    type        : 'enum',
+                    enumValues  : ['application/vnd.github.moondragon+json']
+                }
+            ]
+        },
+        {
+            name     : 'Add or update organization membership',
+            synopsis : 'In order to create or update a user’s membership with an organization, the authenticated user must be an organization admin.',
+            method   : 'PUT',
+            uri      : '/orgs/:org/memberships/:user',
+            oauth    : true,
+            params   : [
+                paramOrg,
+                paramUser,
+                {
+                    name        : 'role',
+                    required    : true,
+                    description : 'The role to give the user in the organization. Can be one of: admin - The user will become an administrator of the organization. member - The user will become a non-admin member of the organization. Use this only to demote an existing admin to a non-admin.',
+                    location    : 'body',
+                    type        : 'enum',
+                    enumValues  : [
+                        'admin',
+                        'member'
+                    ]
+                },
+                {
+                    name        : 'Accept',
+                    required    : false,
+                    description : 'This endpoint is currently in a migration period allowing applications to opt in to the Organization Permissions API. To access this API method during the migration period, you must provide a custom media type in the Accept header.',
+                    location    : 'header',
+                    type        : 'enum',
+                    enumValues  : ['application/vnd.github.moondragon+json']
+                }
+            ]
+        },
+        {
+            name     : 'Remove organization membership',
+            synopsis : 'In order to remove a user’s membership with an organization, the authenticated user must be an organization admin.',
+            method   : 'DELETE',
+            uri      : '/orgs/:org/memberships/:user',
+            oauth    : true,
+            params   : [
+                paramOrg,
+                paramUser,
+                {
+                    name        : 'Accept',
+                    required    : false,
+                    description : 'This endpoint is currently in a migration period allowing applications to opt in to the Organization Permissions API. To access this API method during the migration period, you must provide a custom media type in the Accept header.',
+                    location    : 'header',
+                    type        : 'enum',
+                    enumValues  : ['application/vnd.github.moondragon+json']
+                }
+            ]
+        },
+        {
             name     : 'List your organization memberships',
             synopsis : '',
             method   : 'GET',

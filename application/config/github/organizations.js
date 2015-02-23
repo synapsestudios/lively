@@ -114,6 +114,7 @@ module.exports = {
     ],
     resources : [
         require('./organizations/members'),
-        require('./organizations/teams')
+        require('./organizations/teams'),
+        require('./organizations/webhooks')
     ]
 };

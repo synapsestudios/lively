@@ -25,6 +25,8 @@ module.exports = {
             method   : 'POST',
             uri      : '/user/emails',
             oauth    : true,
+            bodyType : 'json-param',
+            bodyParam: 'emails',
             params   : [
                 paramEmails
             ]
@@ -35,6 +37,8 @@ module.exports = {
             method   : 'DELETE',
             uri      : '/user/emails',
             oauth    : true,
+            bodyType : 'json-param',
+            bodyParam: 'emails',
             params   : [
                 paramEmails
             ]

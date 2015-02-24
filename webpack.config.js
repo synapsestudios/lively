@@ -4,6 +4,7 @@ var HtmlWebpack       = require('html-webpack-plugin');
 var WebpackError      = require('webpack-error-notification');
 
 var environment = (process.env.APP_ENV || 'development');
+var path = require('path');
 
 var config      = {
     entry   : ['./application/bootstrap.js'],
@@ -18,7 +19,8 @@ var config      = {
     reactLoaders : ['jsx?insertPragma=React.DOM'],
     sassOptions  : (
         '?outputStyle=' + (environment === 'production' ? 'compressed' : 'nested') +
-        '&includePaths[]=' + __dirname + '/node_modules'
+        '&includePaths[]=' + (path.resolve(__dirname, '/bower_components')) +
+        '&includePaths[]=' + (path.resolve(__dirname, '/node_modules'))
     )
 };
 
@@ -80,7 +82,7 @@ module.exports = {
                 test   : /\.scss$/,
                 loader : ExtractTextPlugin.extract(
                     'style-loader',
-                    'css-loader!sass-loader' + config.sassOptions
+                    'css!autoprefixer!sass' + config.sassOptions
                 )
             },
             {

@@ -17,9 +17,12 @@ module.exports = React.createClass({
         apiConfig : React.PropTypes.object.isRequired
     },
 
-    getResourceConfigFromSplat : function(splat, resources)
+    getResourceConfig : function()
     {
-        var resource, title, findCallback;
+        var resources, splat, resource, title, findCallback;
+
+        resources = this.props.apiConfig.resources;
+        splat     = this.getParams().splat.split('/');
 
         title = [this.props.apiConfig.name, 'Lively Docs'];
 
@@ -40,16 +43,15 @@ module.exports = React.createClass({
         }
 
         resource.title = title.join(' | ');
+
         return resource;
     },
 
     renderResourceComponent : function()
     {
-        var component, splat, resource, resourceComponent;
+        var resource, resourceComponent;
 
-        component = this;
-        splat     = this.getParams().splat.split('/');
-        resource  = this.getResourceConfigFromSplat(splat, this.props.apiConfig.resources);
+        resource = this.getResourceConfig();
 
         if (resource) {
             window.document.title = resource.title;
@@ -61,7 +63,6 @@ module.exports = React.createClass({
                     endpoints  = {_.isUndefined(resource.endpoints) ? resource.methods : resource.endpoints}
                 />
             );
-
         } else {
             resourceComponent = (
                 <div className='panel'>

@@ -36,6 +36,8 @@ if (environment === 'development') {
     ]);
 }
 
+var dependencyFolderRegex = /node_modules|bower_components/;
+
 module.exports = {
     name   : 'browser bundle',
     entry  : config.entry,
@@ -46,14 +48,14 @@ module.exports = {
     module : {
         preLoaders : [
             {
-                test    : /\.js?/,
+                test    : /\.js$/,
                 loader  : 'jshint-loader',
-                exclude : __dirname + '/node_modules'
+                exclude : dependencyFolderRegex
             },
             {
-                test    : /\.jsx?/,
+                test    : /\.jsx$/,
                 loader  : 'jsxhint-loader',
-                exclude : __dirname + '/node_modules'
+                exclude : dependencyFolderRegex
             }
         ],
         loaders : [
@@ -77,6 +79,10 @@ module.exports = {
                     'style-loader',
                     'css-loader!sass-loader' + config.sassOptions
                 )
+            },
+            {
+                test   : /\.md$/,
+                loader : 'html!markdown'
             }
         ]
     },
@@ -85,4 +91,7 @@ module.exports = {
         extensions : ['', '.css', '.js', '.json', '.jsx', '.scss', '.webpack.js', '.web.js']
     },
     devtool : '#inline-source-map',
+    jshint : {
+        globalstrict : true
+    }
 };

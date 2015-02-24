@@ -1,13 +1,11 @@
 'use strict';
 
-var fs      = require('fs');
-var marked  = require('marked');
-var summary = fs.readFileSync(__dirname + '/github/summary.md').toString();
+var summary = require('./github/summary.md');
 
 module.exports = {
     'name'    : 'GitHub v3 API',
     'logo'    : '/images/logos/github-mark.png',
-    'summary' : marked(summary),
+    'summary' : summary,
     'api'     : {
         'hostname' : 'api.github.com',
         'port'     : 443,

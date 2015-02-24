@@ -13,7 +13,7 @@ var config            = require('../../config');
 
 module.exports = React.createClass({
 
-    mixins : [FluxMixin, StoreWatchMixin('OAuthStore')],
+    mixins : [FluxMixin, new StoreWatchMixin('OAuthStore')],
 
     displayName : 'ApiPage',
 
@@ -49,7 +49,7 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var apiConfig, activeRouteHandler;
+        var apiConfig, ActiveRouteHandler;
 
         apiConfig = config.apis[this.props.params.apiSlug];
 
@@ -57,7 +57,7 @@ module.exports = React.createClass({
             return (<NotFoundPage />);
         }
 
-        activeRouteHandler = this.props.activeRouteHandler;
+        ActiveRouteHandler = this.props.activeRouteHandler;
 
         return (
             <div>
@@ -71,7 +71,7 @@ module.exports = React.createClass({
                     oauthStoreState = {this.state.oauthStoreState}
                     slug            = {this.props.params.apiSlug}
                 />
-                <activeRouteHandler
+                <ActiveRouteHandler
                     apiConfig       = {apiConfig}
                     oauthStoreState = {this.state.oauthStoreState}
                 />

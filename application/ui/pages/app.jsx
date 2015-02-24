@@ -26,7 +26,7 @@ module.exports = React.createClass({
     },
 
     render: function() {
-        var logo, backButton, linkParams, heading, activeRouteHandler;
+        var logo, backButton, linkParams, heading, ActiveRouteHandler;
 
         if (this.state.apiName) {
             linkParams = {apiSlug : this.state.apiSlug};
@@ -43,7 +43,7 @@ module.exports = React.createClass({
             }
         }
 
-        activeRouteHandler = this.props.activeRouteHandler;
+        ActiveRouteHandler = this.props.activeRouteHandler;
 
         return (
             <div>
@@ -57,7 +57,7 @@ module.exports = React.createClass({
                     </span>
                 </header>
 
-                <activeRouteHandler updateHeader={this.updateHeader} />
+                <ActiveRouteHandler updateHeader={this.updateHeader} />
             </div>
         );
     }

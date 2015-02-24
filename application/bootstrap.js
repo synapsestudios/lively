@@ -1,5 +1,5 @@
-'use strict';
 /* global window */
+'use strict';
 
 var React    = require('react');
 window.React = React; // React Dev Tools requires this

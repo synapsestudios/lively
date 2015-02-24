@@ -18,7 +18,7 @@ module.exports = React.createClass({
 
     displayName : 'Endpoint',
 
-    mixins : [FluxMixin, StoreWatchMixin('RequestStore'), UriHelperMixin],
+    mixins : [FluxMixin, new StoreWatchMixin('RequestStore'), UriHelperMixin],
 
     propTypes : {
         name     : React.PropTypes.string.isRequired,

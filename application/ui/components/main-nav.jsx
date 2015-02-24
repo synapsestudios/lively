@@ -63,7 +63,7 @@ module.exports = React.createClass({
 
     displayName : 'MainNav',
 
-    mixins      : [FluxMixin, StoreWatchMixin('OAuthStore')],
+    mixins      : [FluxMixin, new StoreWatchMixin('OAuthStore')],
 
     propTypes : {
         oauthStoreState : React.PropTypes.object.isRequired,

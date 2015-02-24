@@ -1,4 +1,3 @@
-/* jshint globalstrict: true */
 /* global console */
 'use strict';
 
@@ -27,7 +26,7 @@ module.exports = React.createClass({
     mixins : [
         RenderParamsMixin,
         FluxMixin,
-        StoreWatchMixin('RequestStore'),
+        new StoreWatchMixin('RequestStore'),
         UriHelperMixin
     ],
 

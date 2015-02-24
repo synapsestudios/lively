@@ -18,14 +18,14 @@ var ApiResource   = require('./ui/components/api-resource');
 var flux          = require('./flux');
 
 module.exports = (
-    Routes({location: "history"},
-        Route({name: "app", path: "/", handler: App},
-            Route({name: "api", path: ":apiSlug", handler: ApiPage, flux: flux},
-                Route({name: "api-resource", path: "*", handler: ApiResource}),
-                DefaultRoute({name: "api-summary", handler: ApiSummary})
+    new Routes({location: "history"},
+        new Route({name: "app", path: "/", handler: App},
+            new Route({name: "api", path: ":apiSlug", handler: ApiPage, flux: flux},
+                new Route({name: "api-resource", path: "*", handler: ApiResource}),
+                new DefaultRoute({name: "api-summary", handler: ApiSummary})
             ),
-            DefaultRoute({name: "api-list", handler: ApiListPage}),
-            NotFoundRoute({name: "not-found", handler: NotFoundPage})
+            new DefaultRoute({name: "api-list", handler: ApiListPage}),
+            new NotFoundRoute({name: "not-found", handler: NotFoundPage})
         )
     )
 );

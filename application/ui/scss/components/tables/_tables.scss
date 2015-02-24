@@ -7,24 +7,24 @@
 // *******************************************
 
 table {
-    width                : 100%;
+    width : 100%;
 
     tr {
 
         th {
-            text-align               : left;
-            min-width                : rem-calc(90);
+            text-align : left;
+            min-width  : rem-calc(90);
         }
 
         td {
-            line-height              : rem-calc(20);
+            line-height : rem-calc(20);
 
             &.td--max-width {
-                max-width          : rem-calc(220);
+                max-width : rem-calc(220);
             }
 
             select {
-                margin-bottom        : 0;
+                margin-bottom : 0;
             }
 
             input {
@@ -43,7 +43,7 @@ table {
 
     td {
         span {
-            white-space: nowrap;
+            white-space : nowrap;
         }
 
         p {
@@ -53,7 +53,7 @@ table {
     }
 
     .field-button--add {
-        margin    : rem-calc(3 0 5 40);
+        margin : rem-calc(3 0 5 40);
     }
 
     input {

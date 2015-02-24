@@ -1,19 +1,19 @@
 .panel__wrapper {
-    position             : relative;
-    left                 : rem-calc(350);
-    margin               : rem-calc(0 30 30 0);
-    padding-top          : rem-calc(90);
-    width                : calc(100% - 350px);
-    overflow             : hidden;
+    position    : relative;
+    left        : rem-calc(350);
+    margin      : rem-calc(0 30 30 0);
+    padding-top : rem-calc(90);
+    width       : calc(100% - 350px);
+    overflow    : hidden;
 
     &.panel__wrapper--full-width {
-        width            : 100%;
-        left             : 0;
+        width : 100%;
+        left  : 0;
 
         .panel {
-            top          : 0;
-            min-height   : rem-calc(300);
-            padding      : rem-calc(20 20 30);
+            top        : 0;
+            min-height : rem-calc(300);
+            padding    : rem-calc(20 20 30);
         }
 
     }
@@ -21,23 +21,23 @@
 }
 
 .panel {
-    position             : relative;
-    width                : calc(100% - 60px);
-    margin               : 0 auto;
-    border-radius        : 3px;
-    padding-top          : rem-calc(20);
-    padding-bottom       : rem-calc(20);
-    margin-bottom        : rem-calc(30);
-    border               : 1px solid tint($themeMLGray, 90%);
-    box-shadow           : 0 1px 5px rgba($black, .10);
-    background-color     : $white;
-    @include transition(all 300ms ease-in);
+    position         : relative;
+    width            : calc(100% - 60px);
+    margin           : 0 auto;
+    border-radius    : 3px;
+    padding-top      : rem-calc(20);
+    padding-bottom   : rem-calc(20);
+    margin-bottom    : rem-calc(30);
+    border           : 1px solid tint($themeMLGray, 90%);
+    box-shadow       : 0 1px 5px rgba($black, .10);
+    background-color : $white;
+    transition       : all 300ms ease-in;
     @include clearfix;
 
     &.panel--padded {
-        padding          : rem-calc(20 20 30);
-        overflow-x       : hidden;
-        overflow-y       : scroll;
+        padding    : rem-calc(20 20 30);
+        overflow-x : hidden;
+        overflow-y : scroll;
     }
 
     &.oauth-panel {
@@ -50,14 +50,14 @@
         margin           : 0 auto;
         z-index          : 999;
         box-shadow       : 0 2px 5px rgba($black, .2);
-        @include transition(all 300ms ease-in-out);
+        transition       : all 300ms ease-in-out;
 
         &.panel--hidden {
-            top          : rem-calc(-420);
+            top : rem-calc(-420);
         }
 
         .oauth-panel__form {
-            padding      : rem-calc(20 0);
+            padding : rem-calc(20 0);
         }
 
     }
@@ -67,7 +67,7 @@
         min-height : rem-calc(81);
 
         h1 {
-            float : left;
+            float  : left;
             margin : 0;
         }
 
@@ -88,11 +88,11 @@
     }
 
     .panel__header {
-        @extend .ff-source-bold;
-        position                     : relative;
-        height                       : rem-calc(50);
-        width                        : 100%;
-        @include user-select(none);
+        font-family : $source-bold;
+        position    : relative;
+        height      : rem-calc(50);
+        width       : 100%;
+        user-select : none;
 
         h1 {
             text-align               : left;
@@ -105,34 +105,34 @@
         }
 
         .panel__header-x {
-            position                 : absolute;
-            top                      : 0;
-            right                    : rem-calc(20);
-            height                   : rem-calc(30);
-            width                    : rem-calc(30);
-            color                    : $themeDDGray;
-            text-decoration          : none;
-            background-color         : $white;
-            border-radius            : 50%;
-            border                   : 1px solid $themeMLGray;
-            @include transition(all 300ms ease-in-out);
+            position         : absolute;
+            top              : 0;
+            right            : rem-calc(20);
+            height           : rem-calc(30);
+            width            : rem-calc(30);
+            color            : $themeDDGray;
+            text-decoration  : none;
+            background-color : $white;
+            border-radius    : 50%;
+            border           : 1px solid $themeMLGray;
+            transition       : all 300ms ease-in-out;
 
             &::before {
-                content              : '\f00d';
-                font-family          : FontAwesome;
-                position             : absolute;
-                top                  : rem-calc(3);
-                left                 : rem-calc(5);
-                font-size            : rem-calc(22);
-                color                : $themeMLGray;
-                @include transition(all 300ms ease-in-out);
+                content     : '\f00d';
+                font-family : $font-awesome;
+                position    : absolute;
+                top         : rem-calc(3);
+                left        : rem-calc(5);
+                font-size   : rem-calc(22);
+                color       : $themeMLGray;
+                transition  : all 300ms ease-in-out;
             }
 
             &:hover {
-                border               : 1px solid $themeDDGray;
+                border : 1px solid $themeDDGray;
 
                 &::before {
-                    color            : $themeDDGray;
+                    color : $themeDDGray;
                 }
 
             }
@@ -142,20 +142,20 @@
     }
 
     .panel__link {
-        padding-left     : rem-calc(20);
-        color            : $themeMLGray;
-        @include transition(color 300ms ease-in-out);
+        padding-left : rem-calc(20);
+        color        : $themeMLGray;
+        transition   : color 300ms ease-in-out;
 
         &::before {
-            padding-right: rem-calc(5);
+            padding-right : rem-calc(5);
         }
 
         &:hover {
-            color        : $themeDDGray;
+            color : $themeDDGray;
         }
 
         &:first-of-type {
-            margin-top   : rem-calc(20);
+            margin-top : rem-calc(20);
         }
 
     }
@@ -163,19 +163,19 @@
 }
 
 .overlay-pattern {
-    position             : fixed;
-    top                  : 0;
-    right                : 0;
-    bottom               : 0;
-    left                 : 0;
-    background           : rgba($black, .5) url('/images/css-images/overlay-pattern.png') repeat;
-    z-index              : 998;
-    opacity              : 1;
-    @include transition(opacity 300ms ease-in-out);
+    position   : fixed;
+    top        : 0;
+    right      : 0;
+    bottom     : 0;
+    left       : 0;
+    background : rgba($black, .5) url('/images/css-images/overlay-pattern.png') repeat;
+    z-index    : 998;
+    opacity    : 1;
+    transition : opacity 300ms ease-in-out;
 
     &.overlay-pattern--hidden {
-        bottom           : 100%;
-        opacity          : 0;
+        bottom  : 100%;
+        opacity : 0;
     }
 
 }
@@ -183,18 +183,18 @@
 .endpoint-panel {
     max-height : 3000px;
     margin-top : 20px;
-    @include transition(all 500ms ease-in-out);
+    transition : all 500ms ease-in-out;
 
     &.endpoint-panel--hidden {
         max-height : 0px;
         overflow   : hidden;
-        @include transition(all 500ms cubic-bezier(.05, .71, .12, .98));
+        transition : all 500ms cubic-bezier(.05, .71, .12, .98);
     }
 
     .panel__synopsis {
         min-height : 0;
         padding    : rem-calc(0 0 20);
-        @include transition(all 500ms ease-in-out);
+        transition : all 500ms ease-in-out;
     }
 
 }

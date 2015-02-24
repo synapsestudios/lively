@@ -1,95 +1,95 @@
 .switch__container {
-    border               : 1px solid #ddd;
-    width                : rem-calc(200);
-    padding              : rem-calc(5);
+    border  : 1px solid #ddd;
+    width   : rem-calc(200);
+    padding : rem-calc(5);
 
     p.checkbox-label {
-        margin-bottom    : rem-calc(20);
-        text-align       : center;
+        margin-bottom : rem-calc(20);
+        text-align    : center;
     }
 
     .onoffswitch {
-        position             : relative;
-        width                : rem-calc(60);
-        left                 : 50%;
-        margin-left          : rem-calc(-30);
-        margin-bottom        : rem-calc(20);
-        @include user-select(none);
+        position      : relative;
+        width         : rem-calc(60);
+        left          : 50%;
+        margin-left   : rem-calc(-30);
+        margin-bottom : rem-calc(20);
+        user-select   : none;
 
         input[type="checkbox"]+label {
-            margin           : 0;
+            margin : 0;
         }
 
         .onoffswitch-checkbox {
-            display              : none;
+            display : none;
         }
 
         .onoffswitch-label {
-            display              : block;
-            overflow             : hidden;
-            cursor               : pointer;
-            border-radius        : rem-calc(35);
-            border               : 1px solid $themeLLGray;
+            display       : block;
+            overflow      : hidden;
+            cursor        : pointer;
+            border-radius : rem-calc(35);
+            border        : 1px solid $themeLLGray;
         }
 
         .onoffswitch-inner {
-            display              : block;
-            width                : 200%;
-            margin-left          : -100%;
-            @include transition(all 200ms ease-in-out 0s);
+            display     : block;
+            width       : 200%;
+            margin-left : -100%;
+            transition  : all 200ms ease-in-out 0s;
         }
 
         .onoffswitch-inner:before,
         .onoffswitch-inner:after {
-            font-family          : $font-awesome;
-            display              : block;
-            float                : left;
-            width                : 50%;
-            height               : rem-calc(27);
-            padding              : 0;
-            line-height          : rem-calc(27);
-            font-size            : rem-calc(18);
-            color                : $white;
+            font-family : $font-awesome;
+            display     : block;
+            float       : left;
+            width       : 50%;
+            height      : rem-calc(27);
+            padding     : 0;
+            line-height : rem-calc(27);
+            font-size   : rem-calc(18);
+            color       : $white;
         }
 
         .onoffswitch-inner:before {
-            content              : "\f00c";
-            padding-left         : rem-calc(8);
-            background-color     : $statusGreen;
-            box-shadow           : -1px 0 1px $themeLGray, inset 0 1px 2px shade($statusGreen, 30%), inset 0 -1px 2px tint($statusGreen, 70%);
-            border-radius        : rem-calc(35 0 0 35);
-            color                : $white;
+            content          : "\f00c";
+            padding-left     : rem-calc(8);
+            background-color : $statusGreen;
+            box-shadow       : -1px 0 1px $themeLGray, inset 0 1px 2px shade($statusGreen, 30%), inset 0 -1px 2px tint($statusGreen, 70%);
+            border-radius    : rem-calc(35 0 0 35);
+            color            : $white;
         }
 
         .onoffswitch-inner:after {
-            content              : "\f00d";
-            padding-right        : rem-calc(12);
-            background-color     : $statusRed;
-            box-shadow           : 1px 0 1px $themeLGray, inset 0 1px 2px shade($statusRed, 50%), inset 0 -1px 2px tint($statusRed, 50%);
-            border-radius        : rem-calc(0 35 35 0);
-            color                : $white;
-            text-align           : right;
+            content          : "\f00d";
+            padding-right    : rem-calc(12);
+            background-color : $statusRed;
+            box-shadow       : 1px 0 1px $themeLGray, inset 0 1px 2px shade($statusRed, 50%), inset 0 -1px 2px tint($statusRed, 50%);
+            border-radius    : rem-calc(0 35 35 0);
+            color            : $white;
+            text-align       : right;
         }
 
         .onoffswitch-switch {
-            display              : block;
-            width                : rem-calc(25);
-            height               : rem-calc(25);
-            background           : $white;
-            box-shadow           : 1px 0 1px rgba($themeDDGray, .1), inset 0 -1px 2px rgba($themeDDGray, .3), inset 0 -10px 10px shade($white, 10%);
-            border-radius        : 50%;
-            position             : absolute;
-            top                  : rem-calc(2);
-            right                : rem-calc(33);
-            @include transition(all 200ms ease-in-out 0s);
+            display       : block;
+            width         : rem-calc(25);
+            height        : rem-calc(25);
+            background    : $white;
+            box-shadow    : 1px 0 1px rgba($themeDDGray, .1), inset 0 -1px 2px rgba($themeDDGray, .3), inset 0 -10px 10px shade($white, 10%);
+            border-radius : 50%;
+            position      : absolute;
+            top           : rem-calc(2);
+            right         : rem-calc(33);
+            transition    : all 200ms ease-in-out 0s;
         }
 
         .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
-            margin-left          : 0;
+            margin-left : 0;
         }
 
         .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
-            right                : rem-calc(2);
+            right : rem-calc(2);
         }
 
     }

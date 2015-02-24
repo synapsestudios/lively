@@ -11,10 +11,12 @@
     "start"   : "rm -rf ./build && webpack && node webpack",
     "webpack" : "rm -rf ./build && webpack",
     "dist"    : "rm -rf ./build && APP_ENV=production webpack -p && zip -r build-`date +%s` application build node_modules server server.js",
-    "clean"   : "rm -rf ./build"
+    "clean"   : "rm -rf ./build",
+    "test"    : "jest"
   },
   "devDependencies" : {
     "react-tools" : "0.11.0",
+    "jest-cli"    : "0.1.17",
 
     "css-loader"                  : "0.9.1",
     "6to5-loader"                 : "3.0.0",
@@ -47,5 +49,11 @@
     "synapse-common" : "1.1.0",
     "underscore"     : "1.6.0",
     "q"              : "1.1.2"
+  },
+  "jest" : {
+    "scriptPreprocessor"         : "./preprocessor.js",
+    "unmockedModulePathPatterns" : [
+      "./node_modules/react"
+    ]
   }
 }

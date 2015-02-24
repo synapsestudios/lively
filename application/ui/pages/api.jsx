@@ -23,11 +23,14 @@ module.exports = React.createClass({
 
     displayName : 'ApiPage',
 
+    componentWillMount : function()
+    {
+        this.apiConfig = config.apis[this.getParams().apiSlug];
+    },
+
     componentDidMount : function()
     {
         var query = this.getQuery();
-
-        this.getFlux().actions.oauth.setApi(this.getParams().apiSlug);
 
         if (query && query.access_token) {
             this.getFlux().actions.oauth.setToken({
@@ -45,6 +48,8 @@ module.exports = React.createClass({
         var title = [this.apiConfig.name, 'Lively Docs'];
         window.document.title = title.join(' | ');
 
+        this.getFlux().actions.oauth.setApi(this.getParams().apiSlug);
+
         this.props.updateHeader(this.apiConfig.name, this.apiConfig.logo, this.getParams().apiSlug);
     },
 
@@ -57,28 +62,24 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var apiConfig;
-
-        apiConfig = config.apis[this.getParams().apiSlug];
-
-        if (_.isUndefined(apiConfig)) {
+        if (_.isUndefined(this.apiConfig)) {
             return (<NotFoundPage />);
         }
 
         return (
             <div>
                 <OAuthConnectPanel
-                    apiConfig       = {apiConfig}
+                    apiConfig       = {this.apiConfig}
                     oauthStoreState = {this.state.oauthStoreState}
                     slug            = {this.getParams().apiSlug}
                 />
                 <MainNav
-                    apiConfig       = {apiConfig}
+                    apiConfig       = {this.apiConfig}
                     oauthStoreState = {this.state.oauthStoreState}
                     slug            = {this.getParams().apiSlug}
                 />
                 <RouteHandler
-                    apiConfig       = {apiConfig}
+                    apiConfig       = {this.apiConfig}
                     oauthStoreState = {this.state.oauthStoreState}
                 />
             </div>

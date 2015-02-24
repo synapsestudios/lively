@@ -125,6 +125,8 @@ An API is made up of multiple resources. Each resource has a list of endpoints t
     method   : 'GET',
     uri      : '/repos/:owner/:repo/events',
     oauth    : false,
+    bodyType : 'json-object',
+    bodyParam: null,
     params   : [
         {
             name        : 'owner',
@@ -143,6 +145,8 @@ An API is made up of multiple resources. Each resource has a list of endpoints t
 - **method**: A `string` containing the HTTP method to be used for the request.
 - **uri**: A `string` containing the path of the endpoint. Parts that are prefixed with `:` will be filled in by the `param` with the same name and its `location` set to `uri`. See below for more details on `params`.
 - **oauth**: A `bool` (`true` or `false`) which determines whether or not this request defaults to using oauth or unauthenticated.
+- **bodyType**: A `string` containing the body type the request should contain.  Default is `json-object`, only alternate at this time is `json-param`, which will use the contents of a specific `param` to be the body of the request.
+- **bodyParam**: A `string` containing the specific `params` name to use as the request body.  Only applies when `bodyType` is set to `json-param`, otherwise it is optional.
 - **params**: An array of `Object` containing parameter objects which this endpoint can accept. See below for details.
 
 ### Param Configuration

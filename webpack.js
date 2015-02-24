@@ -7,10 +7,10 @@ new WebpackDevServer(webpack(config), {
     hot                : true,
     noInfo             : true,
     historyApiFallback : true
-}).listen(9000, 'localhost', function (err, result) {
+}).listen(9001, 'localhost', function (err, result) {
     if (err) {
         console.log(err);
     }
 
-    console.log('Listening at localhost:9000');
+    console.log('Listening at localhost:9001');
 });

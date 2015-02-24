@@ -1,14 +1,17 @@
 /* global window */
 'use strict';
 
-var _          = require('underscore');
-var React      = require('react');
-var Resource   = require('./resource');
-var slugifier  = require('../../util/slug-helper').getSlugFromResource;
+var _         = require('underscore');
+var React     = require('react');
+var Resource  = require('./resource');
+var slugifier = require('../../util/slug-helper').getSlugFromResource;
+var Router    = require('react-router');
 
 module.exports = React.createClass({
 
     displayName : 'ApiResource',
+
+    mixins : [Router.State],
 
     propTypes : {
         apiConfig : React.PropTypes.object.isRequired
@@ -45,7 +48,7 @@ module.exports = React.createClass({
         var component, splat, resource, resourceComponent;
 
         component = this;
-        splat     = this.props.params.splat.split('/');
+        splat     = this.getParams().splat.split('/');
         resource  = this.getResourceConfigFromSplat(splat, this.props.apiConfig.resources);
 
         if (resource) {

@@ -10,22 +10,30 @@ var OAuthConnectPanel = require('../components/oauth');
 var MainNav           = require('../components/main-nav');
 var NotFoundPage      = require('./404');
 var config            = require('../../config');
+var Router            = require('react-router');
+var RouteHandler      = Router.RouteHandler;
 
 module.exports = React.createClass({
 
-    mixins : [FluxMixin, new StoreWatchMixin('OAuthStore')],
+    mixins : [
+        FluxMixin,
+        new StoreWatchMixin('OAuthStore'),
+        Router.State
+    ],
 
     displayName : 'ApiPage',
 
     componentDidMount : function()
     {
-        this.getFlux().actions.oauth.setApi(this.props.params.apiSlug);
+        var query = this.getQuery();
 
-        if (this.props.query && this.props.query.access_token) {
+        this.getFlux().actions.oauth.setApi(this.getParams().apiSlug);
+
+        if (query && query.access_token) {
             this.getFlux().actions.oauth.setToken({
-                accessToken : this.props.query.access_token,
-                tokenType   : this.props.query.token_type,
-                tokenData   : this.props.query
+                accessToken : query.access_token,
+                tokenType   : query.token_type,
+                tokenData   : query
             });
         }
 
@@ -37,7 +45,7 @@ module.exports = React.createClass({
         var title = [this.apiConfig.name, 'Lively Docs'];
         window.document.title = title.join(' | ');
 
-        this.props.updateHeader(this.apiConfig.name, this.apiConfig.logo, this.props.params.apiSlug);
+        this.props.updateHeader(this.apiConfig.name, this.apiConfig.logo, this.getParams().apiSlug);
     },
 
     getStateFromFlux : function()
@@ -49,29 +57,27 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var apiConfig, ActiveRouteHandler;
+        var apiConfig;
 
-        apiConfig = config.apis[this.props.params.apiSlug];
+        apiConfig = config.apis[this.getParams().apiSlug];
 
         if (_.isUndefined(apiConfig)) {
             return (<NotFoundPage />);
         }
-
-        ActiveRouteHandler = this.props.activeRouteHandler;
 
         return (
             <div>
                 <OAuthConnectPanel
                     apiConfig       = {apiConfig}
                     oauthStoreState = {this.state.oauthStoreState}
-                    slug            = {this.props.params.apiSlug}
+                    slug            = {this.getParams().apiSlug}
                 />
                 <MainNav
                     apiConfig       = {apiConfig}
                     oauthStoreState = {this.state.oauthStoreState}
-                    slug            = {this.props.params.apiSlug}
+                    slug            = {this.getParams().apiSlug}
                 />
-                <ActiveRouteHandler
+                <RouteHandler
                     apiConfig       = {apiConfig}
                     oauthStoreState = {this.state.oauthStoreState}
                 />

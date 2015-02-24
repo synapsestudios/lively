@@ -21,7 +21,7 @@ module.exports = React.createClass({
 
     render : function()
     {
-        return this.transferPropsTo(
+        return (
             <input value={this.props.value} onChange={this.handleChange} />
         );
     }

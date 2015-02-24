@@ -2,6 +2,7 @@
 
 var Router        = require('react-router');
 
+var React         = require('react');
 var Route         = Router.Route;
 var Routes        = Router.Routes;
 var DefaultRoute  = Router.DefaultRoute;
@@ -18,14 +19,12 @@ var ApiResource   = require('./ui/components/api-resource');
 var flux          = require('./flux');
 
 module.exports = (
-    new Routes({location: "history"},
-        new Route({name: "app", path: "/", handler: App},
-            new Route({name: "api", path: ":apiSlug", handler: ApiPage, flux: flux},
-                new Route({name: "api-resource", path: "*", handler: ApiResource}),
-                new DefaultRoute({name: "api-summary", handler: ApiSummary})
-            ),
-            new DefaultRoute({name: "api-list", handler: ApiListPage}),
-            new NotFoundRoute({name: "not-found", handler: NotFoundPage})
-        )
-    )
+    <Route name={"app"} path={"/"} handler={App}>
+        <Route name={"api"} path={":apiSlug"} handler={ApiPage} flux={flux}>
+            <Route name={"api-resource"} path={"*"} handler={ApiResource} />
+            <DefaultRoute name={"api-summary"} handler={ApiSummary} />
+        </Route>
+        <DefaultRoute name={"api-list"} handler={ApiListPage} />
+        <NotFoundRoute name={"not-found"} handler={NotFoundPage} />
+    </Route>
 );

@@ -1,9 +1,11 @@
 'use strict';
 
-var _      = require('underscore');
-var React  = require('react');
-var Link   = require('react-router').Link;
-var config = require('../../config');
+var _            = require('underscore');
+var React        = require('react');
+var config       = require('../../config');
+var Router       = require('react-router');
+var Link         = Router.Link;
+var RouteHandler = Router.RouteHandler;
 
 module.exports = React.createClass({
     displayName : 'App',
@@ -26,7 +28,7 @@ module.exports = React.createClass({
     },
 
     render: function() {
-        var logo, backButton, linkParams, heading, ActiveRouteHandler;
+        var logo, backButton, linkParams, heading;
 
         if (this.state.apiName) {
             linkParams = {apiSlug : this.state.apiSlug};
@@ -43,8 +45,6 @@ module.exports = React.createClass({
             }
         }
 
-        ActiveRouteHandler = this.props.activeRouteHandler;
-
         return (
             <div>
                 <header className='header'>
@@ -57,7 +57,7 @@ module.exports = React.createClass({
                     </span>
                 </header>
 
-                <ActiveRouteHandler updateHeader={this.updateHeader} />
+                <RouteHandler updateHeader={this.updateHeader} />
             </div>
         );
     }

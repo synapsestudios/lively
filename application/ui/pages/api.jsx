@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 /* global window */
 'use strict';
 
@@ -50,31 +49,34 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var apiConfig = config.apis[this.props.params.apiSlug];
+        var apiConfig, activeRouteHandler;
+
+        apiConfig = config.apis[this.props.params.apiSlug];
 
         if (_.isUndefined(apiConfig)) {
             return (<NotFoundPage />);
         }
-        else {
-            return (
-                <div>
-                    <OAuthConnectPanel
-                        apiConfig       = {apiConfig}
-                        oauthStoreState = {this.state.oauthStoreState}
-                        slug            = {this.props.params.apiSlug}
-                    />
-                    <MainNav
-                        apiConfig       = {apiConfig}
-                        oauthStoreState = {this.state.oauthStoreState}
-                        slug            = {this.props.params.apiSlug}
-                    />
-                    <this.props.activeRouteHandler
-                        apiConfig       = {apiConfig}
-                        oauthStoreState = {this.state.oauthStoreState}
-                    />
-                </div>
-            );
-        }
+
+        activeRouteHandler = this.props.activeRouteHandler;
+
+        return (
+            <div>
+                <OAuthConnectPanel
+                    apiConfig       = {apiConfig}
+                    oauthStoreState = {this.state.oauthStoreState}
+                    slug            = {this.props.params.apiSlug}
+                />
+                <MainNav
+                    apiConfig       = {apiConfig}
+                    oauthStoreState = {this.state.oauthStoreState}
+                    slug            = {this.props.params.apiSlug}
+                />
+                <activeRouteHandler
+                    apiConfig       = {apiConfig}
+                    oauthStoreState = {this.state.oauthStoreState}
+                />
+            </div>
+        );
     }
 
 });

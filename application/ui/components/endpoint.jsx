@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 /* global window */
 'use strict';
 
@@ -306,11 +305,15 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var apiCallInfo;
+        var apiCallInfo, latency, responseTime, requestTime;
 
         if (this.state.loaded)
         {
-            var latency = this.state.responseTimestamp > 0 ? (parseInt(this.state.responseTimestamp) - parseInt(this.state.requestTimestamp)) : 0;
+            responseTime = parseInt(this.state.responseTimestamp, 10);
+            requestTime  = parseInt(this.state.requestTimestamp, 10);
+
+            latency = this.state.responseTimestamp > 0 ? responseTime - requestTime : 0;
+
             apiCallInfo = (
                 <ApiCallInfo status   = {this.state.status}
                              request  = {this.state.requestInfo}

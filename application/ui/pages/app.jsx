@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 'use strict';
 
 var _      = require('underscore');
@@ -27,7 +26,7 @@ module.exports = React.createClass({
     },
 
     render: function() {
-        var logo, backButton, linkParams, heading;
+        var logo, backButton, linkParams, heading, activeRouteHandler;
 
         if (this.state.apiName) {
             linkParams = {apiSlug : this.state.apiSlug};
@@ -44,6 +43,8 @@ module.exports = React.createClass({
             }
         }
 
+        activeRouteHandler = this.props.activeRouteHandler;
+
         return (
             <div>
                 <header className='header'>
@@ -56,7 +57,7 @@ module.exports = React.createClass({
                     </span>
                 </header>
 
-                <this.props.activeRouteHandler updateHeader={this.updateHeader} />
+                <activeRouteHandler updateHeader={this.updateHeader} />
             </div>
         );
     }

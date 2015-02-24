@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+/* jshint globalstrict: true */
 'use strict';
 
 var _           = require('underscore');
@@ -34,8 +34,8 @@ module.exports = {
             defaultValue = param.defaultValue;
         }
 
-        description = (param.required ? '**Required**. ' : '') + param.description
-            + (defaultValue ? ' **Default:** ' + defaultValue : '');
+        description = (param.required ? '**Required**. ' : '') + param.description +
+            (defaultValue ? ' **Default:** ' + defaultValue : '');
 
         innerHtml = {
             __html: marked(description)

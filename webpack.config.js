@@ -58,14 +58,14 @@ module.exports = {
         ],
         loaders : [
             {
-                test   : /\.(ico|jpg|png)$/,
+                test   : /\.(eot|ico|jpg|png|svg|ttf|woff|woff2)$/,
                 loader : 'file-loader',
-                query  : {name : '[path][name].[ext]?[hash]'}
+                query  : {name : '[path][name].[ext]'}
             },
             {
-                test    : /\.(js|jsx)$/,
+                test    : /\.jsx$/,
                 loaders : config.reactLoaders,
-                exclude : /node_modules/
+                exclude : __dirname + '/node_modules'
             },
             {
                 test   : /\.json$/,

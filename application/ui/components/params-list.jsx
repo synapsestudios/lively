@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+/* jshint globalstrict: true */
 /* global console */
 'use strict';
 
@@ -67,7 +67,7 @@ module.exports = React.createClass({
 
             if (type === 'integer') {
                 // ensure we can allow negative numbers
-                if (value != '-') {
+                if (value !== '-') {
                     value = parseInt(value, 10);
                     if (isNaN(value)) {
                         value = '';
@@ -152,9 +152,9 @@ module.exports = React.createClass({
                 </td>
             );
             if (
-                param.type != 'file'
-                && this.props.requestMethod != 'GET'
-                && !this.isParameterNameInUri(param.name, this.props.uri)
+                param.type !== 'file' &&
+                this.props.requestMethod !== 'GET' &&
+                ! this.isParameterNameInUri(param.name, this.props.uri)
             ) {
                 nullCheckboxComponent = (
                     <td>

@@ -1,10 +1,7 @@
-/** @jsx React.DOM */
 /* global window */
 'use strict';
 
-var _          = require('underscore');
 var React      = require('react');
-var dispatcher = require('synapse-common/lib/dispatcher');
 
 module.exports = React.createClass({
 

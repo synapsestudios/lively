@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 'use strict';
 
 var _               = require('underscore');
@@ -152,8 +151,7 @@ module.exports = React.createClass({
                     categoryName    = {resource.name}
                     categorySlug    = {slug}
                     apiSlug         = {component.props.slug}
-                    key             = {'c-'+slug}
-                >
+                    key             = {'c-'+slug} >
                     {subnav}
                 </GroupHeader>
             );

@@ -11,7 +11,6 @@
     "start"   : "rm -rf ./build && webpack && node webpack",
     "webpack" : "rm -rf ./build && webpack",
     "dist"    : "rm -rf ./build && APP_ENV=production webpack -p && zip -r build-`date +%s` application build node_modules server server.js",
-    "test"    : "./node_modules/karma/bin/karma start karma.conf.js",
     "clean"   : "rm -rf ./build"
   },
   "devDependencies" : {

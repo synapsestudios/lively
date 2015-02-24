@@ -41,6 +41,8 @@
             background-color : tint($statusBlue, 50%);
 
             h2>span:first-of-type {
+                position         : relative;
+                top              : rem-calc(14);
                 padding          : rem-calc(9 41 4);
                 background-color : $statusBlue;
             }
@@ -149,6 +151,10 @@
 
         }
 
+    }
+
+    .panel__container {
+        margin : 20px 0;
     }
 
 }

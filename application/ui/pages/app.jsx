@@ -7,12 +7,17 @@ var Router       = require('react-router');
 var Link         = Router.Link;
 var RouteHandler = Router.RouteHandler;
 var logo         = require('../../../media/images/logos/livelydocs-logomark.png');
+var overlay      = require('../../../media/images/css-images/overlay-pattern.png');
 var background   = require('../../../media/images/css-images/background.svg');
 var fonts = [
     require('../../../media/fonts/SourceSansPro/sourcesanspro-regular-webfont.woff'),
     require('../../../media/fonts/SourceSansPro/sourcesanspro-semibold-webfont.woff'),
     require('../../../media/fonts/SourceSansPro/sourcesanspro-regular-webfont.ttf'),
-    require('../../../media/fonts/SourceSansPro/sourcesanspro-semibold-webfont.ttf')
+    require('../../../media/fonts/SourceSansPro/sourcesanspro-semibold-webfont.ttf'),
+    require('../../../media/fonts/Inconsolata/inconsolata-webfont.woff'),
+    require('../../../media/fonts/Inconsolata/inconsolata-webfont.ttf'),
+    require('../../../media/fonts/FontAwesome/fontawesome-webfont.woff'),
+    require('../../../media/fonts/FontAwesome/fontawesome-webfont.ttf')
 ];
 
 module.exports = React.createClass({

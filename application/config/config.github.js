@@ -1,6 +1,7 @@
 'use strict';
 
 var summary = require('./github/summary.md');
+var logo    = require('../../media/images/logos/github-mark.png');
 
 module.exports = {
     'name'    : 'GitHub v3 API',

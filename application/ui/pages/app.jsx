@@ -6,6 +6,14 @@ var config       = require('../../config');
 var Router       = require('react-router');
 var Link         = Router.Link;
 var RouteHandler = Router.RouteHandler;
+var logo         = require('../../../media/images/logos/livelydocs-logomark.png');
+var background   = require('../../../media/images/css-images/background.svg');
+var fonts = [
+    require('../../../media/fonts/SourceSansPro/sourcesanspro-regular-webfont.woff'),
+    require('../../../media/fonts/SourceSansPro/sourcesanspro-semibold-webfont.woff'),
+    require('../../../media/fonts/SourceSansPro/sourcesanspro-regular-webfont.ttf'),
+    require('../../../media/fonts/SourceSansPro/sourcesanspro-semibold-webfont.ttf')
+];
 
 module.exports = React.createClass({
     displayName : 'App',

@@ -34,14 +34,14 @@ module.exports = {
         });
     },
 
-    request : function(apiName, endpointName, method, path, queryParams, bodyParams, headers, bodyType, bodyParam)
+    request : function(apiName, endpointName, method, path, queryParams, bodyParams, headers, bodyType)
     {
         var client, flux = this;
 
         client = new Client(apiName);
 
         if (bodyType == 'json-param') {
-            bodyParams = bodyParams[bodyParam];
+            bodyParams = bodyParams[Object.keys(bodyParams)[0]];
         }
 
         client.request(method, path, queryParams, bodyParams, headers)

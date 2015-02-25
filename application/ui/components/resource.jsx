@@ -85,7 +85,6 @@ module.exports = React.createClass({
                oauth               = {endpoint.oauth}
                params              = {endpoint.params}
                bodyType            = {endpoint.bodyType ? endpoint.bodyType : 'json-object'}
-               bodyParam           = {endpoint.bodyParam ? endpoint.bodyParam : null}
                endpointPanelHidden = {! this.state.expanded[id]}
                toggleEndpointPanel = {_.partial(this.toggleDisplayEndpoint, id)}
             />

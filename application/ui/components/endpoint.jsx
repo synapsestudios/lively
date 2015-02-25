@@ -26,7 +26,6 @@ module.exports = React.createClass({
         synopsis : React.PropTypes.string,
         method   : React.PropTypes.oneOf(['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'PATCH']),
         bodyType : React.PropTypes.string,
-        bodyParam: React.PropTypes.string,
         uri      : React.PropTypes.string.isRequired,
         oauth    : React.PropTypes.bool,
         params   : React.PropTypes.array
@@ -118,7 +117,6 @@ module.exports = React.createClass({
             method      = this.props.method,
             uri         = this.props.uri,
             bodyType    = this.props.bodyType,
-            bodyParam   = this.props.bodyParam,
             accessToken = this.getFlux().store('OAuthStore').getState().accessToken;
 
         var headerParams = {},
@@ -161,10 +159,6 @@ module.exports = React.createClass({
 
             var paramData = _.findWhere(this.props.params, { name : name });
             bodyType  = this.props.bodyType;
-            bodyParam = false;
-            if (bodyType == 'json-param') {
-                bodyParam = this.props.bodyParam;
-            }
 
             if (paramData.type === 'file') {
                 bodyParams = value;
@@ -202,8 +196,7 @@ module.exports = React.createClass({
                 queryParams,
                 bodyParams,
                 headerParams,
-                bodyType,
-                bodyParam
+                bodyType
             );
         }
 

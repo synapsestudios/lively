@@ -1,77 +1,77 @@
 // Font Awesome
-$font-awesome: 'FontAwesome';
+$font-awesome : 'FontAwesome';
 
 // Source Sans Pro
-$source-light: 'source_sans_prolight';
-$source      : 'source_sans_proregular';
-$source-bold : 'source_sans_prosemibold';
+$source-light : 'source_sans_prolight';
+$source       : 'source_sans_proregular';
+$source-bold  : 'source_sans_prosemibold';
 
 // Inconsolata
 $inconsolata : 'inconsolata';
 
 @font-face {
-    font-family: $font-awesome;
+    font-family : $font-awesome;
     src: url('/fonts/FontAwesome/fontawesome-webfont.eot');
     src: url('/fonts/FontAwesome/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
          url('/fonts/FontAwesome/fontawesome-webfont.woff') format('woff'),
          url('/fonts/FontAwesome/fontawesome-webfont.ttf') format('truetype'),
          url('/fonts/FontAwesome/fontawesome-webfont.svg#source_sans_prolight') format('svg');
-    font-weight: normal;
-    font-style: normal;
+    font-weight : normal;
+    font-style  : normal;
 }
 
 @font-face {
-    font-family: $source-light;
+    font-family : $source-light;
     src: url('/fonts/SourceSansPro/sourcesanspro-light-webfont.eot');
     src: url('/fonts/SourceSansPro/sourcesanspro-light-webfont.eot?#iefix') format('embedded-opentype'),
          url('/fonts/SourceSansPro/sourcesanspro-light-webfont.woff') format('woff'),
          url('/fonts/SourceSansPro/sourcesanspro-light-webfont.ttf') format('truetype'),
          url('/fonts/SourceSansPro/sourcesanspro-light-webfont.svg#source_sans_prolight') format('svg');
-    font-weight: normal;
-    font-style: normal;
+    font-weight : normal;
+    font-style  : normal;
 }
 
 @font-face {
-    font-family: $source;
+    font-family : $source;
     src: url('/fonts/SourceSansPro/sourcesanspro-regular-webfont.eot');
     src: url('/fonts/SourceSansPro/sourcesanspro-regular-webfont.eot?#iefix') format('embedded-opentype'),
          url('/fonts/SourceSansPro/sourcesanspro-regular-webfont.woff') format('woff'),
          url('/fonts/SourceSansPro/sourcesanspro-regular-webfont.ttf') format('truetype'),
          url('/fonts/SourceSansPro/sourcesanspro-regular-webfont.svg#source_sans_proregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
+    font-weight : normal;
+    font-style  : normal;
 }
 
 @font-face {
-    font-family: $source-bold;
+    font-family : $source-bold;
     src: url('/fonts/SourceSansPro/sourcesanspro-semibold-webfont.eot');
     src: url('/fonts/SourceSansPro/sourcesanspro-semibold-webfont.eot?#iefix') format('embedded-opentype'),
          url('/fonts/SourceSansPro/sourcesanspro-semibold-webfont.woff') format('woff'),
          url('/fonts/SourceSansPro/sourcesanspro-semibold-webfont.ttf') format('truetype'),
          url('/fonts/SourceSansPro/sourcesanspro-semibold-webfont.svg#source_sans_prosemibold') format('svg');
-    font-weight: normal;
-    font-style: normal;
+    font-weight : normal;
+    font-style  : normal;
 }
 
 @font-face {
-    font-family: $inconsolata;
+    font-family : $inconsolata;
     src: url('/fonts/Inconsolata/inconsolata-webfont.eot');
     src: url('/fonts/Inconsolata/inconsolata-webfont.eot?#iefix') format('embedded-opentype'),
          url('/fonts/Inconsolata/inconsolata-webfont.woff') format('woff'),
          url('/fonts/Inconsolata/inconsolata-webfont.ttf') format('truetype'),
          url('/fonts/Inconsolata/inconsolata-webfont.svg#source_sans_prolight') format('svg');
-    font-weight: normal;
-    font-style: normal;
+    font-weight : normal;
+    font-style  : normal;
 
 }
 
 .ital-text {
-    font-style:italic;
-    padding-right: 3px;
+    font-style    : italic;
+    padding-right : 3px;
 }
 
 .ital-text__bold {
-    font-style:italic;
-    padding-right: 3px;
-    font-weight: bold;
+    font-style    : italic;
+    padding-right : 3px;
+    font-weight   : bold;
 }

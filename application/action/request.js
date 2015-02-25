@@ -40,7 +40,7 @@ module.exports = {
 
         client = new Client(apiName);
 
-        if (bodyType == 'json-param') {
+        if (bodyType === 'json-param') {
             bodyParams = bodyParams[Object.keys(bodyParams)[0]];
         }
 

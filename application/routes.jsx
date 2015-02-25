@@ -15,11 +15,11 @@ var ApiSummary    = require('./ui/components/api-summary');
 var ApiResource   = require('./ui/components/api-resource');
 
 module.exports = (
-    <Route handler={App}>
-        <Route name='api-list' path='/'         handler={ApiListPage} />
-        <Route name='api'      path='/:apiSlug' handler={ApiPage}>
+    <Route handler={App} path='/'>
+        <Route name='api' path=':apiSlug' handler={ApiPage}>
             <Route        name='api-resource' handler={ApiResource} path='*' />
             <DefaultRoute name='api-summary'  handler={ApiSummary} />
         </Route>
+        <DefaultRoute name='api-list' handler={ApiListPage} />
     </Route>
 );

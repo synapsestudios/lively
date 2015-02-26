@@ -27,22 +27,25 @@ module.exports = React.createClass({
     mixins : [
         RenderParamsMixin,
         FluxMixin,
-        StoreWatchMixin('RequestStore', 'ConfigStore'),
+        StoreWatchMixin('RequestStore', 'ConfigStore', 'StripeStore'),
         UriHelperMixin
     ],
 
     getStateFromFlux : function()
     {
-        var requestState, configState;
+        var requestState, configState, stripeState;
 
         requestState = this.getFlux().store('RequestStore').getState();
         configState  = this.getFlux().store('ConfigStore').getState();
+        stripeState  = this.getFlux().store('StripeStore').getState();
 
         return {
             requestValues  : (requestState.endpoint[this.props.endpointName] || {}).values,
             excludedFields : (requestState.endpoint[this.props.endpointName] || {}).excludedFields,
             nullFields     : (requestState.endpoint[this.props.endpointName] || {}).nullFields,
-            stripeKey      : configState.stripe_key
+            stripeKey      : configState.stripe_key,
+            stripeLoading  : (stripeState.endpoint[this.props.endpointName] || {}).loading,
+            stripeToken    : (stripeState.endpoint[this.props.endpointName] || {}).token
         };
     },
 
@@ -101,9 +104,17 @@ module.exports = React.createClass({
         this.getFlux().actions.request.setRequestValues(this.props.endpointName, values);
     },
 
-    generateStripeToken : function(event)
+    getGenerateStripeTokenCallback : function(paramName)
     {
+        var component = this;
 
+        return function() {
+            component.getFlux().actions.stripe.requestToken(
+                component.state.stripeKey,
+                paramName,
+                component.props.endpointName
+            );
+        };
     },
 
     renderTopLevelParam : function(param)
@@ -346,20 +357,28 @@ module.exports = React.createClass({
         } else if (type === 'hash') {
             return null;
         } else if (type === 'stripe_token') {
-            return this.renderStripeTokenField();
+            return this.renderStripeTokenField(options.name);
         } else {
             return <Text key={key} value={value} onChange={changeHandler} />;
         }
     },
 
-    renderStripeTokenField : function()
+    renderStripeTokenField : function(paramName)
     {
         var button;
 
         if (! this.state.stripeKey) {
             button = <button disabled={true}>Stripe Key Not Found</button>;
+        } else if (this.state.stripeLoading) {
+            button = <button disabled={true}>Loading...</button>;
+        } else if (this.state.stripeToken) {
+            button = (
+                <button onClick={this.getGenerateStripeTokenCallback(paramName)}>
+                    {this.state.stripeToken}
+                </button>
+            );
         } else {
-            button = <button onChange={this.generateStripeToken}>Generate Token</button>;
+            button = <button onClick={this.getGenerateStripeTokenCallback(paramName)}>Generate Token</button>;
         }
 
         return button;

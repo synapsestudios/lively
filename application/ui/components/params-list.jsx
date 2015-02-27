@@ -27,18 +27,25 @@ module.exports = React.createClass({
     mixins : [
         RenderParamsMixin,
         FluxMixin,
-        StoreWatchMixin('RequestStore'),
+        StoreWatchMixin('RequestStore', 'ConfigStore', 'StripeStore'),
         UriHelperMixin
     ],
 
     getStateFromFlux : function()
     {
-        var requestState = this.getFlux().store('RequestStore').getState();
+        var requestState, configState, stripeState;
+
+        requestState = this.getFlux().store('RequestStore').getState();
+        configState  = this.getFlux().store('ConfigStore').getState();
+        stripeState  = this.getFlux().store('StripeStore').getState();
 
         return {
             requestValues  : (requestState.endpoint[this.props.endpointName] || {}).values,
             excludedFields : (requestState.endpoint[this.props.endpointName] || {}).excludedFields,
-            nullFields     : (requestState.endpoint[this.props.endpointName] || {}).nullFields
+            nullFields     : (requestState.endpoint[this.props.endpointName] || {}).nullFields,
+            stripeKey      : configState.stripe_key,
+            stripeLoading  : (stripeState.endpoint[this.props.endpointName] || {}).loading,
+            stripeToken    : (stripeState.endpoint[this.props.endpointName] || {}).token
         };
     },
 
@@ -67,7 +74,7 @@ module.exports = React.createClass({
 
             if (type === 'integer') {
                 // ensure we can allow negative numbers
-                if (value != '-') {
+                if (value !== '-') {
                     value = parseInt(value, 10);
                     if (isNaN(value)) {
                         value = '';
@@ -95,6 +102,19 @@ module.exports = React.createClass({
         values = NestedPropertyHandler.set(values, path, array);
 
         this.getFlux().actions.request.setRequestValues(this.props.endpointName, values);
+    },
+
+    getGenerateStripeTokenCallback : function(paramName)
+    {
+        var component = this;
+
+        return function() {
+            component.getFlux().actions.stripe.requestToken(
+                component.state.stripeKey,
+                paramName,
+                component.props.endpointName
+            );
+        };
     },
 
     renderTopLevelParam : function(param)
@@ -152,9 +172,9 @@ module.exports = React.createClass({
                 </td>
             );
             if (
-                param.type != 'file'
-                && this.props.requestMethod != 'GET'
-                && !this.isParameterNameInUri(param.name, this.props.uri)
+                param.type !== 'file' &&
+                this.props.requestMethod !== 'GET' &&
+                !this.isParameterNameInUri(param.name, this.props.uri)
             ) {
                 nullCheckboxComponent = (
                     <td>
@@ -336,9 +356,32 @@ module.exports = React.createClass({
             return <input type='file' key={key} onChange={changeHandler}/>;
         } else if (type === 'hash') {
             return null;
+        } else if (type === 'stripe_token') {
+            return this.renderStripeTokenField(options.name);
         } else {
             return <Text key={key} value={value} onChange={changeHandler} />;
         }
+    },
+
+    renderStripeTokenField : function(paramName)
+    {
+        var button;
+
+        if (! this.state.stripeKey) {
+            button = <button disabled={true}>Stripe Key Not Found</button>;
+        } else if (this.state.stripeLoading) {
+            button = <button disabled={true}>Loading...</button>;
+        } else if (this.state.stripeToken) {
+            button = (
+                <button onClick={this.getGenerateStripeTokenCallback(paramName)}>
+                    {this.state.stripeToken}
+                </button>
+            );
+        } else {
+            button = <button onClick={this.getGenerateStripeTokenCallback(paramName)}>Generate Token</button>;
+        }
+
+        return button;
     },
 
     renderRemoveArrayElementButton : function(path)

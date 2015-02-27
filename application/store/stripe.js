@@ -41,9 +41,9 @@ module.exports = Fluxxor.createStore({
             configState = configStore.getState();
 
             if (configState.stripe_key) {
-                stripeScriptTag = document.createElement('script');
+                stripeScriptTag      = document.createElement('script');
                 stripeScriptTag.type = 'text/javascript';
-                stripeScriptTag.src = 'https://js.stripe.com/v2/';
+                stripeScriptTag.src  = 'https://js.stripe.com/v2/';
                 document.body.appendChild(stripeScriptTag);
 
                 this.stripeScriptIncluded = true;

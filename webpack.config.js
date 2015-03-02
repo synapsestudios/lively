@@ -27,7 +27,7 @@ var config      = {
 if (environment === 'development') {
     config.entry = [
         'webpack/hot/dev-server',
-        'webpack-dev-server/client?http://localhost:9000'
+        'webpack-dev-server/client?http://localhost:9001'
     ].concat(config.entry);
 
     config.reactLoaders = ['react-hot'].concat(config.reactLoaders);

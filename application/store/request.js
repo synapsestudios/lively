@@ -22,7 +22,8 @@ module.exports = Fluxxor.createStore({
             constants.SET_NULL_VALUE, 'onSetNullValue',
             constants.UNSET_NULL_VALUE, 'onUnsetNullValue',
             constants.REQUEST_ADD_TO_EXCLUDED_FIELDS, 'onAddToExcludedFields',
-            constants.REQUEST_REMOVE_FROM_EXCLUDED_FIELDS, 'onRemoveFromExcludedFields'
+            constants.REQUEST_REMOVE_FROM_EXCLUDED_FIELDS, 'onRemoveFromExcludedFields',
+            constants.REQUEST_STRIPE_TOKEN_SUCCESS, 'onRequestStripeTokenSuccess'
         );
     },
 
@@ -168,6 +169,27 @@ module.exports = Fluxxor.createStore({
         this.state.endpoint[endpointName].nullFields = _(this.state.endpoint[endpointName].nullFields).without(field);
 
         this.emit('change');
+    },
+
+    onRequestStripeTokenSuccess : function(response)
+    {
+        var store = this;
+
+        this.waitFor(['StripeStore'], function(stripeStore) {
+            var stripeStoreState, endpointName, paramName;
+
+            stripeStoreState = stripeStore.getState();
+            endpointName = stripeStoreState.currentEndpoint;
+            paramName = stripeStoreState.endpoint[endpointName].paramName;
+
+            if (! store.state.endpoint[endpointName]) {
+                store.state.endpoint[endpointName] = store.getBlankEndpointDataObject();
+            }
+
+            store.state.endpoint[endpointName].values[paramName] = stripeStoreState.endpoint[endpointName].token;
+
+            store.emit('change');
+        });
     },
 
     getBlankEndpointDataObject : function()

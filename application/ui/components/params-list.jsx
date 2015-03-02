@@ -26,7 +26,7 @@ module.exports = React.createClass({
     mixins : [
         RenderParamsMixin,
         FluxMixin,
-        StoreWatchMixin('RequestStore', 'ConfigStore', 'StripeStore'),
+        new StoreWatchMixin('RequestStore', 'ConfigStore', 'StripeStore'),
         UriHelperMixin
     ],
 

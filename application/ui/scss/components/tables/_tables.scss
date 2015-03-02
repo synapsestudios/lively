@@ -14,10 +14,12 @@ table {
         th {
             text-align : left;
             min-width  : rem-calc(90);
+            padding    : rem-calc(5);
         }
 
         td {
             line-height : rem-calc(20);
+            padding     : rem-calc(5);
 
             &.td--max-width {
                 max-width : rem-calc(220);

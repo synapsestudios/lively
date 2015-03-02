@@ -14,7 +14,7 @@ module.exports = React.createClass({
     render: function()
     {
         return (
-            <button ref='uploadButton'>{'Upload'}</button>
+            <button ref='button uploadButton'>{'Upload'}</button>
         );
     },
 

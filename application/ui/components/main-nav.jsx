@@ -42,15 +42,13 @@ var GroupHeader = React.createClass({
         return (
             <div className={classes}>
                 <div className='main-nav__group-header'>
-                    <span className='main-nav__group-title'>
-                        <Link
-                            to              = 'api-resource'
-                            params          = {params}
-                            className       = 'main-nav__link'
-                            activeClassName = 'main-nav__link--active'>
-                            {this.props.categoryName}
-                        </Link>
-                    </span>
+                    <Link
+                        to              = 'api-resource'
+                        params          = {params}
+                        className       = 'main-nav__link'
+                        activeClassName = 'main-nav__link--active'>
+                        {this.props.categoryName}
+                    </Link>
                 </div>
                 {this.props.children}
             </div>

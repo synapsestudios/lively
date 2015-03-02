@@ -13,6 +13,11 @@
         box-shadow : 0 3px 3px rgba($black, .15);
         cursor     : pointer;
 
+        h2>span:first-of-type {
+            position : relative;
+            top      : rem-calc(14);
+        }
+
         &::before,
         &::after {
             content  : '';
@@ -36,13 +41,10 @@
             right : rem-calc(-20);
         }
 
-
         &.panel__header--get {
             background-color : tint($statusBlue, 50%);
 
             h2>span:first-of-type {
-                position         : relative;
-                top              : rem-calc(14);
                 padding          : rem-calc(9 41 4);
                 background-color : $statusBlue;
             }

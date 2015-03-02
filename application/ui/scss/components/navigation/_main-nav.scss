@@ -112,16 +112,10 @@
 
         .main-nav__group-header {
             height           : rem-calc(35);
+            padding          : rem-calc(8 0);
             background-color : tint($themeLGray, 70%);
-            padding          : rem-calc(0 5);
             cursor           : pointer;
             border-bottom    : 1px solid tint($themeLGray, 60%);
-
-            .main-nav__group-title {
-                font-family : $source-bold;
-                line-height : rem-calc(35);
-                color       : $themeDDGray;
-            }
 
             &::before {
                 display : none;

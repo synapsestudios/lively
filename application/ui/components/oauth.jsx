@@ -119,7 +119,8 @@ module.exports = React.createClass({
             <div>
                 <div className={oAuthPanelClasses}>
                     <div className='panel__header'>
-                        <h1>OAuth2</h1><a className='panel__header-x' onClick={this.toggleOAuthPanel}></a>
+                        <h1>OAuth2</h1>
+                        <a className='panel__header-x' onClick={this.toggleOAuthPanel}></a>
                     </div>
                     <div className='oauth-panel__form'>
                         <div className='small-4 columns'>
@@ -151,7 +152,7 @@ module.exports = React.createClass({
                         </div>
                         <div className='small-12 columns'>
                             <a className='button right' onClick={this.handleLogoutClick}>Log Out</a>
-                            <a className='button right' onClick={this.handleConnectClick}>Connect</a>
+                            <a className='button right l--m-right-10' onClick={this.handleConnectClick}>Connect</a>
                         </div>
                         <hr />
                         <div className='small-6 columns'>

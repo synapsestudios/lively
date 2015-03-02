@@ -37,8 +37,9 @@
 }
 
 .button--primary {
-    background-color     : $primary;
-    border-color         : $primary;
+    color            : $white;
+    background-color : $primary;
+    border-color     : $primary;
 
     &:hover {
         background-color : shade($primary, 5%);

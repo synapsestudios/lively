@@ -8,34 +8,34 @@
 
 html,
 body {
-    width                : 100%;
-    height               : 100%;
-    margin               : 0;
+    width                  : 100%;
+    height                 : 100%;
+    margin                 : 0;
     -webkit-font-smoothing : antialiased;
 
     @media #{$medium-up} {
-        height           : 100%;
+        height : 100%;
     }
 
 }
 
 html {
-    background           :  transparent;
+    background : transparent;
 }
 
 body {
-    background           : url('/images/css-images/background.svg');
-    background-attachment: fixed;
-    background-size      : cover;
+    background            : url('/images/css-images/background.svg');
+    background-attachment : fixed;
+    background-size       : cover;
 }
 
 .error-404 {
-    color                : $white;
-    text-align           : center;
+    color      : $white;
+    text-align : center;
 
     @media #{$small-only} {
-        font-size        : rem-calc(18);
-        padding-top      : rem-calc(50);
+        font-size   : rem-calc(18);
+        padding-top : rem-calc(50);
     }
 
 }

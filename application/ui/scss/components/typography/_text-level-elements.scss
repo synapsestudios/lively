@@ -1,0 +1,161 @@
+// *******************************************
+// *******************************************
+
+    // Typographical inline element styles
+
+// *******************************************
+// *******************************************
+
+////////////////////////////
+//                       //
+//     Text-level 1      //
+//                       //
+///////////////////////////
+
+// links
+.a {
+    color       : $primary;
+    background  : transparent;
+    font-family : $body--reg;
+    cursor      : pointer;
+    transition  : color 200ms ease;
+
+    // Addresses outline displayed oddly in Chrome
+    &:focus {
+        outline : thin dotted;
+    }
+
+    // Improves readability when focused and also mouse hovered in all browsers
+    &:hover,
+    &:active {
+        text-decoration : underline;
+        color           : shade($primary, 10%);
+        outline         : 0;
+    }
+
+}
+
+// inline modifiers
+.b,
+.strong {
+    font-family : $body--bold;
+}
+
+.i,
+.em {
+    font-family : $body--italic;
+}
+
+.small {
+    font-size : 80%;
+}
+
+.sub,
+.sup {
+    font-size      : 75%;
+    line-height    : 0;
+    position       : relative;
+    vertical-align : baseline;
+}
+
+.sup {
+    top : -0.5em;
+}
+
+.sub {
+    bottom : -0.25em;
+}
+
+// definitions
+.dfn {
+    font-family : $body--italic;
+}
+
+// abbreviations
+.abbr[title] {
+    border-bottom : 1px dotted;
+}
+
+// consistent quote types
+.q {
+    quotes : "\201C" "\201D" "\2018" "\2019";
+}
+
+////////////////////////////
+//                       //
+//     Text-level 2      //
+//                       //
+///////////////////////////
+
+.code,
+.kbd,
+.samp {
+    font-size   : rem-calc(16);
+    font-family : monospace, serif;
+}
+
+// .time {
+
+// }
+
+// .code {
+
+// }
+
+// force proper styling for all
+// elements inside typography element
+.typography {
+
+    a {
+        @extend .a;
+    }
+
+    b {
+        @extend .b;
+    }
+
+    strong {
+        @extend .strong;
+    }
+
+    i {
+        @extend .i;
+    }
+
+    em {
+        @extend .em;
+    }
+
+    small {
+        @extend .small;
+    }
+
+    sub {
+        @extend .sub;
+    }
+
+    sup {
+        @extend .sup;
+    }
+
+    dfn {
+        @extend .dfn;
+    }
+
+    q {
+        @extend .q;
+    }
+
+    code {
+        @extend .code;
+    }
+
+    kbd {
+        @extend .kbd;
+    }
+
+    samp {
+        @extend .samp;
+    }
+
+}

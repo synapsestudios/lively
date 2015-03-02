@@ -1,27 +1,27 @@
 .panel__link {
-    @extend .ff-source;
-    padding-left                 : rem-calc(30);
-    color                        : $themeMLGray;
-    margin-top                   : rem-calc(20);
-    @include transition(color 300ms ease-in-out);
+    font-family  : $source;
+    padding-left : rem-calc(30);
+    color        : $themeMLGray;
+    margin-top   : rem-calc(20);
+    transition   : color 300ms ease-in-out;
 
     &::before {
-        font-family              : FontAwesome;
-        padding-right            : rem-calc(5);
+        font-family   : $font-awesome;
+        padding-right : rem-calc(5);
     }
 
     &:hover {
-        color                    : $themeDDGray;
+        color : $themeDDGray;
     }
 
     &:first-of-type {
-        padding-left             : 0;
+        padding-left : 0;
     }
 
 }
 
 .panel__link-logo {
-    height               : rem-calc(20);
-    width                : rem-calc(20);
-    margin-right         : rem-calc(5);
+    height       : rem-calc(20);
+    width        : rem-calc(20);
+    margin-right : rem-calc(5);
 }

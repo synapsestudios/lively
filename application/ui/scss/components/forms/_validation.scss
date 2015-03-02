@@ -8,34 +8,34 @@
 // </div>
 
 .validate {
-    position  :  relative;
+    position : relative;
 }
 
 // error over input on right side
 // <span class="validate__field-error">&#215;</span>
 
 .validate__field-error {
-    position     :  absolute;
-    top          :  rem-calc(7.5);
-    right        :  rem-calc(7.5);
-    display      :  none;
-    text-align   :  center;
-    font-size    :  rem-calc(21);
-    color        :  $white;
+    position   : absolute;
+    top        : rem-calc(7.5);
+    right      : rem-calc(7.5);
+    display    : none;
+    text-align : center;
+    font-size  : rem-calc(21);
+    color      : $white;
 }
 
 // adjust dimensions for large inputs
 
 .input--large ~ .validate__field-error {
-    height       :  rem-calc(21);
-    width        :  rem-calc(21);
+    height : rem-calc(21);
+    width  : rem-calc(21);
 }
 
 // adjust radius for rounded inputs
 
 .input--rounded ~ .validate__field-error {
 
-    border-radius: 50%;
+    border-radius : 50%;
 }
 
 // error message under field
@@ -43,7 +43,7 @@
 // <span class="validate__field-message">Please select a repo</span>
 
 .validate__field-message {
-    @extend .ff-source;
+    font-family : $source;
     position    : absolute;
     bottom      : -26px;
     left        : 0;
@@ -65,13 +65,13 @@
 .validate--passed {
 
     .validate__field-error {
-        background   :  $statusGreen;
-        border       :  1px solid $statusGreen;
+        background : $statusGreen;
+        border     : 1px solid $statusGreen;
     }
 
     .validate__field-message {
-        background  :  $statusGreen;
-        border      :  1px solid $statusGreen;
+        background : $statusGreen;
+        border     : 1px solid $statusGreen;
     }
 
 }
@@ -79,16 +79,16 @@
 // FAILED
 
 .validate--failed {
-    margin-bottom    : 0;
+    margin-bottom : 0;
 
     .validate__field-error {
-        background   :  $statusRed;
-        border       :  1px solid $statusRed;
+        background : $statusRed;
+        border     : 1px solid $statusRed;
     }
 
     .validate__field-message {
-        background  :  $statusRed;
-        border      :  1px solid $statusRed;
+        background : $statusRed;
+        border     : 1px solid $statusRed;
     }
 
 }
@@ -98,13 +98,13 @@
 .validate--warnings {
 
     .validate__field-error {
-        background   :  $statusOrange;
-        border       :  1px solid $statusOrange;
+        background : $statusOrange;
+        border     : 1px solid $statusOrange;
     }
 
     .validate__field-message {
-        background  :  $statusOrange;
-        border      :  1px solid $statusOrange;
+        background : $statusOrange;
+        border     : 1px solid $statusOrange;
     }
 
 }
@@ -115,7 +115,7 @@
 
     .validate__field-error,
     .validate__field-message {
-        display  :  block;
+        display : block;
     }
 
 }

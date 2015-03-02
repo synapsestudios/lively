@@ -365,11 +365,13 @@ module.exports = React.createClass({
                         requestMethod           = {this.props.method}
                         uri                     = {this.props.uri}
                     />
-                    <div className='switch__container'>
+                    <div className='panel__container switch__container'>
                         <p className='checkbox-label'>Include OAuth Token?</p>
                         <Checkbox defaultChecked={this.props.oauth} ref='sendToken' name={this.props.name}/>
                     </div>
-                    {this.getTryItButton()}
+                    <div className='panel__container'>
+                        {this.getTryItButton()}
+                    </div>
                     {this.getErrorMessage()}
                     {apiCallInfo}
                 </div>

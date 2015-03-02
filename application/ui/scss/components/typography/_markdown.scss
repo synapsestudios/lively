@@ -1,0 +1,142 @@
+// *******************************************
+// *******************************************
+
+    // markdown styles
+
+// *******************************************
+// *******************************************
+
+.markdown-wrapper {
+    @extend .input;
+    height: auto;
+    min-height    : 500px;
+    margin-bottom : rem-calc(20);
+    padding       : rem-calc(0) !important;
+    overflow-y    : scroll;
+}
+
+.markdown {
+    padding       : rem-calc(10);
+
+    > * {
+        color       : $secondary;
+        font-size   : rem-calc(18);
+        line-height : 1.5;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin : 0 !important;
+    }
+
+    h1 {
+        @extend .h1;
+    }
+
+    h2 {
+        @extend .h2;
+    }
+
+    h3 {
+        @extend .h3;
+    }
+
+    h4 {
+        @extend .h4;
+    }
+
+    h5 {
+        @extend .h5;
+    }
+
+    h6 {
+        @extend .h6;
+    }
+
+    p {
+        @extend .p;
+    }
+
+    span {
+        @extend .span;
+   }
+
+   a {
+        @extend .a;
+   }
+
+   b {
+        @extend .b;
+   }
+
+   strong {
+        @extend .strong;
+   }
+
+   i {
+        @extend .i;
+   }
+
+   em {
+        @extend .em;
+   }
+
+   em {
+        @extend .em;
+   }
+
+   blockquote {
+        @extend .blockquote;
+   }
+
+   small {
+        @extend .small;
+    }
+
+    sub {
+        @extend .sub;
+    }
+
+    sup {
+        @extend .sup;
+    }
+
+    dfn {
+        @extend .dfn;
+    }
+
+    q {
+        @extend .q;
+    }
+
+    code {
+        @extend .code;
+    }
+
+    pre {
+        @extend .pre;
+    }
+
+    kbd {
+        @extend .kbd;
+    }
+
+    samp {
+        @extend .samp;
+    }
+
+    ul {
+        margin-left     : rem-calc(20);
+        list-style-type : disc !important;
+    }
+
+    ol {
+        margin-left     : rem-calc(20);
+        list-style-type : decimal !important;
+    }
+
+}

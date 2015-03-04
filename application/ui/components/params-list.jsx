@@ -340,11 +340,19 @@ module.exports = React.createClass({
     {
         var changeHandler   = this.getChangeHandler(path, type),
             requestBodyCopy = _.extend({}, this.state.requestValues),
-            value           = NestedPropertyHandler.get(requestBodyCopy, path);
+            value           = NestedPropertyHandler.get(requestBodyCopy, path),
+            badConfig       = '';
 
         if (type === 'enum') {
             if (! options.enumValues.length) {
-                console.warn('Missing enumValues for param: ' + options.name);
+                badConfig = 'Missing Enum Values in api configuration';
+                console.warn('Missing Enum Values for param: ' + options.name);
+            } else if (
+                typeof options.defaultValue !== 'undefined'
+                && options.enumValues.indexOf(options.defaultValue) === -1
+            ) {
+                badConfig = 'Default value for enum not in values list';
+                console.warn('Defautl enum value not in values list');
             }
 
             return <Select value={value} key={key} options={options.enumValues} onChange={changeHandler} />;

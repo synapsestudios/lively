@@ -12,7 +12,6 @@ var ParamHelper           = require('../../util/param-helper');
 var Select                = require('./input/select');
 var Text                  = require('./input/text');
 var ResumableUpload       = require('./input/resumable-upload');
-var NestedPropertyHandler = require('../../util/nested-property-handler');
 var UriHelperMixin        = require('../../util/uri-helper');
 
 module.exports = React.createClass({

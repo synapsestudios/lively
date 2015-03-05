@@ -56,7 +56,7 @@ module.exports = React.createClass({
                 <Resource
                     name       = {resource.name}
                     synopsis   = {resource.synopsis}
-                    endpoints  = {_.isUndefined(resource.endpoints) ? resource.methods : resource.endpoints}
+                    endpoints  = {resource.endpoints}
                 />
             );
 

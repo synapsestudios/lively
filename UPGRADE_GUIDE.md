@@ -24,9 +24,7 @@ The `methods` property of an API Resource was renamed to `endpoints` to reduce c
         {...}
     ]
 }
-```
 
-```js
 // 0.2.0 API Resource configuration
 {
     name      : 'Activity',

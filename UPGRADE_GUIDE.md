@@ -6,7 +6,7 @@ Upgrade Guide
 
 ### Rename `methods` to `endpoints`
 
-The `methods` property of an API Resource was renamed to `endpoints` to reduce confusion with `method`, which is a string containing the HTTP method to be used for the request. Update any references to `methods` in your lively config files.
+The `methods` property of an API Resource was renamed to `endpoints` to reduce confusion with `method`, which is a string containing the HTTP method to be used for the request. Update any references to `methods` in your lively config files, as they will be deprecated in v1.0.
 
 
 ```js

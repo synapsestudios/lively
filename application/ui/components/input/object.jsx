@@ -52,7 +52,7 @@ module.exports = React.createClass({
                     className    = 'array-input'
                     value        = {prop.value}
                     onChange     = {_.partial(instance.updateField, index, 'value')}
-                    />
+                />
             );
         } else {
             field = <ChildObject value={prop.value} index={index}/>;
@@ -70,7 +70,7 @@ module.exports = React.createClass({
                     className='select'
                     onChange={_.partial(instance.updateField, index, 'type')}
                     value={prop.inputType}
-                    >
+                >
                     <option value={'string'}>String</option>
                     <option value={'number'}>Number</option>
                 </select>
@@ -83,20 +83,15 @@ module.exports = React.createClass({
                     <a className='button field-button--remove' onClick={rmCallback}>–</a>
                 </td>
                 <td>
-                    <input
+                    <label>Key: <input
                         className    = 'array-input'
                         value        = {prop.key}
                         onChange     = {_.partial(instance.updateField, index, 'key')}
                     />
-                </td>
-                <td>
-                    :
-                </td>
-                <td>
-                    {field}
-                </td>
-                <td>
-                    {selectType}
+                    </label>
+                    <label>Type: {selectType}</label>
+                    <br />
+                    <label>Value: {field}</label>
                 </td>
             </tr>
         );

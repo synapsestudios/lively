@@ -15,7 +15,7 @@ module.exports = React.createClass({
     {
         return (
             <table>
-                <ObjectParam value={this.props.value} index={this.props.index}/>
+                <ObjectParam value={this.props.value} index={this.props.index} changeHandler={this.props.onChange}/>
             </table>
         );
     }

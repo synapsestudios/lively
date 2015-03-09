@@ -356,7 +356,7 @@ module.exports = React.createClass({
         } else if (type === 'file') {
             return <input type='file' key={key} onChange={changeHandler}/>;
         } else if (type === 'object') {
-            return <ObjectParameter value={value} key={key} index={0}/>;
+            return <ObjectParameter value={value} key={key} index={0} onChange={changeHandler}/>;
         } else if (type === 'hash') {
             return null;
         } else if (type === 'stripe_token') {

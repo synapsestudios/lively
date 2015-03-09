@@ -55,7 +55,7 @@ module.exports = React.createClass({
                 />
             );
         } else {
-            field = <ChildObject value={prop.value} index={index}/>;
+            field = <ChildObject value={prop.value} index={index} onChange={_.partial(instance.updateField, index, 'value')}/>;
         }
 
         var rmCallback = function () {
@@ -68,7 +68,7 @@ module.exports = React.createClass({
             selectType = (
                 <select
                     className='select'
-                    onChange={_.partial(instance.updateField, index, 'type')}
+                    onChange={_.partial(instance.updateField, index, 'inputType')}
                     value={prop.inputType}
                 >
                     <option value={'string'}>String</option>
@@ -97,6 +97,26 @@ module.exports = React.createClass({
         );
     },
 
+    updateValuesForRequest : function()
+    {
+        var data = {};
+
+        for(var i in this.state.values) {
+            var val = this.state.values[i];
+            switch (val.inputType) {
+                case 'string':
+                case 'object':
+                    data[val.key] = val.value;
+                    break;
+                case 'number':
+                    data[val.key] = parseInt(val.value);
+                    break;
+            }
+        }
+
+        this.props.onChange(data);
+    },
+
     addField : function()
     {
         var values = this.state.values;
@@ -106,6 +126,8 @@ module.exports = React.createClass({
         this.setState({
             values : values
         });
+
+        this.updateValuesForRequest();
     },
 
     addObject : function()
@@ -120,11 +142,14 @@ module.exports = React.createClass({
         this.setState({
             values : values
         });
+
+        this.updateValuesForRequest();
     },
 
     updateField : function(index, type, event)
     {
         var values = this.state.values;
+        console.log(event);
 
         if (typeof values[index] === 'undefined') {
             values[index] = {
@@ -133,11 +158,18 @@ module.exports = React.createClass({
                 'type'  : 'string'
             };
         }
-        values[index][type] = event.target.value;
+        if (typeof event.target === 'undefined') {
+            // just setting value from a child object
+            values[index][type] = event;
+        } else {
+            values[index][type] = event.target.value;
+        }
 
         this.setState({
             values : values
         });
+
+        this.updateValuesForRequest();
     },
 
     removeField : function(index)
@@ -149,6 +181,8 @@ module.exports = React.createClass({
         this.setState({
             values : values
         });
+
+        this.updateValuesForRequest();
     },
 
     render : function()
@@ -162,7 +196,6 @@ module.exports = React.createClass({
                     </table>
                     <a className='button field-button--add' onClick={this.addField}>{'+ Add Field'}</a>
                     <a className='button field-button--add' onClick={this.addObject}>{'+ Add Object'}</a>
-
                 </td>
             </tr>
         );

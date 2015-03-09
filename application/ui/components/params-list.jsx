@@ -14,6 +14,7 @@ var Text                  = require('./input/text');
 var ResumableUpload       = require('./input/resumable-upload');
 var NestedPropertyHandler = require('../../util/nested-property-handler');
 var UriHelperMixin        = require('../../util/uri-helper');
+var ObjectParameter       = require('./input/object');
 
 module.exports = React.createClass({
 
@@ -354,6 +355,8 @@ module.exports = React.createClass({
             return <ResumableUpload key={key} target={options.uri} resumableUploadCallback={options.resumableUploadCallback} />;
         } else if (type === 'file') {
             return <input type='file' key={key} onChange={changeHandler}/>;
+        } else if (type === 'object') {
+            return <ObjectParameter value={value} key={key} index={0}/>;
         } else if (type === 'hash') {
             return null;
         } else if (type === 'stripe_token') {

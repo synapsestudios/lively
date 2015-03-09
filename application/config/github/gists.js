@@ -108,9 +108,9 @@ module.exports = {
                 {
                     name        : 'files',
                     required    : true,
-                    type        : 'hash with variable keys',
+                    type        : 'object',
                     location    : 'body',
-                    description : 'Files that make up this gist.' // @todo add hash support
+                    description : 'Files that make up this gist.'
                 },
                 {
                     name        : 'description',

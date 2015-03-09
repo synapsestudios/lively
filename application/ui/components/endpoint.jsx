@@ -26,6 +26,7 @@ module.exports = React.createClass({
         synopsis : React.PropTypes.string,
         method   : React.PropTypes.oneOf(['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'PATCH']),
         bodyType : React.PropTypes.string,
+        rootParam: React.PropTypes.string,
         uri      : React.PropTypes.string.isRequired,
         oauth    : React.PropTypes.bool,
         params   : React.PropTypes.array
@@ -117,6 +118,7 @@ module.exports = React.createClass({
             method      = this.props.method,
             uri         = this.props.uri,
             bodyType    = this.props.bodyType,
+            rootParam   = this.props.rootParam,
             accessToken = this.getFlux().store('OAuthStore').getState().accessToken;
 
         var headerParams = {},
@@ -186,7 +188,8 @@ module.exports = React.createClass({
                 queryParams,
                 bodyParams,
                 headerParams,
-                bodyType
+                bodyType,
+                rootParam
             );
         } else {
             this.getFlux().actions.request.request(
@@ -197,7 +200,8 @@ module.exports = React.createClass({
                 queryParams,
                 bodyParams,
                 headerParams,
-                bodyType
+                bodyType,
+                rootParam
             );
         }
 

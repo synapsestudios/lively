@@ -26,6 +26,7 @@ module.exports = {
             uri      : '/user/emails',
             oauth    : true,
             bodyType : 'json-param',
+            rootParam: 'emails',
             params   : [
                 paramEmails
             ]
@@ -37,6 +38,7 @@ module.exports = {
             uri      : '/user/emails',
             oauth    : true,
             bodyType : 'json-param',
+            rootParam: 'emails',
             params   : [
                 paramEmails
             ]

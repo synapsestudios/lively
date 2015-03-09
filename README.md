@@ -145,6 +145,7 @@ An API is made up of multiple resources. Each resource has a list of endpoints t
 - **uri**: A `string` containing the path of the endpoint. Parts that are prefixed with `:` will be filled in by the `param` with the same name and its `location` set to `uri`. See below for more details on `params`.
 - **oauth**: A `bool` (`true` or `false`) which determines whether or not this request defaults to using oauth or unauthenticated.
 - **bodyType**: A `string` containing the body type the request should contain.  Default is `json-object`, only alternate at this time is `json-param`, which will use the contents of the remaining body `param` as the request body.
+- **rootParam**: A `string` containing the name of the parameter which will be used as the body request.  This option is only available when `bodyType = 'json-param'`.
 - **params**: An array of `Object` containing parameter objects which this endpoint can accept. See below for details.
 
 ### Param Configuration

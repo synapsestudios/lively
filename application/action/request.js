@@ -5,7 +5,7 @@ var Client    = require('../client');
 
 module.exports = {
 
-    oauthRequest : function(apiName, endpointName, accessToken, method, path, queryParams, bodyParams, headers)
+    oauthRequest : function(apiName, endpointName, accessToken, method, path, queryParams, bodyParams, headers, bodyType)
     {
         var client, flux = this;
 
@@ -14,6 +14,10 @@ module.exports = {
         }
 
         client = new Client(apiName);
+
+        if (bodyType === 'json-param') {
+            bodyParams = bodyParams[Object.keys(bodyParams)[0]];
+        }
 
         client.authRequest(accessToken, method, path, queryParams, bodyParams, headers)
             .then(

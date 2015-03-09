@@ -185,7 +185,8 @@ module.exports = React.createClass({
                 uri,
                 queryParams,
                 bodyParams,
-                headerParams
+                headerParams,
+                bodyType
             );
         } else {
             this.getFlux().actions.request.request(

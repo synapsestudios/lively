@@ -1,5 +1,4 @@
 /** @jsx React.DOM */
-/* global console */
 'use strict';
 
 var _                     = require('underscore');
@@ -12,7 +11,6 @@ var ParamHelper           = require('../../util/param-helper');
 var Select                = require('./input/select');
 var Text                  = require('./input/text');
 var ResumableUpload       = require('./input/resumable-upload');
-var NestedPropertyHandler = require('../../util/nested-property-handler');
 var UriHelperMixin        = require('../../util/uri-helper');
 
 module.exports = React.createClass({
@@ -343,10 +341,6 @@ module.exports = React.createClass({
             value           = NestedPropertyHandler.get(requestBodyCopy, path);
 
         if (type === 'enum') {
-            if (! options.enumValues.length) {
-                console.warn('Missing enumValues for param: ' + options.name);
-            }
-
             return <Select value={value} key={key} options={options.enumValues} onChange={changeHandler} />;
         } else if (type === 'boolean') {
             return <Select value={value} key={key} options={['true', 'false']} onChange={changeHandler} />;

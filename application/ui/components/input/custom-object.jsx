@@ -3,7 +3,7 @@
 
 var _             = require('underscore');
 var React         = require('react');
-var ChildObject   = require('./child-object');
+var ChildObject   = require('./child-custom-object');
 
 module.exports = React.createClass({
 

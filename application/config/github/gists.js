@@ -108,7 +108,7 @@ module.exports = {
                 {
                     name        : 'files',
                     required    : true,
-                    type        : 'object',
+                    type        : 'custom-object',
                     location    : 'body',
                     description : 'Files that make up this gist.'
                 },
@@ -147,23 +147,9 @@ module.exports = {
                 {
                     name        : 'files',
                     required    : false,
-                    type        : 'hash with variable keys',
+                    type        : 'custom-object',
                     location    : 'body',
                     description : 'Files that make up this gist.' // @todo add hash support
-                },
-               {
-                    name        : 'content',
-                    required    : false,
-                    type        : 'string',
-                    location    : 'body',
-                    description : 'Updated file contents.'
-                },
-               {
-                    name        : 'filename',
-                    required    : false,
-                    type        : 'string',
-                    location    : 'body',
-                    description : 'New name for this file.'
                 }
             ]
         },

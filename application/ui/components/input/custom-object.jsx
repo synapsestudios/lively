@@ -24,9 +24,9 @@ module.exports = ObjectParameter = React.createClass({
     getDefaultValue : function()
     {
         return {
-            key: '',
-            value: '',
-            inputType: 'string'
+            key         : '',
+            value       : '',
+            inputType   : 'string'
         };
     },
 
@@ -71,9 +71,9 @@ module.exports = ObjectParameter = React.createClass({
         } else {
             selectType = (
                 <select
-                    className='select'
-                    onChange={_.partial(instance.updateField, index, 'inputType')}
-                    value={prop.inputType}
+                    className = 'select'
+                    onChange  = {_.partial(instance.updateField, index, 'inputType')}
+                    value     = {prop.inputType}
                 >
                     <option value={'string'}>String</option>
                     <option value={'number'}>Number</option>

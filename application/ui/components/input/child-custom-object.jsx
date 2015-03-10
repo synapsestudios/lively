@@ -8,9 +8,11 @@ var ObjectParam;
 
 module.exports = React.createClass({
     displayName : 'ChildObjectParameter',
+
     componentWillMount: function() {
         ObjectParam = require('./custom-object');
     },
+
     render : function()
     {
         return (

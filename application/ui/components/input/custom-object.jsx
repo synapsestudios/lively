@@ -3,9 +3,9 @@
 
 var _             = require('underscore');
 var React         = require('react');
-var ChildObject   = require('./child-custom-object');
+var ObjectParameter;
 
-module.exports = React.createClass({
+module.exports = ObjectParameter = React.createClass({
 
     displayName : 'ObjectParameter',
 
@@ -55,7 +55,11 @@ module.exports = React.createClass({
                 />
             );
         } else {
-            field = <ChildObject value={prop.value} index={index} onChange={_.partial(instance.updateField, index, 'value')}/>;
+            field = (
+                <table>
+                    <ObjectParameter value={prop.value} index={index} onChange={_.partial(instance.updateField, index, 'value')}/>
+                </table>
+            );
         }
 
         var rmCallback = function () {
@@ -149,7 +153,6 @@ module.exports = React.createClass({
     updateField : function(index, type, event)
     {
         var values = this.state.values;
-        console.log(event);
 
         if (typeof values[index] === 'undefined') {
             values[index] = {

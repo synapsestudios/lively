@@ -32,11 +32,11 @@ module.exports = ObjectParameter = React.createClass({
 
     getInputs : function()
     {
-        var inputs   = [],
-            instance = this;
+        var inputs    = [],
+            component = this;
 
         _.each(this.state.values, function (value, index) {
-            inputs.push(instance.getInput(value, index));
+            inputs.push(component.getInput(value, index));
         });
 
         return inputs;

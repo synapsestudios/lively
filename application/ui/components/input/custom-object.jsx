@@ -48,20 +48,27 @@ module.exports = ObjectParameter = React.createClass({
     {
         var field, selectType, instance = this;
 
-        if (prop.inputType !== 'object') {
-            field = (
-                <Text
-                    className    = 'array-input'
-                    value        = {prop.value}
-                    onChange     = {_.partial(instance.updateField, index, 'value')}
-                />
-            );
-        } else {
-            field = (
-                <table>
-                    <ObjectParameter value={prop.value} index={index} onChange={_.partial(instance.updateField, index, 'value')}/>
-                </table>
-            );
+        switch (prop.inputType) {
+            case 'string':
+            case 'number':
+                field = (
+                    <Text
+                        className    = 'array-input'
+                        value        = {prop.value}
+                        onChange     = {_.partial(instance.updateField, index, 'value')}
+                        />
+                );
+                break;
+            case 'object':
+                field = (
+                    <table>
+                        <ObjectParameter value={prop.value} index={index} onChange={_.partial(instance.updateField, index, 'value')}/>
+                    </table>
+                );
+                break;
+            case 'null':
+                field = null;
+                break;
         }
 
         var rmCallback = function () {
@@ -76,7 +83,7 @@ module.exports = ObjectParameter = React.createClass({
                     className = 'select'
                     onChange  = {_.partial(instance.updateField, index, 'inputType')}
                     value     = {prop.inputType}
-                    options   = {['string', 'number']}
+                    options   = {['string', 'number', 'null']}
                 />
             );
         }
@@ -114,6 +121,9 @@ module.exports = ObjectParameter = React.createClass({
                     break;
                 case 'number':
                     data[val.key] = parseInt(val.value);
+                    break;
+                case 'null':
+                    data[val.key] = null;
                     break;
             }
         }

@@ -3,6 +3,8 @@
 
 var _             = require('underscore');
 var React         = require('react');
+var Select        = require('./select');
+var Text          = require('./text');
 var ObjectParameter;
 
 module.exports = ObjectParameter = React.createClass({
@@ -48,7 +50,7 @@ module.exports = ObjectParameter = React.createClass({
 
         if (prop.inputType !== 'object') {
             field = (
-                <input
+                <Text
                     className    = 'array-input'
                     value        = {prop.value}
                     onChange     = {_.partial(instance.updateField, index, 'value')}
@@ -70,14 +72,12 @@ module.exports = ObjectParameter = React.createClass({
             selectType = 'object';
         } else {
             selectType = (
-                <select
+                <Select
                     className = 'select'
                     onChange  = {_.partial(instance.updateField, index, 'inputType')}
                     value     = {prop.inputType}
-                >
-                    <option value={'string'}>String</option>
-                    <option value={'number'}>Number</option>
-                </select>
+                    options   = {['string', 'number']}
+                />
             );
         }
 
@@ -87,7 +87,7 @@ module.exports = ObjectParameter = React.createClass({
                     <a className='button field-button--remove' onClick={rmCallback}>–</a>
                 </td>
                 <td>
-                    <label>Key: <input
+                    <label>Key: <Text
                         className    = 'array-input'
                         value        = {prop.key}
                         onChange     = {_.partial(instance.updateField, index, 'key')}
@@ -150,7 +150,7 @@ module.exports = ObjectParameter = React.createClass({
         this.updateValuesForRequest();
     },
 
-    updateField : function(index, type, event)
+    updateField : function(index, type, value)
     {
         var values = this.state.values;
 
@@ -161,12 +161,8 @@ module.exports = ObjectParameter = React.createClass({
                 'type'  : 'string'
             };
         }
-        if (typeof event.target === 'undefined') {
-            // just setting value from a child object
-            values[index][type] = event;
-        } else {
-            values[index][type] = event.target.value;
-        }
+
+        values[index][type] = value;
 
         this.setState({
             values : values

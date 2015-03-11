@@ -94,15 +94,14 @@ module.exports = ObjectParameter = React.createClass({
                     <a className='button field-button--remove' onClick={rmCallback}>–</a>
                 </td>
                 <td>
-                    <label>Key: <Text
+                    Key: <Text
                         className    = 'array-input'
                         value        = {prop.key}
                         onChange     = {_.partial(instance.updateField, index, 'key')}
                     />
-                    </label>
-                    <label>Type: {selectType}</label>
+                    Type: {selectType}
                     <br />
-                    <label>Value: {field}</label>
+                    Value: {field}
                 </td>
             </tr>
         );

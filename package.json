@@ -9,6 +9,7 @@
   },
   "scripts" : {
     "start"   : "rm -rf ./build && webpack && node webpack",
+    "windows" : "rmdir /S /Q build && webpack.cmd && node webpack",
     "webpack" : "rm -rf ./build && webpack",
     "dist"    : "rm -rf ./build && APP_ENV=production webpack -p && zip -r build-`date +%s` application build node_modules server server.js",
     "clean"   : "rm -rf ./build",

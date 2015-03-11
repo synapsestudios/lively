@@ -7,7 +7,7 @@ var React           = require('react');
 var cx              = require('react/lib/cx');
 var FluxMixin       = require('fluxxor').FluxMixin(React);
 var StoreWatchMixin = require('fluxxor').StoreWatchMixin;
-var Params          = require('./params-list');
+var Params          = require('./params');
 var ApiCallInfo     = require('./api-call-info');
 var Checkbox        = require('./input/checkbox');
 var Resumable       = require('../../../bower_components/resumablejs/resumable');
@@ -68,8 +68,6 @@ module.exports = React.createClass({
             loading           : endpointData.loading,
             loaded            : endpointData.loaded,
             values            : endpointData.values,
-            excludedFields    : endpointData.excludedFields,
-            nullFields        : endpointData.nullFields,
             response          : endpointData.response,
             responseTimestamp : endpointData.responseTimestamp,
             requestTimestamp  : endpointData.requestTimestamp,
@@ -313,6 +311,11 @@ module.exports = React.createClass({
         }
     },
 
+    changeHandler : function(value)
+    {
+        console.log(value);
+    },
+
     render : function()
     {
         var apiCallInfo;
@@ -370,6 +373,8 @@ module.exports = React.createClass({
                         ref                     = 'params'
                         requestMethod           = {this.props.method}
                         uri                     = {this.props.uri}
+                        key                     = {0}
+                        onChange                = {this.changeHandler}
                     />
                     <div className='switch__container'>
                         <p className='checkbox-label'>Include OAuth Token?</p>

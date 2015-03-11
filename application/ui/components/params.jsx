@@ -14,16 +14,21 @@ module.exports = React.createClass({
 
     getInitialState : function()
     {
-        var values = {};
+        var values   = {};
+        var includes = {};
+
         _.each(this.props.params, function(param) {
+            includes[param.name] = true;
+
             if (typeof param.defaultValue !== 'undefined') {
                 values[param.name] = param.defaultValue;
                 return;
             }
+
             switch (param.type) {
                 case 'string':
                     values[param.name] = '';
-                    break
+                    break;
                 case 'number':
                     values[param.name] = 0;
                     break;
@@ -45,8 +50,8 @@ module.exports = React.createClass({
 
         return {
             values      : values,
-            nullKeys    : [],
-            excludeKeys : []
+            nullKeys    : {},
+            includeKeys : includes
         };
     },
 
@@ -56,7 +61,7 @@ module.exports = React.createClass({
 
         for (var i in this.props.params) {
             paramName = this.props.params[i].name;
-            if (typeof this.state.excludeKeys[paramName] === 'undefined') {
+            if (typeof this.state.includeKeys[paramName] !== 'undefined') {
                 if (typeof this.state.nullKeys[paramName] === 'undefined') {
                     data[paramName] = this.state.values[paramName];
                 } else {
@@ -71,11 +76,12 @@ module.exports = React.createClass({
     /**
      * Manage null values
      * @param key
-     * @param value
+     * @param event
      */
-    nullHandler : function(key, value)
+    nullHandler : function(key, event)
     {
         var state = _.extend({}, this.state);
+        var value = event.currentTarget.checked;
 
         if (value) {
             state.nullKeys[key] = true;
@@ -83,31 +89,32 @@ module.exports = React.createClass({
             delete state.nullKeys[key];
         }
 
+        this.props.onChange(this.getValue());
         this.setState(state);
     },
 
-    includeHandler : function(key, value)
+    includeHandler : function(key, event)
     {
         var state = _.extend({}, this.state);
+        var value = event.currentTarget.checked;
 
-        if (!value) {
-            state.excludeKeys[key] = true;
+        if (value) {
+            state.includeKeys[key] = true;
         } else {
-            delete state.excludeKeys[key];
+            delete state.includeKeys[key];
         }
 
         this.setState(state);
+        this.props.onChange(this.getValue());
     },
 
     changeHandler : function(key, value)
     {
         var state = _.extend({}, this.state);
-        console.log(arguments);
 
         state.values[key] = value;
 
         this.setState(state);
-
         this.props.onChange(this.getValue());
     },
 
@@ -124,6 +131,8 @@ module.exports = React.createClass({
                     onChange    = {_.partial(component.changeHandler, item.name)}
                     onInclude   = {_.partial(component.includeHandler, item.name)}
                     onNull      = {_.partial(component.nullHandler, item.name)}
+                    isNull      = {typeof component.state.nullKeys[item.name] !== 'undefined'}
+                    isIncluded  = {component.state.includeKeys[item.name]}
                 />
             );
         });

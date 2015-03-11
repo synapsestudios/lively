@@ -1,9 +1,10 @@
 var WebpackDevServer = require('webpack-dev-server');
 var webpack          = require('webpack');
 var config           = require('./webpack.config');
+var path             = require('path');
 
 new WebpackDevServer(webpack(config), {
-    contentBase        : __dirname + '/build',
+    contentBase        : path.resolve(__dirname + '/build'),
     hot                : true,
     noInfo             : true,
     historyApiFallback : true

@@ -12,6 +12,7 @@ var Select                = require('./input/select');
 var Text                  = require('./input/text');
 var ResumableUpload       = require('./input/resumable-upload');
 var UriHelperMixin        = require('../../util/uri-helper');
+var ObjectParameter       = require('./input/custom-object');
 
 module.exports = React.createClass({
 
@@ -348,6 +349,8 @@ module.exports = React.createClass({
             return <ResumableUpload key={key} target={options.uri} resumableUploadCallback={options.resumableUploadCallback} />;
         } else if (type === 'file') {
             return <input type='file' key={key} onChange={changeHandler}/>;
+        } else if (type === 'custom-object') {
+            return <ObjectParameter value={value} key={key} index={0} onChange={changeHandler}/>;
         } else if (type === 'hash') {
             return null;
         } else if (type === 'stripe_token') {

@@ -37,7 +37,7 @@ module.exports = {
     getDefaultValueForParam : function(param)
     {
         // array[hash] defaults are provided by their sub-params
-        if (param.type == 'array[hash]' && param.hasOwnProperty('defaultValue')) {
+        if (param.type === 'array[hash]' && param.hasOwnProperty('defaultValue')) {
             delete param.defaultValue;
         }
         if (param.hasOwnProperty('defaultValue')) {

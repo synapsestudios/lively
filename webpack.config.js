@@ -41,8 +41,6 @@ if (environment === 'development') {
     }
 }
 
-var dependencyFolderRegex = /node_modules|bower_components/;
-
 module.exports = {
     name   : 'browser bundle',
     entry  : config.entry,

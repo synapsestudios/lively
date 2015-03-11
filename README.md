@@ -127,6 +127,7 @@ An API is made up of multiple resources. Each resource has a list of endpoints t
     method   : 'GET',
     uri      : '/repos/:owner/:repo/events',
     oauth    : false,
+    bodyType : 'json-object',
     params   : [
         {
             name        : 'owner',
@@ -145,6 +146,8 @@ An API is made up of multiple resources. Each resource has a list of endpoints t
 - **method**: A `string` containing the HTTP method to be used for the request.
 - **uri**: A `string` containing the path of the endpoint. Parts that are prefixed with `:` will be filled in by the `param` with the same name and its `location` set to `uri`. See below for more details on `params`.
 - **oauth**: A `bool` (`true` or `false`) which determines whether or not this request defaults to using oauth or unauthenticated.
+- **bodyType**: A `string` containing the body type the request should contain.  Default is `json-object`, only alternate at this time is `json-param`, which will use the contents of the remaining body `param` as the request body.
+- **rootParam**: A `string` containing the name of the parameter which will be used as the body request.  This option is only available when `bodyType = 'json-param'`.
 - **params**: An array of `Object` containing parameter objects which this endpoint can accept. See below for details.
 
 ### Param Configuration
@@ -162,7 +165,10 @@ An API is made up of multiple resources. Each resource has a list of endpoints t
 
 - **name**: A `string` containing the key or name of this parameter that will be sent in the request body or injected into the URI.
 - **required**: A `bool` (`true` or `false`) which flags this parameter as required.
-- **type**: A `string` containing one of: `string`, `integer`, `boolean`, `resumable-upload`, `hash`, `array[hash]`, `array[string]`, `array[boolean]`, `array[integer]`, or `enum`. If `enum`, specify `enumValues` property on param containing an array of strings to display as options to the user.
+- **type**: A `string` containing one of: `string`, `integer`, `boolean`, `resumable-upload`, `hash`, `array[hash]`, `array[string]`, `array[boolean]`, `array[integer]`, `stripe_token`, `custom-object`, or `enum`.
+  - `hash` and `array[hash]` will require a child set of `params`
+  - `custom-object` will allow the user to create objects with arbitrary keys and values, including child objects.
+  - If `enum`, specify `enumValues` property on param containing an array of strings to display as options to the user.
 - **location**: A `string` containing one of `header`, `body`, `uri` or `query`. If the param is named in the endpoint's URI, Lively will ignore the stated location. *Default:* `body` unless param is named in URI, then `uri`.
 - **defaultValue**: A `string`, `bool`, or `array` depending on what `type` is set. The default value to display in the param.
 - **description**: A `string` containing a short description of the parameter.

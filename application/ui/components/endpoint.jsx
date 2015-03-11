@@ -24,6 +24,8 @@ module.exports = React.createClass({
         name     : React.PropTypes.string.isRequired,
         synopsis : React.PropTypes.string,
         method   : React.PropTypes.oneOf(['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'PATCH']),
+        bodyType : React.PropTypes.string,
+        rootParam: React.PropTypes.string,
         uri      : React.PropTypes.string.isRequired,
         oauth    : React.PropTypes.bool,
         params   : React.PropTypes.array
@@ -111,9 +113,11 @@ module.exports = React.createClass({
 
     onSubmit : function()
     {
-        var values = this.state.values,
-            method = this.props.method,
-            uri    = this.props.uri,
+        var values      = this.state.values,
+            method      = this.props.method,
+            uri         = this.props.uri,
+            bodyType    = this.props.bodyType,
+            rootParam   = this.props.rootParam,
             accessToken = this.getFlux().store('OAuthStore').getState().accessToken;
 
         var headerParams = {},
@@ -155,6 +159,7 @@ module.exports = React.createClass({
             }
 
             var paramData = _.findWhere(this.props.params, { name : name });
+            bodyType  = this.props.bodyType;
 
             if (paramData.type === 'file') {
                 bodyParams = value;
@@ -181,7 +186,9 @@ module.exports = React.createClass({
                 uri,
                 queryParams,
                 bodyParams,
-                headerParams
+                headerParams,
+                bodyType,
+                rootParam
             );
         } else {
             this.getFlux().actions.request.request(
@@ -191,7 +198,9 @@ module.exports = React.createClass({
                 uri,
                 queryParams,
                 bodyParams,
-                headerParams
+                headerParams,
+                bodyType,
+                rootParam
             );
         }
 
@@ -377,6 +386,5 @@ module.exports = React.createClass({
                 </div>
             </div>
         );
-
     }
 });

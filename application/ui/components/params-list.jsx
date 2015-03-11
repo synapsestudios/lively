@@ -11,8 +11,8 @@ var ParamHelper           = require('../../util/param-helper');
 var Select                = require('./input/select');
 var Text                  = require('./input/text');
 var ResumableUpload       = require('./input/resumable-upload');
-var NestedPropertyHandler = require('../../util/nested-property-handler');
 var UriHelperMixin        = require('../../util/uri-helper');
+var ObjectParameter       = require('./input/custom-object');
 
 module.exports = React.createClass({
 
@@ -342,10 +342,6 @@ module.exports = React.createClass({
             value           = NestedPropertyHandler.get(requestBodyCopy, path);
 
         if (type === 'enum') {
-            if (! options.enumValues.length) {
-                console.warn('Missing enumValues for param: ' + options.name);
-            }
-
             return <Select value={value} key={key} options={options.enumValues} onChange={changeHandler} />;
         } else if (type === 'boolean') {
             return <Select value={value} key={key} options={['true', 'false']} onChange={changeHandler} />;
@@ -353,6 +349,8 @@ module.exports = React.createClass({
             return <ResumableUpload key={key} target={options.uri} resumableUploadCallback={options.resumableUploadCallback} />;
         } else if (type === 'file') {
             return <input type='file' key={key} onChange={changeHandler}/>;
+        } else if (type === 'custom-object') {
+            return <ObjectParameter value={value} key={key} index={0} onChange={changeHandler}/>;
         } else if (type === 'hash') {
             return null;
         } else if (type === 'stripe_token') {

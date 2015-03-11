@@ -1,3 +1,4 @@
+/* global console */
 'use strict';
 
 var _           = require('underscore');
@@ -23,9 +24,32 @@ module.exports = {
         ];
     },
 
+    validateParamConfiguration : function(param)
+    {
+        var errors = [];
+
+        switch (param.type) {
+            case "enum":
+                if (! param.enumValues.length) {
+                    errors.push('Missing Enum Values');
+                } else if (
+                    typeof param.defaultValue !== 'undefined' &&
+                    param.enumValues.indexOf(param.defaultValue) === -1
+                ) {
+                    errors.push('Default value for enum not in values list');
+                }
+                break;
+        }
+
+        if (errors.length > 0) {
+            console.log(errors);
+        }
+        return errors;
+    },
+
     renderDescriptionColumn : function(param)
     {
-        var defaultValue, description, innerHtml;
+        var defaultValue, description, innerHtml, errors;
 
         if (_.isBoolean(param.defaultValue)) {
             defaultValue = (param.defaultValue) ? 'true' : 'false';
@@ -35,6 +59,15 @@ module.exports = {
 
         description = (param.required ? '**Required**. ' : '') + param.description +
             (defaultValue ? ' **Default:** ' + defaultValue : '');
+
+        // Add any configuration validation errors
+        errors = this.validateParamConfiguration(param);
+        if (errors.length > 0) {
+            description += "\n\n**API CONFIGURATION ERROR**\n";
+            for (var i in errors) {
+                description += "* " + errors[i] + "\n";
+            }
+        }
 
         innerHtml = {
             __html: marked(description)

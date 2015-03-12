@@ -84,6 +84,7 @@ module.exports = React.createClass({
                 />
                 <RouteHandler
                     apiConfig       = {this.apiConfig}
+                    apiAssets       = {this.apiAssets}
                     oauthStoreState = {this.state.oauthStoreState}
                 />
             </div>

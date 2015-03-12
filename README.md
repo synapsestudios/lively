@@ -42,6 +42,9 @@ A summary and logo can be associated with an API using the assets file at `appli
 }
 ```
 
+- **logo**: A `string` containing a valid path to an image to display for the logo
+- **summary**: A `string` containing the summary that will be displayed by default when you click on an API
+
 Note that PNG and Markdown files can be required directly, thanks to Webpack's file and markdown loaders.
 
 The application is initialized with an empty assets file by default, in the case that no assets exist.
@@ -64,8 +67,6 @@ Each API has a configuration that tells Lively how to make requests and what end
 ```
 {
     'name'    : 'GitHub v3 API',
-    'logo'    : '/images/logos/github-mark.png',
-    'summary' : 'Summary text',
     'api'     : {
         'hostname' : 'api.github.com',
         'port'     : 443,
@@ -90,8 +91,6 @@ Each API has a configuration that tells Lively how to make requests and what end
 ```
 
 - **name**: A `string` containing the display name for the API.
-- **logo**: A `string` containing a valid path to an image to display for the logo
-- **summary**: A `string` containing the summary that will be displayed by default when you click on an API
 - **api**: An `Object` containing connection details for API calls (see below)
 - **oauth2**: An `Object` containing the connection and authentication  information for OAuth2 APIs (see below)
 - **resources**: An array of `Object` containing a resource configuration object for each resource. Resources can be nested arbitrarily deep, see the resource configuration section for more details. The recommended structure is to create folders for each top level resource inside your API configuration folder.

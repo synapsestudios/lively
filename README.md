@@ -14,7 +14,8 @@
 ### Top Level Configuration
 
 The top level configuration for Lively is stored at `application/config.js`. An example is provided in `application/config.dist.js` and below:
-```
+
+```JavaScript
 {
     lively : {
         hostname : 'localhost',
@@ -25,6 +26,25 @@ The top level configuration for Lively is stored at `application/config.js`. An 
     }
 }
 ```
+
+### Asset Configuration
+
+A summary and logo can be associated with an API using the assets file at `application/assets.js`. An example is provided in `application/assets.dist.js` and below:
+
+```JavaScript
+{
+    apis : {
+        github : {
+            logo     : require('../media/images/logos/github-mark.png'),
+            summary  : require('./config/github/summary.md')
+        }
+    }
+}
+```
+
+Note that PNG and Markdown files can be required directly, thanks to Webpack's file and markdown loaders.
+
+The application is initialized with an empty assets file by default, in the case that no assets exist.
 
 #### lively
 

@@ -1,3 +1,12 @@
+## [v0.3.0](https://github.com/synapsestudios/lively/compare/v0.1.0...v0.2.0) - 2015-03-12
+
+### New features
+- [#83](https://github.com/synapsestudios/lively/pull/83) Add support for an array of hashes with custom keys
+- [#60](https://github.com/synapsestudios/lively/pull/60) Allow sending specific param as the body instead of an object
+
+### Bugfixes
+- [#122](https://github.com/synapsestudios/lively/pull/122) Enum fields can have invalid defaultValues
+
 ## [v0.2.0](https://github.com/synapsestudios/lively/compare/v0.1.0...v0.2.0) - 2015-03-05
 
 ### New Features

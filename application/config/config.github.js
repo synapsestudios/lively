@@ -1,27 +1,22 @@
 'use strict';
 
-var summary = require('./github/summary.md');
-var logo    = require('../../media/images/logos/github-mark.png');
-
 module.exports = {
-    'name'    : 'GitHub v3 API',
-    'logo'    : '/images/logos/github-mark.png',
-    'summary' : summary,
-    'api'     : {
-        'hostname' : 'api.github.com',
-        'port'     : 443,
-        'secure'   : true
+    name    : 'GitHub v3 API',
+    api     : {
+        hostname : 'api.github.com',
+        port     : 443,
+        secure   : true
     },
-    'oauth2' : {
-        'type'         : 'authorization-code',
-        'hostname'     : 'github.com',
-        'port'         : 443,
-        'secure'       : true,
-        'authorizeUrl' : '/login/oauth/authorize',
-        'tokenUrl'     : '/login/oauth/access_token',
-        'tokenParam'   : 'token'
+    oauth2 : {
+        type         : 'authorization-code',
+        hostname     : 'github.com',
+        port         : 443,
+        secure       : true,
+        authorizeUrl : '/login/oauth/authorize',
+        tokenUrl     : '/login/oauth/access_token',
+        tokenParam   : 'token'
     },
-    'resources' : [
+    resources : [
         require('./github/activity'),
         require('./github/gists'),
         require('./github/git_data'),

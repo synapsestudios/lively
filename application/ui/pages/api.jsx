@@ -10,6 +10,7 @@ var OAuthConnectPanel = require('../components/oauth');
 var MainNav           = require('../components/main-nav');
 var NotFoundPage      = require('./404');
 var config            = require('../../config');
+var assets            = require('../../assets');
 var Router            = require('react-router');
 var RouteHandler      = Router.RouteHandler;
 
@@ -25,7 +26,10 @@ module.exports = React.createClass({
 
     componentWillMount : function()
     {
-        this.apiConfig = config.apis[this.getParams().apiSlug];
+        var apiSlug = this.getParams().apiSlug;
+
+        this.apiConfig = config.apis[apiSlug];
+        this.apiAssets = assets.apis[apiSlug] || {};
     },
 
     componentDidMount : function()
@@ -50,7 +54,7 @@ module.exports = React.createClass({
 
         this.getFlux().actions.oauth.setApi(this.getParams().apiSlug);
 
-        this.props.updateHeader(this.apiConfig.name, this.apiConfig.logo, this.getParams().apiSlug);
+        this.props.updateHeader(this.apiConfig.name, this.apiAssets.logo, this.getParams().apiSlug);
     },
 
     getStateFromFlux : function()

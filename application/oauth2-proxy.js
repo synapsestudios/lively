@@ -45,7 +45,7 @@ module.exports = function(req, res) {
                     port     = config.lively.port;
 
                 res.writeHead(302, {
-                    Location : 'http://' + hostname + ':' + port + '/'+query.api + '?' + qs.stringify(json)
+                    Location : 'http://' + hostname + ':' + port + '/' + query.api + '?' + qs.stringify(json)
                 });
             } catch (e) {
                 res.write(data);

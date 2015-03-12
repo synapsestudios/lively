@@ -36,6 +36,8 @@ module.exports = React.createClass({
     {
         var query = this.getQuery();
 
+        this.getFlux().actions.oauth.setApi(this.getParams().apiSlug);
+
         if (query && query.access_token) {
             this.getFlux().actions.oauth.setToken({
                 accessToken : query.access_token,
@@ -51,8 +53,6 @@ module.exports = React.createClass({
 
         var title = [this.apiConfig.name, 'Lively Docs'];
         window.document.title = title.join(' | ');
-
-        this.getFlux().actions.oauth.setApi(this.getParams().apiSlug);
 
         this.props.updateHeader(this.apiConfig.name, this.apiAssets.logo, this.getParams().apiSlug);
     },

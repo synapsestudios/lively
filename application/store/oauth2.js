@@ -29,6 +29,10 @@ module.exports = Fluxxor.createStore({
 
         if (localStorage.get(apiSlug + 'oauth')) {
             this.unserializeFromLocalStorage();
+        } else {
+            delete this.state.accessToken;
+            delete this.state.tokenType;
+            delete this.state.tokenData;
         }
 
         this.emit('change');

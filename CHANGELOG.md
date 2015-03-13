@@ -1,4 +1,9 @@
-## [v0.3.0](https://github.com/synapsestudios/lively/compare/v0.1.0...v0.2.0) - 2015-03-12
+## [v0.4.0](https://github.com/synapsestudios/lively/compare/v0.3.0...v0.4.0) - 2015-03-13
+
+### Changes
+- [#125](https://github.com/synapsestudios/lively/pull/125) Move from gulp to webpack
+
+## [v0.3.0](https://github.com/synapsestudios/lively/compare/v0.2.0...v0.3.0) - 2015-03-12
 
 ### New features
 - [#83](https://github.com/synapsestudios/lively/pull/83) Add support for an array of hashes with custom keys

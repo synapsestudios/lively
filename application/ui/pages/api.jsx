@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 /* global window */
 'use strict';
 
@@ -11,22 +10,39 @@ var OAuthConnectPanel = require('../components/oauth');
 var MainNav           = require('../components/main-nav');
 var NotFoundPage      = require('./404');
 var config            = require('../../config');
+var assets            = require('../../assets');
+var Router            = require('react-router');
+var RouteHandler      = Router.RouteHandler;
 
 module.exports = React.createClass({
 
-    mixins : [FluxMixin, StoreWatchMixin('OAuthStore')],
+    mixins : [
+        FluxMixin,
+        new StoreWatchMixin('OAuthStore'),
+        Router.State
+    ],
 
     displayName : 'ApiPage',
 
+    componentWillMount : function()
+    {
+        var apiSlug = this.getParams().apiSlug;
+
+        this.apiConfig = config.apis[apiSlug];
+        this.apiAssets = assets.apis[apiSlug] || {};
+    },
+
     componentDidMount : function()
     {
-        this.getFlux().actions.oauth.setApi(this.props.params.apiSlug);
+        var query = this.getQuery();
 
-        if (this.props.query && this.props.query.access_token) {
+        this.getFlux().actions.oauth.setApi(this.getParams().apiSlug);
+
+        if (query && query.access_token) {
             this.getFlux().actions.oauth.setToken({
-                accessToken : this.props.query.access_token,
-                tokenType   : this.props.query.token_type,
-                tokenData   : this.props.query
+                accessToken : query.access_token,
+                tokenType   : query.token_type,
+                tokenData   : query
             });
         }
 
@@ -38,7 +54,7 @@ module.exports = React.createClass({
         var title = [this.apiConfig.name, 'Lively Docs'];
         window.document.title = title.join(' | ');
 
-        this.props.updateHeader(this.apiConfig.name, this.apiConfig.logo, this.props.params.apiSlug);
+        this.props.updateHeader(this.apiConfig.name, this.apiAssets.logo, this.getParams().apiSlug);
     },
 
     getStateFromFlux : function()
@@ -50,31 +66,29 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var apiConfig = config.apis[this.props.params.apiSlug];
-
-        if (_.isUndefined(apiConfig)) {
+        if (_.isUndefined(this.apiConfig)) {
             return (<NotFoundPage />);
         }
-        else {
-            return (
-                <div>
-                    <OAuthConnectPanel
-                        apiConfig       = {apiConfig}
-                        oauthStoreState = {this.state.oauthStoreState}
-                        slug            = {this.props.params.apiSlug}
-                    />
-                    <MainNav
-                        apiConfig       = {apiConfig}
-                        oauthStoreState = {this.state.oauthStoreState}
-                        slug            = {this.props.params.apiSlug}
-                    />
-                    <this.props.activeRouteHandler
-                        apiConfig       = {apiConfig}
-                        oauthStoreState = {this.state.oauthStoreState}
-                    />
-                </div>
-            );
-        }
+
+        return (
+            <div>
+                <OAuthConnectPanel
+                    apiConfig       = {this.apiConfig}
+                    oauthStoreState = {this.state.oauthStoreState}
+                    slug            = {this.getParams().apiSlug}
+                />
+                <MainNav
+                    apiConfig       = {this.apiConfig}
+                    oauthStoreState = {this.state.oauthStoreState}
+                    slug            = {this.getParams().apiSlug}
+                />
+                <RouteHandler
+                    apiConfig       = {this.apiConfig}
+                    apiAssets       = {this.apiAssets}
+                    oauthStoreState = {this.state.oauthStoreState}
+                />
+            </div>
+        );
     }
 
 });

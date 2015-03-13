@@ -1,10 +1,11 @@
-/** @jsx React.DOM */
 'use strict';
 
-var _      = require('underscore');
-var React  = require('react');
-var Link   = require('react-router').Link;
-var config = require('../../config');
+var _            = require('underscore');
+var React        = require('react');
+var config       = require('../../config');
+var Router       = require('react-router');
+var Link         = Router.Link;
+var RouteHandler = Router.RouteHandler;
 
 module.exports = React.createClass({
     displayName : 'App',
@@ -18,7 +19,8 @@ module.exports = React.createClass({
         };
     },
 
-    updateHeader: function(apiName, apiLogo, apiSlug) {
+    updateHeader: function(apiName, apiLogo, apiSlug)
+    {
         this.setState({
             apiName : apiName,
             apiLogo : apiLogo,
@@ -26,7 +28,8 @@ module.exports = React.createClass({
         });
     },
 
-    render: function() {
+    render: function()
+    {
         var logo, backButton, linkParams, heading;
 
         if (this.state.apiName) {
@@ -56,7 +59,7 @@ module.exports = React.createClass({
                     </span>
                 </header>
 
-                <this.props.activeRouteHandler updateHeader={this.updateHeader} />
+                <RouteHandler updateHeader={this.updateHeader} />
             </div>
         );
     }

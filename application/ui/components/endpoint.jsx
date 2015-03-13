@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 /* global window */
 'use strict';
 
@@ -19,7 +18,7 @@ module.exports = React.createClass({
 
     displayName : 'Endpoint',
 
-    mixins : [FluxMixin, StoreWatchMixin('RequestStore'), UriHelperMixin],
+    mixins : [FluxMixin, new StoreWatchMixin('RequestStore'), UriHelperMixin],
 
     propTypes : {
         name     : React.PropTypes.string.isRequired,
@@ -315,11 +314,15 @@ module.exports = React.createClass({
 
     render : function()
     {
-        var apiCallInfo;
+        var apiCallInfo, latency, responseTime, requestTime;
 
         if (this.state.loaded)
         {
-            var latency = this.state.responseTimestamp > 0 ? (parseInt(this.state.responseTimestamp, 10) - parseInt(this.state.requestTimestamp, 10)) : 0;
+            responseTime = parseInt(this.state.responseTimestamp, 10);
+            requestTime  = parseInt(this.state.requestTimestamp, 10);
+
+            latency = this.state.responseTimestamp > 0 ? responseTime - requestTime : 0;
+
             apiCallInfo = (
                 <ApiCallInfo status   = {this.state.status}
                              request  = {this.state.requestInfo}
@@ -371,11 +374,13 @@ module.exports = React.createClass({
                         requestMethod           = {this.props.method}
                         uri                     = {this.props.uri}
                     />
-                    <div className='switch__container'>
+                    <div className='panel__container switch__container'>
                         <p className='checkbox-label'>Include OAuth Token?</p>
                         <Checkbox defaultChecked={this.props.oauth} ref='sendToken' name={this.props.name}/>
                     </div>
-                    {this.getTryItButton()}
+                    <div className='panel__container'>
+                        {this.getTryItButton()}
+                    </div>
                     {this.getErrorMessage()}
                     {apiCallInfo}
                 </div>

@@ -35,7 +35,7 @@ module.exports = React.createClass({
     {
         var classes = this.props.className;
 
-        classes += ' button';
+        classes += 'button button--primary';
 
         if (this.props.disabled === true) {
             classes += ' button--disabled';

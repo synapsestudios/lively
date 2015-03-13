@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+/* global console */
 'use strict';
 
 var _                     = require('underscore');
@@ -26,7 +26,7 @@ module.exports = React.createClass({
     mixins : [
         RenderParamsMixin,
         FluxMixin,
-        StoreWatchMixin('RequestStore', 'ConfigStore', 'StripeStore'),
+        new StoreWatchMixin('RequestStore', 'ConfigStore', 'StripeStore'),
         UriHelperMixin
     ],
 
@@ -173,7 +173,7 @@ module.exports = React.createClass({
             if (
                 param.type !== 'file' &&
                 this.props.requestMethod !== 'GET' &&
-                !this.isParameterNameInUri(param.name, this.props.uri)
+                ! this.isParameterNameInUri(param.name, this.props.uri)
             ) {
                 nullCheckboxComponent = (
                     <td>

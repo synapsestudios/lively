@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 'use strict';
 
 var _     = require('underscore');
@@ -34,7 +33,7 @@ module.exports = React.createClass({
 
     render : function()
     {
-        return this.transferPropsTo(
+        return (
             <select className='select' onChange={this.handleChange} value={this.props.value}>
                 {this.props.options.map(this.renderOption)}
             </select>

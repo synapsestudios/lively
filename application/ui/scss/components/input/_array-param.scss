@@ -1,9 +1,9 @@
 .field-button--add {
-    display   : block;
-    max-width : rem-calc(200);
-    margin    : rem-calc(3 0);
-    border    : 0;
-    @include user-select(none);
+    display     : block;
+    max-width   : rem-calc(200);
+    margin      : rem-calc(3 0);
+    border      : 0;
+    user-select : none;
 
 
     &:hover {
@@ -14,15 +14,15 @@
 }
 
 .field-button--remove {
-    display   : inline;
-    float     : left;
-    height    : rem-calc(30);
-    width     : rem-calc(30);
-    min-width : rem-calc(30);
-    margin    : rem-calc(3 0 8);
-    padding   : rem-calc(5 10);
-    border    : 0;
-    @include user-select(none);
+    display     : inline;
+    float       : left;
+    height      : rem-calc(30);
+    width       : rem-calc(30);
+    min-width   : rem-calc(30);
+    margin      : rem-calc(3 0 8);
+    padding     : rem-calc(5 10);
+    border      : 0;
+    user-select : none;
 
     &:hover {
         background-color : rgba($black, .1);
@@ -36,7 +36,7 @@
     margin-left   : rem-calc(5);
     margin-bottom : rem-calc(10);
     margin-right  : 0;
-    @include user-select(none);
+    user-select   : none;
 }
 
 .array-title {

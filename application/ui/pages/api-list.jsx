@@ -1,38 +1,39 @@
-/** @jsx React.DOM */
-/* global window */
+/* global console, window */
 'use strict';
 
-var _      = require('underscore');
-var React  = require('react');
-var config = require('../../config');
-var Router = require('react-router');
+var _          = require('underscore');
+var React      = require('react');
+var config     = require('../../config');
+var assets     = require('../../assets');
+var Router     = require('react-router');
+var Navigation = Router.Navigation;
 
 module.exports = React.createClass({
 
     displayName : 'ApiList',
 
-    componentWillMount : function()
-    {
-        if (_.size(config.apis) === 1) {
-            Router.transitionTo('api-summary', {apiSlug : _.keys(config.apis)[0]});
-        }
-    },
+    mixins : [Navigation],
 
     componentDidMount : function()
     {
         window.document.title = 'Lively Docs';
         this.props.updateHeader();
+
+        if (_.size(config.apis) === 1) {
+            this.transitionTo('api-summary', {apiSlug : _.keys(config.apis)[0]});
+        }
     },
 
-    render : function()
+    renderLinks : function()
     {
-        var links = _.map(config.apis, function(api, slug) {
+        return _.map(config.apis, function(api, slug) {
+            var apiAssets, apiLogo;
 
-            var apiLogo;
+            apiAssets = assets.apis[slug] || {};
 
-            if (api.logo) {
+            if (apiAssets.logo) {
                 apiLogo = (
-                    <img className="panel__link-logo" src={api.logo} alt={api.name} />
+                    <img className="panel__link-logo" src={apiAssets.logo} alt={api.name} />
                 );
             }
 
@@ -43,12 +44,15 @@ module.exports = React.createClass({
                 </a>
             );
         });
+    },
 
+    render : function()
+    {
         return (
             <div className='panel__wrapper panel__wrapper--full-width'>
                 <div className='panel'>
                     <h1>API List</h1>
-                    {links}
+                    {this.renderLinks()}
                 </div>
             </div>
         );

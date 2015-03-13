@@ -1,25 +1,30 @@
 // log & project panels
 
 .panel-section {
-    position             : relative;
-    width                : 100%;
-    background-color     : $white;
-    height               : auto;
-    padding              : rem-calc(0 20 5);
+    position         : relative;
+    width            : 100%;
+    background-color : $white;
+    height           : auto;
+    padding          : rem-calc(0 20 5);
 
     .panel__header {
-        left             : rem-calc(-30);
-        width            : calc(100% + 55px) !important;
-        box-shadow       : 0 3px 3px rgba($black, .15);
-        cursor           : pointer;
+        left       : rem-calc(-30);
+        width      : calc(100% + 55px) !important;
+        box-shadow : 0 3px 3px rgba($black, .15);
+        cursor     : pointer;
+
+        h2>span:first-of-type {
+            position : relative;
+            top      : rem-calc(14);
+        }
 
         &::before,
         &::after {
-            content      : '';
-            position     : absolute;
-            top          : 0;
-            width        : rem-calc(20);
-            height       : rem-calc(50);
+            content  : '';
+            position : absolute;
+            top      : 0;
+            width    : rem-calc(20);
+            height   : rem-calc(50);
         }
 
         &::before {
@@ -33,126 +38,125 @@
         }
 
         &::after {
-            right                    : rem-calc(-20);
+            right : rem-calc(-20);
         }
 
-
         &.panel__header--get {
-            background-color       : tint($statusBlue, 50%);
+            background-color : tint($statusBlue, 50%);
 
             h2>span:first-of-type {
-                padding              : rem-calc(9 41 4);
-                background-color     : $statusBlue;
+                padding          : rem-calc(9 41 4);
+                background-color : $statusBlue;
             }
 
             &::before {
-                border-color       : transparent shade($statusBlue, 40%) transparent transparent;
+                border-color : transparent shade($statusBlue, 40%) transparent transparent;
             }
 
         }
 
         &.panel__header--head {
-            background-color         : tint($statusPurple, 80%);
-
-            // h2>span:first-of-type {
-            //     padding              : rem-calc(9 33 4 12);
-            // }
+            background-color : tint($statusPurple, 80%);
 
             h2>span:first-of-type {
-                padding              : rem-calc(9 32 4);
-                background-color     : tint($statusPurple, 20%);
+                padding          : rem-calc(9 32 4);
+                background-color : tint($statusPurple, 20%);
             }
 
             &::before {
-                border-color       : transparent shade($statusPurple, 40%) transparent transparent;
+                border-color : transparent shade($statusPurple, 40%) transparent transparent;
             }
 
         }
 
         &.panel__header--post {
-            background-color         : tint($statusGreen, 50%);
+            background-color : tint($statusGreen, 50%);
 
             h2>span:first-of-type {
-                padding              : rem-calc(9 32 4 33);
-                background-color     : $statusGreen;
+                padding          : rem-calc(9 32 4 33);
+                background-color : $statusGreen;
             }
 
             &::before {
-                border-color       : transparent shade($statusGreen, 40%) transparent transparent;
+                border-color : transparent shade($statusGreen, 40%) transparent transparent;
             }
 
         }
 
         &.panel__header--patch {
-            background-color         : tint($statusOrange, 50%);
+            background-color : tint($statusOrange, 50%);
 
             h2>span:first-of-type {
-                padding              : rem-calc(9 26 4);
-                background-color     : $statusOrange;
+                padding          : rem-calc(9 26 4);
+                background-color : $statusOrange;
             }
 
             &::before {
-                border-color       : transparent shade($statusOrange, 40%) transparent transparent;
+                border-color : transparent shade($statusOrange, 40%) transparent transparent;
             }
 
         }
 
         &.panel__header--put {
-            background-color         : tint($statusYellow, 50%);
+            background-color : tint($statusYellow, 50%);
 
             h2>span:first-of-type {
-                padding              : rem-calc(9 40 4);
-                background-color     : $statusYellow;
+                padding          : rem-calc(9 40 4);
+                background-color : $statusYellow;
             }
 
             &::before {
-                border-color       : transparent shade($statusYellow, 40%) transparent transparent;
+                border-color : transparent shade($statusYellow, 40%) transparent transparent;
             }
 
         }
 
         &.panel__header--delete {
-            background-color         : tint($statusRed, 50%);
+            background-color : tint($statusRed, 50%);
 
             h2>span:first-of-type {
-                padding              : rem-calc(9 19 4 20);
-                background-color   : $statusRed;
+                padding          : rem-calc(9 19 4 20);
+                background-color : $statusRed;
             }
 
             &::before {
-                border-color       : transparent shade($statusRed, 40%) transparent transparent;
+                border-color : transparent shade($statusRed, 40%) transparent transparent;
             }
 
         }
 
         h2 {
-            position                 : relative;
-            height                   : rem-calc(50);
-            padding-left             : 0 !important;
-            white-space              : nowrap;
+            position     : relative;
+            height       : rem-calc(50);
+            padding-left : 0 !important;
+            white-space  : nowrap;
 
             span {
-                font-size            : 28px;
+                font-size : 28px;
 
                 &:nth-of-type(2) {
-                    display          : inline-block;
-                    position         : absolute;
-                    top              : rem-calc(3);
-                    font-size        : rem-calc(20);
-                    margin-left      : rem-calc(20);
+                    display     : inline-block;
+                    position    : absolute;
+                    top         : rem-calc(3);
+                    font-size   : rem-calc(20);
+                    margin-left : rem-calc(20);
                 }
 
                 &:nth-of-type(3) {
-                    display          : inline-block;
-                    position         : absolute;
-                    top              : rem-calc(30);
-                    margin-left      : rem-calc(20);
-                    font-size        : rem-calc(12);
+                    display     : inline-block;
+                    position    : absolute;
+                    top         : rem-calc(30);
+                    margin-left : rem-calc(20);
+                    font-size   : rem-calc(12);
                 }
             }
 
         }
 
+    }
+
+    .panel__container {
+        margin : 20px 0;
     }
 
 }
@@ -162,25 +166,25 @@
 $navicon-size : rem-calc(24);
 
 @mixin line {
-    display              : inline-block;
-    width                : $navicon-size;
-    height               : $navicon-size/8;
-    background-color     : $themeMLGray;
-    user-select          : none;
-    @include transition(300ms);
+    display          : inline-block;
+    width            : $navicon-size;
+    height           : $navicon-size/8;
+    background-color : $themeMLGray;
+    user-select      : none;
+    transition       : 300ms;
 }
 
 .navicon-button {
-    position             : absolute;
-    top                  : 0;
-    right                : 0;
-    padding              : rem-calc(13);
-    width                : rem-calc(24);
-    height               : rem-calc(24);
-    background           : transparent;
-    cursor               : pointer;
-    @include user-select(none);
-    @include box-sizing(content-box);
+    position    : absolute;
+    top         : 0;
+    right       : 0;
+    padding     : rem-calc(13);
+    width       : rem-calc(24);
+    height      : rem-calc(24);
+    background  : transparent;
+    cursor      : pointer;
+    user-select : none;
+    box-sizing  : content-box;
 
     .navicon {
         position         : relative;
@@ -188,25 +192,23 @@ $navicon-size : rem-calc(24);
         width            : rem-calc(24);
         left             : 0;
         background-color : transparent;
-        @include transition(all 300ms ease-in-out);
-        // @include transform-origin(50% 50%);
-
+        transition       : all 300ms ease-in-out;
 
         &::before {
             content      : '';
             position     : absolute;
             top          : 50%;
             left         : 50%;
-            @include transform(translate(-50%, -50%) rotate3d(0, 0, 1, -90deg));
+            transform    : translate(-50%, -50%) rotate3d(0, 0, 1, -90deg);
             @include line;
         }
 
         &::after {
-            content      : '';
-            position     : absolute;
-            top          : 50%;
-            left         : 50%;
-            @include transform(translate(-50%, -50%));
+            content   : '';
+            position  : absolute;
+            top       : 50%;
+            left      : 50%;
+            transform : translate(-50%, -50%);
             @include line;
         }
 
@@ -215,13 +217,13 @@ $navicon-size : rem-calc(24);
     &.open {
         .navicon {
             &::before {
-                @include transform-origin(25% 25%);
-                @include transform(rotate3d(0, 0, 1, 180deg));
+                transform-origin : 25% 25%;
+                transform        : rotate3d(0, 0, 1, 180deg);
             }
 
             &::after {
-                @include transform-origin(25% 25%);
-                @include transform(rotate3d(0, 0, 1, 180deg));
+                transform-origin : 25% 25%;
+                transform        : rotate3d(0, 0, 1, 180deg);
             }
         }
 

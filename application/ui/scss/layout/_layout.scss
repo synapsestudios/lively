@@ -2,51 +2,54 @@
 
 .home .layout--main {
     @media #{$medium-up} {
-       overflow             : hidden;
+       overflow : hidden;
     }
 }
 
 .layout--main {
-    width                : 100%;
-    height               : 100%;
-    margin               : 0;
-    position             : relative;
-    z-index              : 1;
-
-    @include transition(all 300ms ease-in-out);
+    width      : 100%;
+    height     : 100%;
+    margin     : 0;
+    position   : relative;
+    z-index    : 1;
+    transition : all 300ms ease-in-out;
 }
 
 .main {
-    height               : inherit;
+    height : inherit;
 }
 
 .app-wrapper {
-    height               : 100%;
+    height : 100%;
 }
 
 // max width and center
 
 .layout--max-width {
-    max-width            : rem-calc(1120);
-    margin               : auto;
-    padding              : rem-calc(0 15);
+    max-width : rem-calc(1120);
+    margin    : auto;
+    padding   : rem-calc(0 15);
 }
 
 .layout--header-fixed {
-    height               : rem-calc(50);
-    position             : fixed;
-    z-index              : 1000;
-    top                  : 0;
-    right                : 0;
-    left                 : 0;
+    height   : rem-calc(50);
+    position : fixed;
+    z-index  : 1000;
+    top      : 0;
+    right    : 0;
+    left     : 0;
     @include noFlicker();
 
     ~ .layout--main-content {
-        padding-top      : rem-calc(50); // offset fixed header
+        padding-top : rem-calc(50); // offset fixed header
     }
 
 }
 
 .layout--main-content {
-    height               : 100%;
+    height : 100%;
+}
+
+.l--m-right-10 {
+    margin-right : rem-calc(10);
 }

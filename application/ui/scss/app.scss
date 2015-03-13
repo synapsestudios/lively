@@ -1,16 +1,7 @@
 // vendor imports
-
-    // normalize
-
-    @import "../../../bower_components/foundation/scss/normalize";
-
-    // bourbon
-
-    @import "../../../bower_components/bourbon/app/assets/stylesheets/bourbon";
-
-    // foundation
-
-    @import "vendor/foundation/foundation-loader";
+    @import "vendor/reset";
+    // synfrastucture
+    @import "../../../node_modules/synfrastructure/scss/synfrastructure";
 
     // dependency imports
     @import "dependencies/colors";
@@ -31,6 +22,9 @@
     @import "components/panel/api-list";
     @import "components/panel/panel-section";
     @import "components/panel/response-data";
+
+    //typography
+    @import "components/typography/headings";
 
     //inputs
     @import "components/input/array-param";

@@ -1,23 +1,28 @@
-/** @jsx React.DOM */
 /* global window */
 'use strict';
 
-var _          = require('underscore');
-var React      = require('react');
-var Resource   = require('./resource');
-var slugifier  = require('../../util/slug-helper').getSlugFromResource;
+var _         = require('underscore');
+var React     = require('react');
+var Resource  = require('./resource');
+var slugifier = require('../../util/slug-helper').getSlugFromResource;
+var Router    = require('react-router');
 
 module.exports = React.createClass({
 
     displayName : 'ApiResource',
 
+    mixins : [Router.State],
+
     propTypes : {
         apiConfig : React.PropTypes.object.isRequired
     },
 
-    getResourceConfigFromSplat : function(splat, resources)
+    getResourceConfig : function()
     {
-        var resource, title, findCallback;
+        var resources, splat, resource, title, findCallback;
+
+        resources = this.props.apiConfig.resources;
+        splat     = this.getParams().splat.split('/');
 
         title = [this.props.apiConfig.name, 'Lively Docs'];
 
@@ -38,16 +43,15 @@ module.exports = React.createClass({
         }
 
         resource.title = title.join(' | ');
+
         return resource;
     },
 
     renderResourceComponent : function()
     {
-        var component, splat, resource, resourceComponent;
+        var resource, resourceComponent;
 
-        component = this;
-        splat     = this.props.params.splat.split('/');
-        resource  = this.getResourceConfigFromSplat(splat, this.props.apiConfig.resources);
+        resource = this.getResourceConfig();
 
         if (resource) {
             window.document.title = resource.title;
@@ -59,7 +63,6 @@ module.exports = React.createClass({
                     endpoints  = {_.isUndefined(resource.endpoints) ? resource.methods : resource.endpoints}
                 />
             );
-
         } else {
             resourceComponent = (
                 <div className='panel'>

@@ -4,32 +4,33 @@ h3,
 h4,
 h5,
 h6 {
-    @extend .ff-source-bold;
-    color : $themeMLGray;
-    @include user-select(none);
+    font-family : $source-bold;
+    color       : $themeMLGray;
+    user-select : none;
 }
 
 p,
 a,
 span {
-    @extend .ff-source;
-    color : $themeDDGray;
-    @include user-select(none);
+    font-family : $source;
+    color       : $themeDDGray;
+    user-select : none;
 }
 
 code,
 pre {
-    @extend .inconsolata;
+    font-family : $inconsolata;
     font-weight : normal;
     cursor      : text;
+    color       : $statusRed;
 }
 
 a.inline-link {
-    @extend .ff-source-bold;
+    font-family     : $source-bold;
     color           : $themeDDGray;
     text-decoration : none;
     border-bottom   : 1px solid $themeDGray;
-    @include transition(color 300ms ease-in-out);
+    transition      : color 300ms ease-in-out;
 
     &:hover {
         color : $themeMLGray;
@@ -43,18 +44,11 @@ ul {
     list-style : none;
 }
 
-.pull-request-icon {
-    height     : 15px;
-    width      : 13px;
-    margin     : 10px 8px;
-    background : transparent url('../../images/css-images/pull-request.svg') no-repeat center center;
-}
-
 // FONT AWESOME ICON STYLES //
 
 .fa {
     display     : inline-block;
-    font-family : FontAwesome;
+    font-family : $font-awesome;
     font-style  : normal;
     font-weight : normal;
     line-height : 1;

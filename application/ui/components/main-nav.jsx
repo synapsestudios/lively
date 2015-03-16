@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 'use strict';
 
 var _               = require('underscore');
@@ -43,15 +42,13 @@ var GroupHeader = React.createClass({
         return (
             <div className={classes}>
                 <div className='main-nav__group-header'>
-                    <span className='main-nav__group-title'>
-                        <Link
-                            to              = 'api-resource'
-                            params          = {params}
-                            className       = 'main-nav__link'
-                            activeClassName = 'main-nav__link--active'>
-                            {this.props.categoryName}
-                        </Link>
-                    </span>
+                    <Link
+                        to              = 'api-resource'
+                        params          = {params}
+                        className       = 'main-nav__link'
+                        activeClassName = 'main-nav__link--active'>
+                        {this.props.categoryName}
+                    </Link>
                 </div>
                 {this.props.children}
             </div>
@@ -64,7 +61,7 @@ module.exports = React.createClass({
 
     displayName : 'MainNav',
 
-    mixins      : [FluxMixin, StoreWatchMixin('OAuthStore')],
+    mixins      : [FluxMixin, new StoreWatchMixin('OAuthStore')],
 
     propTypes : {
         oauthStoreState : React.PropTypes.object.isRequired,
@@ -152,8 +149,7 @@ module.exports = React.createClass({
                     categoryName    = {resource.name}
                     categorySlug    = {slug}
                     apiSlug         = {component.props.slug}
-                    key             = {'c-'+slug}
-                >
+                    key             = {'c-'+slug} >
                     {subnav}
                 </GroupHeader>
             );

@@ -1,7 +1,7 @@
 .panel__synopsis {
-    padding : rem-calc(20);
-    opacity : 1;
-    @include transition(opacity 200ms ease-in-out 300ms);
+    padding    : rem-calc(20);
+    opacity    : 1;
+    transition : opacity 200ms ease-in-out 300ms;
 
     .endpoint-panel--hidden & {
         opacity : 0;
@@ -9,29 +9,29 @@
 
     h2,
     h3 {
-        margin           : rem-calc(20 0 5);
-        color            : $themeLGray;
+        margin : rem-calc(20 0 5);
+        color  : $themeLGray;
     }
 
     p {
-        @extend .ff-source;
-        color            : $themeDDGray;
-        line-height      : 1.75;
-        margin-bottom    : 0;
+        font-family   : $source;
+        color         : $themeDDGray;
+        line-height   : 1.75;
+        margin-bottom : 0;
     }
 
     ul {
-        list-style       : disc;
-        padding          : rem-calc(10 0 10 15);
+        list-style : disc;
+        padding    : rem-calc(10 0 10 15);
     }
 
     a {
-        color                        : $themeDGray;
-        border-bottom                : 1px solid $themeDGray;
-        @include transition(border-bottom 200ms ease-in-out);
+        color         : $themeDGray;
+        border-bottom : 1px solid $themeDGray;
+        transition    : border-bottom 200ms ease-in-out;
 
         &:hover {
-            border-bottom            : 3px solid $themeDGray;
+            border-bottom : 3px solid $themeDGray;
         }
     }
 

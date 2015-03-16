@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 /* global console */
 'use strict';
 
@@ -58,8 +57,8 @@ module.exports = {
             defaultValue = param.defaultValue;
         }
 
-        description = (param.required ? '**Required**. ' : '') + param.description
-            + (defaultValue ? ' **Default:** ' + defaultValue : '');
+        description = (param.required ? '**Required**. ' : '') + param.description +
+            (defaultValue ? ' **Default:** ' + defaultValue : '');
 
         // Add any configuration validation errors
         errors = this.validateParamConfiguration(param);

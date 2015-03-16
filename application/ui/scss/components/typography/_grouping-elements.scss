@@ -1,0 +1,45 @@
+// *******************************************
+// *******************************************
+
+    // Typographical grouping element styles
+
+// *******************************************
+// *******************************************
+
+.p {
+    margin      : rem-calc(0 0 16 0);
+    font-family : $body--reg;
+    line-height : 1.5;
+}
+
+.pre {
+     white-space : pre;
+     white-space : pre-wrap;
+     word-wrap   : break-word;
+     font-size   : rem-calc(16);
+     line-height : 1.5;
+     font-family : monospace, serif;
+}
+
+.blockquote {
+    margin      : rem-calc(21 0);
+    padding     : rem-calc(6 21);
+    font-family : $body--reg;
+    line-height : 1.5;
+}
+
+.typography {
+
+    p {
+        @extend .p;
+    }
+
+    pre {
+        @extend .pre;
+    }
+
+    blockquote {
+        @extend .blockquote;
+    }
+
+}

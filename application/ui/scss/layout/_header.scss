@@ -6,7 +6,7 @@ header {
     background-color : $themeLGray;
     height           : 60px;
     box-shadow       : 0 2px 2px rgba($black, .15);
-    @include user-select(none);
+    user-select      : none;
 
     .header__back-button {
         @extend .tool-tip;
@@ -16,7 +16,7 @@ header {
         line-height : rem-calc(60);
         font-size   : rem-calc(24);
         padding     : rem-calc(18 20);
-        @include transition(left 300ms ease-in-out);
+        transition  : left 300ms ease-in-out;
 
         &::after {
             content : 'back to api list';
@@ -25,7 +25,7 @@ header {
     }
 
     .header__api-link {
-        @extend .ff-source;
+        font-family     : $source;
         position        : relative;
         margin-left     : rem-calc(30);
         text-decoration : none;
@@ -33,7 +33,7 @@ header {
         color           : $themeDDGray;
         font-size       : rem-calc(24);
         line-height     : 60px;
-        @include transition(color 300ms ease-in-out);
+        transition      : color 300ms ease-in-out;
 
         &.header__api-link--no-margin {
             margin-left : 0;
@@ -56,7 +56,7 @@ header {
         padding-right  : rem-calc(30);
 
         .powered-by {
-            @extend .ff-source;
+            font-family    : $source;
             color          : $themeLLGray;
             font-size      : rem-calc(9);
             width          : auto;
@@ -70,7 +70,7 @@ header {
         }
 
         .logo-type {
-            @extend .ff-source-bold;
+            font-family    : $source-bold;
             text-transform : uppercase;
             font-size      : rem-calc(20);
             letter-spacing : 15px;

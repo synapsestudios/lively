@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 'use strict';
 
 var React    = require('react');
@@ -115,7 +114,7 @@ module.exports = React.createClass({
     {
         if (this.props.endpoints.length > 1) {
             return (
-                <button className='button__toggle' onClick={this.handleExpandCollapseClick}>
+                <button className='button button__toggle' onClick={this.handleExpandCollapseClick}>
                     {(this.state.allExpanded) ? ('Collapse All') : ('Expand All')}
                 </button>
             );

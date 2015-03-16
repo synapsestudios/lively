@@ -23,7 +23,7 @@ module.exports = React.createClass({
             switch (param.type) {
                 case 'string':
                     values[param.name] = '';
-                    break
+                    break;
                 case 'number':
                     values[param.name] = 0;
                     break;

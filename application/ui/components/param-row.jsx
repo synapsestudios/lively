@@ -54,8 +54,8 @@ module.exports = React.createClass({
             defaultValue = param.defaultValue;
         }
 
-        description = (param.required ? '**Required**. ' : '') + param.description
-        + (defaultValue ? ' **Default:** ' + defaultValue : '');
+        description = (param.required ? '**Required**. ' : '') + param.description +
+        (defaultValue ? ' **Default:** ' + defaultValue : '');
 
         // Add any configuration validation errors
         errors = this.validateParamConfiguration(param);

@@ -90,7 +90,7 @@ module.exports = React.createClass({
                 type      = "checkbox"
                 name      = {'include-' + component.props.param.name}
                 onChange  = {component.props.onInclude}
-                checked   = {! component.props.excluded }
+                checked   = {component.props.isIncluded}
             />
         );
         if (component.props.param.type !== 'file') {

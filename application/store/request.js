@@ -47,6 +47,10 @@ module.exports = Fluxxor.createStore({
     {
         var endpoint = this.state.endpoint[requestInfo.endpointName];
 
+        if (_.isUndefined(endpoint)) {
+            endpoint = this.state.endpoint[requestInfo.endpointName] = {};
+        }
+
         endpoint.response = null;
         endpoint.loading  = true;
         endpoint.loaded   = false;

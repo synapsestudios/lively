@@ -21,14 +21,14 @@ module.exports = React.createClass({
     mixins : [FluxMixin, new StoreWatchMixin('RequestStore'), UriHelperMixin],
 
     propTypes : {
-        name     : React.PropTypes.string.isRequired,
-        synopsis : React.PropTypes.string,
-        method   : React.PropTypes.oneOf(['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'PATCH']),
-        bodyType : React.PropTypes.string,
-        rootParam: React.PropTypes.string,
-        uri      : React.PropTypes.string.isRequired,
-        oauth    : React.PropTypes.bool,
-        params   : React.PropTypes.array
+        name      : React.PropTypes.string.isRequired,
+        synopsis  : React.PropTypes.string,
+        method    : React.PropTypes.oneOf(['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'PATCH']),
+        bodyType  : React.PropTypes.string,
+        rootParam : React.PropTypes.string,
+        uri       : React.PropTypes.string.isRequired,
+        oauth     : React.PropTypes.bool,
+        params    : React.PropTypes.array
     },
 
     getDefaultProps : function()

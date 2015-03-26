@@ -9,7 +9,10 @@ var bowerPath   = path.resolve(__dirname, 'bower_components');
 var npmPath     = path.resolve(__dirname, 'node_modules');
 
 var config      = {
-    entry   : ['./application/bootstrap.js'],
+    entry   : [
+        'webpack/hot/dev-server',
+        './application/bootstrap.js'
+    ],
     plugins : [
         new ExtractTextPlugin('app.css', {allChunks : true}),
         new HtmlWebpack({template : './application/index.html'}),

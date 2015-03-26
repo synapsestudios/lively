@@ -17,6 +17,7 @@ module.exports = {
         tokenParam   : 'token'
     },
     resources : [
+        require('./paramtest'),
         require('./github/activity'),
         require('./github/gists'),
         require('./github/git_data'),

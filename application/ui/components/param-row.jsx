@@ -8,7 +8,7 @@ var Select          = require('./input/select');
 var Params;
 
 module.exports = React.createClass({
-    displayName : 'Params',
+    displayName : 'Param',
 
     propTypes : {
         param     : React.PropTypes.object,
@@ -133,8 +133,19 @@ module.exports = React.createClass({
 
             // inline params
             case 'enum':
+                var enumValues = _.map(component.props.param.enumValues, function (value) {
+                    return {
+                        label : value,
+                        value : value
+                    };
+                });
                 inlineParam = (
-                    <Select value={component.props.value} key={component.props.key} options={component.props.param.enumValues} onChange={component.props.onChange} />
+                    <Select value={component.props.value} key={component.props.key} options={enumValues} onChange={component.props.onChange} />
+                );
+                break;
+            case 'boolean':
+                inlineParam = (
+                    <Select value={component.props.value} key={component.props.key} options={[{value: false, label: 'false'}, {value: true, label: 'true'}]} onChange={component.props.onChange} />
                 );
                 break;
             case 'string':

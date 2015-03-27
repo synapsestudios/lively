@@ -5,6 +5,7 @@ var React           = require('react');
 var marked          = require('marked');
 var Text            = require('./param/text');
 var Select          = require('./input/select');
+var StripeToken     = require('./input/stripe-token');
 var CustomObject    = require('./input/custom-object');
 var Params;
 
@@ -161,6 +162,11 @@ module.exports = React.createClass({
             case 'number':
                 inlineParam = (
                     <Text key={component.props.key} type={component.props.param.type} onChange={component.props.onChange} />
+                );
+                break;
+            case 'stripe-token':
+                inlineParam = (
+                    <StripeToken paramName={component.props.param.name} onChange={component.props.onChange} />
                 );
                 break;
         }

@@ -48,6 +48,9 @@ module.exports = React.createClass({
                 case 'custom-object':
                     values[param.name] = {};
                     break;
+                case 'stripe-token':
+                    values[param.name] = null;
+                    break;
             }
         });
 

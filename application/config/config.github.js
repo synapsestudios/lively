@@ -7,6 +7,7 @@ module.exports = {
         port     : 443,
         secure   : true
     },
+    stripe_key : 'pk_test_F8viiVc00X4kcRshQNDFdosu',
     oauth2 : {
         type         : 'authorization-code',
         hostname     : 'github.com',

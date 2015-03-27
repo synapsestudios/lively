@@ -5,6 +5,7 @@ var React           = require('react');
 var marked          = require('marked');
 var Text            = require('./param/text');
 var Select          = require('./input/select');
+var CustomObject    = require('./input/custom-object');
 var Params;
 
 module.exports = React.createClass({
@@ -128,7 +129,15 @@ module.exports = React.createClass({
             case 'array':
             case 'array[hash]':
             case 'array[object]':
+                break;
             case 'custom-object':
+                rowParam = (
+                    <tr>
+                        <td colSpan={5}>
+                            <CustomObject name='' onChange={component.props.onChange} />
+                        </td>
+                    </tr>
+                );
                 break;
 
             // inline params

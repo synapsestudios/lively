@@ -83,7 +83,7 @@ module.exports = ObjectParameter = React.createClass({
                     className = 'select'
                     onChange  = {_.partial(instance.updateField, index, 'inputType')}
                     value     = {prop.inputType}
-                    options   = {['string', 'number', 'null']}
+                    options   = {[{label:'string',value:'string'}, {label:'number',value:'number'}, {label:'null',value:'null'}]}
                 />
             );
         }

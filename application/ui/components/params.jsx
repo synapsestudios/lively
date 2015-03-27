@@ -35,6 +35,9 @@ module.exports = React.createClass({
                 case 'boolean':
                     values[param.name] = false;
                     break;
+                case 'enum':
+                    values[param.name] = param.defaultValue;
+                    break;
                 case 'array':
                 case 'array[hash]':
                 case 'array[object]':
@@ -114,8 +117,9 @@ module.exports = React.createClass({
 
         state.values[key] = value;
 
-        this.setState(state);
-        this.props.onChange(this.getValue());
+        this.setState(state, function() {
+            this.props.onChange(this.getValue());
+        });
     },
 
     renderParams : function()
@@ -128,6 +132,7 @@ module.exports = React.createClass({
                 <ParamRow
                     key         = {item.name}
                     param       = {item}
+                    value       = {component.state.values[item.name]}
                     onChange    = {_.partial(component.changeHandler, item.name)}
                     onInclude   = {_.partial(component.includeHandler, item.name)}
                     onNull      = {_.partial(component.nullHandler, item.name)}

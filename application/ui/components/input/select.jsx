@@ -35,7 +35,7 @@ module.exports = React.createClass({
     render : function()
     {
         return (
-            <select className='select' onChange={this.handleChange} value={this.props.value}>
+            <select className='select' onChange={this.handleChange} value={this.props.value} defaultValue={this.props.value}>
                 {this.props.options.map(this.renderOption)}
             </select>
         );

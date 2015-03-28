@@ -7,6 +7,7 @@ var Text            = require('./param/text');
 var Select          = require('./input/select');
 var StripeToken     = require('./input/stripe-token');
 var CustomObject    = require('./input/custom-object');
+var ArrayObject     = require('./input/array');
 var Params;
 
 module.exports = React.createClass({
@@ -128,8 +129,13 @@ module.exports = React.createClass({
                 );
                 break;
             case 'array':
-            case 'array[hash]':
-            case 'array[object]':
+                rowParam = (
+                    <tr>
+                        <td colSpan={5}>
+                            <ArrayObject type='string' onChange={component.props.onChange} />
+                        </td>
+                    </tr>
+                );
                 break;
             case 'custom-object':
                 rowParam = (

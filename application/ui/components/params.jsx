@@ -39,8 +39,6 @@ module.exports = React.createClass({
                     values[param.name] = param.defaultValue;
                     break;
                 case 'array':
-                case 'array[hash]':
-                case 'array[object]':
                     values[param.name] = [];
                     break;
                 case 'object':

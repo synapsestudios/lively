@@ -26,9 +26,8 @@ module.exports = ArrayParameter = React.createClass({
     getDefaultValue : function()
     {
         return {
-            key         : '',
-            value       : '',
-            inputType   : 'string'
+            value     : '',
+            inputType : 'string'
         };
     },
 
@@ -53,9 +52,9 @@ module.exports = ArrayParameter = React.createClass({
             case 'number':
                 field = (
                     <Text
-                        className    = 'array-input'
-                        value        = {prop.value}
-                        onChange     = {_.partial(instance.updateField, index, 'value')}
+                        className = 'array-input'
+                        value     = {prop.value}
+                        onChange  = {_.partial(instance.updateField, index, 'value')}
                         />
                 );
                 break;
@@ -107,11 +106,6 @@ module.exports = ArrayParameter = React.createClass({
                     <a className='button field-button--remove' onClick={rmCallback}>–</a>
                 </td>
                 <td>
-                    Key: <Text
-                        className    = 'array-input'
-                        value        = {prop.key}
-                        onChange     = {_.partial(instance.updateField, index, 'key')}
-                    />
                     Type: {selectType}
                     <br />
                     Value: {field}
@@ -122,20 +116,20 @@ module.exports = ArrayParameter = React.createClass({
 
     updateValuesForRequest : function()
     {
-        var data = {};
+        var data = [];
 
         for(var i in this.state.values) {
             var val = this.state.values[i];
             switch (val.inputType) {
                 case 'string':
                 case 'object':
-                    data[val.key] = val.value;
+                    data[i] = val.value;
                     break;
                 case 'number':
-                    data[val.key] = parseInt(val.value);
+                    data[i] = parseInt(val.value);
                     break;
                 case 'null':
-                    data[val.key] = null;
+                    data[i] = null;
                     break;
             }
         }
@@ -156,29 +150,12 @@ module.exports = ArrayParameter = React.createClass({
         this.updateValuesForRequest();
     },
 
-    addObject : function()
-    {
-        var values = this.state.values;
-
-        var defValue        = this.getDefaultValue();
-        defValue.inputType  = 'object';
-
-        values.push(defValue);
-
-        this.setState({
-            values : values
-        });
-
-        this.updateValuesForRequest();
-    },
-
     updateField : function(index, type, value)
     {
         var values = this.state.values;
 
         if (typeof values[index] === 'undefined') {
             values[index] = {
-                'key' : '',
                 'value' : '',
                 'type'  : 'string'
             };
@@ -197,7 +174,7 @@ module.exports = ArrayParameter = React.createClass({
     {
         var values = this.state.values;
 
-        delete values[index];
+        values.splice(index, 1);
 
         this.setState({
             values : values

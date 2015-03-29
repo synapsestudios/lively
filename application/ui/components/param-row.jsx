@@ -119,11 +119,11 @@ module.exports = React.createClass({
                 rowParam = (
                     <tr>
                         <td colSpan={5}>
-                    <Params
-                        key={component.props.key}
-                        params={component.props.param.params}
-                        onChange={component.props.onChange}
-                    />
+                            <Params
+                                key={component.props.key}
+                                params={component.props.param.params}
+                                onChange={component.props.onChange}
+                            />
                         </td>
                     </tr>
                 );

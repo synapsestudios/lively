@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('underscore');
+
 /**
  * URI Helper
  * @type {Object}
@@ -28,9 +30,25 @@ module.exports = {
      * @return {String}        URI with replaced parameter
      */
     injectValueIntoUri : function(name, uri, value) {
-        var regex = new RegExp(':' + name + '(?![A-z])');
+        console.log(value);
+        // inject array differently using name[]=value
+        if (typeof value ==='object') {
+            // skip if someone tries to put an object in a uri
+            if (_.isArray(value)) {
+                uri = uri.replace(new RegExp('(' + name + '=)'), '');
+                var arrayRegex = new RegExp('(\:' + name + '(?![A-z]))');
+                var params = [];
+                for(var i in value) {
+                    params.push(name + '[]=' + encodeURIComponent(value[i]));
+                }
+                uri = uri.replace(arrayRegex, params.join('&'));
+            }
+        } else {
+            var regex = new RegExp(':' + name + '(?![A-z])');
 
-        uri = uri.replace(regex, encodeURIComponent(value));
+            uri = uri.replace(regex, encodeURIComponent(value));
+        }
+
 
         return uri;
     }

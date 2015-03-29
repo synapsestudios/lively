@@ -171,6 +171,7 @@ An API is made up of multiple resources. Each resource has a list of endpoints t
 
 ### Param Configuration
 
+`string` example:
 ```
 {
     name         : 'owner',
@@ -182,10 +183,47 @@ An API is made up of multiple resources. Each resource has a list of endpoints t
 }
 ```
 
+`object` example:
+```
+{
+    name         : 'thing',
+    required     : true,
+    type         : 'object',
+    description  : 'a set of properties defining a thing.',
+    params       : [
+        {
+            name         : 'owner',
+            required     : true,
+            type         : 'string',
+            defaultValue : 'synapsestudios'
+            description  : 'The owner of the repo.'
+        }
+    ]
+}
+```
+
+`array` example:
+```
+{
+    name         : 'owners',
+    required     : true,
+    type         : 'array',
+    location     : 'An array of owners.',
+    param       : {
+        name         : 'owner',
+        type         : 'string',
+        defaultValue : 'synapsestudios'
+        description  : 'The owner of the repo.'
+    }
+}
+```
+
+
 - **name**: A `string` containing the key or name of this parameter that will be sent in the request body or injected into the URI.
-- **required**: A `bool` (`true` or `false`) which flags this parameter as required.
-- **type**: A `string` containing one of: `string`, `integer`, `boolean`, `resumable-upload`, `hash`, `array[hash]`, `array[string]`, `array[boolean]`, `array[integer]`, `stripe_token`, `custom-object`, or `enum`.
-  - `hash` and `array[hash]` will require a child set of `params`
+- **required**: A `bool` (`true` or `false`) which flags this parameter as required.  `required` is not used in an `array` parameter as they may just be removed.
+- **type**: A `string` containing one of: `string`, `integer`, `boolean`, `resumable-upload`, `object`, `array`, `stripe_token`, `custom-object`, or `enum`.
+  - `object` will require a child set of `params`, defined like a top-level list of params.  An `object` param's `location` must be "body" and should not be used in `GET` requests.
+  - `array` will require a child `param`, which is a single object (see example)
   - `custom-object` will allow the user to create objects with arbitrary keys and values, including child objects.
   - If `enum`, specify `enumValues` property on param containing an array of strings to display as options to the user.
 - **location**: A `string` containing one of `header`, `body`, `uri` or `query`. If the param is named in the endpoint's URI, Lively will ignore the stated location. *Default:* `body` unless param is named in URI, then `uri`.

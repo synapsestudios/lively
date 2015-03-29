@@ -55,6 +55,18 @@ var paramArray = {
     }
 };
 
+var paramUriArray = {
+    name        : 'arrayUriKey',
+    required    : false,
+    location    : 'uri',
+    type        : 'array',
+    description : 'This is for a list of strings which will be uri parameters.',
+    param : {
+        type : 'string',
+        name : 'someString'
+    }
+};
+
 var paramArrayCustom = {
     name        : 'arrayCustomKey',
     required    : false,
@@ -70,26 +82,25 @@ var paramStripe = {
     description : 'Not totally sure what this does but it works now.'
 };
 
-var paramHash = {
-    name       : 'hashKey',
-    type       : 'hash',
+var paramObject = {
+    name       : 'objectKey',
+    type       : 'object',
     desription : 'Blaze it',
     params     : [
         {
-            name        : 'hashStringAKey',
+            name        : 'objectStringAKey',
             required    : false,
             type        : 'string',
-            description : 'This is the first hash thing'
+            description : 'This is the first object thing'
         },
         {
-            name        : 'hashStringBKey',
+            name        : 'objectStringBKey',
             required    : false,
             type        : 'string',
-            description : 'This is the second hash thing'
+            description : 'This is the second object thing'
         }
     ]
 };
-
 
 module.exports = {
     name      : 'PARAM TEST',
@@ -98,17 +109,18 @@ module.exports = {
             name     : 'PARAMETER TESTING ENDPOINT',
             synopsis : 'Not real',
             method   : 'POST',
-            uri      : '/somewhere',
+            uri      : '/somewhere?arrayUriKey=:arrayUriKey',
             oauth    : false,
             params   : [
                 paramEnum,
                 paramString,
                 paramNumber,
                 paramBool,
-                paramHash,
+                paramObject,
                 paramCustom,
                 paramStripe,
                 paramArray,
+                paramUriArray,
                 paramArrayCustom
             ]
         }

@@ -208,16 +208,20 @@ module.exports = ObjectParameter = React.createClass({
     render : function()
     {
         return (
-            <tr>
-                <td className='array-title'><code>{this.props.name}</code></td>
-                <td className='array-td td--max-width' colSpan={5}>
-                    <table>
-                        {this.getInputs()}
-                    </table>
-                    <a className='button field-button--add' onClick={this.addField}>{'+ Add Field'}</a>
-                    <a className='button field-button--add' onClick={this.addObject}>{'+ Add Object'}</a>
-                </td>
-            </tr>
+            <table>
+                <tbody>
+                    <tr>
+                        <td className='array-title'><code>{this.props.name}</code></td>
+                        <td className='array-td td--max-width' colSpan={5}>
+                            <table>
+                                {this.getInputs()}
+                            </table>
+                            <a className='button field-button--add' onClick={this.addField}>{'+ Add Field'}</a>
+                            <a className='button field-button--add' onClick={this.addObject}>{'+ Add Object'}</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         );
     }
 });

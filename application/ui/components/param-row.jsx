@@ -1,3 +1,4 @@
+/* global console */
 'use strict';
 
 var _               = require('underscore');
@@ -17,7 +18,8 @@ module.exports = React.createClass({
         param     : React.PropTypes.object,
         onChange  : React.PropTypes.func,
         onInclude : React.PropTypes.func,
-        onNull    : React.PropTypes.func
+        onNull    : React.PropTypes.func,
+        simple    : React.PropTypes.bool
     },
 
     validateParamConfiguration : function(param)
@@ -132,7 +134,11 @@ module.exports = React.createClass({
                 rowParam = (
                     <tr>
                         <td colSpan={5}>
-                            <ArrayObject type='string' onChange={component.props.onChange} />
+                            <ArrayObject
+                                key={component.props.key}
+                                param={component.props.param.param}
+                                onChange={component.props.onChange}
+                            />
                         </td>
                     </tr>
                 );
@@ -177,6 +183,18 @@ module.exports = React.createClass({
                 break;
         }
 
+        if (component.props.simple === true) {
+            return (
+                <tbody>
+                    <tr>
+                        <td><code>{component.props.param.name}</code></td>
+                        <td><code>{component.props.param.type}</code></td>
+                        <td>{inlineParam}</td>
+                    </tr>
+                    {rowParam}
+                </tbody>
+            );
+        }
         description = component.renderDescription(component.props.param);
 
         if (description) {

@@ -5,7 +5,6 @@ var paramEnum = {
     required     : false,
     type         : 'enum',
     defaultValue : 'subscribed',
-    location     : 'query',
     description  : 'Pick one of the options, or don\'t.',
     enumValues   : [
         'assigned',
@@ -20,7 +19,6 @@ var paramString = {
     name        : 'stringKey',
     required    : false,
     type        : 'string',
-    location    : 'query',
     description : 'Lorem doler sit amet.'
 };
 
@@ -28,7 +26,6 @@ var paramNumber = {
     name        : 'numberKey',
     required    : false,
     type        : 'number',
-    location    : 'uri',
     description : 'Numbers, integers, or whatever?'
 };
 
@@ -37,7 +34,6 @@ var paramBool = {
     defaultValue : true,
     required     : false,
     type         : 'boolean',
-    location     : 'query',
     description  : 'True or false values go in here.'
 };
 
@@ -45,7 +41,6 @@ var paramCustom = {
     name        : 'customObjectKey',
     required    : false,
     type        : 'custom-object',
-    location    : 'query',
     description : 'Description about a custom parameter.'
 };
 
@@ -53,15 +48,25 @@ var paramArray = {
     name        : 'arrayKey',
     required    : false,
     type        : 'array',
-    location    : 'query',
-    description : 'This is for a list of things.'
+    description : 'This is for a list of strings.',
+    param : {
+        type : 'string',
+        name : 'someString'
+    }
+};
+
+var paramArrayCustom = {
+    name        : 'arrayCustomKey',
+    required    : false,
+    type        : 'array',
+    description : 'This is for a list of custom objects.',
+    param : paramCustom
 };
 
 var paramStripe = {
     name        : 'stripeTokenKey',
     required    : false,
     type        : 'stripe-token',
-    location    : 'query',
     description : 'Not totally sure what this does but it works now.'
 };
 
@@ -74,14 +79,12 @@ var paramHash = {
             name        : 'hashStringAKey',
             required    : false,
             type        : 'string',
-            location    : 'query',
             description : 'This is the first hash thing'
         },
         {
             name        : 'hashStringBKey',
             required    : false,
             type        : 'string',
-            location    : 'query',
             description : 'This is the second hash thing'
         }
     ]
@@ -92,9 +95,9 @@ module.exports = {
     name      : 'PARAM TEST',
     endpoints : [
         {
-            name     : 'EXAMPLE ENDPOINT',
+            name     : 'PARAMETER TESTING ENDPOINT',
             synopsis : 'Not real',
-            method   : 'GET',
+            method   : 'POST',
             uri      : '/somewhere',
             oauth    : false,
             params   : [
@@ -105,7 +108,8 @@ module.exports = {
                 paramHash,
                 paramCustom,
                 paramStripe,
-                paramArray
+                paramArray,
+                paramArrayCustom
             ]
         }
     ]

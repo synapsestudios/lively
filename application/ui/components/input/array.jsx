@@ -3,32 +3,26 @@
 
 var _             = require('underscore');
 var React         = require('react');
-var Select        = require('./select');
-var Text          = require('./text');
-var ArrayParameter;
 
-module.exports = ArrayParameter = React.createClass({
+module.exports = React.createClass({
 
     displayName : 'ArrayParameter',
 
     getInitialState : function()
     {
         return {
-            values : []
+            values   : [],
+            numItems : 0
         };
     },
 
     getValue : function()
     {
-        return this.state.values;
-    },
-
-    getDefaultValue : function()
-    {
-        return {
-            value     : '',
-            inputType : 'string'
-        };
+        var data = [];
+        for(var i in this.state.values) {
+            data.push(this.state.values[i]);
+        }
+        return data;
     },
 
     getInputs : function()
@@ -36,82 +30,45 @@ module.exports = ArrayParameter = React.createClass({
         var inputs    = [],
             component = this;
 
-        _.each(this.state.values, function (value, index) {
-            inputs.push(component.getInput(value, index));
+        _.each(this.state.values, function (value, itemNum) {
+            inputs.push(component.getInput(value, itemNum));
         });
 
         return inputs;
     },
 
-    getInput : function(prop, index)
+    getInput : function(value, itemNum)
     {
-        var field, selectType, instance = this;
-
-        switch (prop.inputType) {
-            case 'string':
-            case 'number':
-                field = (
-                    <Text
-                        className = 'array-input'
-                        value     = {prop.value}
-                        onChange  = {_.partial(instance.updateField, index, 'value')}
-                        />
-                );
-                break;
-            case 'object':
-                field = (
-                    <table>
-                        <ArrayParameter value={prop.value} index={index} onChange={_.partial(instance.updateField, index, 'value')}/>
-                    </table>
-                );
-                break;
-            case 'null':
-                field = null;
-                break;
-        }
+        var instance = this;
+        var ParamRow = require('../param-row');
 
         var rmCallback = function () {
-            instance.removeField(index);
+            instance.removeField(itemNum);
         };
 
-        if (prop.inputType === 'object') {
-            selectType = 'object';
-        } else {
-            selectType = (
-                <Select
-                    className = 'select'
-                    onChange  = {_.partial(instance.updateField, index, 'inputType')}
-                    value     = {prop.inputType}
-                    options   = {[
-                                    {
-                                        label : 'string',
-                                        value : 'string'
-                                    },
-                                    {
-                                        label : 'number',
-                                        value : 'number'
-                                    },
-                                    {
-                                        label : 'null',
-                                        value : 'null'
-                                    }
-                                ]}
-                />
-            );
-        }
-
         return (
-            <tr key={index}>
+            <tr key={itemNum}>
                 <td>
                     <a className='button field-button--remove' onClick={rmCallback}>–</a>
                 </td>
                 <td>
-                    Type: {selectType}
-                    <br />
-                    Value: {field}
+                    <table>
+                    <ParamRow
+                        simple      = {true}
+                        value       = {value}
+                        key         = {itemNum}
+                        param       = {instance.props.param}
+                        onChange    = {_.partial(instance.changeHandler, itemNum)}
+                        onInclude   = {function() {}}
+                        onNull      = {function() {}}
+                        isNull      = {false}
+                        isIncluded  = {true}
+                    />
+                    </table>
                 </td>
             </tr>
         );
+
     },
 
     updateValuesForRequest : function()
@@ -120,18 +77,7 @@ module.exports = ArrayParameter = React.createClass({
 
         for(var i in this.state.values) {
             var val = this.state.values[i];
-            switch (val.inputType) {
-                case 'string':
-                case 'object':
-                    data[i] = val.value;
-                    break;
-                case 'number':
-                    data[i] = parseInt(val.value);
-                    break;
-                case 'null':
-                    data[i] = null;
-                    break;
-            }
+            data.push(val);
         }
 
         this.props.onChange(data);
@@ -140,8 +86,25 @@ module.exports = ArrayParameter = React.createClass({
     addField : function()
     {
         var values = this.state.values;
+        var itemNum = this.state.numItems + 1;
 
-        values.push(this.getDefaultValue());
+        values.push(
+            null
+        );
+
+        this.setState({
+            values   : values,
+            numItems : itemNum
+        });
+
+        this.updateValuesForRequest();
+    },
+
+    removeField : function(itemNum)
+    {
+        var values = this.state.values;
+
+        delete values[itemNum];
 
         this.setState({
             values : values
@@ -150,51 +113,35 @@ module.exports = ArrayParameter = React.createClass({
         this.updateValuesForRequest();
     },
 
-    updateField : function(index, type, value)
+    changeHandler : function(key, value)
     {
-        var values = this.state.values;
+        var state = _.extend({}, this.state);
 
-        if (typeof values[index] === 'undefined') {
-            values[index] = {
-                'value' : '',
-                'type'  : 'string'
-            };
-        }
+        state.values[key] = value;
 
-        values[index][type] = value;
-
-        this.setState({
-            values : values
+        this.setState(state, function() {
+            this.props.onChange(this.getValue());
         });
-
-        this.updateValuesForRequest();
-    },
-
-    removeField : function(index)
-    {
-        var values = this.state.values;
-
-        values.splice(index, 1);
-
-        this.setState({
-            values : values
-        });
-
-        this.updateValuesForRequest();
     },
 
     render : function()
     {
         return (
-            <tr>
-                <td className='array-title'><code>{this.props.name}</code></td>
-                <td className='array-td td--max-width' colSpan={5}>
-                    <table>
-                        {this.getInputs()}
-                    </table>
-                    <a className='button field-button--add' onClick={this.addField}>{'+ Add Field'}</a>
-                </td>
-            </tr>
+            <table>
+                <tbody>
+                    <tr>
+                        <td className='array-title'><code>{this.props.name}</code></td>
+                        <td className='array-td td--max-width' colSpan={5}>
+                            <table>
+                                <tbody>
+                                {this.getInputs()}
+                                </tbody>
+                            </table>
+                            <a className='button field-button--add' onClick={this.addField}>{'+ Add Field'}</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         );
     }
 });

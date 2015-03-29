@@ -60,58 +60,62 @@ module.exports = {
                 {
                     name         : 'tree',
                     required     : true,
-                    type         : 'array[hash]',
+                    type         : 'array',
                     location     : 'body',
                     description  : 'An array of hashes. Objects (of `path`, `mode`, `type`, and `sha`) specifying a tree structure.',
-                    params       : [
-                        {
-                            name        : 'path',
-                            type        : 'string',
-                            required    : true,
-                            location    : 'body',
-                            description : 'The file referenced in the tree'
-                        },
-                        {
-                            name        : 'mode',
-                            type        : 'enum',
-                            required    : true,
-                            location    : 'body',
-                            description : 'The file mode; one of `100644` for file (blob), `100755` for executable (blob), `040000` for subdirectory (tree), `160000` for submodule (commit), or `120000` for a blob that specifies the path of a symlink',
-                            enumValues  : [
-                                '100644',
-                                '100755',
-                                '040000',
-                                '160000',
-                                '120000'
-                            ]
-                        },
-                        {
-                            name        : 'type',
-                            type        : 'enum',
-                            required    : true,
-                            location    : 'body',
-                            description : 'Either `blob`, `tree`, or `commit`',
-                            enumValues  : [
-                                'blob',
-                                'tree',
-                                'commit'
-                            ]
-                        },
-                        {
-                            name        : 'sha',
-                            type        : 'string',
-                            required    : false,
-                            location    : 'body',
-                            description : 'The SHA1 checksum ID of the object in the tree'
-                        },
-                        {
-                            name        : 'content',
-                            type        : 'string',
-                            required    : false,
-                            location    : 'body',
-                            description : 'The content you want this file to have. GitHub will write this blob out and use that SHA for this entry. Use either this, or tree.sha.'
-                        }
-                    ]
+                    param        : {
+                        type : 'object',
+                        name : 'tree',
+                        params       : [
+                            {
+                                name        : 'path',
+                                type        : 'string',
+                                required    : true,
+                                location    : 'body',
+                                description : 'The file referenced in the tree'
+                            },
+                            {
+                                name        : 'mode',
+                                type        : 'enum',
+                                required    : true,
+                                location    : 'body',
+                                description : 'The file mode; one of `100644` for file (blob), `100755` for executable (blob), `040000` for subdirectory (tree), `160000` for submodule (commit), or `120000` for a blob that specifies the path of a symlink',
+                                enumValues  : [
+                                    '100644',
+                                    '100755',
+                                    '040000',
+                                    '160000',
+                                    '120000'
+                                ]
+                            },
+                            {
+                                name        : 'type',
+                                type        : 'enum',
+                                required    : true,
+                                location    : 'body',
+                                description : 'Either `blob`, `tree`, or `commit`',
+                                enumValues  : [
+                                    'blob',
+                                    'tree',
+                                    'commit'
+                                ]
+                            },
+                            {
+                                name        : 'sha',
+                                type        : 'string',
+                                required    : false,
+                                location    : 'body',
+                                description : 'The SHA1 checksum ID of the object in the tree'
+                            },
+                            {
+                                name        : 'content',
+                                type        : 'string',
+                                required    : false,
+                                location    : 'body',
+                                description : 'The content you want this file to have. GitHub will write this blob out and use that SHA for this entry. Use either this, or tree.sha.'
+                            }
+                        ]
+                    }
                 },
                 {
                     name         : 'base_tree',

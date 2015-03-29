@@ -118,7 +118,11 @@ module.exports = {
                     required     : false,
                     description  : 'Determines what events the hook is triggered for.',
                     location     : 'body',
-                    type         : 'array[string]'
+                    type         : 'array',
+                    param        : {
+                        type : 'string',
+                        name : 'event'
+                    }
                 },
                 {
                     name         : 'active',
@@ -186,7 +190,11 @@ module.exports = {
                     required     : false,
                     description  : 'Determines what events the hook is triggered for.',
                     location     : 'body',
-                    type         : 'array[string]'
+                    type         : 'array',
+                    param        : {
+                        type : 'string',
+                        name : 'event'
+                    }
                 },
                 {
                     name         : 'active',

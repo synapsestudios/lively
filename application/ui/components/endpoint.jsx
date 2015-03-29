@@ -1,4 +1,5 @@
 /* global window */
+/* global console */
 'use strict';
 
 var _               = require('underscore');
@@ -313,6 +314,7 @@ module.exports = React.createClass({
     changeHandler : function(value)
     {
         console.log(value);
+        this.setState({values: value});
     },
 
     render : function()

@@ -1,3 +1,4 @@
+/* global JSON */
 'use strict';
 
 var _             = require('underscore');

@@ -112,8 +112,8 @@ module.exports = React.createClass({
         if (component.props.param.type !== 'file') {
             nullCheckboxComponent = (
                 <input
-                    type = "checkbox"
-                    name = {'null-' + component.props.param.name}
+                    type      = "checkbox"
+                    name      = {'null-' + component.props.param.name}
                     onChange  = {component.props.onNull}
                     checked   = {component.props.isNull}
                 />
@@ -133,9 +133,9 @@ module.exports = React.createClass({
                     <tr>
                         <td colSpan={5}>
                             <Params
-                                key={component.props.key}
-                                params={component.props.param.params}
-                                onChange={component.props.onChange}
+                                key      = {component.props.key}
+                                params   = {component.props.param.params}
+                                onChange = {component.props.onChange}
                             />
                         </td>
                     </tr>
@@ -146,9 +146,9 @@ module.exports = React.createClass({
                     <tr>
                         <td colSpan={5}>
                             <ArrayObject
-                                key={component.props.key}
-                                param={component.props.param.param}
-                                onChange={component.props.onChange}
+                                key      = {component.props.key}
+                                param    = {component.props.param.param}
+                                onChange = {component.props.onChange}
                             />
                         </td>
                     </tr>
@@ -158,7 +158,10 @@ module.exports = React.createClass({
                 rowParam = (
                     <tr>
                         <td colSpan={5}>
-                            <CustomObject name='' onChange={component.props.onChange} />
+                            <CustomObject
+                                name     = ''
+                                onChange = {component.props.onChange}
+                            />
                         </td>
                     </tr>
                 );
@@ -174,20 +177,20 @@ module.exports = React.createClass({
                 });
                 inlineParam = (
                     <Select
-                        value={component.props.value}
-                        key={component.props.key}
-                        options={enumValues}
-                        onChange={component.props.onChange}
+                        value    = {component.props.value}
+                        key      = {component.props.key}
+                        options  = {enumValues}
+                        onChange = {component.props.onChange}
                     />
                 );
                 break;
             case 'boolean':
                 inlineParam = (
                     <Select
-                        value={component.props.value}
-                        key={component.props.key}
-                        options={[{value: false, label: 'false'}, {value: true, label: 'true'}]}
-                        onChange={component.props.onChange}
+                        value    = {component.props.value}
+                        key      = {component.props.key}
+                        options  = {[{value: false, label: 'false'}, {value: true, label: 'true'}]}
+                        onChange = {component.props.onChange}
                     />
                 );
                 break;
@@ -195,17 +198,17 @@ module.exports = React.createClass({
             case 'number':
                 inlineParam = (
                     <Text
-                        key={component.props.key}
-                        type={component.props.param.type}
-                        onChange={component.props.onChange}
+                        key      = {component.props.key}
+                        type     = {component.props.param.type}
+                        onChange = {component.props.onChange}
                     />
                 );
                 break;
             case 'stripe-token':
                 inlineParam = (
                     <StripeToken
-                        paramName={component.props.param.name}
-                        onChange={component.props.onChange}
+                        paramName = {component.props.param.name}
+                        onChange  = {component.props.onChange}
                     />
                 );
                 break;

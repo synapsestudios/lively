@@ -51,7 +51,7 @@ module.exports = React.createClass({
         }
 
         if (errors.length > 0) {
-            console.log(errors);
+            console.warn(errors);
         }
         return errors;
     },
@@ -173,23 +173,40 @@ module.exports = React.createClass({
                     };
                 });
                 inlineParam = (
-                    <Select value={component.props.value} key={component.props.key} options={enumValues} onChange={component.props.onChange} />
+                    <Select
+                        value={component.props.value}
+                        key={component.props.key}
+                        options={enumValues}
+                        onChange={component.props.onChange}
+                    />
                 );
                 break;
             case 'boolean':
                 inlineParam = (
-                    <Select value={component.props.value} key={component.props.key} options={[{value: false, label: 'false'}, {value: true, label: 'true'}]} onChange={component.props.onChange} />
+                    <Select
+                        value={component.props.value}
+                        key={component.props.key}
+                        options={[{value: false, label: 'false'}, {value: true, label: 'true'}]}
+                        onChange={component.props.onChange}
+                    />
                 );
                 break;
             case 'string':
             case 'number':
                 inlineParam = (
-                    <Text key={component.props.key} type={component.props.param.type} onChange={component.props.onChange} />
+                    <Text
+                        key={component.props.key}
+                        type={component.props.param.type}
+                        onChange={component.props.onChange}
+                    />
                 );
                 break;
             case 'stripe-token':
                 inlineParam = (
-                    <StripeToken paramName={component.props.param.name} onChange={component.props.onChange} />
+                    <StripeToken
+                        paramName={component.props.param.name}
+                        onChange={component.props.onChange}
+                    />
                 );
                 break;
         }

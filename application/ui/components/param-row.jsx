@@ -99,30 +99,29 @@ module.exports = React.createClass({
     {
         var includeCheckboxComponent, nullCheckboxComponent, inlineParam = null, rowParam = null;
         var description;
-        var component = this;
 
         includeCheckboxComponent = (
             <input
                 type      = "checkbox"
-                name      = {'include-' + component.props.param.name}
-                onChange  = {component.props.onInclude}
-                checked   = {component.props.isIncluded}
+                name      = {'include-' + this.props.param.name}
+                onChange  = {this.props.onInclude}
+                checked   = {this.props.isIncluded}
             />
         );
-        if (component.props.param.type !== 'file') {
+        if (this.props.param.type !== 'file') {
             nullCheckboxComponent = (
                 <input
                     type      = "checkbox"
-                    name      = {'null-' + component.props.param.name}
-                    onChange  = {component.props.onNull}
-                    checked   = {component.props.isNull}
+                    name      = {'null-' + this.props.param.name}
+                    onChange  = {this.props.onNull}
+                    checked   = {this.props.isNull}
                 />
             );
         } else {
             nullCheckboxComponent = ('N/A');
         }
 
-        switch (component.props.param.type) {
+        switch (this.props.param.type) {
             // row-params
             case 'hash':
             case 'object':
@@ -133,9 +132,9 @@ module.exports = React.createClass({
                     <tr>
                         <td colSpan={5}>
                             <Params
-                                key      = {component.props.key}
-                                params   = {component.props.param.params}
-                                onChange = {component.props.onChange}
+                                key      = {this.props.key}
+                                params   = {this.props.param.params}
+                                onChange = {this.props.onChange}
                             />
                         </td>
                     </tr>
@@ -146,9 +145,9 @@ module.exports = React.createClass({
                     <tr>
                         <td colSpan={5}>
                             <ArrayObject
-                                key      = {component.props.key}
-                                param    = {component.props.param.param}
-                                onChange = {component.props.onChange}
+                                key      = {this.props.key}
+                                param    = {this.props.param.param}
+                                onChange = {this.props.onChange}
                             />
                         </td>
                     </tr>
@@ -160,7 +159,7 @@ module.exports = React.createClass({
                         <td colSpan={5}>
                             <CustomObject
                                 name     = ''
-                                onChange = {component.props.onChange}
+                                onChange = {this.props.onChange}
                             />
                         </td>
                     </tr>
@@ -169,7 +168,7 @@ module.exports = React.createClass({
 
             // inline params
             case 'enum':
-                var enumValues = _.map(component.props.param.enumValues, function (value) {
+                var enumValues = _.map(this.props.param.enumValues, function (value) {
                     return {
                         label : value,
                         value : value
@@ -177,20 +176,20 @@ module.exports = React.createClass({
                 });
                 inlineParam = (
                     <Select
-                        value    = {component.props.value}
-                        key      = {component.props.key}
+                        value    = {this.props.value}
+                        key      = {this.props.key}
                         options  = {enumValues}
-                        onChange = {component.props.onChange}
+                        onChange = {this.props.onChange}
                     />
                 );
                 break;
             case 'boolean':
                 inlineParam = (
                     <Select
-                        value    = {component.props.value}
-                        key      = {component.props.key}
+                        value    = {this.props.value}
+                        key      = {this.props.key}
                         options  = {[{value: false, label: 'false'}, {value: true, label: 'true'}]}
-                        onChange = {component.props.onChange}
+                        onChange = {this.props.onChange}
                     />
                 );
                 break;
@@ -198,35 +197,35 @@ module.exports = React.createClass({
             case 'number':
                 inlineParam = (
                     <Text
-                        key      = {component.props.key}
-                        type     = {component.props.param.type}
-                        onChange = {component.props.onChange}
+                        key      = {this.props.key}
+                        type     = {this.props.param.type}
+                        onChange = {this.props.onChange}
                     />
                 );
                 break;
             case 'stripe-token':
                 inlineParam = (
                     <StripeToken
-                        paramName = {component.props.param.name}
-                        onChange  = {component.props.onChange}
+                        paramName = {this.props.param.name}
+                        onChange  = {this.props.onChange}
                     />
                 );
                 break;
         }
 
-        if (component.props.simple === true) {
+        if (this.props.simple === true) {
             return (
                 <tbody>
                     <tr>
-                        <td><code>{component.props.param.name}</code></td>
-                        <td><code>{component.props.param.type}</code></td>
+                        <td><code>{this.props.param.name}</code></td>
+                        <td><code>{this.props.param.type}</code></td>
                         <td>{inlineParam}</td>
                     </tr>
                     {rowParam}
                 </tbody>
             );
         }
-        description = component.renderDescription(component.props.param);
+        description = this.renderDescription(this.props.param);
 
         if (description) {
             description = (
@@ -237,10 +236,10 @@ module.exports = React.createClass({
         return (
             <tbody>
                 <tr>
-                    <td><code>{component.props.param.name}</code></td>
+                    <td><code>{this.props.param.name}</code></td>
                     <td>{includeCheckboxComponent}</td>
                     <td>{nullCheckboxComponent}</td>
-                    <td><code>{component.props.param.type}</code></td>
+                    <td><code>{this.props.param.type}</code></td>
                     <td>{inlineParam}</td>
                 </tr>
                 {description}

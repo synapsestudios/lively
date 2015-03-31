@@ -56,22 +56,26 @@ module.exports = React.createClass({
 
     render : function()
     {
+        var component = this;
         var button;
 
         if (! this.state.stripeKey) {
             button = <button disabled={true}>Stripe Key Not Found</button>;
         } else if (this.state.stripeLoading) {
             button = <button disabled={true}>Loading...</button>;
-        } else if (this.state.stripeToken) {
+        } else {
             button = (
                 <button onClick={this.getGenerateStripeTokenCallback(this.props.paramName)}>
-                    {this.state.stripeToken}
+                    Generate Stripe Token
                 </button>
             );
-        } else {
-            button = <button onClick={this.getGenerateStripeTokenCallback(this.props.paramName)}>Generate Token</button>;
         }
 
-        return button;
+        return (
+            <div>
+                {button}&nbsp;
+                {component.state.stripeToken}
+            </div>
+        );
     }
 });

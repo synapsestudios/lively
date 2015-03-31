@@ -22,6 +22,19 @@ module.exports = React.createClass({
         simple    : React.PropTypes.bool
     },
 
+    getDefaultProps : function()
+    {
+        return {
+            param: {},
+            onChange: function () {},
+            onInclude: function () {},
+            onNull: function () {},
+            isNull: false,
+            isIncluded: true,
+            simple: false
+        };
+    },
+
     validateParamConfiguration : function(param)
     {
         var errors = [];

@@ -59,10 +59,6 @@ module.exports = React.createClass({
                         key         = {itemNum}
                         param       = {component.props.param}
                         onChange    = {_.partial(component.changeHandler, itemNum)}
-                        onInclude   = {function() {}}
-                        onNull      = {function() {}}
-                        isNull      = {false}
-                        isIncluded  = {true}
                     />
                     </table>
                 </td>

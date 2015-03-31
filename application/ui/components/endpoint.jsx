@@ -313,7 +313,6 @@ module.exports = React.createClass({
 
     changeHandler : function(value)
     {
-        console.log(value);
         this.setState({values: value});
     },
 

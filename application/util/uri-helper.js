@@ -30,7 +30,6 @@ module.exports = {
      * @return {String}        URI with replaced parameter
      */
     injectValueIntoUri : function(name, uri, value) {
-        console.log(value);
         // inject array differently using name[]=value
         if (typeof value ==='object') {
             // skip if someone tries to put an object in a uri

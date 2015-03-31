@@ -3,8 +3,8 @@
 module.exports = {
     name    : 'Example API',
     api     : {
-        hostname : 'localhost',
-        port     : 80,
+        hostname : '',
+        port     : 9001,
         secure   : false
     },
     stripe_key : 'pk_test_F8viiVc00X4kcRshQNDFdosu',

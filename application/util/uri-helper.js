@@ -41,13 +41,14 @@ module.exports = {
                     params.push(name + '[]=' + encodeURIComponent(value[i]));
                 }
                 uri = uri.replace(arrayRegex, params.join('&'));
+            } else {
+                throw new Error('Objects should not be set as a uri values.');
             }
         } else {
             var regex = new RegExp(':' + name + '(?![A-z])');
 
             uri = uri.replace(regex, encodeURIComponent(value));
         }
-
 
         return uri;
     }

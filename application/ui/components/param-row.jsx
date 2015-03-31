@@ -39,17 +39,15 @@ module.exports = React.createClass({
     {
         var errors = [];
 
-        switch (param.type) {
-            case "enum":
-                if (! param.enumValues.length) {
-                    errors.push('Missing Enum Values');
-                } else if (
-                    typeof param.defaultValue !== 'undefined' &&
-                    param.enumValues.indexOf(param.defaultValue) === -1
-                ) {
-                    errors.push('Default value for enum not in values list');
-                }
-                break;
+        if (param.type === 'enum') {
+            if (! param.enumValues.length) {
+                errors.push('Missing Enum Values');
+            } else if (
+                typeof param.defaultValue !== 'undefined' &&
+                param.enumValues.indexOf(param.defaultValue) === -1
+            ) {
+                errors.push('Default value for enum not in values list');
+            }
         }
 
         if (errors.length > 0) {

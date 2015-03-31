@@ -61,13 +61,22 @@ module.exports = ObjectParameter = React.createClass({
                 break;
             case 'boolean':
                 field = (
-                    <Select value={prop.value} index={index} options={[{value: false, label: 'false'}, {value: true, label: 'true'}]} onChange={_.partial(instance.updateField, index, 'value')} />
+                    <Select
+                        value={prop.value}
+                        index={index}
+                        options={[{value: false, label: 'false'}, {value: true, label: 'true'}]}
+                        onChange={_.partial(instance.updateField, index, 'value')}
+                    />
                 );
                 break;
             case 'object':
                 field = (
                     <table>
-                        <ObjectParameter value={prop.value} index={index} onChange={_.partial(instance.updateField, index, 'value')}/>
+                        <ObjectParameter
+                            value={prop.value}
+                            index={index}
+                            onChange={_.partial(instance.updateField, index, 'value')}
+                        />
                     </table>
                 );
                 break;

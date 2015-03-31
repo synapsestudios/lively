@@ -377,7 +377,6 @@ module.exports = React.createClass({
                         ref                     = 'params'
                         requestMethod           = {this.props.method}
                         uri                     = {this.props.uri}
-                        key                     = {0}
                         onChange                = {this.changeHandler}
                     />
                     <div className='panel__container switch__container'>

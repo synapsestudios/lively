@@ -20,7 +20,7 @@ module.exports = React.createClass({
     {
         var value = event.target.value;
         if (this.props.type === 'number') {
-            value = parseInt(value);
+            value = parseInt(value, 10);
         }
         this.props.onChange(value);
     },

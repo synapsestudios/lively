@@ -39,11 +39,11 @@ module.exports = React.createClass({
 
     getInput : function(value, itemNum)
     {
-        var instance = this;
+        var component = this;
         var ParamRow = require('../param-row');
 
         var rmCallback = function () {
-            instance.removeField(itemNum);
+            component.removeField(itemNum);
         };
 
         return (
@@ -57,8 +57,8 @@ module.exports = React.createClass({
                         simple      = {true}
                         value       = {value}
                         key         = {itemNum}
-                        param       = {instance.props.param}
-                        onChange    = {_.partial(instance.changeHandler, itemNum)}
+                        param       = {component.props.param}
+                        onChange    = {_.partial(component.changeHandler, itemNum)}
                         onInclude   = {function() {}}
                         onNull      = {function() {}}
                         isNull      = {false}

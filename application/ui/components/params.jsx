@@ -157,6 +157,11 @@ module.exports = React.createClass({
 
     render : function()
     {
+        if (this.props.params.length === 0) {
+            return (
+                <div />
+            );
+        }
         var header = (
             <thead>
                 <tr>

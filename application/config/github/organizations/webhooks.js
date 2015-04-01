@@ -76,7 +76,7 @@ module.exports = {
                     required    : true,
                     description : 'Key/value pairs to provide settings for this webhook.',
                     location    : 'body',
-                    type        : 'hash',
+                    type        : 'object',
                     params      : [
                         {
                             name        : 'url',
@@ -148,7 +148,7 @@ module.exports = {
                     required    : true,
                     description : 'Key/value pairs to provide settings for this webhook.',
                     location    : 'body',
-                    type        : 'hash',
+                    type        : 'object',
                     params      : [
                         {
                             name        : 'url',

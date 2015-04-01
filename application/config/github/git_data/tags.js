@@ -80,7 +80,7 @@ module.exports = {
                 {
                     name        : 'tagger',
                     required    : false,
-                    type        : 'hash',
+                    type        : 'object',
                     location    : 'body',
                     description : 'A hash with information about the individual creating the tag.',
                     params      : [

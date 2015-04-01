@@ -82,7 +82,7 @@ module.exports = {
                 {
                     name         : 'author',
                     required     : false,
-                    type         : 'hash',
+                    type         : 'object',
                     location     : 'body',
                     description  : 'If the author section is omitted, it will be filled in with the authenticated user\'s information and the current date.',
                     params       : [
@@ -112,7 +112,7 @@ module.exports = {
                 {
                     name         : 'committer',
                     required     : false,
-                    type         : 'hash',
+                    type         : 'object',
                     location     : 'body',
                     description  : 'The committer section is optional and will be filled with the author data if omitted.',
                     params       : [

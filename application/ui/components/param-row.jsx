@@ -9,6 +9,7 @@ var Select          = require('./input/select');
 var StripeToken     = require('./input/stripe-token');
 var CustomObject    = require('./input/custom-object');
 var ArrayObject     = require('./input/array');
+var FileParam       = require('./input/file');
 var Params;
 
 module.exports = React.createClass({
@@ -208,6 +209,14 @@ module.exports = React.createClass({
                     <StripeToken
                         paramName = {this.props.param.name}
                         onChange  = {this.props.onChange}
+                    />
+                );
+                break;
+            case 'file':
+                inlineParam = (
+                    <FileParam
+                        name = {this.props.param.name}
+                        onChange = {this.props.onChange}
                     />
                 );
                 break;

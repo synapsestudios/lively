@@ -123,6 +123,19 @@ module.exports = {
                 paramUriArray,
                 paramArrayCustom
             ]
+        },
+        {
+            name     : 'FILE UPLOAD TEST',
+            synopsis : 'Not real',
+            method   : 'POST',
+            uri      : '/somewhere',
+            oauth    : false,
+            params   : [
+                {
+                    name: 'file',
+                    type: 'file'
+                }
+            ]
         }
     ]
 };

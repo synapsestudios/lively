@@ -50,6 +50,9 @@ module.exports = React.createClass({
                 case 'stripe-token':
                     values[param.name] = null;
                     break;
+                case 'file':
+                    values[param.name] = null;
+                    break;
             }
         });
 

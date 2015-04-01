@@ -19,8 +19,10 @@ module.exports = React.createClass({
     handleChange : function(event)
     {
         var value = event.target.value;
-        if (this.props.type === 'number') {
+        if (this.props.type === 'integer' || this.props.type === 'number') {
             value = parseInt(value, 10);
+        } else if(this.props.type === 'float') {
+            value = parseFloat(value);
         }
         this.props.onChange(value);
     },

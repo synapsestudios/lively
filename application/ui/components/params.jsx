@@ -31,6 +31,8 @@ module.exports = React.createClass({
                     values[param.name] = param.defaultValue ? param.defaultValue : '';
                     break;
                 case 'number':
+                case 'integer':
+                case 'float':
                     values[param.name] = param.defaultValue ? param.defaultValue : 0;
                     break;
                 case 'boolean':

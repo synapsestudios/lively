@@ -197,6 +197,8 @@ module.exports = React.createClass({
                 break;
             case 'string':
             case 'number':
+            case 'integer':
+            case 'float':
                 inlineParam = (
                     <Text
                         key      = {this.props.key}

@@ -45,7 +45,11 @@ var paramParents = {
     required    : true,
     type        : 'array',
     location    : 'uri',
-    description : 'The SHAs of the commits that were the parents of this commit. If omitted or empty, the commit will be written as a root commit. For a single parent, an array of one SHA should be provided; for a merge commit, an array of more than one should be provided.'
+    description : 'The SHAs of the commits that were the parents of this commit. If omitted or empty, the commit will be written as a root commit. For a single parent, an array of one SHA should be provided; for a merge commit, an array of more than one should be provided.',
+    param        : {
+        name : 'Commit SHA',
+        type : 'string'
+    }
 };
 
 module.exports = {

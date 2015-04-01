@@ -7,6 +7,7 @@ var marked          = require('marked');
 var Text            = require('./param/text');
 var Select          = require('./input/select');
 var StripeToken     = require('./input/stripe-token');
+var Checkbox        = require('./input/checkbox');
 var CustomObject    = require('./input/custom-object');
 var ArrayObject     = require('./input/array');
 var FileParam       = require('./input/file');
@@ -200,6 +201,15 @@ module.exports = React.createClass({
                     <Text
                         key      = {this.props.key}
                         type     = {this.props.param.type}
+                        onChange = {this.props.onChange}
+                    />
+                );
+                break;
+            case 'checkbox':
+                inlineParam = (
+                    <Checkbox
+                        value    = {this.props.value}
+                        key      = {this.props.key}
                         onChange = {this.props.onChange}
                     />
                 );

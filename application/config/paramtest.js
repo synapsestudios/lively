@@ -37,6 +37,14 @@ var paramBool = {
     description  : 'True or false values go in here.'
 };
 
+var paramCheckbox = {
+    name         : 'checkboxKey',
+    defaultValue : false,
+    required     : false,
+    type         : 'checkbox',
+    description  : 'Checked == true'
+};
+
 var paramCustom = {
     name        : 'customObjectKey',
     required    : false,
@@ -116,6 +124,7 @@ module.exports = {
                 paramString,
                 paramNumber,
                 paramBool,
+                paramCheckbox,
                 paramObject,
                 paramCustom,
                 paramStripe,

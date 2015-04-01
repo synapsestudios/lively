@@ -4,11 +4,16 @@ var React = require('react');
 
 module.exports = React.createClass({
 
-    displayName : 'TextInput',
+    displayName : 'CheckboxParam',
 
     getValue : function()
     {
         return this.refs.input.getDOMNode().checked;
+    },
+
+    handleChange : function()
+    {
+        this.props.onChange(this.getValue());
     },
 
     render : function()
@@ -22,6 +27,7 @@ module.exports = React.createClass({
                     className      = 'onoffswitch-checkbox'
                     id             = {this.props.name}
                     defaultChecked = {this.props.defaultChecked}
+                    onChange       = {this.handleChange}
                 />
                 <label className='onoffswitch-label' htmlFor={this.props.name}>
                     <span className='onoffswitch-inner'></span>

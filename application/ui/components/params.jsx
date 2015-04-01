@@ -28,30 +28,33 @@ module.exports = React.createClass({
 
             switch (param.type) {
                 case 'string':
-                    values[param.name] = '';
+                    values[param.name] = param.defaultValue ? param.defaultValue : '';
                     break;
                 case 'number':
-                    values[param.name] = 0;
+                    values[param.name] = param.defaultValue ? param.defaultValue : 0;
                     break;
                 case 'boolean':
-                    values[param.name] = false;
+                    values[param.name] = param.defaultValue ? param.defaultValue : false;
                     break;
                 case 'enum':
-                    values[param.name] = param.defaultValue;
+                    values[param.name] = param.defaultValue ? param.defaultValue : param.defaultValue;
                     break;
                 case 'array':
-                    values[param.name] = [];
+                    values[param.name] = param.defaultValue ? param.defaultValue : [];
                     break;
                 case 'object':
                 case 'hash':
                 case 'custom-object':
-                    values[param.name] = {};
+                    values[param.name] = param.defaultValue ? param.defaultValue : {};
                     break;
                 case 'stripe-token':
-                    values[param.name] = null;
+                    values[param.name] = param.defaultValue ? param.defaultValue : null;
                     break;
                 case 'file':
-                    values[param.name] = null;
+                    values[param.name] = param.defaultValue ? param.defaultValue : null;
+                    break;
+                case 'checkbox':
+                    values[param.name] = param.defaultValue ? param.defaultValue : false;
                     break;
             }
         });

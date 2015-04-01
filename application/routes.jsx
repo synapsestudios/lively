@@ -1,3 +1,4 @@
+/** @jsx React.DOM */
 'use strict';
 
 var Router        = require('react-router');
@@ -5,7 +6,6 @@ var Router        = require('react-router');
 var React         = require('react');
 var Route         = Router.Route;
 var DefaultRoute  = Router.DefaultRoute;
-var NotFoundRoute = Router.NotFoundRoute;
 
 var App           = require('./ui/pages/app');
 var ApiListPage   = require('./ui/pages/api-list');

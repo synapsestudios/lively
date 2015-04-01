@@ -1,5 +1,4 @@
 /* global window */
-/* global console */
 'use strict';
 
 var _               = require('underscore');

@@ -221,7 +221,7 @@ An API is made up of multiple resources. Each resource has a list of endpoints t
 
 - **name**: A `string` containing the key or name of this parameter that will be sent in the request body or injected into the URI.
 - **required**: A `bool` (`true` or `false`) which flags this parameter as required.  `required` is not used in an `array` parameter as they may just be removed.
-- **type**: A `string` containing one of: `string`, `integer`, `boolean`, `resumable-upload`, `object`, `array`, `stripe_token`, `custom-object`, or `enum`.
+- **type**: A `string` containing one of: `string`, `integer`, `float`, `checkbox`, `boolean`, `resumable-upload`, `object`, `array`, `stripe_token`, `custom-object`, or `enum`.
   - `object` will require a child set of `params`, defined like a top-level list of params.  An `object` param's `location` must be "body" and should not be used in `GET` requests.
   - `array` will require a child `param`, which is a single object (see example)
   - `custom-object` will allow the user to create objects with arbitrary keys and values, including child objects.

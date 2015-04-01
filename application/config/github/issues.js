@@ -93,7 +93,7 @@ var paramMilestone = {
     name         : 'milestone',
     required     : false,
     defaultValue : '*',
-    type         : 'mixed',
+    type         : 'string',
     location     : 'query',
     description  : 'If an integer is passed, it should refer to a milestone number. If the string `*` is passed, issues with any milestone are accepted. If the string `none` is passed, issues without milestones are returned.'
 };

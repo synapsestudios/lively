@@ -137,7 +137,7 @@ module.exports = ObjectParameter = React.createClass({
                     data[val.key] = val.value;
                     break;
                 case 'number':
-                    data[val.key] = parseInt(val.value);
+                    data[val.key] = parseInt(val.value, 10);
                     break;
                 case 'boolean':
                     data[val.key] = val.value;

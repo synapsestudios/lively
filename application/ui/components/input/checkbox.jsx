@@ -6,6 +6,15 @@ module.exports = React.createClass({
 
     displayName : 'CheckboxParam',
 
+    getDefaultProps : function()
+    {
+        return {
+            name            : '',
+            defaultChecked  : false,
+            onChange        : function () {}
+        };
+    },
+
     getValue : function()
     {
         return this.refs.input.getDOMNode().checked;

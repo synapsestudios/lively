@@ -11,8 +11,7 @@ module.exports = React.createClass({
     getInitialState : function()
     {
         return {
-            values   : [],
-            numItems : 0
+            values   : []
         };
     },
 
@@ -82,15 +81,13 @@ module.exports = React.createClass({
     addField : function()
     {
         var values = this.state.values;
-        var itemNum = this.state.numItems + 1;
 
         values.push(
             null
         );
 
         this.setState({
-            values   : values,
-            numItems : itemNum
+            values   : values
         });
 
         this.updateValuesForRequest();

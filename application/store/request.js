@@ -7,7 +7,7 @@ var config       = require('../config');
 
 module.exports = Fluxxor.createStore({
 
-    initialize : function(options)
+    initialize : function()
     {
         this.state = {
             endpoint : {}
@@ -19,10 +19,6 @@ module.exports = Fluxxor.createStore({
             constants.REQUEST_SUCCESS, 'onRequestSuccess',
             constants.REQUEST_FAILURE, 'onRequestFailure',
             constants.SET_REQUEST_VALUES, 'onSetRequestValues',
-            constants.SET_NULL_VALUE, 'onSetNullValue',
-            constants.UNSET_NULL_VALUE, 'onUnsetNullValue',
-            constants.REQUEST_ADD_TO_EXCLUDED_FIELDS, 'onAddToExcludedFields',
-            constants.REQUEST_REMOVE_FROM_EXCLUDED_FIELDS, 'onRemoveFromExcludedFields',
             constants.REQUEST_STRIPE_TOKEN_SUCCESS, 'onRequestStripeTokenSuccess'
         );
     },
@@ -111,71 +107,7 @@ module.exports = Fluxxor.createStore({
         this.emit('change');
     },
 
-    onAddToExcludedFields : function(payload)
-    {
-        var endpointName, field;
-
-        endpointName = payload.endpointName;
-        field        = payload.field;
-
-        if (! this.state.endpoint[endpointName]) {
-            this.state.endpoint[endpointName] = this.getBlankEndpointDataObject();
-        }
-
-        this.state.endpoint[endpointName].excludedFields.push(field);
-
-        this.emit('change');
-    },
-
-    onRemoveFromExcludedFields : function(payload)
-    {
-        var endpointName, field;
-
-        endpointName = payload.endpointName;
-        field        = payload.field;
-
-        if (! this.state.endpoint[endpointName]) {
-            this.state.endpoint[endpointName] = this.getBlankEndpointDataObject();
-        }
-
-        this.state.endpoint[endpointName].excludedFields = _(this.state.endpoint[endpointName].excludedFields).without(field);
-
-        this.emit('change');
-    },
-
-    onSetNullValue : function(payload)
-    {
-        var endpointName, field;
-
-        endpointName = payload.endpointName;
-        field        = payload.field;
-
-        if (! this.state.endpoint[endpointName]) {
-            this.state.endpoint[endpointName] = this.getBlankEndpointDataObject();
-        }
-
-        this.state.endpoint[endpointName].nullFields.push(field);
-
-        this.emit('change');
-    },
-
-    onUnsetNullValue : function(payload)
-    {
-        var endpointName, field;
-
-        endpointName = payload.endpointName;
-        field        = payload.field;
-
-        if (! this.state.endpoint[endpointName]) {
-            this.state.endpoint[endpointName] = this.getBlankEndpointDataObject();
-        }
-
-        this.state.endpoint[endpointName].nullFields = _(this.state.endpoint[endpointName].nullFields).without(field);
-
-        this.emit('change');
-    },
-
-    onRequestStripeTokenSuccess : function(response)
+    onRequestStripeTokenSuccess : function()
     {
         var store = this;
 
@@ -199,9 +131,7 @@ module.exports = Fluxxor.createStore({
     getBlankEndpointDataObject : function()
     {
         return {
-            values              : [],
-            excludedFields      : [],
-            nullFields          : [],
+            values              : {},
             requestTimestamp    : 0,
             responseTimestamp   : 0
         };

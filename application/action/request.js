@@ -65,45 +65,5 @@ module.exports = {
             requestInfo  : client.getLastRequestInfo(),
             endpointName : endpointName
         });
-    },
-
-    setRequestValues : function(endpointName, values)
-    {
-        this.dispatch(constants.SET_REQUEST_VALUES, {
-            endpointName : endpointName,
-            values       : values
-        });
-    },
-
-    addToExcludedFields : function(endpointName, field)
-    {
-        this.dispatch(constants.REQUEST_ADD_TO_EXCLUDED_FIELDS, {
-            endpointName : endpointName,
-            field        : field
-        });
-    },
-
-    removeFromExcludedFields : function(endpointName, field)
-    {
-        this.dispatch(constants.REQUEST_REMOVE_FROM_EXCLUDED_FIELDS, {
-            endpointName : endpointName,
-            field        : field
-        });
-    },
-
-    addToNullFields : function(endpointName, field)
-    {
-        this.dispatch(constants.SET_NULL_VALUE, {
-            endpointName : endpointName,
-            field        : field
-        });
-    },
-
-    removeFromNullFields : function(endpointName, field)
-    {
-        this.dispatch(constants.UNSET_NULL_VALUE, {
-            endpointName : endpointName,
-            field        : field
-        });
     }
 };

@@ -130,6 +130,12 @@ module.exports = React.createClass({
         });
     },
 
+    // ensures values are passed up even if none have changed
+    componentDidMount: function()
+    {
+        this.props.onChange(this.getValue());
+    },
+
     renderParams : function()
     {
         var rows = [];

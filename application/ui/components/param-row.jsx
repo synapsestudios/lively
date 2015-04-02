@@ -110,7 +110,9 @@ module.exports = React.createClass({
                 checked   = {this.props.isIncluded}
             />
         );
-        if (this.props.method === 'GET') {
+        if (
+            this.props.method === 'GET' || this.props.param.location === 'uri' || this.props.param.location === 'query'
+        ) {
             nullCheckboxComponent = ('N/A');
         } else {
             if (this.props.param.type !== 'file') {

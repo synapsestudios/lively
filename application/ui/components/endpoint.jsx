@@ -139,7 +139,7 @@ module.exports = React.createClass({
             name = param.name;
 
             // Skip excluded fields
-            if (_(this.state.excludedFields).contains(name)) {
+            if (typeof values[name] === 'undefined') {
                 return;
             }
 

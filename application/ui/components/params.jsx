@@ -89,12 +89,11 @@ module.exports = React.createClass({
     /**
      * Manage null values
      * @param key
-     * @param event
+     * @param value
      */
-    nullHandler : function(key, event)
+    nullHandler : function(key, value)
     {
         var state = _.extend({}, this.state);
-        var value = event.currentTarget.checked;
 
         if (value) {
             state.nullKeys[key] = true;
@@ -106,10 +105,9 @@ module.exports = React.createClass({
         this.setState(state);
     },
 
-    includeHandler : function(key, event)
+    includeHandler : function(key, value)
     {
         var state = _.extend({}, this.state);
-        var value = event.currentTarget.checked;
 
         if (value) {
             state.includeKeys[key] = true;
@@ -147,7 +145,7 @@ module.exports = React.createClass({
                     onInclude   = {_.partial(component.includeHandler, item.name)}
                     onNull      = {_.partial(component.nullHandler, item.name)}
                     isNull      = {typeof component.state.nullKeys[item.name] !== 'undefined'}
-                    isIncluded  = {component.state.includeKeys[item.name]}
+                    isIncluded  = {typeof component.state.includeKeys[item.name] !== 'undefined'}
                 />
             );
         });
@@ -159,7 +157,7 @@ module.exports = React.createClass({
     {
         if (this.props.params.length === 0) {
             return (
-                <div />
+                <span />
             );
         }
         var header = (

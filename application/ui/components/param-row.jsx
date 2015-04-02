@@ -103,8 +103,7 @@ module.exports = React.createClass({
         var description;
 
         includeCheckboxComponent = (
-            <input
-                type      = "checkbox"
+            <Checkbox
                 name      = {'include-' + this.props.param.name}
                 onChange  = {this.props.onInclude}
                 checked   = {this.props.isIncluded}
@@ -112,8 +111,7 @@ module.exports = React.createClass({
         );
         if (this.props.param.type !== 'file') {
             nullCheckboxComponent = (
-                <input
-                    type      = "checkbox"
+                <Checkbox
                     name      = {'null-' + this.props.param.name}
                     onChange  = {this.props.onNull}
                     checked   = {this.props.isNull}

@@ -36,6 +36,7 @@ module.exports = React.createClass({
                     className      = 'onoffswitch-checkbox'
                     id             = {this.props.name}
                     defaultChecked = {this.props.defaultChecked}
+                    checked        = {this.props.checked}
                     onChange       = {this.handleChange}
                 />
                 <label className='onoffswitch-label' htmlFor={this.props.name}>

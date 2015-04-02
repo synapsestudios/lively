@@ -29,6 +29,13 @@ var paramNumber = {
     description : 'Numbers, integers, or whatever?'
 };
 
+var paramFloat = {
+    name        : 'floatKey',
+    required    : false,
+    type        : 'float',
+    description : 'Floating point number'
+};
+
 var paramBool = {
     name         : 'boolKey',
     defaultValue : true,
@@ -135,6 +142,7 @@ module.exports = {
                 paramEnum,
                 paramString,
                 paramNumber,
+                paramFloat,
                 paramBool,
                 paramCheckbox,
                 paramObject,

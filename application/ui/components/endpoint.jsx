@@ -43,7 +43,8 @@ module.exports = React.createClass({
     getInitialState : function()
     {
         return {
-            endpointPanelHidden : true
+            endpointPanelHidden : true,
+            values : {}
         };
     },
 
@@ -66,7 +67,6 @@ module.exports = React.createClass({
         newState = {
             loading           : endpointData.loading,
             loaded            : endpointData.loaded,
-            values            : endpointData.values,
             response          : endpointData.response,
             responseTimestamp : endpointData.responseTimestamp,
             requestTimestamp  : endpointData.requestTimestamp,

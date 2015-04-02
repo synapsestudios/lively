@@ -121,6 +121,13 @@ module.exports = {
     name      : 'PARAM TEST',
     endpoints : [
         {
+            name     : 'GET WITH NO PARAMETERS ENDPOINT',
+            synopsis : 'Not real',
+            method   : 'GET',
+            uri      : '/somewhere',
+            oauth    : false
+        },
+        {
             name     : 'GET TESTING ENDPOINT',
             synopsis : 'Not real',
             method   : 'GET',

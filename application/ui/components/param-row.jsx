@@ -163,7 +163,7 @@ module.exports = React.createClass({
                 break;
             case 'custom-object':
                 if (this.props.method === 'GET') {
-                    rowParam = ('INVALID CONFIGURATION - CANNOT USE `custom-object` IN GET REQUEST');
+                    rowParam = (<tr><td>{'INVALID CONFIGURATION - CANNOT USE `custom-object` IN GET REQUEST'}</td></tr>);
                 } else {
                     rowParam = (
                         <tr>
@@ -236,7 +236,7 @@ module.exports = React.createClass({
                 break;
             case 'file':
                 if (this.props.method === 'GET') {
-                    rowParam = ('INVALID CONFIGURATION - CANNOT USE `file` IN GET REQUEST');
+                    rowParam = (<tr><td>{'INVALID CONFIGURATION - CANNOT USE `file` IN GET REQUEST'}</td></tr>);
                 } else {
                     inlineParam = (
                         <FileParam
@@ -269,7 +269,7 @@ module.exports = React.createClass({
         }
 
         return (
-            <tbody>
+            <tbody className="paramrow">
                 <tr>
                     <td><code>{this.props.param.name}</code></td>
                     <td>{includeCheckboxComponent}</td>

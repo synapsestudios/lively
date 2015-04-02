@@ -377,6 +377,7 @@ module.exports = React.createClass({
                         requestMethod           = {this.props.method}
                         uri                     = {this.props.uri}
                         onChange                = {this.changeHandler}
+                        endpointMethod          = {this.props.method}
                     />
                     <div className='panel__container switch__container'>
                         <p className='checkbox-label'>Include OAuth Token?</p>

@@ -58,6 +58,7 @@ module.exports = React.createClass({
                         key         = {itemNum}
                         param       = {component.props.param}
                         onChange    = {_.partial(component.changeHandler, itemNum)}
+                        method      = {this.props.method}
                     />
                     </table>
                 </td>

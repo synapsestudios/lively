@@ -93,7 +93,7 @@ var paramStripe = {
 var paramObject = {
     name       : 'objectKey',
     type       : 'object',
-    desription : 'Blaze it',
+    desription : 'Just an object',
     params     : [
         {
             name        : 'objectStringAKey',
@@ -114,10 +114,22 @@ module.exports = {
     name      : 'PARAM TEST',
     endpoints : [
         {
-            name     : 'PARAMETER TESTING ENDPOINT',
+            name     : 'GET TESTING ENDPOINT',
+            synopsis : 'Not real',
+            method   : 'GET',
+            uri      : '/somewhere',
+            oauth    : false,
+            params   : [
+                paramString,
+                paramEnum,
+                paramArray
+            ]
+        },
+        {
+            name     : 'POST TESTING ENDPOINT',
             synopsis : 'Not real',
             method   : 'POST',
-            uri      : '/somewhere?arrayUriKey=:arrayUriKey',
+            uri      : '/somewhere',
             oauth    : false,
             params   : [
                 paramEnum,

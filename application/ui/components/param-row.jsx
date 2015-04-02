@@ -21,6 +21,7 @@ module.exports = React.createClass({
         onChange  : React.PropTypes.func,
         onInclude : React.PropTypes.func,
         onNull    : React.PropTypes.func,
+        method    : React.PropTypes.string,
         simple    : React.PropTypes.bool
     },
 
@@ -109,17 +110,22 @@ module.exports = React.createClass({
                 checked   = {this.props.isIncluded}
             />
         );
-        if (this.props.param.type !== 'file') {
-            nullCheckboxComponent = (
-                <Checkbox
-                    name      = {'null-' + this.props.param.name}
-                    onChange  = {this.props.onNull}
-                    checked   = {this.props.isNull}
-                />
-            );
-        } else {
+        if (this.props.method === 'GET') {
             nullCheckboxComponent = ('N/A');
+        } else {
+            if (this.props.param.type !== 'file') {
+                nullCheckboxComponent = (
+                    <Checkbox
+                        name      = {'null-' + this.props.param.name}
+                        onChange  = {this.props.onNull}
+                        checked   = {this.props.isNull}
+                    />
+                );
+            } else {
+                nullCheckboxComponent = ('N/A');
+            }
         }
+
 
         switch (this.props.param.type) {
             // row-params
@@ -135,6 +141,7 @@ module.exports = React.createClass({
                                 key      = {this.props.key}
                                 params   = {this.props.param.params}
                                 onChange = {this.props.onChange}
+                                method   = {this.props.method}
                             />
                         </td>
                     </tr>
@@ -148,22 +155,27 @@ module.exports = React.createClass({
                                 key      = {this.props.key}
                                 param    = {this.props.param.param}
                                 onChange = {this.props.onChange}
+                                method   = {this.props.method}
                             />
                         </td>
                     </tr>
                 );
                 break;
             case 'custom-object':
-                rowParam = (
-                    <tr>
-                        <td colSpan={5}>
-                            <CustomObject
-                                name     = ''
-                                onChange = {this.props.onChange}
-                            />
-                        </td>
-                    </tr>
-                );
+                if (this.props.method === 'GET') {
+                    rowParam = ('INVALID CONFIGURATION - CANNOT USE `custom-object` IN GET REQUEST');
+                } else {
+                    rowParam = (
+                        <tr>
+                            <td colSpan={5}>
+                                <CustomObject
+                                    name     = ''
+                                    onChange = {this.props.onChange}
+                                />
+                            </td>
+                        </tr>
+                    );
+                }
                 break;
 
             // inline params
@@ -223,12 +235,16 @@ module.exports = React.createClass({
                 );
                 break;
             case 'file':
-                inlineParam = (
-                    <FileParam
-                        name = {this.props.param.name}
-                        onChange = {this.props.onChange}
-                    />
-                );
+                if (this.props.method === 'GET') {
+                    rowParam = ('INVALID CONFIGURATION - CANNOT USE `file` IN GET REQUEST');
+                } else {
+                    inlineParam = (
+                        <FileParam
+                            name = {this.props.param.name}
+                            onChange = {this.props.onChange}
+                        />
+                    );
+                }
                 break;
         }
 

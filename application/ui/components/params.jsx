@@ -152,6 +152,7 @@ module.exports = React.createClass({
                     onNull      = {_.partial(component.nullHandler, item.name)}
                     isNull      = {typeof component.state.nullKeys[item.name] !== 'undefined'}
                     isIncluded  = {typeof component.state.includeKeys[item.name] !== 'undefined'}
+                    method      = {component.props.endpointMethod}
                 />
             );
         });

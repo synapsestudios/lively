@@ -76,7 +76,7 @@ module.exports = {
                     required    : true,
                     description : 'Key/value pairs to provide settings for this webhook.',
                     location    : 'body',
-                    type        : 'hash',
+                    type        : 'object',
                     params      : [
                         {
                             name        : 'url',
@@ -118,7 +118,11 @@ module.exports = {
                     required     : false,
                     description  : 'Determines what events the hook is triggered for.',
                     location     : 'body',
-                    type         : 'array[string]'
+                    type         : 'array',
+                    param        : {
+                        type : 'string',
+                        name : 'event'
+                    }
                 },
                 {
                     name         : 'active',
@@ -144,7 +148,7 @@ module.exports = {
                     required    : true,
                     description : 'Key/value pairs to provide settings for this webhook.',
                     location    : 'body',
-                    type        : 'hash',
+                    type        : 'object',
                     params      : [
                         {
                             name        : 'url',
@@ -186,7 +190,11 @@ module.exports = {
                     required     : false,
                     description  : 'Determines what events the hook is triggered for.',
                     location     : 'body',
-                    type         : 'array[string]'
+                    type         : 'array',
+                    param        : {
+                        type : 'string',
+                        name : 'event'
+                    }
                 },
                 {
                     name         : 'active',

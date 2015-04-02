@@ -59,10 +59,24 @@ module.exports = ObjectParameter = React.createClass({
                         />
                 );
                 break;
+            case 'boolean':
+                field = (
+                    <Select
+                        value={prop.value}
+                        index={index}
+                        options={[{value: false, label: 'false'}, {value: true, label: 'true'}]}
+                        onChange={_.partial(instance.updateField, index, 'value')}
+                    />
+                );
+                break;
             case 'object':
                 field = (
                     <table>
-                        <ObjectParameter value={prop.value} index={index} onChange={_.partial(instance.updateField, index, 'value')}/>
+                        <ObjectParameter
+                            value={prop.value}
+                            index={index}
+                            onChange={_.partial(instance.updateField, index, 'value')}
+                        />
                     </table>
                 );
                 break;
@@ -83,7 +97,11 @@ module.exports = ObjectParameter = React.createClass({
                     className = 'select'
                     onChange  = {_.partial(instance.updateField, index, 'inputType')}
                     value     = {prop.inputType}
-                    options   = {['string', 'number', 'null']}
+                    options   = {[
+                        {label:'string', value:'string'},
+                        {label:'number', value:'number'},
+                        {label:'boolean', value:'boolean'},
+                        {label:'null', value:'null'}]}
                 />
             );
         }
@@ -119,7 +137,10 @@ module.exports = ObjectParameter = React.createClass({
                     data[val.key] = val.value;
                     break;
                 case 'number':
-                    data[val.key] = parseInt(val.value);
+                    data[val.key] = parseInt(val.value, 10);
+                    break;
+                case 'boolean':
+                    data[val.key] = val.value;
                     break;
                 case 'null':
                     data[val.key] = null;
@@ -196,16 +217,20 @@ module.exports = ObjectParameter = React.createClass({
     render : function()
     {
         return (
-            <tr>
-                <td className='array-title'><code>{this.props.name}</code></td>
-                <td className='array-td td--max-width' colSpan={5}>
-                    <table>
-                        {this.getInputs()}
-                    </table>
-                    <a className='button field-button--add' onClick={this.addField}>{'+ Add Field'}</a>
-                    <a className='button field-button--add' onClick={this.addObject}>{'+ Add Object'}</a>
-                </td>
-            </tr>
+            <table>
+                <tbody>
+                    <tr>
+                        <td className='array-title'><code>{this.props.name}</code></td>
+                        <td className='array-td td--max-width' colSpan={5}>
+                            <table>
+                                {this.getInputs()}
+                            </table>
+                            <a className='button field-button--add' onClick={this.addField}>{'+ Add Field'}</a>
+                            <a className='button field-button--add' onClick={this.addObject}>{'+ Add Object'}</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         );
     }
 });

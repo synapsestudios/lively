@@ -101,7 +101,11 @@ module.exports = {
                     defaultValue : '',
                     type         : 'array',
                     location     : 'body',
-                    description  : 'Optional array of status contexts verified against commit status checks. If this parameter is omitted from the parameters then all unique contexts will be verified before a deployment is created. To bypass checking entirely pass an empty array. Defaults to all unique contexts.'
+                    description  : 'Optional array of status contexts verified against commit status checks. If this parameter is omitted from the parameters then all unique contexts will be verified before a deployment is created. To bypass checking entirely pass an empty array. Defaults to all unique contexts.',
+                    param        : {
+                        name : 'Context',
+                        type : 'string'
+                    }
                 },
                 {
                     name         : 'payload',

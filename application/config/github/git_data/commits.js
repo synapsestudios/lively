@@ -45,7 +45,11 @@ var paramParents = {
     required    : true,
     type        : 'array',
     location    : 'uri',
-    description : 'The SHAs of the commits that were the parents of this commit. If omitted or empty, the commit will be written as a root commit. For a single parent, an array of one SHA should be provided; for a merge commit, an array of more than one should be provided.'
+    description : 'The SHAs of the commits that were the parents of this commit. If omitted or empty, the commit will be written as a root commit. For a single parent, an array of one SHA should be provided; for a merge commit, an array of more than one should be provided.',
+    param        : {
+        name : 'Commit SHA',
+        type : 'string'
+    }
 };
 
 module.exports = {
@@ -78,7 +82,7 @@ module.exports = {
                 {
                     name         : 'author',
                     required     : false,
-                    type         : 'hash',
+                    type         : 'object',
                     location     : 'body',
                     description  : 'If the author section is omitted, it will be filled in with the authenticated user\'s information and the current date.',
                     params       : [
@@ -108,7 +112,7 @@ module.exports = {
                 {
                     name         : 'committer',
                     required     : false,
-                    type         : 'hash',
+                    type         : 'object',
                     location     : 'body',
                     description  : 'The committer section is optional and will be filled with the author data if omitted.',
                     params       : [

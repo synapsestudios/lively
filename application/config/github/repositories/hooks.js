@@ -69,7 +69,7 @@ module.exports = {
                 {
                     name        : 'config',
                     required    : true,
-                    type        : 'hash with variable keys',
+                    type        : 'custom-object',
                     location    : 'body',
                     description : 'Key/value pairs to provide settings for this hook. These settings vary between the services and are defined in the github-services repository. Booleans are stored internally as “1” for true, and “0” for false. Any JSON true/false values will be converted automatically.'
                 },
@@ -77,9 +77,13 @@ module.exports = {
                     name         : 'events',
                     required     : false,
                     defaultValue : ['push'],
-                    type         : 'array[string]',
+                    type         : 'array',
                     location     : 'body',
-                    description  : 'Determines what events the hook is triggered for.'
+                    description  : 'Determines what events the hook is triggered for.',
+                    param        : {
+                        type : 'string',
+                        name : 'event'
+                    }
                 },
                 {
                     name        : 'active',
@@ -103,7 +107,7 @@ module.exports = {
                 {
                     name        : 'config',
                     required    : true,
-                    type        : 'hash with variable keys',
+                    type        : 'custom-object',
                     location    : 'body',
                     description : 'Key/value pairs to provide settings for this hook. These settings vary between the services and are defined in the github-services repository. Booleans are stored internally as “1” for true, and “0” for false. Any JSON true/false values will be converted automatically.'
                 },
@@ -111,25 +115,37 @@ module.exports = {
                     name         : 'events',
                     required     : false,
                     defaultValue : ['push'],
-                    type         : 'array[string]',
+                    type         : 'array',
                     location     : 'body',
-                    description  : 'Determines what events the hook is triggered for.'
+                    description  : 'Determines what events the hook is triggered for.',
+                    param        : {
+                        type : 'string',
+                        name : 'event'
+                    }
                 },
                 {
                     name         : 'add_events',
                     required     : false,
                     defaultValue : '',
-                    type         : 'array[string]',
+                    type         : 'array',
                     location     : 'body',
-                    description  : 'Determines a list of events to be added to the list of events that the Hook triggers for.'
+                    description  : 'Determines a list of events to be added to the list of events that the Hook triggers for.',
+                    param        : {
+                        type : 'string',
+                        name : 'event'
+                    }
                 },
                 {
                     name         : 'remove_events',
                     required     : false,
                     defaultValue : '',
-                    type         : 'array[string]',
+                    type         : 'array',
                     location     : 'body',
-                    description  : 'Determines a list of events to be removed from the list of events that the Hook triggers for.'
+                    description  : 'Determines a list of events to be removed from the list of events that the Hook triggers for.',
+                    param        : {
+                        type : 'string',
+                        name : 'event'
+                    }
                 },
                 {
                     name        : 'active',

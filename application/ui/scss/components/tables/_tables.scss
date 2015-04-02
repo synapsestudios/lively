@@ -39,6 +39,14 @@ table {
 
 }
 
+tbody.paramrow {
+  border-bottom: 1px solid silver;
+}
+
+tbody.paramrow:last-child {
+  border-bottom: 0px;
+}
+
 .table__hash {
     float : right;
     width : calc(100% - 40px);

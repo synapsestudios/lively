@@ -35,9 +35,13 @@ var paramDescription = {
 var paramRepoNames = {
     name        : 'repo_names',
     required    : false,
-    type        : 'mixed',
+    type        : 'array',
     location    : 'body',
-    description : 'The repositories to add the team to. This must be an `array` of `strings`.'
+    description : 'The repositories to add the team to. This must be an `array` of `strings`.',
+    param       : {
+        name : 'Repository',
+        type : 'string'
+    }
 };
 
 var paramPermission = {

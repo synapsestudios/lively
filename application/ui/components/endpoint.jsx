@@ -6,7 +6,7 @@ var React           = require('react');
 var cx              = require('react/lib/cx');
 var FluxMixin       = require('fluxxor').FluxMixin(React);
 var StoreWatchMixin = require('fluxxor').StoreWatchMixin;
-var Params          = require('./params-list');
+var Params          = require('./params');
 var ApiCallInfo     = require('./api-call-info');
 var Checkbox        = require('./input/checkbox');
 var Resumable       = require('../../../bower_components/resumablejs/resumable');
@@ -21,14 +21,14 @@ module.exports = React.createClass({
     mixins : [FluxMixin, new StoreWatchMixin('RequestStore'), UriHelperMixin],
 
     propTypes : {
-        name     : React.PropTypes.string.isRequired,
-        synopsis : React.PropTypes.string,
-        method   : React.PropTypes.oneOf(['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'PATCH']),
-        bodyType : React.PropTypes.string,
-        rootParam: React.PropTypes.string,
-        uri      : React.PropTypes.string.isRequired,
-        oauth    : React.PropTypes.bool,
-        params   : React.PropTypes.array
+        name      : React.PropTypes.string.isRequired,
+        synopsis  : React.PropTypes.string,
+        method    : React.PropTypes.oneOf(['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'PATCH']),
+        bodyType  : React.PropTypes.string,
+        rootParam : React.PropTypes.string,
+        uri       : React.PropTypes.string.isRequired,
+        oauth     : React.PropTypes.bool,
+        params    : React.PropTypes.array
     },
 
     getDefaultProps : function()
@@ -43,7 +43,8 @@ module.exports = React.createClass({
     getInitialState : function()
     {
         return {
-            endpointPanelHidden : true
+            endpointPanelHidden : true,
+            values : {}
         };
     },
 
@@ -66,9 +67,6 @@ module.exports = React.createClass({
         newState = {
             loading           : endpointData.loading,
             loaded            : endpointData.loaded,
-            values            : endpointData.values,
-            excludedFields    : endpointData.excludedFields,
-            nullFields        : endpointData.nullFields,
             response          : endpointData.response,
             responseTimestamp : endpointData.responseTimestamp,
             requestTimestamp  : endpointData.requestTimestamp,
@@ -141,7 +139,7 @@ module.exports = React.createClass({
             name = param.name;
 
             // Skip excluded fields
-            if (_(this.state.excludedFields).contains(name)) {
+            if (typeof values[name] === 'undefined') {
                 return;
             }
 
@@ -149,8 +147,8 @@ module.exports = React.createClass({
                 values[name] :
                 ParamHelper.getDefaultValueForParam(param);
 
-            if (_(value).isNaN() || value === null) {
-                value = '';
+            if (_(value).isNaN()) {
+                value = null;
             }
 
             if (this.isParameterNameInUri(name, uri)) {
@@ -312,6 +310,11 @@ module.exports = React.createClass({
         }
     },
 
+    changeHandler : function(value)
+    {
+        this.setState({values: value});
+    },
+
     render : function()
     {
         var apiCallInfo, latency, responseTime, requestTime;
@@ -373,6 +376,8 @@ module.exports = React.createClass({
                         ref                     = 'params'
                         requestMethod           = {this.props.method}
                         uri                     = {this.props.uri}
+                        onChange                = {this.changeHandler}
+                        endpointMethod          = {this.props.method}
                     />
                     <div className='panel__container switch__container'>
                         <p className='checkbox-label'>Include OAuth Token?</p>

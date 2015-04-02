@@ -4,6 +4,7 @@ module.exports = {
         port     : 9001
     },
     apis : {
+        example: require('./config/config.example'),
         github : require('./config/config.github')
     }
 };

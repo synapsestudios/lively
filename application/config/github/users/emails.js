@@ -5,7 +5,11 @@ var paramEmails = {
     required    : true,
     type        : 'array',
     location    : 'body',
-    description : 'A single string or an array of email addresses.'
+    description : 'A single string or an array of email addresses.',
+    param        : {
+        name : 'Email Address',
+        type : 'string'
+    }
 };
 
 module.exports = {

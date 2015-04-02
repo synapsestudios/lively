@@ -93,7 +93,7 @@ var paramMilestone = {
     name         : 'milestone',
     required     : false,
     defaultValue : '*',
-    type         : 'mixed',
+    type         : 'string',
     location     : 'query',
     description  : 'If an integer is passed, it should refer to a milestone number. If the string `*` is passed, issues with any milestone are accepted. If the string `none` is passed, issues without milestones are returned.'
 };
@@ -258,7 +258,11 @@ module.exports = {
                     required     : false,
                     type         : 'array',
                     location     : 'body',
-                    description  : 'Labels to associate with this issue. This should be an `array` of `strings`. *NOTE: Only users with push access can set labels for new issues. Labels are silently dropped otherwise.*'
+                    description  : 'Labels to associate with this issue. This should be an `array` of `strings`. *NOTE: Only users with push access can set labels for new issues. Labels are silently dropped otherwise.*',
+                    param        : {
+                        name : 'Label',
+                        type : 'string'
+                    }
                 }
             ]
         },
@@ -316,7 +320,11 @@ module.exports = {
                     required     : false,
                     type         : 'array',
                     location     : 'body',
-                    description  : 'Labels to associate with this issue. This should be an `array` of `strings`. Pass one or more Labels to *replace* the set of Labels on this Issue. Send an empty array (`[]`) to clear all Labels from the Issue. *NOTE: Only users with push access can set labels for issues. Labels are silently dropped otherwise.*'
+                    description  : 'Labels to associate with this issue. This should be an `array` of `strings`. Pass one or more Labels to *replace* the set of Labels on this Issue. Send an empty array (`[]`) to clear all Labels from the Issue. *NOTE: Only users with push access can set labels for issues. Labels are silently dropped otherwise.*',
+                    param        : {
+                        name : 'Label',
+                        type : 'string'
+                    }
                 }
             ]
         }

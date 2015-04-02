@@ -147,8 +147,8 @@ module.exports = React.createClass({
                 values[name] :
                 ParamHelper.getDefaultValueForParam(param);
 
-            if (_(value).isNaN() || value === null) {
-                value = '';
+            if (_(value).isNaN()) {
+                value = null;
             }
 
             if (this.isParameterNameInUri(name, uri)) {

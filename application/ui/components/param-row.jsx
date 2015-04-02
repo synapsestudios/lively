@@ -271,7 +271,7 @@ module.exports = React.createClass({
         }
 
         return (
-            <tbody className = {"paramrow"}>
+            <tbody className='paramrow'>
                 <tr>
                     <td><code>{this.props.param.name}</code></td>
                     <td>{includeCheckboxComponent}</td>

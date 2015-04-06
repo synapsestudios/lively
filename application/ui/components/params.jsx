@@ -39,7 +39,7 @@ module.exports = React.createClass({
                     values[param.name] = param.defaultValue ? param.defaultValue : false;
                     break;
                 case 'enum':
-                    values[param.name] = param.defaultValue ? param.defaultValue : param.defaultValue;
+                    values[param.name] = param.defaultValue ? param.defaultValue : param.enumValues[0];
                     break;
                 case 'array':
                     values[param.name] = param.defaultValue ? param.defaultValue : [];

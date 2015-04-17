@@ -84,7 +84,7 @@ module.exports = React.createClass({
         var values = this.state.values;
 
         values.push(
-            null
+            typeof this.props.param.defaultValue !== 'undefined' ? this.props.param.defaultValue : null
         );
 
         this.setState({

@@ -1,3 +1,13 @@
+## [v1.0.2](https://github.com/synapsestudios/lively/compare/v1.0.1...v1.0.2) - 2015-04-17
+### Fixed
+- [#139](https://github.com/synapsestudios/lively/pull/139) Fixed enum param inside array ending up with null value.
+
+
+## [v1.0.1](https://github.com/synapsestudios/lively/compare/v1.0.0...v1.0.1) - 2015-04-06
+### Fixed
+- [#139](https://github.com/synapsestudios/lively/pull/139) Fixed enum not using first enumValue when no defaultValue is provided.
+
+
 ## [v1.0.0](https://github.com/synapsestudios/lively/compare/v0.4.0...v1.0.0) - 2015-04-02
 ### Added
 - [#135](https://github.com/synapsestudios/lively/pull/135) Added Webpack Dev Server entry point to Webpack Config.

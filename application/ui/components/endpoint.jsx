@@ -122,13 +122,11 @@ module.exports = React.createClass({
             bodyParams   = {},
             queryParams  = {};
 
-        var buttonNode = this.refs.tryItButton.getDOMNode();
-
         if (this.refs.sendToken.getValue() === true && ! accessToken) {
             this.setState({
-                error : 'No access token provided.'
+                error  : 'No access token provided.',
+                loaded : false // Hides response if one is displayed
             });
-            window.scrollTo(0, window.scrollY + buttonNode.getBoundingClientRect().bottom);
             return;
         }
 

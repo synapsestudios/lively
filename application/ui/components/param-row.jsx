@@ -5,6 +5,7 @@ var _               = require('underscore');
 var React           = require('react');
 var marked          = require('marked');
 var Text            = require('./param/text');
+var TextArea        = require('./param/text-area');
 var Select          = require('./input/select');
 var StripeToken     = require('./input/stripe-token');
 var Checkbox        = require('./input/checkbox');
@@ -247,6 +248,9 @@ module.exports = React.createClass({
                         />
                     );
                 }
+                break;
+            case 'text':
+                inlineParam = <TextArea onChange = {this.props.onChange}/>;
                 break;
         }
 

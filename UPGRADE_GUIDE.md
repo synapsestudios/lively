@@ -19,7 +19,7 @@ These changes allow levels of recursion in Lively which were not possible before
 
 ##### Pre-1.0.0:
 
-```JSON
+```JS
 {
   // ...
   params: [
@@ -37,7 +37,7 @@ These changes allow levels of recursion in Lively which were not possible before
 ```
 
 ##### 1.0.0
-```JSON
+```JS
 {
   // ...
   params: [

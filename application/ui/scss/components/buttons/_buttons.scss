@@ -19,14 +19,14 @@
     margin-bottom    : rem-calc(20);
     margin-top       : rem-calc(20);
     color            : $themeMLGray;
-    text-shadow      : 1px 0px 1px rgba(0,0,0,.4);
-    box-shadow       : 1px 2px 3px rgba(0,0,0,.1);
+    text-shadow      : 1px 1px 1px rgba(0,0,0,.2);
     background-image : linear-gradient(rgba($white, .1), rgba($white, 0));
     transition       : all 150ms ease;
 
     &:hover {
         background-color : shade($themeLGray, 5%);
         box-shadow       : 1px 1px 4px rgba(0,0,0,.3);
+        cursor           : pointer;
     }
 
     &:focus {

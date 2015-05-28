@@ -95,7 +95,7 @@ module.exports = React.createClass({
         }
 
         return (
-            <td colSpan={5} dangerouslySetInnerHTML={innerHtml}></td>
+            <td className='array-description' colSpan={5} dangerouslySetInnerHTML={innerHtml}></td>
         );
     },
 

@@ -21,6 +21,6 @@ module.exports = React.createClass({
 
     render : function()
     {
-        return <textarea value={this.props.value} onChange={this.handleChange} />;
+        return <textarea className='array-textarea' value={this.props.value} onChange={this.handleChange} />;
     }
 });

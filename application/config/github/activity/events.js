@@ -3,7 +3,7 @@
 var paramOwner = {
     name        : 'owner',
     required    : true,
-    type        : 'text',
+    type        : 'string',
     location    : 'uri',
     description : 'The owner of the repo.'
 };
@@ -11,7 +11,7 @@ var paramOwner = {
 var paramRepo = {
     name        : 'repo',
     required    : true,
-    type        : 'text',
+    type        : 'string',
     location    : 'uri',
     description : 'The name of the repo.'
 };

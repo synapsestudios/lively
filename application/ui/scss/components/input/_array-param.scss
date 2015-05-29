@@ -41,13 +41,21 @@
 
 .array__options {
 
+    .array__options {
+        padding-right : 0;
+    }
+
+    .array__options td {
+        padding-right : 0;
+    }
+
     .array__options__inner {
         border-left   : 2px solid $themeLGray;
         border-bottom : 10px solid $white;
-        background: rgba(0,0,0,.03);
+        background: rgba(0,0,0,.05);
 
         .array__options__inner {
-            border-bottom : 10px solid rgba(0,0,0,.03);
+            border-bottom : 10px solid rgba(0,0,0,.05);
         }
 
         .array__options__delete {

@@ -60,9 +60,9 @@ module.exports = Fluxxor.createStore({
     serializeToLocalStorage : function()
     {
         localStorage.set(this.state.namespace + 'oauth', {
-            accessToken  : this.state.accessToken,
-            tokenType    : this.state.tokenType,
-            tokenData    : this.state.tokenData
+            access_token : this.state.accessToken,
+            token_type   : this.state.tokenType,
+            token_data   : this.state.tokenData
         });
     },
 
@@ -70,8 +70,8 @@ module.exports = Fluxxor.createStore({
     {
         var data = localStorage.get(this.state.namespace + 'oauth');
 
-        this.state.accessToken = data.accessToken;
-        this.state.tokenType   = data.tokenType;
-        this.state.tokenData   = data.tokenData;
+        this.state.accessToken = data.access_token;
+        this.state.tokenType   = data.token_type;
+        this.state.tokenData   = data.token_data;
     }
 });

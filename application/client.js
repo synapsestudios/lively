@@ -44,7 +44,7 @@ _.extend(Client.prototype, {
             data = queryParams;
         }
 
-        gateway = requiresAuth ? this.authGateway : this.gateway;
+        gateway = requiresAuth ? this.authGateway : this.httpGateway;
 
         return gateway.apiRequest(
             method,

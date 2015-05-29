@@ -229,6 +229,7 @@ module.exports = ObjectParameter = React.createClass({
             <table className='array__group'>
                 <tbody>
                     <tr>
+                        {renderTitle}
                         <td className='array__options' colSpan={5}>
                             <table>
                                 {this.getInputs()}

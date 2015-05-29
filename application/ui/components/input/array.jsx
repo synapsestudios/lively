@@ -46,9 +46,9 @@ module.exports = React.createClass({
         };
 
         return (
-            <tr key={itemNum}>
-                <td>
-                    <a className='button field-button--remove' onClick={rmCallback}>–</a>
+            <tr className='array__options__inner' key={itemNum}>
+                <td className='array__options__delete'>
+                    <a className='button button--remove field-button--remove' onClick={rmCallback}>–</a>
                 </td>
                 <td>
                     <table>
@@ -120,22 +120,20 @@ module.exports = React.createClass({
 
     render : function()
     {
-        this.props.name = 'Test Name';
-
-        var renderTitle = this.props.name ? (<td className='array-title'><code>{this.props.name}</code></td>) : null;
+        var renderTitle = this.props.name ? (<td className='array__title'><code>{this.props.name}</code></td>) : null;
 
         return (
             <table className='array__group'>
                 <tbody>
                     <tr>
                         {renderTitle}
-                        <td className='array-td' colSpan={5}>
+                        <td className='array__options' colSpan={5}>
                             <table>
                                 <tbody>
                                 {this.getInputs()}
                                 </tbody>
                             </table>
-                            <a className='button field-button--add' onClick={this.addField}>{'+ Add Field'}</a>
+                            <a className='button button--lblue field-button--add' onClick={this.addField}>{'+ Add Field'}</a>
                         </td>
                     </tr>
                 </tbody>

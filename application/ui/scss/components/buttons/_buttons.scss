@@ -51,6 +51,18 @@
 
 }
 
+.button--remove {
+    color            : $white;
+    background-color : $statusRed;
+    border-color     : $statusRed;
+
+    &:hover {
+        background-color : shade($statusRed, 5%);
+        border-color     : shade($statusRed, 5%);
+    }
+
+}
+
 .button--secondary {
     background-color     : $secondary;
     border-color         : $secondary;
@@ -64,6 +76,21 @@
     }
 
 }
+
+.button--lblue {
+    background-color     : $lBlue;
+    border-color         : $lBlue;
+
+    &:hover {
+        background-color : shade($lBlue, 10%);
+    }
+
+    &:focus {
+        background-color : $lBlue;
+    }
+
+}
+
 
 .button--tertiary {
     background-color     : $tertiary;

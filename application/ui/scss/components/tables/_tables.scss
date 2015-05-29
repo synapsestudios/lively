@@ -40,11 +40,12 @@ table {
 }
 
 tbody.paramrow {
-  border-bottom: 1px solid silver;
-}
+    border-bottom : 1px solid silver;
 
-tbody.paramrow:last-child {
-  border-bottom: 0px;
+    &:last-child {
+        border-bottom : 0px;
+    }
+
 }
 
 .table__hash {

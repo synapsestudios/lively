@@ -107,19 +107,25 @@ module.exports = ObjectParameter = React.createClass({
         }
 
         return (
-            <tr key={index}>
-                <td>
-                    <a className='button field-button--remove' onClick={rmCallback}>–</a>
+            <tr className='array__options__inner array__options__custom-object' key={index}>
+                <td className='array__options__delete'>
+                    <a className='button button--remove field-button--remove' onClick={rmCallback}>–</a>
                 </td>
                 <td>
-                    Key: <Text
-                        className    = 'array-input'
-                        value        = {prop.key}
-                        onChange     = {_.partial(instance.updateField, index, 'key')}
-                    />
-                    Type: {selectType}
-                    <br />
-                    Value: {field}
+                    <div className='array__options__custom-object--key'>
+                        <strong className='strong'>Key:</strong>
+                        <Text
+                            className    = 'array-input'
+                            value        = {prop.key}
+                            onChange     = {_.partial(instance.updateField, index, 'key')}
+                        />
+                    </div>
+                    <div className='array__options__custom-object--type'>
+                        <strong className='strong'>Type:</strong> {selectType}
+                    </div>
+                    <div className='array__options__custom-object--value'>
+                        <strong className='strong'>Value:</strong> {field}
+                    </div>
                 </td>
             </tr>
         );
@@ -216,17 +222,19 @@ module.exports = ObjectParameter = React.createClass({
 
     render : function()
     {
+
+        var renderTitle = this.props.name ? (<td className='array__title'><code>{this.props.name}</code></td>) : null;
+
         return (
-            <table>
+            <table className='array__group'>
                 <tbody>
                     <tr>
-                        <td className='array-title'><code>{this.props.name}</code></td>
-                        <td className='array-td td--max-width' colSpan={5}>
+                        <td className='array__options' colSpan={5}>
                             <table>
                                 {this.getInputs()}
                             </table>
-                            <a className='button field-button--add' onClick={this.addField}>{'+ Add Field'}</a>
-                            <a className='button field-button--add' onClick={this.addObject}>{'+ Add Object'}</a>
+                            <a className='button button--lblue field-button--add' onClick={this.addField}>{'+ Add Field'}</a>
+                            <a className='button button--lblue field-button--add' onClick={this.addObject}>{'+ Add Object'}</a>
                         </td>
                     </tr>
                 </tbody>

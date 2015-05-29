@@ -167,7 +167,7 @@ module.exports = React.createClass({
         }
         var header = (
             <thead>
-                <tr>
+                <tr className='param-headers'>
                     <th>Parameter</th>
                     <th>Include</th>
                     <th>NULL</th>

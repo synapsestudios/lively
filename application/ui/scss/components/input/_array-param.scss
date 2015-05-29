@@ -51,3 +51,30 @@
 .array-td {
     padding-top : rem-calc(23);
 }
+
+.array-textarea {
+    width        : 100%;
+    max-width    : rem-calc(320);
+    border-color : rgb(238, 238, 238);
+}
+
+.array-description {
+    font-size : rem-calc(12);
+
+    strong {
+        font-weight : 800;
+    }
+
+}
+
+.param-headers {
+    background    : $themeLLGray;
+
+    th {
+        color          : $themeDGray;
+        font-size      : rem-calc(14);
+        font-weight    : 800;
+        text-transform : uppercase;
+    }
+
+}

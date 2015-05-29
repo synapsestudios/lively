@@ -10,6 +10,7 @@ table {
     width : 100%;
 
     tr {
+        padding : rem-calc(5 0);
 
         th {
             text-align : left;
@@ -18,8 +19,9 @@ table {
         }
 
         td {
-            line-height : rem-calc(20);
-            padding     : rem-calc(5);
+            vertical-align : middle;
+            line-height    : rem-calc(20);
+            padding        : rem-calc(5);
 
             &.td--max-width {
                 max-width : rem-calc(220);

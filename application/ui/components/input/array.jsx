@@ -120,12 +120,16 @@ module.exports = React.createClass({
 
     render : function()
     {
+        this.props.name = 'Test Name';
+
+        var renderTitle = this.props.name ? (<td className='array-title'><code>{this.props.name}</code></td>) : null;
+
         return (
-            <table>
+            <table className='array__group'>
                 <tbody>
                     <tr>
-                        <td className='array-title'><code>{this.props.name}</code></td>
-                        <td className='array-td td--max-width' colSpan={5}>
+                        {renderTitle}
+                        <td className='array-td' colSpan={5}>
                             <table>
                                 <tbody>
                                 {this.getInputs()}

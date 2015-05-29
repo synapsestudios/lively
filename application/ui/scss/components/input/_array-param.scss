@@ -1,6 +1,6 @@
 .field-button--add {
     display     : block;
-    max-width   : rem-calc(200);
+    width       : 100%;
     margin      : rem-calc(3 0);
     border      : 0;
     user-select : none;
@@ -41,13 +41,13 @@
 
 .array-title {
     vertical-align : top;
-    padding-top    : rem-calc(23);
+    padding        : rem-calc(0 5 0 10);
 
     p {
         margin-top : 0;
     }
 }
 
-.array-td {
-    padding-top : rem-calc(23);
+.array__group {
+    border-left : 2px solid $themeLGray;
 }

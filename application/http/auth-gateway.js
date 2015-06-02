@@ -1,6 +1,7 @@
 'use strict';
 
 var ParentAuthGateway = require('synapse-common/http/auth-gateway');
+var HttpError         = require('synapse-common/http/error');
 
 var AuthGateway = ParentAuthGateway.extend({
 
@@ -27,6 +28,10 @@ var AuthGateway = ParentAuthGateway.extend({
     ) {
         if (response.statusCode === 401) {
             return this.handle401(resolve, reject, method, path, data, requestHeaders);
+        }
+
+        if (responseData.error === 'invalid_request') {
+            reject(new HttpError(responseData, response));
         }
 
         resolve({

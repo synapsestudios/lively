@@ -6,7 +6,7 @@ var _           = require('underscore');
 
 var Client = function(configState)
 {
-    this.config = _.extend({}, configState.config.api);
+    this.config = configState.config.api;
 
     this.httpGateway = new HttpGateway();
     this.httpGateway.config = this.config;

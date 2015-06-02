@@ -9,7 +9,7 @@ module.exports = {
     {
         var client, makeRequest, flux = this;
 
-        client = new Client(apiName);
+        client = new Client(this.flux.store('ConfigStore').getState());
 
         if (bodyType === 'json-param') {
             bodyParams = bodyParams[rootParam];

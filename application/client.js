@@ -2,20 +2,21 @@
 
 var HttpGateway = require('./http/gateway');
 var AuthGateway = require('./http/auth-gateway');
-var config      = require('./config');
 var _           = require('underscore');
 
-var Client = function(namespace)
+var Client = function(configState)
 {
-    this.config = _.extend({}, config.apis[namespace].api);
+    this.config = _.extend({}, configState.config.api);
 
     this.httpGateway = new HttpGateway();
     this.httpGateway.config = this.config;
 
     this.authGateway = new AuthGateway();
-    this.authGateway.tokenStorageLocation = namespace + 'oauth';
+    this.authGateway.tokenStorageLocation = configState.apiSlug + 'oauth';
     this.authGateway.config = this.config;
-    this.authGateway.oauthConfig = _.extend({}, config.apis[namespace].oauth2);
+    this.authGateway.config.oauth = {
+        token : configState.config.oauth2.tokenUrl
+    };
 };
 
 _.extend(Client.prototype, {

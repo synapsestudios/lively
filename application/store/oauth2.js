@@ -13,8 +13,7 @@ module.exports = Fluxxor.createStore({
 
         this.bindActions(
             constants.SET_API, 'onSetApi',
-            constants.SET_TOKEN, 'onSetToken',
-            constants.OAUTH_SET_CLIENT_OPTIONS, 'onSetClientOptions'
+            constants.SET_TOKEN, 'onSetToken'
         );
     },
 
@@ -47,14 +46,6 @@ module.exports = Fluxxor.createStore({
         this.state.tokenData    = tokenData.tokenData;
 
         this.serializeToLocalStorage();
-
-        this.emit('change');
-    },
-
-    onSetClientOptions : function(options)
-    {
-        this.state.clientId     = options.clientId;
-        this.state.clientSecret = options.clientSecret;
 
         this.emit('change');
     },

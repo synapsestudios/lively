@@ -30,7 +30,8 @@ var AuthGateway = ParentAuthGateway.extend({
             return this.handle401(resolve, reject, method, path, data, requestHeaders);
         }
 
-        if (responseData.error === 'invalid_request') {
+        // Reject if error is from token endpoint
+        if (path === this.config.oauth.token) {
             reject(new HttpError(responseData, response));
         }
 

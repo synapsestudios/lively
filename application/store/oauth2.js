@@ -13,8 +13,7 @@ module.exports = Fluxxor.createStore({
 
         this.bindActions(
             constants.SET_API, 'onSetApi',
-            constants.SET_TOKEN, 'onSetToken',
-            constants.OAUTH_SET_CLIENT_OPTIONS, 'onSetClientOptions'
+            constants.SET_TOKEN, 'onSetToken'
         );
     },
 
@@ -31,6 +30,7 @@ module.exports = Fluxxor.createStore({
             this.unserializeFromLocalStorage();
         } else {
             delete this.state.accessToken;
+            delete this.state.refreshToken;
             delete this.state.tokenType;
             delete this.state.tokenData;
         }
@@ -40,19 +40,12 @@ module.exports = Fluxxor.createStore({
 
     onSetToken : function(tokenData)
     {
-        this.state.accessToken = tokenData.accessToken;
-        this.state.tokenType   = tokenData.tokenType;
-        this.state.tokenData   = tokenData.tokenData;
+        this.state.accessToken  = tokenData.accessToken;
+        this.state.refreshToken = tokenData.refreshToken;
+        this.state.tokenType    = tokenData.tokenType;
+        this.state.tokenData    = tokenData.tokenData;
 
         this.serializeToLocalStorage();
-
-        this.emit('change');
-    },
-
-    onSetClientOptions : function(options)
-    {
-        this.clientId     = options.clientId;
-        this.clientSecret = options.clientSecret;
 
         this.emit('change');
     },
@@ -60,9 +53,10 @@ module.exports = Fluxxor.createStore({
     serializeToLocalStorage : function()
     {
         localStorage.set(this.state.namespace + 'oauth', {
-            accessToken  : this.state.accessToken,
-            tokenType    : this.state.tokenType,
-            tokenData    : this.state.tokenData
+            access_token  : this.state.accessToken,
+            refresh_token : this.state.refreshToken,
+            token_type    : this.state.tokenType,
+            token_data    : this.state.tokenData
         });
     },
 
@@ -70,8 +64,9 @@ module.exports = Fluxxor.createStore({
     {
         var data = localStorage.get(this.state.namespace + 'oauth');
 
-        this.state.accessToken = data.accessToken;
-        this.state.tokenType   = data.tokenType;
-        this.state.tokenData   = data.tokenData;
+        this.state.accessToken  = data.access_token;
+        this.state.refreshToken = data.refresh_token;
+        this.state.tokenType    = data.token_type;
+        this.state.tokenData    = data.token_data;
     }
 });

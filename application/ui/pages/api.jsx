@@ -40,9 +40,10 @@ module.exports = React.createClass({
 
         if (query && query.access_token) {
             this.getFlux().actions.oauth.setToken({
-                accessToken : query.access_token,
-                tokenType   : query.token_type,
-                tokenData   : query
+                accessToken  : query.access_token,
+                refreshToken : query.refresh_token,
+                tokenType    : query.token_type,
+                tokenData    : query
             });
         }
 

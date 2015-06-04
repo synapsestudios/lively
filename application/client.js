@@ -1,19 +1,58 @@
-/* globals File, FileReader, Uint8Array, Buffer */
 'use strict';
 
-var HttpGateway = require('synapse-common/http/gateway');
-var Q           = require('q');
-var http        = require('http');
-var https       = require('https');
-var config      = require('./config');
+var HttpGateway = require('./http/gateway');
+var AuthGateway = require('./http/auth-gateway');
 var _           = require('underscore');
 
-module.exports = HttpGateway.extend({
+var Client = function(configState)
+{
+    this.config = configState.config.api;
 
-    constructor : function(namespace)
+    this.httpGateway = new HttpGateway();
+    this.httpGateway.config = this.config;
+
+    this.authGateway = new AuthGateway();
+    this.authGateway.tokenStorageLocation = configState.apiSlug + 'oauth';
+    this.authGateway.config = this.config;
+    this.authGateway.config.oauth = {
+        token : configState.config.oauth2.tokenUrl
+    };
+};
+
+_.extend(Client.prototype, {
+
+    getConfig : function()
     {
-        this.config = config.apis[namespace].api;
-        this.oauthConfig = config.apis[namespace].oauth2;
+        return this.config;
+    },
+
+    // Make either an auth or non-auth request, depending on value of requiresAuth arg
+    makeRequest : function(requiresAuth, method, path, queryParams, bodyParams, headers)
+    {
+        var gateway, data;
+
+        this.setLastRequestInfo(
+            method,
+            path,
+            queryParams,
+            bodyParams,
+            _.extend({}, headers, this.authGateway.getRequestOptions(method, path).headers)
+        );
+
+        if (_(queryParams).isEmpty()) {
+            data = bodyParams;
+        } else {
+            data = queryParams;
+        }
+
+        gateway = requiresAuth ? this.authGateway : this.httpGateway;
+
+        return gateway.apiRequest(
+            method,
+            path,
+            data,
+            headers
+        );
     },
 
     /**
@@ -28,9 +67,8 @@ module.exports = HttpGateway.extend({
      */
     request : function(method, path, queryParams, bodyParams, headers)
     {
-        this.accessToken = false;
-
-        return this.apiRequest(
+        return this.makeRequest(
+            false,
             method,
             path,
             queryParams,
@@ -49,11 +87,10 @@ module.exports = HttpGateway.extend({
      * @param  {Object} headers     [description]
      * @return promise
      */
-    authRequest : function(accessToken, method, path, queryParams, bodyParams, headers)
+    authRequest : function(method, path, queryParams, bodyParams, headers)
     {
-        this.accessToken = accessToken;
-
-        return this.apiRequest(
+        return this.makeRequest(
+            true,
             method,
             path,
             queryParams,
@@ -102,154 +139,7 @@ module.exports = HttpGateway.extend({
     getLastRequestInfo : function()
     {
         return this.lastRequestInfo;
-    },
-
-    /**
-     * Perform a request to the API
-     *
-     * @param  string  method       Request method
-     * @param  string  path         Request path
-     * @param  object  queryParams  Query params (if any)
-     * @param  object  bodyParams   Body params (if any)
-     * @param  object  headers      Additional headers (if any)
-     * @return promise
-     */
-    apiRequest : function(method, path, queryParams, bodyParams, headers)
-    {
-        var options, reader, boundaryKey, gateway = this;
-
-        options = this.getRequestOptions(method, path);
-
-        _.extend(options.headers, headers);
-
-        if (queryParams && ! _(queryParams).isEmpty()) {
-            options.path = path + '?' + this.toQuery(queryParams);
-        }
-
-        if (_.isUndefined(headers)) {
-            headers = {};
-        }
-
-        this.setLastRequestInfo(method, path, queryParams, bodyParams, options.headers);
-
-        if (bodyParams instanceof File) {
-            boundaryKey = Math.random().toString(16);
-            options.headers['Content-Type'] = 'multipart/form-data; boundary=' + boundaryKey;
-            options.headers['Content-Length'] = bodyParams.size;
-        }
-
-        return Q.Promise(_.bind(function(resolve, reject) {
-            var req = (gateway.getConfig().secure ? https : http).request(options, function(response) {
-                var responseText = '';
-
-                response.on('data', function(chunk) {
-                    responseText += chunk;
-                });
-
-                response.on('end', function() {
-                    var responseData;
-
-                    try {
-                        responseData = JSON.parse(responseText);
-                    } catch (e) {
-                        responseData = responseText;
-                    }
-
-                    resolve({
-                        data    : responseData,
-                        headers : req.xhr.getAllResponseHeaders(),
-                        status  : response.statusCode
-                    });
-                });
-            });
-
-            req.on('error', function(e) {
-                reject(e);
-            });
-
-            if (bodyParams && ! _(bodyParams).isEmpty()) {
-                if (bodyParams instanceof File) {
-                    reader = new FileReader();
-                    reader.onloadend = function () {
-                        req.write(gateway.getUploadPayload(bodyParams, reader.result, boundaryKey));
-                        req.end();
-                    };
-                    reader.readAsArrayBuffer(bodyParams);
-                } else if (_.isObject(bodyParams)) {
-                    bodyParams = JSON.stringify(bodyParams);
-                    req.write(bodyParams);
-                    req.end();
-                } else {
-                    req.write(bodyParams);
-                    req.end();
-                }
-            } else {
-                req.end();
-            }
-        }, this));
-    },
-
-    /**
-     * Get a Uint8Array that can be passed to request.write() to upload a file
-     *
-     * @param  {File} file                   File object
-     * @param  {ArrayBuffer} fileArrayBuffer
-     * @param  {String} boundaryKey
-     * @return {Uint8Array}
-     */
-    getUploadPayload : function(file, fileArrayBuffer, boundaryKey)
-    {
-        var prefix, suffix, dataString, payloadString, payloadTypedArray;
-
-        prefix        = this.getBodyPrefixForFileUpload(file, boundaryKey);
-        suffix        = '\r\n--' + boundaryKey + '--\r\n';
-        dataString    = this.convertArrayBufferToString(fileArrayBuffer);
-        payloadString = prefix + dataString + suffix;
-
-        payloadTypedArray = new Uint8Array(payloadString.length);
-        for (var i = 0; i < payloadString.length; i += 1) {
-            payloadTypedArray[i] = payloadString.charCodeAt(i);
-        }
-
-        return payloadTypedArray;
-    },
-
-    /**
-     * Convert an ArrayBuffer to a binary string
-     *
-     * @param  {ArrayBuffer} arrayBuffer
-     * @return {String}
-     */
-    convertArrayBufferToString : function(arrayBuffer)
-    {
-        var buffer;
-
-        buffer = new Buffer(new Uint8Array(arrayBuffer));
-
-        return buffer.toString('binary');
-    },
-
-    getBodyPrefixForFileUpload : function(file, boundaryKey)
-    {
-        return (
-            '--' + boundaryKey + '\r\n' +
-            'Content-Disposition: form-data; name="file"; filename="' + file.name + '"\r\n' +
-            'Content-Type: application/octet-stream\r\n\r\n'
-        );
-    },
-
-    getRequestOptions : function(method, path)
-    {
-        var options, config;
-
-        options = HttpGateway.prototype.getRequestOptions.call(this, method, path);
-
-        config = this.getConfig();
-
-        if (this.accessToken) {
-            options.headers.Authorization = this.oauthConfig.tokenParam + ' ' + this.accessToken;
-        }
-
-        return options;
     }
 });
+
+module.exports = Client;

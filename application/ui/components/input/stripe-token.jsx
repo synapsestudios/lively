@@ -29,7 +29,7 @@ module.exports = React.createClass({
         stripeState  = this.getFlux().store('StripeStore').getState();
 
         return {
-            stripeKey     : configState.stripe_key,
+            stripeKey     : configState.config.stripe_key,
             stripeLoading : (stripeState.endpoint[this.props.endpointName] || {}).loading,
             stripeToken   : (stripeState.endpoint[this.props.endpointName] || {}).token
         };

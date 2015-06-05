@@ -118,15 +118,26 @@ module.exports = React.createClass({
         });
     },
 
+    renderTitle : function()
+    {
+        if (! this.props.name) {
+            return null;
+        }
+
+        return (
+            <td className='array__title'>
+                <code>{this.props.name}</code>
+            </td>
+        );
+    },
+
     render : function()
     {
-        var renderTitle = this.props.name ? (<td className='array__title'><code>{this.props.name}</code></td>) : null;
-
         return (
             <table className='array__group'>
                 <tbody>
                     <tr>
-                        {renderTitle}
+                        {this.renderTitle()}
                         <td className='array__options' colSpan={5}>
                             <table>
                                 <tbody>

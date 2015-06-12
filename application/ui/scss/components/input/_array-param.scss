@@ -1,16 +1,9 @@
 .field-button--add {
     display     : block;
-    max-width   : rem-calc(200);
+    width       : 100%;
     margin      : rem-calc(3 0);
     border      : 0;
     user-select : none;
-
-
-    &:hover {
-        background-color : rgba($black, .1);
-        color            : $themeDDGray;
-    }
-
 }
 
 .field-button--remove {
@@ -19,16 +12,11 @@
     height      : rem-calc(30);
     width       : rem-calc(30);
     min-width   : rem-calc(30);
-    margin      : rem-calc(3 0 8);
-    padding     : rem-calc(5 10);
+    margin      : rem-calc(5);
+    padding     : rem-calc(4 8);
+    font-size   : rem-calc(30);
     border      : 0;
     user-select : none;
-
-    &:hover {
-        background-color : rgba($black, .1);
-        color            : $themeDDGray;
-    }
-
 }
 
 .array-input {
@@ -39,17 +27,93 @@
     user-select   : none;
 }
 
-.array-title {
+.array__title {
+    max-width      : rem-calc(80);
     vertical-align : top;
-    padding-top    : rem-calc(23);
+    padding        : rem-calc(0 5 0 10);
 
-    p {
+    > * {
         margin-top : 0;
+        font-size  : rem-calc(12);
     }
+
 }
 
-.array-td {
-    padding-top : rem-calc(23);
+.array__options {
+
+    .array__options {
+        padding-right : 0;
+    }
+
+    .array__options td {
+        padding-right : 0;
+    }
+
+    .array__options__inner {
+        border-left   : 2px solid $themeLGray;
+        border-bottom : 10px solid $white;
+        background    : rgba(0,0,0,.05);
+
+        .array__options__inner {
+            border-bottom : 10px solid rgba(0,0,0,.05);
+        }
+
+        .array__options__delete {
+            width : 50px;
+        }
+
+        .array__options__custom-object {
+            &--key {
+                display : inline-block;
+                width   : 50%;
+
+                > * {
+                    display : inline-block;
+                }
+
+                input {
+                    width : 70%;
+                }
+
+            }
+
+            &--type {
+                display : inline-block;
+                width   : 30%;
+                margin  : 0 10px;
+
+                > * {
+                    display : inline-block;
+                }
+
+                select {
+                    width : 70%;
+                }
+            }
+
+            &--value {
+                width      : 100%;
+                margin-top : 10px;
+            }
+
+        }
+
+        .strong {
+            font-size   : rem-calc(12);
+            margin      : 0 4px 0 0;
+            font-weight : 600;
+        }
+
+        td {
+            vertical-align : middle;
+        }
+
+    }
+
+}
+
+.array__group {
+    border-left : 2px solid $themeLGray;
 }
 
 .array-textarea {

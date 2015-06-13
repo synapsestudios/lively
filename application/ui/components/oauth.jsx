@@ -1,12 +1,10 @@
 /* global window */
 'use strict';
 
-var _              = require('underscore');
 var React          = require('react');
 var Fluxxor        = require('fluxxor');
 var FluxChildMixin = Fluxxor.FluxMixin(React);
 var cx             = require('react/lib/cx');
-var TextInput      = require('./input/text');
 var Events         = require('../mixins/events');
 var util           = require('util');
 var qs             = require('querystring');
@@ -40,9 +38,9 @@ module.exports = React.createClass({
     handleConnectClick : function()
     {
         var options = {
-            clientId     : this.state.clientId,
-            clientSecret : this.state.clientSecret,
-            scope        : this.state.scope
+            clientId     : this.props.apiConfig.api.client_id,
+            clientSecret : this.props.apiConfig.api.client_secret,
+            scope        : this.props.apiConfig.api.scope
         };
 
         var redirectQs = qs.stringify({
@@ -86,15 +84,6 @@ module.exports = React.createClass({
         };
     },
 
-    handleUpdate : function(stateProperty, value)
-    {
-        var state = this.state;
-
-        state[stateProperty] = value;
-
-        this.setState(state);
-    },
-
     toggleOAuthPanel : function()
     {
         this.setState({
@@ -123,33 +112,6 @@ module.exports = React.createClass({
                         <a className='panel__header-x' onClick={this.toggleOAuthPanel}></a>
                     </div>
                     <div className='oauth-panel__form'>
-                        <div className='small-4 columns'>
-                            <label className='panel-form__label' htmlFor='clientId'>Client ID</label>
-                            <TextInput
-                                className = 'form__input panel-form__input'
-                                name      = 'clientId'
-                                value     = {this.props.oauthStoreState.clientId}
-                                onChange  = {_.partial(this.handleUpdate, 'clientId')}
-                            />
-                        </div>
-                        <div className='small-4 columns'>
-                            <label className='panel-form__label' htmlFor='clientSecret'>Client Secret</label>
-                            <TextInput
-                                className = 'form__input panel-form__input'
-                                name      = 'clientSecret'
-                                value     = {this.props.oauthStoreState.clientSecret}
-                                onChange  = {_.partial(this.handleUpdate, 'clientSecret')}
-                            />
-                        </div>
-                        <div className='small-4 columns'>
-                            <label className='panel-form__label' htmlFor='scope'>Scope</label>
-                            <TextInput
-                                className = 'form__input panel-form__input'
-                                name      = 'scope'
-                                value     = {this.state.scope}
-                                onChange  = {_.partial(this.handleUpdate, 'scope')}
-                            />
-                        </div>
                         <div className='small-12 columns'>
                             <a className='button right' onClick={this.handleLogoutClick}>Log Out</a>
                             <a className='button right l--m-right-10' onClick={this.handleConnectClick}>Connect</a>

@@ -10,6 +10,7 @@ table {
     width : 100%;
 
     tr {
+        padding : rem-calc(5 0);
 
         th {
             text-align : left;
@@ -18,8 +19,9 @@ table {
         }
 
         td {
-            line-height : rem-calc(20);
-            padding     : rem-calc(5);
+            vertical-align : middle;
+            line-height    : rem-calc(20);
+            padding        : rem-calc(5);
 
             &.td--max-width {
                 max-width : rem-calc(220);
@@ -40,11 +42,12 @@ table {
 }
 
 tbody.paramrow {
-  border-bottom: 1px solid silver;
-}
+    border-bottom : 1px solid silver;
 
-tbody.paramrow:last-child {
-  border-bottom: 0px;
+    &:last-child {
+        border-bottom : 0px;
+    }
+
 }
 
 .table__hash {
@@ -60,10 +63,6 @@ tbody.paramrow:last-child {
             margin : 0;
         }
 
-    }
-
-    .field-button--add {
-        margin : rem-calc(3 0 5 40);
     }
 
     input {

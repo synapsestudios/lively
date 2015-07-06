@@ -40,6 +40,23 @@ var AuthGateway = ParentAuthGateway.extend({
             headers : responseHeaders,
             status  : response.statusCode
         });
+    },
+
+    handleTokenExchangeSuccess : function(token, method, path, data, headers, resolve, reject, response)
+    {
+        ParentAuthGateway.prototype.handleTokenExchangeSuccess.apply(
+            this,
+            [
+                token,
+                method,
+                path,
+                data,
+                headers,
+                resolve,
+                reject,
+                response.data
+            ]
+        );
     }
 });
 

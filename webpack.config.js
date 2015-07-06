@@ -29,7 +29,7 @@ var config      = {
     )
 };
 
-if (environment === 'development') {
+if (environment === 'development' || environment === 'qa') {
     config.entry = [
         'webpack/hot/dev-server',
         'webpack-dev-server/client?http://localhost:9001'

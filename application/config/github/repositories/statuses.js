@@ -51,6 +51,7 @@ module.exports = {
                 {
                     name         : 'target_url',
                     required     : false,
+                    include      : false,
                     type         : 'string',
                     location     : 'body',
                     description  : 'The target URL to associate with this status. This URL will be linked from the GitHub UI to allow users to easily see the ‘source’ of the Status.'
@@ -58,6 +59,7 @@ module.exports = {
                 {
                     name         : 'description',
                     required     : false,
+                    include      : false,
                     type         : 'string',
                     location     : 'body',
                     description  : 'A short description of the status.'
@@ -65,6 +67,7 @@ module.exports = {
                 {
                     name         : 'context',
                     required     : false,
+                    include      : false,
                     defaultValue : 'default',
                     type         : 'string',
                     location     : 'body',

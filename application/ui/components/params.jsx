@@ -19,7 +19,9 @@ module.exports = React.createClass({
         var includes = {};
 
         _.each(this.props.params, function(param) {
-            includes[param.name] = true;
+            if (typeof param.include === 'undefined' || param.include !== false) {
+                includes[param.name] = true;
+            }
 
             if (typeof param.defaultValue !== 'undefined') {
                 values[param.name] = param.defaultValue;

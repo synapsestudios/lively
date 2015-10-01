@@ -178,7 +178,7 @@ An API is made up of multiple resources. Each resource has a list of endpoints t
     required     : true,
     type         : 'string',
     location     : 'uri',
-    defaultValue : 'synapsestudios'
+    defaultValue : 'synapsestudios',
     description  : 'The owner of the repo.'
 }
 ```
@@ -195,7 +195,7 @@ An API is made up of multiple resources. Each resource has a list of endpoints t
             name         : 'owner',
             required     : true,
             type         : 'string',
-            defaultValue : 'synapsestudios'
+            defaultValue : 'synapsestudios',
             description  : 'The owner of the repo.'
         }
     ]
@@ -212,7 +212,7 @@ An API is made up of multiple resources. Each resource has a list of endpoints t
     param       : {
         name         : 'owner',
         type         : 'string',
-        defaultValue : 'synapsestudios'
+        defaultValue : 'synapsestudios',
         description  : 'The owner of the repo.'
     }
 }

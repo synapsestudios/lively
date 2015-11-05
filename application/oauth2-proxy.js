@@ -44,6 +44,9 @@ module.exports = function(req, res) {
                     hostname = config.lively.hostname,
                     port     = config.lively.port;
 
+                if (!json.redirect_uri) {
+                    json.redirect_uri = store.get('redirect_uri');
+                }
                 res.writeHead(302, {
                     Location : 'http://' + hostname + ':' + port + '/' + query.api + '?' + qs.stringify(json)
                 });
@@ -66,7 +69,7 @@ module.exports = function(req, res) {
         client_secret : query.client_secret,
         scope         : query.scope,
         state         : Math.random(),
-        redirect_uri  : ''
+        redirect_uri  : 'http://localhost:9001/oauth2-redirect'
     }));
 
     proxyReq.end();

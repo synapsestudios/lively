@@ -3,7 +3,7 @@
 var ParentHttpGateway = require('synapse-common/http/gateway');
 
 var HttpGateway = ParentHttpGateway.extend({
-    resolveResponse : function(resolve, data, headers, statusCode)
+    handleSuccess : function(resolve, data, headers, statusCode)
     {
         resolve({
             data    : data,

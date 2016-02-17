@@ -5,21 +5,19 @@ var Client    = require('../client');
 
 module.exports = {
 
-    oauthRequest : function(apiName, endpointName, accessToken, method, path, queryParams, bodyParams, headers, bodyType, rootParam)
+    makeRequest : function(requiresAuth, apiName, endpointName, method, path, queryParams, bodyParams, headers, bodyType, rootParam)
     {
-        var client, flux = this;
+        var client, makeRequest, flux = this;
 
-        if (! accessToken) {
-            return this.dispatch(constants.REQUEST_FAILURE);
-        }
-
-        client = new Client(apiName);
+        client = new Client(this.flux.store('ConfigStore').getState());
 
         if (bodyType === 'json-param') {
             bodyParams = bodyParams[rootParam];
         }
 
-        client.authRequest(accessToken, method, path, queryParams, bodyParams, headers)
+        makeRequest = (requiresAuth ? client.authRequest : client.request).bind(client);
+
+        makeRequest(method, path, queryParams, bodyParams, headers)
             .then(
                 function(response) {
                     flux.dispatch(constants.REQUEST_SUCCESS, {
@@ -38,32 +36,21 @@ module.exports = {
         });
     },
 
+    oauthRequest : function(apiName, endpointName, method, path, queryParams, bodyParams, headers, bodyType, rootParam)
+    {
+        var args = Array.prototype.slice.call(arguments);
+
+        args.unshift(true);
+
+        this.flux.actions.request.makeRequest.apply(this, args);
+    },
+
     request : function(apiName, endpointName, method, path, queryParams, bodyParams, headers, bodyType, rootParam)
     {
-        var client, flux = this;
+        var args = Array.prototype.slice.call(arguments);
 
-        client = new Client(apiName);
+        args.unshift(false);
 
-        if (bodyType === 'json-param') {
-            bodyParams = bodyParams[rootParam];
-        }
-
-        client.request(method, path, queryParams, bodyParams, headers)
-            .then(
-                function(response) {
-                    flux.dispatch(constants.REQUEST_SUCCESS, {
-                        endpointName : endpointName,
-                        response     : response
-                    });
-                },
-                function() {
-                    flux.dispatch(constants.REQUEST_FAILURE, endpointName);
-                }
-            ).done();
-
-        flux.dispatch(constants.REQUEST, {
-            requestInfo  : client.getLastRequestInfo(),
-            endpointName : endpointName
-        });
+        this.flux.actions.request.makeRequest.apply(this, args);
     }
 };

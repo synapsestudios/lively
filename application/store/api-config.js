@@ -18,7 +18,10 @@ module.exports = Fluxxor.createStore({
 
     onSetApi : function(apiSlug)
     {
-        this.state = config.apis[apiSlug];
+        this.state = {
+            apiSlug : apiSlug,
+            config  : config.apis[apiSlug]
+        };
 
         this.emit('change');
     },

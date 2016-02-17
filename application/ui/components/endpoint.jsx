@@ -177,7 +177,6 @@ module.exports = React.createClass({
             this.getFlux().actions.request.oauthRequest(
                 this.state.namespace,
                 this.props.name,
-                accessToken,
                 method,
                 uri,
                 queryParams,

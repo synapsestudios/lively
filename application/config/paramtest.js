@@ -93,6 +93,7 @@ var paramArrayCustom = {
 var paramStripe = {
     name        : 'stripeTokenKey',
     required    : false,
+    include     : false,
     type        : 'stripe-token',
     description : 'Not totally sure what this does but it works now.'
 };

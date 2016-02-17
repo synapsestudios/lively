@@ -1,3 +1,7 @@
+## [v1.0.6](https://github.com/synapsestudios/lively/compare/v1.0.2...v1.0.6) - ?
+### Fixed
+- [#155](https://github.com/synapsestudios/lively/pull/155) Allow default no-include for parameters.
+
 ## [v1.0.2](https://github.com/synapsestudios/lively/compare/v1.0.1...v1.0.2) - 2015-04-17
 ### Fixed
 - [#139](https://github.com/synapsestudios/lively/pull/139) Fixed enum param inside array ending up with null value.

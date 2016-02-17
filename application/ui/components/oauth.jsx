@@ -52,6 +52,7 @@ module.exports = React.createClass({
         });
 
         var redirectHost = (
+            (config.lively.port === 443 ? 'https://' : 'http://') +
             config.lively.hostname + ':' +
             config.lively.port
         );
@@ -65,7 +66,7 @@ module.exports = React.createClass({
                 'client_id'     : options.clientId,
                 'client_secret' : options.clientSecret,
                 'response_type' : 'code',
-                'redirect_uri'  : 'http://' + redirectHost + '/oauth2-redirect?' + redirectQs,
+                'redirect_uri'  : redirectHost + '/oauth2-redirect?' + redirectQs,
                 'scope'         : options.scope,
                 'state'         : Math.random()
             }

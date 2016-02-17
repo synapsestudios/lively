@@ -14,7 +14,7 @@ module.exports = function(req, res) {
 
     var apiConfig = config.apis[query.api];
 
-    var httpLib = apiConfig.oauth2.port === 443 ? https : http;
+    var httpLib = apiConfig.oauth2.secure ? https : http;
     var proxyReq = httpLib.request({
         hostname           : apiConfig.oauth2.hostname,
         port               : apiConfig.oauth2.port,
@@ -42,10 +42,11 @@ module.exports = function(req, res) {
             try {
                 var json     = JSON.parse(data),
                     hostname = config.lively.hostname,
-                    port     = config.lively.port;
+                    port     = config.lively.port,
+                    scheme   = port === 443 ? 'https' : 'http';
 
                 res.writeHead(302, {
-                    Location : 'http://' + hostname + ':' + port + '/' + query.api + '?' + qs.stringify(json)
+                    Location : scheme + '://' + hostname + ':' + port + '/' + query.api + '?' + qs.stringify(json)
                 });
             } catch (e) {
                 res.write(data);

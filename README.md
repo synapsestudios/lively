@@ -229,3 +229,4 @@ An API is made up of multiple resources. Each resource has a list of endpoints t
 - **location**: A `string` containing one of `header`, `body`, `uri` or `query`. If the param is named in the endpoint's URI, Lively will ignore the stated location. *Default:* `body` unless param is named in URI, then `uri`.
 - **defaultValue**: A `string`, `bool`, or `array` depending on what `type` is set. The default value to display in the param.
 - **description**: A `string` containing a short description of the parameter.
+
